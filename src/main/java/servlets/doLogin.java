@@ -1,6 +1,7 @@
 package servlets;
 
 import beans.Error;
+import dbConnection.DatabaseConnection;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -40,11 +41,9 @@ public class doLogin extends HttpServlet {
 
         RequestDispatcher sourceDispatcher = request.getRequestDispatcher(sourcePage);
 
-        //RequestDispatcher backDispatcher = request.getRequestDispatcher(request.getHeader("referer"));
-
         if(username==null || password==null )
         {
-           errorHandler(request,response,sourcePage);
+            errorHandler(request, response, sourcePage);
         }
 
         String userCredential = userMapper.getUserCredential(username);
@@ -78,32 +77,8 @@ public class doLogin extends HttpServlet {
     @Override
     public void init() throws ServletException {
 
-        URI dbUri = null;
+        session = DatabaseConnection.getFactory().openSession();
+        userMapper = session.getMapper(UserMapper.class);
 
-        try {
-            Class.forName("org.postgresql.Driver");
-            dbUri = new URI(System.getenv("DATABASE_URL"));
-            System.out.println(System.getenv("DATABASE_URL"));
-            String username = dbUri.getUserInfo().split(":")[0];
-            String password = dbUri.getUserInfo().split(":")[1];
-
-            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-
-            TransactionFactory transactionFactory = new JdbcTransactionFactory();
-            DataSource dataSource = new UnpooledDataSource("org.postgresql.Driver",dbUrl,username,password);
-
-            Environment environment = new Environment("development", transactionFactory, dataSource);
-            Configuration configuration = new Configuration(environment);
-            configuration.addMapper(UserMapper.class);
-            SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-            SqlSessionFactory factory = builder.build(configuration);
-            session = factory.openSession();
-            userMapper = session.getMapper(UserMapper.class);
-
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }
