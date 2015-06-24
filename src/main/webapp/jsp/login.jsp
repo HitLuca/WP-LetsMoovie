@@ -22,8 +22,12 @@
                 </label>
 
                 <div class="row">
-                    <input type="submit" class="button expand" value="Log In"/>
-
+                    <div class="medium-6 columns">
+                        <input type="submit" class="button expand" value="Log In"/>
+                    </div>
+                    <div class="medium-6 columns">
+                        <input type="submit" class="button expand" value="Forgot your password?"/>
+                    </div>
                 </div>
             </form>
         </div>
