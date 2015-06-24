@@ -1,7 +1,7 @@
 package servlets;
 
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.ibatis.datasource.DataSourceFactory;
+import beans.Error;
+import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
@@ -10,8 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import types.ErrorType;
-import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
-
+import types.mappers.UserMapper;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,14 +23,6 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-
-import beans.Error;
-import types.UserLoginCredential;
-import types.mappers.UserMapper;
 
 /**
  * Created by etrunon on 24/06/15.
@@ -42,6 +33,7 @@ public class doLogin extends HttpServlet {
     private UserMapper userMapper;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String sourcePage = request.getParameter("sourcePage");
@@ -49,17 +41,18 @@ public class doLogin extends HttpServlet {
         RequestDispatcher sourceDispatcher = request.getRequestDispatcher(sourcePage);
 
         //RequestDispatcher backDispatcher = request.getRequestDispatcher(request.getHeader("referer"));
+
         if(username==null || password==null )
         {
            errorHandler(request,response,sourcePage);
         }
 
         String userCredential = userMapper.getUserCredential(username);
-        if(userCredential==null)
+
+        if (userCredential == null)
         {
             errorHandler(request,response,sourcePage);
-        }
-        else if(!password.equals(userCredential))
+        } else if (!password.equals(userCredential))
         {
             errorHandler(request,response,sourcePage);
         }
@@ -68,11 +61,12 @@ public class doLogin extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("role","USER");
             session.setAttribute("username",username);
-            sourceDispatcher.forward(request,response);
+            sourceDispatcher.forward(request, response);
         }
     }
 
     private void errorHandler(HttpServletRequest request,HttpServletResponse response,String sourcePage) throws ServletException, IOException {
+
         RequestDispatcher errorDispatcher = request.getRequestDispatcher("jsp/login.jsp");
         Error error = new Error();
         error.setErrorType(ErrorType.INVALID_LOGIN);
@@ -80,9 +74,12 @@ public class doLogin extends HttpServlet {
         request.setAttribute("sourcePage",sourcePage);
         errorDispatcher.forward(request,response);
     }
+
     @Override
     public void init() throws ServletException {
+
         URI dbUri = null;
+
         try {
             Class.forName("org.postgresql.Driver");
             dbUri = new URI(System.getenv("DATABASE_URL"));

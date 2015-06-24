@@ -1,7 +1,6 @@
 package types.mappers;
 
 import org.apache.ibatis.annotations.Select;
-import types.UserLoginCredential;
 
 /**
  * Created by marco on 24/06/15.
