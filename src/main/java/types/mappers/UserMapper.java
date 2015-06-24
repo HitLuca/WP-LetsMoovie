@@ -3,7 +3,7 @@ package types.mappers;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by marco on 24/06/15.
