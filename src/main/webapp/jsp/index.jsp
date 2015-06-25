@@ -7,6 +7,13 @@
 <body>
 <c:import url="header.jsp"/>
 <h2>Hello World!</h2>
-<c:import url="footer.jsp"/>
+<%--<c:import url="footer.jsp"/>--%>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+</script>
 </body>
 </html>
