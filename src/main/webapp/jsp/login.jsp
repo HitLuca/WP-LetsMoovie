@@ -8,6 +8,7 @@
 </c:url>
 <c:import url="${url}"/>
 <body>
+<c:import url="/jsp/header.jsp"/>
 <div class="row">
     <div class="small-11 small-centered large-6 medium-8 columns">
         <div class="login-box">
@@ -34,5 +35,6 @@
         </div>
     </div>
 </div>
+<c:import url="/jsp/footer.jsp"/>
 </body>
 </html>

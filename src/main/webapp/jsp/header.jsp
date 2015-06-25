@@ -21,10 +21,10 @@
     <section class="top-bar-section">
         <!-- Right Nav Section -->
         <ul class="right">
-            <li><a href="#">Listino prezzi</a></li>
-            <li><a href="#">Info cinema</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Registrati</a></li>
+            <li><a href="#" class="button radius">Listino prezzi</a></li>
+            <li><a href="#" class="button radius">Info cinema</a></li>
+            <li><a href="<c:url value="/login"/>" class="button radius">Login</a></li>
+            <li><a href="#" class="button radius">Registrati</a></li>
         </ul>
     </section>
 </nav>

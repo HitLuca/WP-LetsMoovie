@@ -8,3 +8,7 @@ footer {
 }#logo {
     max-height: 2.8rem;
 }
+
+.top-bar-section ul li {
+    padding-left: 0.5rem;
+}
