@@ -6,6 +6,8 @@
         <welcome-file>jsp/index.jsp</welcome-file>
     </welcome-file-list>
     <listener>
-        <listener-class>database.flywayRunner</listener-class>
+        <listener-class>
+            database.flywayRunner
+        </listener-class>
     </listener>
 </web-app>

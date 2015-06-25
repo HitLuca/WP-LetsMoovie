@@ -22,7 +22,7 @@ CREATE TABLE films (
   duration  SMALLINT,
   trailer   TEXT,
   metascore SMALLINT,
-  rating    DECIMAL(2, 1),
+  rating    REAL,
   year      SMALLINT,
   plot      TEXT,
   director  TEXT,
@@ -59,17 +59,16 @@ CREATE TABLE users (
   surname         TEXT,
   username        TEXT,
   password        TEXT,
-  phone_number    INT,
+  phone_number    TEXT,
   birthday        DATE,
-  credit_card_number INT,
-  residual_credit MONEY,
-  role            TEXT,
+  residual_credit REAL DEFAULT(0.0),
+  role            INT DEFAULT 0,
   PRIMARY KEY (id_user)
 );
 
 CREATE TABLE prices (
   ticket_type TEXT,
-  price MONEY,
+  price REAL,
   PRIMARY KEY (ticket_type)
 );
 
@@ -106,3 +105,10 @@ CREATE TABLE seat_reservations (
   FOREIGN KEY (id_show) REFERENCES shows (id_show),
   FOREIGN KEY (id_seat) REFERENCES seats (id_seat)
 );
+
+CREATE TABLE user_credit_cards (
+  id_user INT,
+  credit_card_number INT,
+  PRIMARY KEY (id_user, credit_card_number),
+  FOREIGN KEY (id_user) REFERENCES users (id_user)
+)
