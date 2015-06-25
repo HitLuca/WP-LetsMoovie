@@ -2,6 +2,7 @@ package servlets;
 
 import dbConnection.DatabaseConnection;
 import org.apache.ibatis.session.SqlSession;
+import types.User;
 import types.mappers.UserMapper;
 
 import javax.servlet.ServletException;
@@ -10,11 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 enum ErrorType {
     NULL_VALUE
@@ -26,7 +22,8 @@ enum ErrorType {
  *      che l'username non sia già presente nel db,
  *      che la password sia della lunghezza giusta
  *
- * Fatto questo, inserisce nel db il nuovo utente con tutti i dati associati e reindirizza l'utente sulla pagina dove si trovava
+ * Fatto questo, invia una mail all'utente. Quando viene clickato il link viene fatto il controllo sulla scadenza
+ * inserisce nel db il nuovo utente con tutti i dati associati e reindirizza l'utente sulla pagina dove si trovava
  * prima di fare la registrazione.
  *
  * Created by etrunon on 24/06/15.
@@ -37,66 +34,41 @@ public class doRegister extends HttpServlet {
     private SqlSession session;
     private UserMapper userMapper;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("boh");
-
-        String email = request.getParameter("email");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String birthday = request.getParameter("birthday");
-        String phone = request.getParameter("phone");
+        User user = new User(request);
         String sourcePage = request.getParameter("sourcePage");
 
-        System.out.println("ho letto");
-
         //Controllo che i campi inseriti non siano NULL
-        if (email == null)
-            errorHandler(ErrorType.NULL_VALUE);
-        if (username == null)
-            errorHandler(ErrorType.NULL_VALUE);
-        if (password == null)
-            errorHandler(ErrorType.NULL_VALUE);
-        if (name == null)
-            errorHandler(ErrorType.NULL_VALUE);
-        if (surname == null)
-            errorHandler(ErrorType.NULL_VALUE);
-        if (birthday == null)
-            errorHandler(ErrorType.NULL_VALUE);
-        if (phone == null)
-            errorHandler(ErrorType.NULL_VALUE);
+        if (user.checkNulls() == true)
+            errorHandler(response, ErrorType.NULL_VALUE);
         if (sourcePage == null)
-            errorHandler(ErrorType.NULL_VALUE);
+            errorHandler(response, ErrorType.NULL_VALUE);
 
-        System.out.println("non erano null");
 
-        //Converto birthday a formato date
-        DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-        Date date = null;
-        try {
-            date = format.parse(birthday);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        /*
         //Procedo all'inserimento nel DB
         try {
             userMapper.insertUser(username, password, email, date, name, surname, phone);
         } catch (Exception e) {
             System.out.println("Inserimento non effettuato");
         }
+*/
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    private void errorHandler(ErrorType e) {
+    private void errorHandler(HttpServletResponse response, ErrorType e) {
         switch (e) {
             case NULL_VALUE: {
+
+                try {
+                    response.sendRedirect("register");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
 
             }
         }
