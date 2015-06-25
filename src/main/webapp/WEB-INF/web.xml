@@ -32,6 +32,10 @@
         <servlet-name>team</servlet-name>
         <jsp-file>/jsp/team.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>registration</servlet-name>
+        <jsp-file>/jsp/registration.jsp</jsp-file>
+    </servlet>
 
     <!-- MAPPING JPS-->
     <servlet-mapping>
@@ -53,5 +57,9 @@
     <servlet-mapping>
         <servlet-name>team</servlet-name>
         <url-pattern>/team</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>registration</servlet-name>
+        <url-pattern>/registration</url-pattern>
     </servlet-mapping>
 </web-app>

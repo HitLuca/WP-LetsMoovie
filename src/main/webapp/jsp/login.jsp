@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <c:url var="url" value="/jsp/head.jsp">
-    <c:param name="title" value="login"/>
+    <c:param name="title" value="Login"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
