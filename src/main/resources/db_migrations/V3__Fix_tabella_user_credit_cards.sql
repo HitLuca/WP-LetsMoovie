@@ -1,1 +1,0 @@
-ALTER TABLE user_credit_cards ALTER COLUMN credit_card_number TYPE TEXT;
