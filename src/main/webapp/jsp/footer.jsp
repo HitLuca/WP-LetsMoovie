@@ -3,16 +3,16 @@
 <footer>
     <div class="row">
         <div id="fooBut" class="small-6 medium-3 columns">
-            <a href="<c:url value="/jsp/contattaci.jsp"/>" class="button expand radius">Contattaci</a>
+            <a href="<c:url value="/contattaci"/>" class="button small expand radius">Contattaci</a>
         </div>
         <div id="fooBut" class="small-6 medium-3 columns">
-            <a href="<c:url value="/jsp/privacy.jsp"/>" class="button expand radius">Privacy</a>
+            <a href="<c:url value="/privacy"/>" class="button small expand radius">Privacy</a>
         </div>
         <div id="fooBut" class="small-6 medium-3 columns">
-            <a href="<c:url value="/jsp/info.jsp"/>" class="button expand radius">Chi siamo</a>
+            <a href="<c:url value="/info"/>" class="button small expand radius">Chi siamo</a>
         </div>
         <div id="fooBut" class="small-6 medium-3 columns">
-            <a href="<c:url value="/jsp/team.jsp"/>" class="button expand radius">Il team</a>
+            <a href="<c:url value="/team"/>" class="button small expand radius">Il team</a>
         </div>
     </div>
 </footer>
