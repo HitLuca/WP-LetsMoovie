@@ -1,3 +1,10 @@
-#logo {
+footer {
+    background-color: #68676e;
+    padding-top: 1rem;
+}
+
+#fooBut {
+    text-align: center;
+}#logo {
     max-height: 2.8rem;
 }

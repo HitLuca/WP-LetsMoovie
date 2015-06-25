@@ -5,7 +5,7 @@
 </c:url>
 <c:import url="${url}"/>
 <body>
-<c:import url="header.jsp"/>
+<%--<c:import url="header.jsp"/>--%>
 <h2>Hello World!</h2>
 <%--<c:import url="footer.jsp"/>--%>
 
