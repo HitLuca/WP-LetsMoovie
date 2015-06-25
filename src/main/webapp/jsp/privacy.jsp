@@ -28,6 +28,6 @@
 
 <p>Su questo sito vengono utilizzati solamente cookie tecnici necessari al funzionamento stesso del sito.</p>
 
-<c:import url="footer.jsp"/>
+<c:import url="/jsp/footer.jsp"/>
 </body>
 </html>
