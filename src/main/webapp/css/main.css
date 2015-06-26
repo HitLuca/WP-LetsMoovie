@@ -12,3 +12,8 @@ footer {
 .top-bar-section ul li {
     padding-left: 0.5rem;
 }
+
+.content {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}

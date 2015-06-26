@@ -19,32 +19,32 @@
 <div class="row">
     <form action="doRegister" method="post">
         <div class="large-6 columns">
-            <label>First name*
+            <label>First name:
                 <input type="text" name="firstname" placeholder="First name" required/>
             </label>
         </div>
         <div class="large-6 columns">
-            <label>Last name*
+            <label>Last name:
                 <input type="text" name="lastname" placeholder="Last name" required/>
             </label>
         </div>
         <div class="large-6 columns">
-            <label>Email address*
+            <label>Email address:
                 <input type="email" name="email" placeholder="Email" required/>
             </label>
         </div>
         <div class="large-6 columns">
-            <label>Date of birth*
+            <label>Date of birth:
                 <input type="date" name="dob" placeholder="Date of birth" required/>
             </label>
         </div>
         <div class="large-6 columns">
-            <label>Mobile phone*
+            <label>Mobile phone:
                 <input type="tel" name="phone" placeholder="Mobile phone" required/>
             </label>
         </div>
         <div class="large-6 columns">
-            <label>Password*</label>
+            <label>Password:</label>
             <input type="password" name="password" placeholder="password" required/>
             <%--TODO: fix medium--%>
             <medium class="input">Password must be at least 8 characters; Contain at least three character types:
