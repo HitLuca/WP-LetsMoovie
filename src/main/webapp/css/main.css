@@ -10,7 +10,11 @@ footer {
 }
 
 .top-bar-section ul li {
-    padding-left: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.top-bar-section ul {
+    margin-right: 0.5rem;
 }
 
 .content {
