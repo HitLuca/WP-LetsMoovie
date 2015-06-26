@@ -3,6 +3,7 @@ package servlets;
 import dbConnection.DatabaseConnection;
 import org.apache.ibatis.session.SqlSession;
 import types.mappers.UserMapper;
+import utilities.VerificationMailSender;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,6 +37,7 @@ public class doRegister extends HttpServlet {
 
     private SqlSession session;
     private UserMapper userMapper;
+    private VerificationMailSender verificationMailSender;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -91,7 +93,21 @@ public class doRegister extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        if(request.getParameter("mandaMail")!=null)
+        {
+            if(verificationMailSender.sendEmail(request.getParameter("mandaMail")))
+            {
+                System.out.println("EMAIL INSERITA");
+            }
+            else
+            {
+                System.out.println("ERRORE INVIO");
+            }
+        }
+        if(request.getParameter("confermaMail")!=null)
+        {
+            System.out.println(verificationMailSender.verify(request.getParameter("confermaMail")));
+        }
     }
 
     private void errorHandler(ErrorType e) {
@@ -107,6 +123,7 @@ public class doRegister extends HttpServlet {
 
         session = DatabaseConnection.getFactory().openSession();
         userMapper = session.getMapper(UserMapper.class);
+        verificationMailSender = new VerificationMailSender();
 
     }
 }
