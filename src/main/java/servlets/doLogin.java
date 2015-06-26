@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import types.ErrorType;
+import types.UserLoginCredential;
 import types.mappers.UserMapper;
 
 import javax.servlet.RequestDispatcher;
@@ -46,12 +47,12 @@ public class doLogin extends HttpServlet {
             errorHandler(request, response, sourcePage);
         }
 
-        String userCredential = userMapper.getUserCredential(username);
+        UserLoginCredential userCredential = userMapper.getUserCredential(username);
 
         if (userCredential == null)
         {
             errorHandler(request,response,sourcePage);
-        } else if (!password.equals(userCredential))
+        } else if (!password.equals(userCredential.getPassword()))
         {
             errorHandler(request,response,sourcePage);
         }
