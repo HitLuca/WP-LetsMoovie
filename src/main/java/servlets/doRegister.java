@@ -47,7 +47,7 @@ public class doRegister extends HttpServlet {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String birthday = request.getParameter("birthday");
-        String phone = request.getParameter("phone");
+        String phone_number = request.getParameter("phone_number");
         String sourcePage = request.getParameter("sourcePage");
 
         System.out.println("ho letto");
@@ -65,7 +65,7 @@ public class doRegister extends HttpServlet {
             errorHandler(ErrorType.NULL_VALUE);
         if (birthday == null)
             errorHandler(ErrorType.NULL_VALUE);
-        if (phone == null)
+        if (phone_number == null)
             errorHandler(ErrorType.NULL_VALUE);
         if (sourcePage == null)
             errorHandler(ErrorType.NULL_VALUE);
@@ -83,7 +83,7 @@ public class doRegister extends HttpServlet {
 
         //Procedo all'inserimento nel DB
         try {
-            userMapper.insertUser(username, password, email, date, name, surname, phone);
+            userMapper.insertUser(email, name, surname, username, password, phone_number, birthday);
         } catch (Exception e) {
             System.out.println("Inserimento non effettuato");
         }
