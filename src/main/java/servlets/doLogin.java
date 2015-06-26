@@ -59,19 +59,18 @@ public class doLogin extends HttpServlet {
         {
             HttpSession session = request.getSession();
             session.setAttribute("role","USER");
-            session.setAttribute("username",username);
-            sourceDispatcher.forward(request, response);
+            session.setAttribute("username", username);
+            response.sendRedirect(sourcePage);
         }
     }
 
     private void errorHandler(HttpServletRequest request,HttpServletResponse response,String sourcePage) throws ServletException, IOException {
 
-        RequestDispatcher errorDispatcher = request.getRequestDispatcher("jsp/login.jsp");
         Error error = new Error();
         error.setErrorType(ErrorType.INVALID_LOGIN);
         request.setAttribute("error", error);
-        request.setAttribute("sourcePage",sourcePage);
-        errorDispatcher.forward(request,response);
+        request.setAttribute("sourcePage", sourcePage);
+        response.sendRedirect("login");
     }
 
     @Override
