@@ -56,7 +56,7 @@ public class doRegister extends HttpServlet {
         /*
         //Procedo all'inserimento nel DB
         try {
-            userMapper.insertUser(username, password, email, date, name, surname, phone);
+            userMapper.insertUser(email, name, surname, username, password, phone_number, birthday);
         } catch (Exception e) {
             System.out.println("Inserimento non effettuato");
         }
