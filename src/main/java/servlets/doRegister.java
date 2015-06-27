@@ -67,7 +67,7 @@ public class doRegister extends HttpServlet {
 
     }
 
-    private void errorHandler(ErrorType e) {
+    private void errorHandler(HttpServletResponse response,ErrorType e) {
         switch (e) {
             case NULL_VALUE: {
 
