@@ -29,21 +29,21 @@ public class doLoginTest extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String sourcePage = request.getParameter("sourcePage");
+
 
         if(username==null || password==null )
         {
-            errorHandler(request, response, sourcePage);
+            errorHandler(request, response);
         }
 
         UserLoginCredential userCredential = userMapper.getUserCredential(username);
 
         if (userCredential == null)
         {
-            errorHandler(request,response,sourcePage);
+            errorHandler(request,response);
         } else if (!password.equals(userCredential.getPassword()))
         {
-            errorHandler(request,response,sourcePage);
+            errorHandler(request,response);
         }
         else
         {
@@ -53,14 +53,14 @@ public class doLoginTest extends HttpServlet {
             String sessionId = session.getId();
             response.setContentType("application/json");
             ServletOutputStream outputStream = response.getOutputStream();
-            outputStream.print("{\"sessionId\":\""+sessionId+"\"}");
+            outputStream.print("{\"status\":\"OK\"}");
 
         }
     }
 
-    private void errorHandler(HttpServletRequest request,HttpServletResponse response,String sourcePage) throws ServletException, IOException {
+    private void errorHandler(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.print("{\"sessionId\":\""+0+"\"}");
+        outputStream.print("{\"sessionId\":\"ERROR\"}");
     }
 
     @Override
