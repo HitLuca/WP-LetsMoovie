@@ -11,6 +11,10 @@
         </listener-class>
     </listener>
 
+    <session-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
     <!-- DEFINIZIONE JSP DA MAPPPARE-->
     <servlet>
         <servlet-name>login</servlet-name>

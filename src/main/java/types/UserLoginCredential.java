@@ -5,13 +5,13 @@ package types;
  */
 public class UserLoginCredential {
     private String password;
-    private Role role;
+    private int role;
 
-    public Role getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(int role) {
         this.role = role;
     }
 
