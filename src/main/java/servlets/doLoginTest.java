@@ -54,6 +54,7 @@ public class doLoginTest extends HttpServlet {
     }
 
     private void errorHandler(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print("{\"success\": false }");
     }
