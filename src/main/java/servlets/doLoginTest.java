@@ -35,26 +35,21 @@ public class doLoginTest extends HttpServlet {
         {
             errorHandler(request, response);
         }
-
-        UserLoginCredential userCredential = userMapper.getUserCredential(username);
-
-        if (userCredential == null)
-        {
-            errorHandler(request,response);
-        } else if (!password.equals(userCredential.getPassword()))
-        {
-            errorHandler(request,response);
-        }
-        else
-        {
-            HttpSession session = request.getSession(true);
-            session.setAttribute("role","USER");
-            session.setAttribute("username", username);
-            String sessionId = session.getId();
-            response.setContentType("application/json");
-            ServletOutputStream outputStream = response.getOutputStream();
-            outputStream.print("{\"success\": true }");
-
+        else {
+            UserLoginCredential userCredential = userMapper.getUserCredential(username);
+            if (userCredential == null) {
+                errorHandler(request, response);
+            } else if (!password.equals(userCredential.getPassword())) {
+                errorHandler(request, response);
+            } else {
+                HttpSession session = request.getSession(true);
+                session.setAttribute("role", "USER");
+                session.setAttribute("username", username);
+                String sessionId = session.getId();
+                response.setContentType("application/json");
+                ServletOutputStream outputStream = response.getOutputStream();
+                outputStream.print("{\"success\": true }");
+            }
         }
     }
 
