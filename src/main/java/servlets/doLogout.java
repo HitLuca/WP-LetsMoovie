@@ -15,16 +15,16 @@ import java.io.IOException;
 public class doLogout extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        response.setContentType("application/JSON");
         String sourcePage = request.getParameter("sourcePage");
-        if(session.getAttribute("username")!=null)
+        try {
+            session.invalidate();
+            response.getOutputStream().print("{\"success\": true }");
+        }catch (IllegalStateException ex)
         {
-            session.removeAttribute("username");
+            session.invalidate();
+            response.getOutputStream().print("{\"success\": false }");
         }
-        if(session.getAttribute("role")!=null)
-        {
-            session.removeAttribute("role");
-        }
-        response.sendRedirect(sourcePage);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

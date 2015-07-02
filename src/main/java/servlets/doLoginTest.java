@@ -53,14 +53,14 @@ public class doLoginTest extends HttpServlet {
             String sessionId = session.getId();
             response.setContentType("application/json");
             ServletOutputStream outputStream = response.getOutputStream();
-            outputStream.print("{\"status\":\"OK\"}");
+            outputStream.print("{\"success\": true }");
 
         }
     }
 
     private void errorHandler(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.print("{\"sessionId\":\"ERROR\"}");
+        outputStream.print("{\"success\": false }");
     }
 
     @Override
