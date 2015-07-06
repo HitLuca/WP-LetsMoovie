@@ -9,18 +9,19 @@ import java.util.List;
 public class InvalidRegistrationException extends Exception{
     private List<String> invalidParameters;
 
-    public InvalidRegistrationException()
-    {
+    public InvalidRegistrationException() {
         invalidParameters = new ArrayList<String>();
     }
 
-    public void addInvalidParameter(String parameter)
-    {
+    public InvalidRegistrationException(List<String> invalidParameters) {
+        this.invalidParameters = invalidParameters;
+    }
+
+    public void addInvalidParameter(String parameter) {
         invalidParameters.add(parameter);
     }
 
-    public List<String> getInvalidParameters()
-    {
+    public List<String> getInvalidParameters() {
         return invalidParameters;
     }
 }

@@ -27,7 +27,7 @@ public class VerificationMailSender {
         sendgrid = new SendGrid(api_user, api_key);
     }
 
-    public boolean sendEmail(User user)
+    public boolean sendEmail(User user, String url)
     {
         long expirationDate = new Date().getTime()+MAIL_TIME*1000;
         String verificationCode = RandomStringUtils.randomAlphanumeric(SECURE_CODE_SIZE);
@@ -36,7 +36,7 @@ public class VerificationMailSender {
         email.addTo(user.getEmail());
         email.setFrom("info@letsmoovie.com");
         email.setSubject("Verify your account");
-        email.setHtml("Il tuo codice di verifica è "+verificationCode);
+        email.setHtml("Il tuo codice di verifica è " + url + "?verificationCode=" + verificationCode);
 
         try {
             System.out.println(sendgrid.send(email).getMessage());

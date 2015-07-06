@@ -24,7 +24,7 @@ public class ModelValidator {
                     invalidParameters.add(a.name());
                 }
                 else {
-                    Pattern pattern = Pattern.compile("^\\d{5}(-\\d{4})?$"); //TODO rejex
+                    Pattern pattern = Pattern.compile(a.reg().getValue());
                     if (!pattern.matcher(value).matches()) {
                         invalidParameters.add(a.name());
                     }

@@ -10,16 +10,9 @@ public class RegisterStatus {
     private List<String> invalidParameters;
     boolean success;
 
-    public RegisterStatus(List<String> invalidParameters)
-    {
-        success = false;
-        this.invalidParameters=invalidParameters;
-    }
-
-    public RegisterStatus() {
-        success = false;
-        invalidParameters = new ArrayList<String>();
-        invalidParameters.add("email");
+    public RegisterStatus(List<String> invalidParameters) {
+        this.success = false;
+        this.invalidParameters = invalidParameters;
     }
 
     public void  setSuccess(boolean success)
@@ -31,4 +24,9 @@ public class RegisterStatus {
     {
         invalidParameters.add(parameter);
     }
+
+    public void addInvalidParametersList(List<String> parameter) {
+        invalidParameters.addAll(parameter);
+    }
+
 }

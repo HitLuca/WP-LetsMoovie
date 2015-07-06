@@ -1,138 +1,58 @@
 package types;
 
-import types.exceptions.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Created by etrunon on 25/06/15.
  */
 public class User {
 
-
-
-
     private String email;
-
     private String username;
     private String password;
     private String name;
     private String surname;
-    private Date birthday;
+    private String birthday;
     private String phone;
-    public User(Map<String,String[]> values) throws InvalidRegistrationException {
-/*
-        String bday;
-        boolean valid = true;
-        InvalidRegistrationException exception = new InvalidRegistrationException();
 
-        if(values.get(emailParameter)[0]!=null) {
-            email = values.get(emailParameter)[0];
-        } else {
-            valid = false;
-            exception.addInvalidParameter(emailParameter);
-        }
+    // ======= Getter per la sanitizzazione
 
-        if(values.get(usernameParameter)[0]!=null) {
-            username = values.get(usernameParameter)[0];
-        } else {
-            valid = false;
-            exception.addInvalidParameter(usernameParameter);
-        }
-        username = values.get(usernameParameter)[0];
-        password = values.get(passwordParameter)[0];
-        name = values.get(nameParameter)[0];
-        surname = values.get(surnameParameter)[0];
-        bday = values.get(birthdayParameter)[0];
-        phone = values.get(phoneParameter)[0];
-
-
-
-
-        if(!emailPattern.matcher(email).matches())
-        {
-            exception.addInvalidParameter(emailParameter);
-            valid=false;
-        }
-        if(!usernamePattern.matcher(username).matches())
-        {
-            exception.addInvalidParameter(usernameParameter);
-            valid=false;
-        }
-        if(!passwordPattern.matcher(password).matches())
-        {
-            exception.addInvalidParameter(passwordParameter);
-            valid=false;
-        }
-        if(!namePattern.matcher(name).matches())
-        {
-            exception.addInvalidParameter(nameParameter);
-            valid=false;
-        }
-        if(!surnamePattern.matcher(surname).matches())
-        {
-            exception.addInvalidParameter(surnameParameter);
-            valid=false;
-        }
-        if(!phonePattern.matcher(phone).matches())
-        {
-            exception.addInvalidParameter(phoneParameter);
-            valid=false;
-        }
-        try{
-            birthday = format.parse(bday);
-        } catch (ParseException e) {
-            exception.addInvalidParameter(birthdayParameter);
-            valid=false;
-        }
-
-        if(!valid)
-        {
-            throw exception;
-        }*/
-    }
-
-    @toSanitize (name = "email")
+    @toSanitize(name = "email", reg = Regex.EMAIL)
     public String getEmail() {
         return email;
     }
 
-    @toSanitize (name = "username")
+    @toSanitize(name = "username", reg = Regex.USERNAME)
     public String getUsername() {
         return username;
     }
 
-    @toSanitize (name = "password")
+    @toSanitize(name = "password", reg = Regex.PASSWORD)
     public String getPassword() {
         return password;
     }
 
-    @toSanitize (name = "name")
+    @toSanitize(name = "name", reg = Regex.NAME)
     public String getName() {
         return name;
     }
 
-    @toSanitize (name = "surname")
+    @toSanitize(name = "surname", reg = Regex.NAME)
     public String getSurname() {
         return surname;
     }
 
-    @toSanitize (name = "birthday")
-    public Date getBirthday() {
+    @toSanitize(name = "birthday", reg = Regex.DATE)
+    public String getBirthday() {
         return birthday;
     }
 
-    @toSanitize (name = "phone")
+    @toSanitize(name = "phone", reg = Regex.PHONE)
     public String getPhone() {
         return phone;
     }
+
+    //====== Setter per il Mapping
 
     public void setEmail(String email) {
         this.email=email;
@@ -154,7 +74,7 @@ public class User {
         this.surname = surname;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

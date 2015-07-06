@@ -1,22 +1,13 @@
 package servlets;
 
-import beans.Error;
 import com.google.gson.Gson;
 import dbConnection.DatabaseConnection;
-import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.transaction.TransactionFactory;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import types.ErrorType;
 import types.UserLoginCredential;
+import types.exceptions.MyException;
 import types.json.LoginStatus;
 import types.mappers.UserMapper;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -24,10 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * Created by etrunon on 24/06/15.
@@ -43,39 +31,52 @@ public class doLogin extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
+        try {
+            if (username == null || password == null)   //campi nulli
+            {   //Lancia l'eccezione campi nulli
+                throw new MyException();
+            }
 
-        if(username==null || password==null )
-        {
+            UserLoginCredential userCredential = userMapper.getUserCredential(username);
+            if (userCredential == null) {   //username non nel db
+                throw new MyException();
+            } else if (!password.equals(userCredential.getPassword())) { //password errata
+                throw new MyException();
+            }
+
+            //Si crea la sessione e la si inizializza coi dati utente. Il sessionId viene inviato automaticamente
+            HttpSession session = request.getSession(true);
+            session.setAttribute("role", "USER");
+            session.setAttribute("username", username);
+            //Si setta il fatto che si stanno inviando Json
+            response.setContentType("application/json");
+
+            // Creo il Jsno di risposta
+            LoginStatus loginStatus = new LoginStatus();
+            loginStatus.setSuccess(true);
+            loginStatus.setUsername(username);
+            ServletOutputStream outputStream = response.getOutputStream();
+            outputStream.print(gson.toJson(loginStatus));
+
+        } catch (MyException e) {
             errorHandler(request, response);
         }
-        else {
-            UserLoginCredential userCredential = userMapper.getUserCredential(username);
-            if (userCredential == null) {
-                errorHandler(request, response);
-            } else if (!password.equals(userCredential.getPassword())) {
-                errorHandler(request, response);
-            } else {
-                HttpSession session = request.getSession(true);
-                session.setAttribute("role", "USER");
-                session.setAttribute("username", username);
-                String sessionId = session.getId();
-                response.setContentType("application/json");
-                LoginStatus loginStatus = new LoginStatus();
-                loginStatus.setSuccess(true);
-                loginStatus.setUsername(username);
-                ServletOutputStream outputStream = response.getOutputStream();
-                outputStream.print(gson.toJson(loginStatus));
-            }
-        }
+
     }
 
-    private void errorHandler(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+    private void errorHandler(HttpServletRequest request, HttpServletResponse response) {
+
         response.setContentType("application/json");
         LoginStatus loginStatus = new LoginStatus();
         loginStatus.setSuccess(false);
         loginStatus.setUsername(null);
-        ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.print(gson.toJson(loginStatus));
+
+        try {
+            ServletOutputStream outputStream = response.getOutputStream();
+            outputStream.print(gson.toJson(loginStatus));
+        } catch (IOException e) {
+            // Decidere che fare con problemi grossi (IOException)
+        }
     }
 
     @Override
