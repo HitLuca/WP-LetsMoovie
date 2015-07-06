@@ -6,7 +6,7 @@ import types.annotations.toSanitize;
 /**
  * Created by etrunon on 25/06/15.
  */
-public class User {
+public class RegistrationRequest {
 
     private String email;
     private String username;

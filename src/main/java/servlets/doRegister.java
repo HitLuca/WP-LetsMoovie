@@ -1,14 +1,19 @@
 package servlets;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.MalformedJsonException;
 import database.DatabaseConnection;
+import json.GenericOperationError;
+import json.GenericSuccessfullOperation;
+import json.OperationStatus;
+import json.register.request.RegistrationRequest;
 import json.register.response.InvalidRegistration;
 import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
 import utilities.InputValidator.ModelValidator;
-import json.register.request.User;
 import types.exceptions.InvalidRegistrationException;
-import json.register.response.RegistrationStatus;
 import database.mappers.UserMapper;
 import utilities.mail.verification.VerificationMailSender;
 
@@ -19,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -37,8 +43,6 @@ import java.util.List;
 @WebServlet(name = "doRegister", urlPatterns = "/doRegister")
 public class doRegister extends HttpServlet {
 
-    //TODO campi "" vengono accettati!!!
-
     private SqlSession session;
     private UserMapper userMapper;
     private VerificationMailSender verificationMailSender;
@@ -46,33 +50,38 @@ public class doRegister extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RegistrationStatus registrationStatus = new InvalidRegistration();
+        OperationStatus registrationStatus;
         ServletOutputStream outputStream = response.getOutputStream();
         try {
-            //Provo a parsare il Json nell'oggetto User. Se exception esce dalla sevlet
-            User user = gson.fromJson(request.getReader(), User.class);
-            //Il validatore valida tutte le stringhe di User e nel caso non siano sanitizzate allora
+            //Provo a parsare il Json nell'oggetto RegistrationRequest. Se exception esce dalla sevlet
+            RegistrationRequest registrationRequest = gson.fromJson(request.getReader(), RegistrationRequest.class);
+            //Il validatore valida tutte le stringhe di RegistrationRequest e nel caso non siano sanitizzate allora
             //le aggiunge alla lista di stringhe invalide
-            List<String> invalidParameters = ModelValidator.validate(user);
+            List<String> invalidParameters = ModelValidator.validate(registrationRequest);
             //Se ho stringhe invalide lancio l'eccezione di registrazione
             if (!invalidParameters.isEmpty()) {
-                registrationStatus = new InvalidRegistration(invalidParameters);
-                throw new InvalidRegistrationException();
+                throw new InvalidRegistrationException(invalidParameters);
             }
 
             //TODO Controllo che i dati inseriti siano unici
 
             //Invio la mail di verifica TODO ritornare codici diversi in caso di mail già inviata
-            if (verificationMailSender.sendEmail(user, request.getRequestURL().toString())) {
-               registrationStatus = new SuccessfullRegistration();
-            } else {
-                registrationStatus = new InvalidRegistration("email");
-                throw new InvalidRegistrationException();
+            if (!verificationMailSender.sendEmail(registrationRequest, request.getRequestURL().toString())) {
+                throw new InvalidRegistrationException("email");
             }
 
+            registrationStatus = new SuccessfullRegistration(registrationRequest.getEmail());
+
         } catch (InvalidRegistrationException e) {
-        } catch (Exception e) {
-            e.printStackTrace();
+            registrationStatus = new InvalidRegistration(e.getInvalidParameters());
+        } catch (IllegalAccessException e) {
+            registrationStatus = new GenericOperationError(e.getMessage());
+        } catch (InvocationTargetException e) {
+            registrationStatus = new GenericOperationError(e.getMessage());
+        } catch(JsonIOException e){
+            registrationStatus = new GenericOperationError(e.getMessage());
+        } catch(JsonSyntaxException e){
+            registrationStatus = new GenericOperationError(e.getMessage());
         }
         outputStream.print(gson.toJson(registrationStatus));
     }
@@ -80,16 +89,16 @@ public class doRegister extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        User user = verificationMailSender.verify(request.getParameter("verificationCode"));
-        response.getWriter().print("Bella sei dentro! " + user.getUsername());
+        RegistrationRequest registrationRequest = verificationMailSender.verify(request.getParameter("verificationCode"));
+        response.getWriter().print("Bella sei dentro! " + registrationRequest.getUsername());
         //TODO implementare e testare le funzionalità mancanti
-        /*userMapper.insertUser(user.getEmail(),
-                user.getName(),
-                user.getSurname(),
-                user.getUsername(),
-                user.getPassword(),
-                user.getPhone(),
-                user.getBirthday());*/
+        /*userMapper.insertUser(registrationRequest.getEmail(),
+                registrationRequest.getName(),
+                registrationRequest.getSurname(),
+                registrationRequest.getUsername(),
+                registrationRequest.getPassword(),
+                registrationRequest.getPhone(),
+                registrationRequest.getBirthday());*/
     }
 
 

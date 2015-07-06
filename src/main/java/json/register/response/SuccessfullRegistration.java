@@ -1,13 +1,14 @@
 package json.register.response;
 
-import json.logout.response.SuccessfullLogout;
+import json.GenericSuccessfullOperation;
 
 /**
- * Created by marco on 06/07/15.
+ * Created by marco on 07/07/15.
  */
-public class SuccessfullRegistration extends RegistrationStatus {
-    public SuccessfullRegistration()
+public class SuccessfullRegistration extends GenericSuccessfullOperation {
+    String email;
+    public SuccessfullRegistration(String email)
     {
-        success = true;
+        this.email = email;
     }
 }

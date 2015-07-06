@@ -1,15 +1,19 @@
 package servlets;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.MalformedJsonException;
 import database.DatabaseConnection;
+import json.GenericOperationError;
+import json.OperationStatus;
+import json.login.response.*;
 import org.apache.ibatis.session.SqlSession;
+import types.exceptions.AlreadyLoggedInException;
 import utilities.InputValidator.ModelValidator;
 import types.UserLoginCredential;
 import types.exceptions.InvalidLoginException;
-import json.login.response.InvalidLogin;
 import json.login.request.LoginRequest;
-import json.login.response.LoginStatus;
-import json.login.response.SuccessfullLogin;
 import database.mappers.UserMapper;
 
 import javax.servlet.ServletException;
@@ -20,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -34,7 +39,7 @@ public class doLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         ServletOutputStream outputStream = response.getOutputStream();
-        LoginStatus loginStatus;
+        OperationStatus loginStatus;
         try {
             LoginRequest loginRequest = gson.fromJson(request.getReader(), LoginRequest.class);
             List<String> invalidParameters = ModelValidator.validate(loginRequest);
@@ -50,14 +55,35 @@ public class doLogin extends HttpServlet {
             } else if (!loginRequest.getPassword().equals(userCredential.getPassword())) { //password errata
                 throw new InvalidLoginException();
             } else {
-                HttpSession session = request.getSession(true);
+                HttpSession session = request.getSession(false);
+                if(session !=null)
+                {
+                    if(session.getAttribute("username")!=null && session.getAttribute("role")!=null)
+                    {
+                        if(session.getAttribute("username").equals(loginRequest.getUsername()))
+                        {
+                            throw new AlreadyLoggedInException();
+                        }
+                    }
+                }
+                session = request.getSession(true);
                 session.setAttribute("role", userCredential.getRole());
                 session.setAttribute("username", loginRequest.getUsername());
                 response.setContentType("application/json");
                 loginStatus = new SuccessfullLogin(loginRequest.getUsername());
             }
-        } catch (Exception e) {
-            loginStatus = new InvalidLogin();
+        } catch (InvalidLoginException e) {
+            loginStatus = new InvalidLoginData();
+        } catch (AlreadyLoggedInException e) {
+            loginStatus = new AlreadyLoggedIn();
+        } catch (IllegalAccessException e) {
+            loginStatus = new GenericOperationError(e.getMessage());
+        } catch (InvocationTargetException e) {
+            loginStatus = new GenericOperationError(e.getMessage());
+        }catch(JsonIOException e){
+            loginStatus = new GenericOperationError(e.getMessage());
+        } catch(JsonSyntaxException e){
+            loginStatus = new GenericOperationError(e.getMessage());
         }
         outputStream.print(gson.toJson(loginStatus));
     }

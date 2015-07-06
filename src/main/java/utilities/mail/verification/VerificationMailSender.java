@@ -2,8 +2,8 @@ package utilities.mail.verification;
 
 import com.sendgrid.SendGrid;
 import com.sendgrid.SendGridException;
+import json.register.request.RegistrationRequest;
 import org.apache.commons.lang3.RandomStringUtils;
-import json.register.request.User;
 
 import java.util.Date;
 
@@ -25,13 +25,13 @@ public class VerificationMailSender {
         sendgrid = new SendGrid(api_user, api_key);
     }
 
-    public boolean sendEmail(User user, String url)
+    public boolean sendEmail(RegistrationRequest registrationRequest, String url)
     {
         long expirationDate = new Date().getTime()+MAIL_TIME*1000;
         String verificationCode = RandomStringUtils.randomAlphanumeric(SECURE_CODE_SIZE);
         SendGrid.Email email = new SendGrid.Email();
 
-        email.addTo(user.getEmail());
+        email.addTo(registrationRequest.getEmail());
         email.setFrom("info@letsmoovie.com");
         email.setSubject("Verify your account");
         email.setHtml("Il tuo codice di verifica è " + url + "?verificationCode=" + verificationCode);
@@ -42,11 +42,11 @@ public class VerificationMailSender {
             return false;
         }
 
-        verificationMailCleanerThread.add(verificationCode,new UserRegistrationRequest(user,expirationDate));
+        verificationMailCleanerThread.add(verificationCode,new UserRegistrationRequest(registrationRequest,expirationDate));
         return true;
     }
 
-    public User verify(String verificationCode)
+    public RegistrationRequest verify(String verificationCode)
     {
         UserRegistrationRequest request = verificationMailCleanerThread.getUserRegistrationRequest(verificationCode);
         if(request==null)
@@ -59,7 +59,7 @@ public class VerificationMailSender {
         }
         else
         {
-            return request.getUser();
+            return request.getRegistrationRequest();
         }
     }
 }
