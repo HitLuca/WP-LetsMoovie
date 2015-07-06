@@ -1,12 +1,8 @@
-package types.mappers;
+package database.mappers;
 
 import org.apache.ibatis.annotations.*;
 import types.UserData;
 import types.UserLoginCredential;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by marco on 24/06/15.

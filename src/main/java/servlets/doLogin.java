@@ -3,10 +3,14 @@ package servlets;
 import com.google.gson.Gson;
 import database.DatabaseConnection;
 import org.apache.ibatis.session.SqlSession;
+import utilities.InputValidator.ModelValidator;
 import types.UserLoginCredential;
-import types.exceptions.MyException;
-import types.json.LoginStatus;
-import types.mappers.UserMapper;
+import types.exceptions.InvalidLoginException;
+import json.login.response.InvalidLogin;
+import json.login.request.LoginRequest;
+import json.login.response.LoginStatus;
+import json.login.response.SuccessfullLogin;
+import database.mappers.UserMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by etrunon on 24/06/15.
@@ -28,55 +33,33 @@ public class doLogin extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
+        ServletOutputStream outputStream = response.getOutputStream();
+        LoginStatus loginStatus;
         try {
-            if (username == null || password == null)   //campi nulli
-            {   //Lancia l'eccezione campi nulli
-                throw new MyException();
+            LoginRequest loginRequest = gson.fromJson(request.getReader(), LoginRequest.class);
+            List<String> invalidParameters = ModelValidator.validate(loginRequest);
+
+            if(!invalidParameters.isEmpty())
+            {
+                throw new InvalidLoginException();
             }
 
-            UserLoginCredential userCredential = userMapper.getUserCredential(username);
+            UserLoginCredential userCredential = userMapper.getUserCredential(loginRequest.getUsername());
             if (userCredential == null) {   //username non nel db
-                throw new MyException();
-            } else if (!password.equals(userCredential.getPassword())) { //password errata
-                throw new MyException();
+                throw new InvalidLoginException();
+            } else if (!loginRequest.getPassword().equals(userCredential.getPassword())) { //password errata
+                throw new InvalidLoginException();
+            } else {
+                HttpSession session = request.getSession(true);
+                session.setAttribute("role", userCredential.getRole());
+                session.setAttribute("username", loginRequest.getUsername());
+                response.setContentType("application/json");
+                loginStatus = new SuccessfullLogin(loginRequest.getUsername());
             }
-
-            //Si crea la sessione e la si inizializza coi dati utente. Il sessionId viene inviato automaticamente
-            HttpSession session = request.getSession(true);
-            session.setAttribute("role", "USER");
-            session.setAttribute("username", username);
-            //Si setta il fatto che si stanno inviando Json
-            response.setContentType("application/json");
-
-            // Creo il Jsno di risposta
-            LoginStatus loginStatus = new LoginStatus();
-            loginStatus.setSuccess(true);
-            loginStatus.setUsername(username);
-            ServletOutputStream outputStream = response.getOutputStream();
-            outputStream.print(gson.toJson(loginStatus));
-
-        } catch (MyException e) {
-            errorHandler(request, response);
+        } catch (Exception e) {
+            loginStatus = new InvalidLogin();
         }
-
-    }
-
-    private void errorHandler(HttpServletRequest request, HttpServletResponse response) {
-
-        response.setContentType("application/json");
-        LoginStatus loginStatus = new LoginStatus();
-        loginStatus.setSuccess(false);
-        loginStatus.setUsername(null);
-
-        try {
-            ServletOutputStream outputStream = response.getOutputStream();
-            outputStream.print(gson.toJson(loginStatus));
-        } catch (IOException e) {
-            // Decidere che fare con problemi grossi (IOException)
-        }
+        outputStream.print(gson.toJson(loginStatus));
     }
 
     @Override

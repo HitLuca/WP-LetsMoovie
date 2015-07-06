@@ -1,6 +1,6 @@
-package types;
+package json.register.request;
 
-import types.InputValidator.Regex;
+import utilities.InputValidator.Regex;
 import types.annotations.toSanitize;
 
 /**

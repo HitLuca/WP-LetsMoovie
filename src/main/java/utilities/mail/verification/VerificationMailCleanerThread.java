@@ -1,6 +1,6 @@
-package utilities;
+package utilities.mail.verification;
 
-import types.UserRegistrationRequest;
+import utilities.mail.verification.UserRegistrationRequest;
 
 import java.util.Date;
 import java.util.HashMap;

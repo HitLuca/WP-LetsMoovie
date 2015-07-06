@@ -1,12 +1,10 @@
-package utilities;
+package utilities.mail.verification;
 
 import com.sendgrid.SendGrid;
 import com.sendgrid.SendGridException;
 import org.apache.commons.lang3.RandomStringUtils;
-import types.User;
-import types.UserRegistrationRequest;
+import json.register.request.User;
 
-import java.security.SecureRandom;
 import java.util.Date;
 
 /**

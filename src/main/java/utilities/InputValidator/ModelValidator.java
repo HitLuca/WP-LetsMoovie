@@ -1,4 +1,4 @@
-package types.InputValidator;
+package utilities.InputValidator;
 
 import types.annotations.toSanitize;
 

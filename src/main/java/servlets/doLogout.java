@@ -1,6 +1,9 @@
 package servlets;
 
 import com.google.gson.Gson;
+import json.logout.response.InvalidLogout;
+import json.logout.response.LogoutStatus;
+import json.logout.response.SuccessfullLogout;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,16 +23,15 @@ public class doLogout extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         response.setContentType("application/JSON");
-        boolean success = false;
         String sourcePage = request.getParameter("sourcePage");
+        LogoutStatus logoutStatus;
         try {
             session.invalidate();
-            success = true;
-            response.getOutputStream().print(gson.toJson(success));
+            logoutStatus = new SuccessfullLogout();
         } catch (IllegalStateException ex) {
-            session.invalidate();
-            response.getOutputStream().print(gson.toJson(success));
+            logoutStatus = new InvalidLogout();
         }
+        response.getOutputStream().print(gson.toJson(logoutStatus));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

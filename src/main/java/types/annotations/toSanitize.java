@@ -1,6 +1,6 @@
 package types.annotations;
 
-import types.InputValidator.Regex;
+import utilities.InputValidator.Regex;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

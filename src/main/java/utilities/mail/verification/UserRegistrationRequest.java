@@ -1,6 +1,6 @@
-package types;
+package utilities.mail.verification;
 
-import java.util.Date;
+import json.register.request.User;
 
 /**
  * Created by marco on 25/06/15.
