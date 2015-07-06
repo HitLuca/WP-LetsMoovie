@@ -1,14 +1,12 @@
 package servlets;
 
-import beans.*;
-import beans.Error;
 import com.google.gson.Gson;
 import dbConnection.DatabaseConnection;
 import org.apache.ibatis.session.SqlSession;
-import types.*;
+import types.UserLoginCredential;
+import types.json.LoginStatus;
 import types.mappers.UserMapper;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -23,9 +21,9 @@ import java.io.IOException;
  */
 @WebServlet(name = "doLoginTest", urlPatterns = "/doLoginTest")
 public class doLoginTest extends HttpServlet {
+    Gson gson;
     private SqlSession session;
     private UserMapper userMapper;
-    Gson gson;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -50,10 +48,7 @@ public class doLoginTest extends HttpServlet {
                 String sessionId = session.getId();
                 response.setContentType("application/json");
                 LoginStatus loginStatus = new LoginStatus();
-                loginStatus.setStatus(true);
-                loginStatus.setUsername(username);
-                LoginStatus loginStatus = new LoginStatus();
-                loginStatus.setStatus(true);
+                loginStatus.setSuccess(true);
                 loginStatus.setUsername(username);
                 ServletOutputStream outputStream = response.getOutputStream();
                 outputStream.print(gson.toJson(loginStatus));
@@ -64,7 +59,7 @@ public class doLoginTest extends HttpServlet {
     private void errorHandler(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         LoginStatus loginStatus = new LoginStatus();
-        loginStatus.setStatus(false);
+        loginStatus.setSuccess(false);
         loginStatus.setUsername(null);
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gson.toJson(loginStatus));
@@ -75,7 +70,6 @@ public class doLoginTest extends HttpServlet {
 
         session = DatabaseConnection.getFactory().openSession();
         userMapper = session.getMapper(UserMapper.class);
-        gson = new Gson();
         gson = new Gson();
 
     }

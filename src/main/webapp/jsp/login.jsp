@@ -67,7 +67,7 @@
         posting.done(function (data) {
             var success = data.success;
             if (success)
-                alertify.notify("Benvenuto, " + username, "success", 2);
+                alertify.notify("Benvenuto, " + data.username + "!", "success", 2);
             else
                 alertify.notify("Username o password errata!", "error", 2);
 
