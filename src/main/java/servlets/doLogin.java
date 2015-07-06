@@ -1,6 +1,7 @@
 package servlets;
 
 import beans.Error;
+import com.google.gson.Gson;
 import dbConnection.DatabaseConnection;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
@@ -12,10 +13,12 @@ import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import types.ErrorType;
 import types.UserLoginCredential;
+import types.json.LoginStatus;
 import types.mappers.UserMapper;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +34,7 @@ import java.net.URISyntaxException;
  */
 @WebServlet(name = "doLogin", urlPatterns = "/doLogin")
 public class doLogin extends HttpServlet {
+    Gson gson;
     private SqlSession session;
     private UserMapper userMapper;
 
@@ -38,40 +42,40 @@ public class doLogin extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String sourcePage = request.getParameter("sourcePage");
 
-        RequestDispatcher sourceDispatcher = request.getRequestDispatcher(sourcePage);
 
         if(username==null || password==null )
         {
-            errorHandler(request, response, sourcePage);
+            errorHandler(request, response);
         }
-
-        UserLoginCredential userCredential = userMapper.getUserCredential(username);
-
-        if (userCredential == null)
-        {
-            errorHandler(request,response,sourcePage);
-        } else if (!password.equals(userCredential.getPassword()))
-        {
-            errorHandler(request,response,sourcePage);
-        }
-        else
-        {
-            HttpSession session = request.getSession();
-            session.setAttribute("role","USER");
-            session.setAttribute("username", username);
-            response.sendRedirect(sourcePage);
+        else {
+            UserLoginCredential userCredential = userMapper.getUserCredential(username);
+            if (userCredential == null) {
+                errorHandler(request, response);
+            } else if (!password.equals(userCredential.getPassword())) {
+                errorHandler(request, response);
+            } else {
+                HttpSession session = request.getSession(true);
+                session.setAttribute("role", "USER");
+                session.setAttribute("username", username);
+                String sessionId = session.getId();
+                response.setContentType("application/json");
+                LoginStatus loginStatus = new LoginStatus();
+                loginStatus.setSuccess(true);
+                loginStatus.setUsername(username);
+                ServletOutputStream outputStream = response.getOutputStream();
+                outputStream.print(gson.toJson(loginStatus));
+            }
         }
     }
 
-    private void errorHandler(HttpServletRequest request,HttpServletResponse response,String sourcePage) throws ServletException, IOException {
-
-        Error error = new Error();
-        error.setErrorType(ErrorType.INVALID_LOGIN);
-        request.setAttribute("error", error);
-        request.setAttribute("sourcePage", sourcePage);
-        response.sendRedirect("login");
+    private void errorHandler(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        LoginStatus loginStatus = new LoginStatus();
+        loginStatus.setSuccess(false);
+        loginStatus.setUsername(null);
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.print(gson.toJson(loginStatus));
     }
 
     @Override
@@ -79,6 +83,7 @@ public class doLogin extends HttpServlet {
 
         session = DatabaseConnection.getFactory().openSession();
         userMapper = session.getMapper(UserMapper.class);
+        gson = new Gson();
 
     }
 }
