@@ -6,11 +6,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Created by etrunon on 25/06/15.
  */
 public class User {
+
+    private final transient Pattern emailPattern = Pattern.compile("^\\d{5}(-\\d{4})?$");
+    private final transient Pattern usernamePattern = Pattern.compile("^\\d{5}(-\\d{4})?$");
+    private final transient Pattern passwordPattern = Pattern.compile("^\\d{5}(-\\d{4})?$");
+    private final transient Pattern namePattern = Pattern.compile("^\\d{5}(-\\d{4})?$");
+    private final transient Pattern surnamePattern = Pattern.compile("^\\d{5}(-\\d{4})?$");
+    private final transient Pattern phonePattern = Pattern.compile("^\\d{5}(-\\d{4})?$");
+    private final transient DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
 
     String email;
     String username;
@@ -20,47 +30,25 @@ public class User {
     Date birthday;
     String phone;
 
-    public User(HttpServletRequest request) {
+    public User(Map<String,String[]> values) throws ParseException {
 
         String bday;
 
-        email = request.getParameter("email");
-        username = request.getParameter("username");
-        password = request.getParameter("password");
-        name = request.getParameter("name");
-        surname = request.getParameter("surname");
-        bday = request.getParameter("birthday");
-        phone = request.getParameter("phone");
+        email = values.get("email")[0];
+        username = values.get("username")[0];
+        password = values.get("password")[0];
+        name = values.get("name")[0];
+        surname = values.get("surname")[0];
+        bday = values.get("birthday")[0];
+        phone = values.get("phone")[0];
 
-        //Converto birthday a formato date
-        DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-        try {
-            birthday = format.parse(bday);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!emailPattern.matcher(email).matches())
+        {
+
         }
 
-    }
+        birthday = format.parse(bday);
 
-    public Boolean checkNulls() {
 
-        if (email == null)
-            return true;
-        else if (username == null)
-            return true;
-        else if (password == null)
-            return true;
-        else if (name == null)
-            return true;
-        else if (surname == null)
-            return true;
-        else if (birthday == null)
-            return true;
-        else if (phone == null)
-            return true;
-        else
-            return false;
     }
 }

@@ -43,7 +43,7 @@ public class doRegister extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        User user = new User(request);
+        User user = new User(request.getParameterMap());
         String sourcePage = request.getParameter("sourcePage");
 
         //Controllo che i campi inseriti non siano NULL
