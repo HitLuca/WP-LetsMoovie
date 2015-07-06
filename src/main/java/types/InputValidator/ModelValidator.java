@@ -1,4 +1,6 @@
-package types;
+package types.InputValidator;
+
+import types.annotations.toSanitize;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -2,16 +2,15 @@ package servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import dbConnection.DatabaseConnection;
+import database.DatabaseConnection;
 import org.apache.ibatis.session.SqlSession;
-import types.ModelValidator;
+import types.InputValidator.ModelValidator;
 import types.User;
 import types.exceptions.InvalidRegistrationException;
 import types.json.RegisterStatus;
 import types.mappers.UserMapper;
 import utilities.VerificationMailSender;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;

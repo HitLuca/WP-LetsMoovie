@@ -1,4 +1,4 @@
-package types;
+package types.InputValidator;
 
 /**
  * Created by etrunon on 06/07/15.

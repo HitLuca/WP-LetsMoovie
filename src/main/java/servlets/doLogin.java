@@ -1,7 +1,7 @@
 package servlets;
 
 import com.google.gson.Gson;
-import dbConnection.DatabaseConnection;
+import database.DatabaseConnection;
 import org.apache.ibatis.session.SqlSession;
 import types.UserLoginCredential;
 import types.exceptions.MyException;

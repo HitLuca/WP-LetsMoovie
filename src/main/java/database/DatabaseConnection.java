@@ -1,4 +1,4 @@
-package dbConnection;
+package database;
 
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
