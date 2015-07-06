@@ -1,11 +1,13 @@
 package types.mappers;
 
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import types.DetailedPayment;
 import types.UserData;
 import types.UserLoginCredential;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
  */
 public interface UserMapper {
 
-    @Select("SELECT password, role FROM users WHERE username = #{username}")
+    @Select("SELECT username, password, role FROM users WHERE username = #{username}")
     UserLoginCredential getUserCredential(String username);
 
     @Select("SELECT * FROM users WHERE username=#{username}")
@@ -39,4 +41,12 @@ public interface UserMapper {
 
     @Update("UPDATE users SET residual_credit=(SELECT residual_credit FROM users WHERE username=#{username})-#{credit} WHERE username=#{username}")
     void removeCredit(String username, float credit);
+
+    @Select("SELECT payment_date, payment_time, id_show, username, ticket_type, price, row, 'column', room_number" +
+            "FROM payments NATURAL JOIN prices NATURAL JOIN seats" +
+            "WHERE username=#{username}")
+    List<DetailedPayment> getUserPayments(String username);
+
+    @Select("SELECT sum(price) FROM payments NATURAL JOIN prices WHERE username=#{username}")
+    float getUserTotalPayments(String username);
 }
