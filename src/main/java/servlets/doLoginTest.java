@@ -2,6 +2,7 @@ package servlets;
 
 import beans.*;
 import beans.Error;
+import com.google.gson.Gson;
 import dbConnection.DatabaseConnection;
 import org.apache.ibatis.session.SqlSession;
 import types.*;
@@ -24,6 +25,7 @@ import java.io.IOException;
 public class doLoginTest extends HttpServlet {
     private SqlSession session;
     private UserMapper userMapper;
+    Gson gson;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -47,16 +49,25 @@ public class doLoginTest extends HttpServlet {
                 session.setAttribute("username", username);
                 String sessionId = session.getId();
                 response.setContentType("application/json");
+                LoginStatus loginStatus = new LoginStatus();
+                loginStatus.setStatus(true);
+                loginStatus.setUsername(username);
+                LoginStatus loginStatus = new LoginStatus();
+                loginStatus.setStatus(true);
+                loginStatus.setUsername(username);
                 ServletOutputStream outputStream = response.getOutputStream();
-                outputStream.print("{\"success\": true }");
+                outputStream.print(gson.toJson(loginStatus));
             }
         }
     }
 
     private void errorHandler(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
+        LoginStatus loginStatus = new LoginStatus();
+        loginStatus.setStatus(false);
+        loginStatus.setUsername(null);
         ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.print("{\"success\": false }");
+        outputStream.print(gson.toJson(loginStatus));
     }
 
     @Override
@@ -64,6 +75,8 @@ public class doLoginTest extends HttpServlet {
 
         session = DatabaseConnection.getFactory().openSession();
         userMapper = session.getMapper(UserMapper.class);
+        gson = new Gson();
+        gson = new Gson();
 
     }
 }

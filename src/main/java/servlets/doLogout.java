@@ -1,5 +1,7 @@
 package servlets;
 
+import com.google.gson.Gson;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,21 +15,29 @@ import java.io.IOException;
  */
 @WebServlet(name = "doLogout", urlPatterns = "/doLogout")
 public class doLogout extends HttpServlet {
+    Gson gson;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         response.setContentType("application/JSON");
+        boolean success = false;
         String sourcePage = request.getParameter("sourcePage");
         try {
             session.invalidate();
-            response.getOutputStream().print("{\"success\": true }");
-        }catch (IllegalStateException ex)
-        {
+            success = true;
+            response.getOutputStream().print(gson.toJson(success));
+        } catch (IllegalStateException ex) {
             session.invalidate();
-            response.getOutputStream().print("{\"success\": false }");
+            response.getOutputStream().print(gson.toJson(success));
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    }
+
+    @Override
+    public void init() {
+        gson = new Gson();
     }
 }
