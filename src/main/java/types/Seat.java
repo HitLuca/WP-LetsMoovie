@@ -4,8 +4,9 @@ package types;
  * Created by hitluca on 29/06/15.
  */
 public class Seat {
-    int row;
-    int column;
+    private int id_seat;
+    private int row;
+    private int column;
 
     public int getRow() {
         return row;
@@ -21,5 +22,13 @@ public class Seat {
 
     public void setColumn(int column) {
         this.column = column;
+    }
+
+    public int getId_seat() {
+        return id_seat;
+    }
+
+    public void setId_seat(int id_seat) {
+        this.id_seat = id_seat;
     }
 }

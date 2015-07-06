@@ -11,14 +11,13 @@ import java.util.Locale;
  * Created by etrunon on 25/06/15.
  */
 public class User {
-
-    String email;
-    String username;
-    String password;
-    String name;
-    String surname;
-    Date birthday;
-    String phone;
+    private String email;
+    private String username;
+    private String password;
+    private String name;
+    private String surname;
+    private Date birthday;
+    private String phone;
 
     public User(HttpServletRequest request) {
 
