@@ -1,4 +1,4 @@
-package types;
+package types.enums;
 
 /**
  * Created by etrunon on 24/06/15.

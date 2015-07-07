@@ -12,12 +12,12 @@ public class InvalidRegistration extends OperationError {
     private List<String> invalidParameters;
 
     public InvalidRegistration(List<String> invalidParameters) {
-        super("Invalid Parameters");
+        super(2); //TODO usare il codice specifico
         this.invalidParameters = invalidParameters;
     }
 
     public InvalidRegistration(String invalidParameter) {
-        super("Invalid Parameter");
+        super(2); //TODO usare il codice specifico
         invalidParameters = new ArrayList<String>();
         invalidParameters.add(invalidParameter);
     }

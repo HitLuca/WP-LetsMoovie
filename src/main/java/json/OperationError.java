@@ -4,9 +4,9 @@ package json;
  * Created by marco on 07/07/15.
  */
 public class OperationError extends OperationResult {
-    private String error;
-    public OperationError(String error)
+    private int errorCode;
+    public OperationError(int errorCode)
     {
-        this.error = error;
+        this.errorCode = errorCode;
     }
 }

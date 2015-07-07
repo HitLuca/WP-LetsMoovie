@@ -32,7 +32,7 @@ public class doLogout extends HttpServlet {
             session.invalidate();
             logoutStatus = new OperationResult();
         } catch (InvalidLogoutException | IllegalStateException e){
-            logoutStatus = new OperationError("Bad Request");
+            logoutStatus = new OperationError(2); //TODO usare il codice specifico
             response.setStatus(400);
         }
         response.getOutputStream().print(gson.toJson(logoutStatus));
