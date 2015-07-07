@@ -3,15 +3,14 @@ package servlets;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.MalformedJsonException;
 import database.DatabaseConnection;
-import json.GenericOperationError;
-import json.GenericSuccessfullOperation;
-import json.OperationStatus;
+import json.OperationError;
+import json.OperationResult;
 import json.register.request.RegistrationRequest;
 import json.register.response.InvalidRegistration;
 import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
+import types.enums.ErrorCode;
 import utilities.InputValidator.ModelValidator;
 import types.exceptions.InvalidRegistrationException;
 import database.mappers.UserMapper;
@@ -50,7 +49,7 @@ public class doRegister extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        OperationStatus registrationStatus;
+        OperationResult registrationStatus;
         try {
             //Provo a parsare il Json nell'oggetto RegistrationRequest. Se exception esce dalla sevlet
             RegistrationRequest registrationRequest = gson.fromJson(request.getReader(), RegistrationRequest.class);
@@ -62,7 +61,9 @@ public class doRegister extends HttpServlet {
                 throw new InvalidRegistrationException(invalidParameters);
             }
 
-            //TODO Controllo che i dati inseriti siano unici
+            //TODO Controllo che i dati inseriti siano unici nel database e nelle mail pending
+
+            //verificationMailSender.checkDuplicates(RegistrationRequest registrationRequest) ritorna la lista di stringhe che corrispondono ai campi dupplicati, lista vuota se va bene
 
             //Invio la mail di verifica TODO ritornare codici diversi in caso di mail già inviata
             if (!verificationMailSender.sendEmail(registrationRequest, request.getRequestURL().toString())) {
@@ -72,10 +73,10 @@ public class doRegister extends HttpServlet {
             registrationStatus = new SuccessfullRegistration(registrationRequest.getEmail());
 
         } catch (InvalidRegistrationException e) {
-            registrationStatus = new InvalidRegistration(e.getInvalidParameters());
+            registrationStatus = new InvalidRegistration(ErrorCode.EMPTY_WRONG_FIELD, e.getInvalidParameters());
             response.setStatus(400);
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e){
-            registrationStatus = new GenericOperationError("Bad Request");
+            registrationStatus = new OperationError(); //TODO usare il codice specifico
             response.setStatus(400);
         }
         ServletOutputStream outputStream = response.getOutputStream();

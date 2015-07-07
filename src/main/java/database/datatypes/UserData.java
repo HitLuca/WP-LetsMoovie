@@ -1,4 +1,4 @@
-package types;
+package database.datatypes;
 
 import java.util.Date;
 
@@ -6,15 +6,15 @@ import java.util.Date;
  * Created by hitluca on 26/06/15.
  */
 public class UserData {
-    String email;
-    String name;
-    String surname;
-    String username;
-    String password;
-    String phone_number;
-    Date birthday;
-    float residual_credit;
-    int role;
+    private String email;
+    private String name;
+    private String surname;
+    private String username;
+    private String password;
+    private String phone_number;
+    private Date birthday;
+    private float residual_credit;
+    private int role;
 
     
     

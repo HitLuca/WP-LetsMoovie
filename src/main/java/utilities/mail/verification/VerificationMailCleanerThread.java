@@ -66,11 +66,44 @@ public class VerificationMailCleanerThread extends Thread {
         try {
             mutex.acquire();
             userRegistrationRequest = pendingRequests.get(verificationCode);
-            pendingRequests.remove(userRegistrationRequest);
             mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return userRegistrationRequest;
+    }
+
+    public boolean checkUsername(String username) throws InterruptedException {
+        mutex.acquire();
+        for(UserRegistrationRequest userRegistrationRequest: pendingRequests.values())
+        {
+            if(userRegistrationRequest.getRegistrationRequest().getUsername().equals(username))
+            {
+                mutex.release();
+                return false;
+            }
+        }
+        mutex.release();
+        return true;
+    }
+
+    public boolean checkEmail(String email) throws InterruptedException {
+        mutex.acquire();
+        for(UserRegistrationRequest userRegistrationRequest: pendingRequests.values())
+        {
+            if(userRegistrationRequest.getRegistrationRequest().getEmail().equals(email))
+            {
+                mutex.release();
+                return false;
+            }
+        }
+        mutex.release();
+        return true;
+    }
+
+    public void remove(String verificationCode) throws InterruptedException {
+        mutex.acquire();
+        pendingRequests.remove(verificationCode);
+        mutex.release();
     }
 }

@@ -3,15 +3,15 @@ package servlets;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.MalformedJsonException;
 import database.DatabaseConnection;
-import json.GenericOperationError;
-import json.OperationStatus;
+import json.OperationError;
+import json.OperationResult;
 import json.login.response.*;
 import org.apache.ibatis.session.SqlSession;
+import types.enums.ErrorCode;
 import types.exceptions.AlreadyLoggedInException;
 import utilities.InputValidator.ModelValidator;
-import types.UserLoginCredential;
+import database.datatypes.UserLoginCredential;
 import types.exceptions.InvalidLoginException;
 import json.login.request.LoginRequest;
 import database.mappers.UserMapper;
@@ -38,45 +38,59 @@ public class doLogin extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        OperationStatus loginStatus;
+        OperationResult loginStatus;
         try {
+            //Check sulla sessione già presente e l'utente è già loggato con un username
+            HttpSession session = request.getSession(false);
+
+            if (session != null) {
+                throw new AlreadyLoggedInException();
+            }
+
             LoginRequest loginRequest = gson.fromJson(request.getReader(), LoginRequest.class);
+
+            //Check sulla richiesta vuota
+            if (loginRequest == null) {
+                throw new InvalidLoginException(ErrorCode.EMPTY_REQ);
+            }
+
+            //Parso e valido la request
             List<String> invalidParameters = ModelValidator.validate(loginRequest);
 
+            //Check sulla parametri non parsabili
             if (!invalidParameters.isEmpty()) {
-                throw new InvalidLoginException();
+                throw new InvalidLoginException(ErrorCode.EMPTY_WRONG_FIELD);
             }
 
+            //Controllo sui dati nel DB
             UserLoginCredential userCredential = userMapper.getUserCredential(loginRequest.getUsername());
             if (userCredential == null) {   //username non nel db
-                throw new InvalidLoginException();
+                throw new InvalidLoginException(ErrorCode.EMPTY_WRONG_FIELD);
             } else if (!loginRequest.getPassword().equals(userCredential.getPassword())) { //password errata
-                throw new InvalidLoginException();
-            } else {
-                HttpSession session = request.getSession(false);
-                if (session != null) {
-                    if (session.getAttribute("username") != null && session.getAttribute("role") != null) {
-                        if (session.getAttribute("username").equals(loginRequest.getUsername())) {
-                            throw new AlreadyLoggedInException();
-                        }
-                    }
-                }
-                session = request.getSession(true);
-                session.setAttribute("role", userCredential.getRole());
-                session.setAttribute("username", loginRequest.getUsername());
-                response.setContentType("application/json");
-                loginStatus = new SuccessfullLogin(loginRequest.getUsername());
+                throw new InvalidLoginException(ErrorCode.EMPTY_WRONG_FIELD);
             }
+
+            //L'utente era nel db e la password era corretta
+            session = request.getSession(true);
+            session.setAttribute("role", userCredential.getRole());
+            session.setAttribute("username", loginRequest.getUsername());
+            response.setContentType("application/json");
+            loginStatus = new SuccessfullLogin(loginRequest.getUsername());
+
         } catch (InvalidLoginException e) {
-            loginStatus = new GenericOperationError("Invalid Data");
+            //Oggetto di errore con all'interno già i campi password e username
+            loginStatus = new LoginError(e.getCode());
             response.setStatus(400);
+
         } catch (AlreadyLoggedInException e) {
-            loginStatus = new GenericOperationError("Already Logged In");
+            loginStatus = new OperationError(ErrorCode.ALREADY_LOGGED);
             response.setStatus(400);
+
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
-            loginStatus = new GenericOperationError("Bad Request");
+            loginStatus = new OperationError(); //TODO Check comportamento null errorcode nel Json
             response.setStatus(400);
         }
+
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gson.toJson(loginStatus));
     }

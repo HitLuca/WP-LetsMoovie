@@ -5,7 +5,9 @@ import com.sendgrid.SendGridException;
 import json.register.request.RegistrationRequest;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by marco on 25/06/15.
@@ -23,6 +25,21 @@ public class VerificationMailSender {
         String api_user = System.getenv("API_USER");
         String api_key = System.getenv("API_KEY");
         sendgrid = new SendGrid(api_user, api_key);
+    }
+
+    public List<String> checkDuplicates(RegistrationRequest registrationRequest)  {
+        List<String> duplicates = new ArrayList<>();
+        try {
+            if (verificationMailCleanerThread.checkUsername(registrationRequest.getUsername())) {
+                duplicates.add("username");
+            }
+            if (verificationMailCleanerThread.checkEmail(registrationRequest.getEmail())) {
+                duplicates.add("email");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return duplicates;
     }
 
     public boolean sendEmail(RegistrationRequest registrationRequest, String url)
@@ -56,10 +73,20 @@ public class VerificationMailSender {
         }
         else if((new Date()).getTime()-request.getExpireDate()>0)
         {
+            try {
+                verificationMailCleanerThread.remove(verificationCode);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return null;
         }
         else
         {
+            try {
+                verificationMailCleanerThread.remove(verificationCode);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return request.getRegistrationRequest();
         }
     }
