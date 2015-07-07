@@ -10,6 +10,7 @@ import json.register.request.RegistrationRequest;
 import json.register.response.InvalidRegistration;
 import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
+import types.enums.ErrorCode;
 import utilities.InputValidator.ModelValidator;
 import types.exceptions.InvalidRegistrationException;
 import database.mappers.UserMapper;
@@ -72,10 +73,10 @@ public class doRegister extends HttpServlet {
             registrationStatus = new SuccessfullRegistration(registrationRequest.getEmail());
 
         } catch (InvalidRegistrationException e) {
-            registrationStatus = new InvalidRegistration(e.getInvalidParameters());
+            registrationStatus = new InvalidRegistration(ErrorCode.EMPTY_WRONG_FIELD, e.getInvalidParameters());
             response.setStatus(400);
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e){
-            registrationStatus = new OperationError(2); //TODO usare il codice specifico
+            registrationStatus = new OperationError(); //TODO usare il codice specifico
             response.setStatus(400);
         }
         ServletOutputStream outputStream = response.getOutputStream();

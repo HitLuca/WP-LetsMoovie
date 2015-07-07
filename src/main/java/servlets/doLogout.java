@@ -3,6 +3,7 @@ package servlets;
 import com.google.gson.Gson;
 import json.OperationError;
 import json.OperationResult;
+import types.enums.ErrorCode;
 import types.exceptions.InvalidLogoutException;
 
 import javax.servlet.ServletException;
@@ -21,18 +22,24 @@ public class doLogout extends HttpServlet {
     Gson gson;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        response.setContentType("application/JSON");
-        String sourcePage = request.getParameter("sourcePage");
+
         OperationResult logoutStatus;
+
         try {
-            if(session==null) {
+            //Prendo la sessione dell'utente
+            HttpSession session = request.getSession(false);
+            //Se è nulla allora vuol dire che è già sloggato o non autenticato
+            if (session == null) {
                 throw new InvalidLogoutException();
             }
+
+            response.setContentType("application/JSON");
             session.invalidate();
+            //todo controllare se invalidate cancella il cookie al client
             logoutStatus = new OperationResult();
+
         } catch (InvalidLogoutException | IllegalStateException e){
-            logoutStatus = new OperationError(2); //TODO usare il codice specifico
+            logoutStatus = new OperationError(ErrorCode.ALREADY_LOGGED_OUT);
             response.setStatus(400);
         }
         response.getOutputStream().print(gson.toJson(logoutStatus));
