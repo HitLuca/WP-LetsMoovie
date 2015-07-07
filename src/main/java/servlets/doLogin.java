@@ -4,17 +4,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
+import database.datatypes.UserLoginCredential;
+import database.mappers.UserMapper;
 import json.OperationError;
 import json.OperationResult;
-import json.login.response.*;
+import json.login.request.LoginRequest;
+import json.login.response.LoginError;
+import json.login.response.SuccessfullLogin;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.AlreadyLoggedInException;
-import utilities.InputValidator.ModelValidator;
-import database.datatypes.UserLoginCredential;
 import types.exceptions.InvalidLoginException;
-import json.login.request.LoginRequest;
-import database.mappers.UserMapper;
+import utilities.InputValidator.ModelValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -36,8 +37,9 @@ public class doLogin extends HttpServlet {
     private SqlSession session;
     private UserMapper userMapper;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
         OperationResult loginStatus;
         try {
             //Check sulla sessione già presente e l'utente è già loggato con un username
@@ -74,7 +76,6 @@ public class doLogin extends HttpServlet {
             session = request.getSession(true);
             session.setAttribute("role", userCredential.getRole());
             session.setAttribute("username", loginRequest.getUsername());
-            response.setContentType("application/json");
             loginStatus = new SuccessfullLogin(loginRequest.getUsername());
 
         } catch (InvalidLoginException e) {

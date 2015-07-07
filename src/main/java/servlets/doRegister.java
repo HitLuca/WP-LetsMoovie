@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
+import database.mappers.UserMapper;
 import json.OperationError;
 import json.OperationResult;
 import json.register.request.RegistrationRequest;
@@ -11,9 +12,8 @@ import json.register.response.InvalidRegistration;
 import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
-import utilities.InputValidator.ModelValidator;
 import types.exceptions.InvalidRegistrationException;
-import database.mappers.UserMapper;
+import utilities.InputValidator.ModelValidator;
 import utilities.mail.verification.VerificationMailSender;
 
 import javax.servlet.ServletException;
@@ -48,7 +48,7 @@ public class doRegister extends HttpServlet {
     private Gson gson;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setContentType("application/json");
         OperationResult registrationStatus;
         try {
             //Provo a parsare il Json nell'oggetto RegistrationRequest. Se exception esce dalla sevlet

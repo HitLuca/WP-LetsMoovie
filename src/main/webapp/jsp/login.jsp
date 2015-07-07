@@ -26,8 +26,9 @@
             <div>
                 <label>
                     Password
-                    <input type="password" name="password" required pattern="alpha"
+                    <input type="password" name="password" pattern="alpha"
                            placeholder="Inserisci la tua password"/>
+                    <%--TODO:CHECK PASSWORD RICHIESTA--%>
                 </label>
                 <small class="error">Password richiesta!</small>
             </div>

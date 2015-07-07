@@ -22,7 +22,7 @@ public class doLogout extends HttpServlet {
     Gson gson;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setContentType("application/json");
         OperationResult logoutStatus;
 
         try {
@@ -33,7 +33,6 @@ public class doLogout extends HttpServlet {
                 throw new InvalidLogoutException();
             }
 
-            response.setContentType("application/JSON");
             session.invalidate();
             //todo controllare se invalidate cancella il cookie al client
             logoutStatus = new OperationResult();
