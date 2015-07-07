@@ -17,9 +17,16 @@
     </div>
 </footer>
 
+<%--JQUERY--%>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+
+<script src="<c:url value="/lib/jquery.serialize-object.min.js"/>"></script>
+
+<%--JAVASCRIPT PERSONALE--%>
+<script src="<c:url value="/javascript/main.js"/>"></script>
+
 <script>
     $(document).foundation();
 </script>
