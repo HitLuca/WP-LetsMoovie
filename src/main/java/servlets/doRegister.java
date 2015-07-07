@@ -60,7 +60,9 @@ public class doRegister extends HttpServlet {
                 throw new InvalidRegistrationException(invalidParameters);
             }
 
-            //TODO Controllo che i dati inseriti siano unici
+            //TODO Controllo che i dati inseriti siano unici nel database e nelle mail pending
+
+            //verificationMailSender.checkDuplicates(RegistrationRequest registrationRequest) ritorna la lista di stringhe che corrispondono ai campi dupplicati, lista vuota se va bene
 
             //Invio la mail di verifica TODO ritornare codici diversi in caso di mail già inviata
             if (!verificationMailSender.sendEmail(registrationRequest, request.getRequestURL().toString())) {
