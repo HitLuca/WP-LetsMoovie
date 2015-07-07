@@ -1,5 +1,9 @@
 package database;
 
+import database.mappers.FilmMapper;
+import database.mappers.SeatMapper;
+import database.mappers.ShowMapper;
+import database.mappers.UserMapper;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -7,7 +11,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import database.mappers.UserMapper;
 
 import javax.sql.DataSource;
 import java.net.URI;
@@ -23,7 +26,7 @@ public class DatabaseConnection {
 
     private static SqlSessionFactory connect() {
 
-        URI dbUri = null;
+        URI dbUri = null; //Warning:(29, 21) Variable 'dbUri' initializer 'null' is redundant
         SqlSessionFactory factory = null;
 
         try {
@@ -41,12 +44,15 @@ public class DatabaseConnection {
             Environment environment = new Environment("development", transactionFactory, dataSource);
             Configuration configuration = new Configuration(environment);
             configuration.addMapper(UserMapper.class);
+            configuration.addMapper(FilmMapper.class);
+            configuration.addMapper(SeatMapper.class);
+            configuration.addMapper(ShowMapper.class);
             SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
             factory = builder.build(configuration);
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException e) { //Warning:(55, 11) catch branch identical to 'ClassNotFoundException' branch
             e.printStackTrace();
         }
 
