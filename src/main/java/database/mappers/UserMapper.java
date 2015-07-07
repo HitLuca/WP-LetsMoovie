@@ -4,9 +4,9 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import types.DetailedPayment;
-import types.UserData;
-import types.UserLoginCredential;
+import database.datatypes.DetailedPayment;
+import database.datatypes.UserData;
+import database.datatypes.UserLoginCredential;
 
 import java.util.List;
 

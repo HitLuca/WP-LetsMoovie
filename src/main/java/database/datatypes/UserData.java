@@ -1,4 +1,4 @@
-package types;
+package database.datatypes;
 
 import java.util.Date;
 

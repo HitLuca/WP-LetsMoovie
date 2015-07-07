@@ -1,8 +1,8 @@
-package types.mappers;
+package database.mappers;
 
 import org.apache.ibatis.annotations.Select;
-import types.Actor;
-import types.FilmData;
+import database.datatypes.Actor;
+import database.datatypes.FilmData;
 
 import java.util.List;
 

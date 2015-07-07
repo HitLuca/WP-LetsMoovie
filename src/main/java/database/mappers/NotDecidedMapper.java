@@ -1,4 +1,4 @@
-package types.mappers;
+package database.mappers;
 
 import org.apache.ibatis.annotations.Select;
 

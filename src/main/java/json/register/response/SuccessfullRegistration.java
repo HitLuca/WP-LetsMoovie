@@ -1,11 +1,11 @@
 package json.register.response;
 
-import json.GenericSuccessfullOperation;
+import json.OperationResult;
 
 /**
  * Created by marco on 07/07/15.
  */
-public class SuccessfullRegistration extends GenericSuccessfullOperation {
+public class SuccessfullRegistration extends OperationResult {
     String email;
     public SuccessfullRegistration(String email)
     {

@@ -1,7 +1,7 @@
-package types.mappers;
+package database.mappers;
 
 import org.apache.ibatis.annotations.Select;
-import types.Seat;
+import database.datatypes.Seat;
 
 import java.util.List;
 

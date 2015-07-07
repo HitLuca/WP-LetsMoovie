@@ -1,9 +1,8 @@
 package servlets;
 
 import com.google.gson.Gson;
-import json.GenericOperationError;
-import json.GenericSuccessfullOperation;
-import json.OperationStatus;
+import json.OperationError;
+import json.OperationResult;
 import types.exceptions.InvalidLogoutException;
 
 import javax.servlet.ServletException;
@@ -25,15 +24,15 @@ public class doLogout extends HttpServlet {
         HttpSession session = request.getSession(false);
         response.setContentType("application/JSON");
         String sourcePage = request.getParameter("sourcePage");
-        OperationStatus logoutStatus;
+        OperationResult logoutStatus;
         try {
             if(session==null) {
                 throw new InvalidLogoutException();
             }
             session.invalidate();
-            logoutStatus = new GenericSuccessfullOperation();
+            logoutStatus = new OperationResult();
         } catch (InvalidLogoutException | IllegalStateException e){
-            logoutStatus = new GenericOperationError(e.getMessage());
+            logoutStatus = new OperationError("Bad Request");
             response.setStatus(400);
         }
         response.getOutputStream().print(gson.toJson(logoutStatus));

@@ -1,4 +1,4 @@
-package types;
+package database.datatypes;
 
 /**
  * Created by hitluca on 29/06/15.

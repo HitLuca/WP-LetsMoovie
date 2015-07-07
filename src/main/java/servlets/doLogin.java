@@ -3,15 +3,14 @@ package servlets;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.MalformedJsonException;
 import database.DatabaseConnection;
-import json.GenericOperationError;
-import json.OperationStatus;
+import json.OperationError;
+import json.OperationResult;
 import json.login.response.*;
 import org.apache.ibatis.session.SqlSession;
 import types.exceptions.AlreadyLoggedInException;
 import utilities.InputValidator.ModelValidator;
-import types.UserLoginCredential;
+import database.datatypes.UserLoginCredential;
 import types.exceptions.InvalidLoginException;
 import json.login.request.LoginRequest;
 import database.mappers.UserMapper;
@@ -38,7 +37,7 @@ public class doLogin extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        OperationStatus loginStatus;
+        OperationResult loginStatus;
         try {
             LoginRequest loginRequest = gson.fromJson(request.getReader(), LoginRequest.class);
             List<String> invalidParameters = ModelValidator.validate(loginRequest);
@@ -68,13 +67,13 @@ public class doLogin extends HttpServlet {
                 loginStatus = new SuccessfullLogin(loginRequest.getUsername());
             }
         } catch (InvalidLoginException e) {
-            loginStatus = new GenericOperationError("Invalid Data");
+            loginStatus = new OperationError("Invalid Data");
             response.setStatus(400);
         } catch (AlreadyLoggedInException e) {
-            loginStatus = new GenericOperationError("Already Logged In");
+            loginStatus = new OperationError("Already Logged In");
             response.setStatus(400);
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
-            loginStatus = new GenericOperationError("Bad Request");
+            loginStatus = new OperationError("Bad Request");
             response.setStatus(400);
         }
         ServletOutputStream outputStream = response.getOutputStream();

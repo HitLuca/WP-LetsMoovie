@@ -1,7 +1,7 @@
-package types.mappers;
+package database.mappers;
 
 import org.apache.ibatis.annotations.Select;
-import types.Show;
+import database.datatypes.Show;
 
 import java.util.List;
 

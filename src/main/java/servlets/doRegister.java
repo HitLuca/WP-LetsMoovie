@@ -3,11 +3,9 @@ package servlets;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.MalformedJsonException;
 import database.DatabaseConnection;
-import json.GenericOperationError;
-import json.GenericSuccessfullOperation;
-import json.OperationStatus;
+import json.OperationError;
+import json.OperationResult;
 import json.register.request.RegistrationRequest;
 import json.register.response.InvalidRegistration;
 import json.register.response.SuccessfullRegistration;
@@ -50,7 +48,7 @@ public class doRegister extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        OperationStatus registrationStatus;
+        OperationResult registrationStatus;
         try {
             //Provo a parsare il Json nell'oggetto RegistrationRequest. Se exception esce dalla sevlet
             RegistrationRequest registrationRequest = gson.fromJson(request.getReader(), RegistrationRequest.class);
@@ -75,7 +73,7 @@ public class doRegister extends HttpServlet {
             registrationStatus = new InvalidRegistration(e.getInvalidParameters());
             response.setStatus(400);
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e){
-            registrationStatus = new GenericOperationError("Bad Request");
+            registrationStatus = new OperationError("Bad Request");
             response.setStatus(400);
         }
         ServletOutputStream outputStream = response.getOutputStream();

@@ -53,34 +53,4 @@ public class RegistrationRequest {
         return phone;
     }
 
-    //====== Setter per il Mapping
-
-    public void setEmail(String email) {
-        this.email=email;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
 }
