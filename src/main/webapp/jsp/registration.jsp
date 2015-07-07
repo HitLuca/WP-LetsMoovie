@@ -16,51 +16,95 @@
 <c:import url="${url}"/>
 <body>
 <c:import url="/jsp/header.jsp"/>
-<div class="row">
-    <form action="doRegister" method="post">
-        <div class="large-6 columns">
-            <label>First name:
-                <input type="text" name="firstname" placeholder="First name" required/>
-            </label>
-        </div>
-        <div class="large-6 columns">
-            <label>Last name:
-                <input type="text" name="lastname" placeholder="Last name" required/>
-            </label>
-        </div>
-        <div class="large-6 columns">
-            <label>Email address:
-                <input type="email" name="email" placeholder="Email" required/>
-            </label>
-        </div>
-        <div class="large-6 columns">
-            <label>Date of birth:
-                <input type="date" name="dob" placeholder="Date of birth" required/>
-            </label>
-        </div>
-        <div class="large-6 columns">
-            <label>Mobile phone:
-                <input type="tel" name="phone" placeholder="Mobile phone" required/>
-            </label>
-        </div>
-        <div class="large-6 columns">
-            <label>Password:</label>
-            <input type="password" name="password" placeholder="password" required/>
-            <%--TODO: fix medium--%>
-            <medium class="input">Password must be at least 8 characters; Contain at least three character types:
-                lowercase
-                letters, uppercase letters, numbers, punctuation; Do not include your username.
-            </medium>
-        </div>
-        <%--<div class="large-6 columns">--%>
-        <%--<label>confirm password*</label>--%>
-        <%--<input type="password" name="passwordconfirm" placeholder="password"/>--%>
-        <%--</div>--%>
-        <div class="medium-6 columns">
-            <input type="submit" class="button expand" value="Register"/>
+<div class="row content">
+    <p>Completa i seguenti campi per effettuare la registrazione:</p>
+
+    <form action="doRegister" method="post" data-abide="ajax">
+        <fieldset>
+            <legend>Generalità utente</legend>
+            <div class="row">
+                <div class="medium-6 columns">
+                    <label>Nome:
+                        <input type="text" name="name" placeholder="Mario" required/>
+                    </label>
+                    <small class="error">Questo campo è obbligatorio!</small>
+                </div>
+                <div class="medium-6 columns">
+                    <label>Cognome:
+                        <input type="text" name="surname" placeholder="Rossi" required/>
+                    </label>
+                    <small class="error">Questo campo è obbligatorio!</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-6 columns">
+                    <label>Data di nascita:
+                        <input type="date" name="birthday" placeholder="AAAA-MM-GG" required/>
+                    </label>
+                    <small class="error">Inserire la data nel giusto formato!</small>
+                </div>
+                <div class="medium-6 columns">
+                    <label>Telefono:
+                        <input type="tel" name="phone" placeholder="3481330331" required/>
+                    </label>
+                    <small class="error">Questo campo è obbligatorio!</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-6 columns">
+                    <label>Indirizzo email:
+                        <input type="email" id="emailadd" name="email" placeholder="mario.rossi@gmail.com" required/>
+                    </label>
+                    <small class="error">Questo campo è obbligatorio!</small>
+                </div>
+                <div class="medium-6 columns">
+                    <label>Conferma indirizzo email:
+                        <input type="email" name="email" placeholder="mario.rossi@gmail.com" required
+                               data-equalto="emailadd"/>
+                    </label>
+                    <small class="error">Gli indirizzi email devono corrispondere!</small>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Credenziali d'accesso</legend>
+            <div class="row">
+                <div class="medium-6 columns">
+                    <label>Username:
+                        <input type="text" name="username" placeholder="MRossi" required/>
+                    </label>
+                    <small class="error">Questo campo è obbligatorio!</small>
+                </div>
+            </div>
+            <div class="row">
+                <p class="columns" id="textpsw">
+                    La password deve includere almeno 4 caratteri di cui almeno uno speciale.
+                </p>
+            </div>
+            <div class="row">
+                <div class="medium-6 columns">
+                    <label>Password:
+                        <input type="password" id="password" name="password" placeholder="Password" required
+                               aria-describedby="textpsw"/>
+                    </label>
+                </div>
+                <div class="medium-6 columns">
+                    <label>Conferma password:
+                        <input type="password" name="passwordconfirm" placeholder="Password" required
+                               data-equalto="password"/>
+                    </label>
+                    <small class="error">Le password devono corrispondere!</small>
+                </div>
+            </div>
+        </fieldset>
+        <p></p>
+
+        <div class="medium-12 centered text-center columns">
+            <button type="submit" class="button radius">
+                Conferma registrazione
+            </button>
         </div>
     </form>
-
 </div>
 
 
