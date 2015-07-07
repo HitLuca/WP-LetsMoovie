@@ -17,8 +17,7 @@
 <body>
 <c:import url="/jsp/header.jsp"/>
 <div class="row content">
-    <p>Completa i seguenti campi per effettuare la registrazione:</p>
-
+    <h3>Completa i seguenti campi per effettuare la registrazione:</h3>
     <form action="doRegister" method="post" data-abide="ajax">
         <fieldset>
             <legend>Generalità utente</legend>

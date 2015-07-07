@@ -11,6 +11,7 @@
 <c:import url="/jsp/header.jsp"/>
 <div class="row content">
     <div class="small-11 small-centered large-6 medium-8 columns">
+        <h3>Accedi al tuo account:</h3>
         <form action="doLogin" id="loginForm" data-abide="ajax">
             <%--<input type="hidden" value="${param.sourcePage}" name="sourcePage">--%>
             <div>
@@ -33,10 +34,11 @@
 
             <div class="row">
                 <div class="medium-6 columns">
-                    <button class="button expand">Login</button>
+                    <button class="button radius expand">Login</button>
                 </div>
                 <div class="medium-6 columns">
-                    <button class="button expand" href="">Password dimenticata?</button>
+                    <button class="button radius expand">Password dimenticata?</button>
+                    <%--TODO: inserire link a password dimenticata--%>
                 </div>
             </div>
         </form>
