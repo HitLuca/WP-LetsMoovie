@@ -66,6 +66,7 @@ public class VerificationMailCleanerThread extends Thread {
         try {
             mutex.acquire();
             userRegistrationRequest = pendingRequests.get(verificationCode);
+            pendingRequests.remove(userRegistrationRequest);
             mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();

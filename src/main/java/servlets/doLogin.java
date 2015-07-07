@@ -38,14 +38,12 @@ public class doLogin extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        ServletOutputStream outputStream = response.getOutputStream();
         OperationStatus loginStatus;
         try {
             LoginRequest loginRequest = gson.fromJson(request.getReader(), LoginRequest.class);
             List<String> invalidParameters = ModelValidator.validate(loginRequest);
 
-            if(!invalidParameters.isEmpty())
-            {
+            if (!invalidParameters.isEmpty()) {
                 throw new InvalidLoginException();
             }
 
@@ -56,12 +54,9 @@ public class doLogin extends HttpServlet {
                 throw new InvalidLoginException();
             } else {
                 HttpSession session = request.getSession(false);
-                if(session !=null)
-                {
-                    if(session.getAttribute("username")!=null && session.getAttribute("role")!=null)
-                    {
-                        if(session.getAttribute("username").equals(loginRequest.getUsername()))
-                        {
+                if (session != null) {
+                    if (session.getAttribute("username") != null && session.getAttribute("role") != null) {
+                        if (session.getAttribute("username").equals(loginRequest.getUsername())) {
                             throw new AlreadyLoggedInException();
                         }
                     }
@@ -73,18 +68,16 @@ public class doLogin extends HttpServlet {
                 loginStatus = new SuccessfullLogin(loginRequest.getUsername());
             }
         } catch (InvalidLoginException e) {
-            loginStatus = new InvalidLoginData();
+            loginStatus = new GenericOperationError("Invalid Data");
+            response.setStatus(400);
         } catch (AlreadyLoggedInException e) {
-            loginStatus = new AlreadyLoggedIn();
-        } catch (IllegalAccessException e) {
-            loginStatus = new GenericOperationError(e.getMessage());
-        } catch (InvocationTargetException e) {
-            loginStatus = new GenericOperationError(e.getMessage());
-        }catch(JsonIOException e){
-            loginStatus = new GenericOperationError(e.getMessage());
-        } catch(JsonSyntaxException e){
-            loginStatus = new GenericOperationError(e.getMessage());
+            loginStatus = new GenericOperationError("Already Logged In");
+            response.setStatus(400);
+        } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
+            loginStatus = new GenericOperationError("Bad Request");
+            response.setStatus(400);
         }
+        ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gson.toJson(loginStatus));
     }
 

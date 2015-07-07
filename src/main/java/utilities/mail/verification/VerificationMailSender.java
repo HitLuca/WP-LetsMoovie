@@ -34,7 +34,8 @@ public class VerificationMailSender {
         email.addTo(registrationRequest.getEmail());
         email.setFrom("info@letsmoovie.com");
         email.setSubject("Verify your account");
-        email.setHtml("Il tuo codice di verifica è " + url + "?verificationCode=" + verificationCode);
+        email.setTemplateId("62710ec1-548f-4b62-a4fa-757187194b9f");
+        email.setText("Benvenuto "+registrationRequest.getUsername()+"\nClicca sul link per confermare la registrazione "+url + "?verificationCode=" + verificationCode);
 
         try {
             System.out.println(sendgrid.send(email).getMessage());

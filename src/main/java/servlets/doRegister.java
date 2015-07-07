@@ -51,7 +51,6 @@ public class doRegister extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         OperationStatus registrationStatus;
-        ServletOutputStream outputStream = response.getOutputStream();
         try {
             //Provo a parsare il Json nell'oggetto RegistrationRequest. Se exception esce dalla sevlet
             RegistrationRequest registrationRequest = gson.fromJson(request.getReader(), RegistrationRequest.class);
@@ -74,15 +73,12 @@ public class doRegister extends HttpServlet {
 
         } catch (InvalidRegistrationException e) {
             registrationStatus = new InvalidRegistration(e.getInvalidParameters());
-        } catch (IllegalAccessException e) {
-            registrationStatus = new GenericOperationError(e.getMessage());
-        } catch (InvocationTargetException e) {
-            registrationStatus = new GenericOperationError(e.getMessage());
-        } catch(JsonIOException e){
-            registrationStatus = new GenericOperationError(e.getMessage());
-        } catch(JsonSyntaxException e){
-            registrationStatus = new GenericOperationError(e.getMessage());
+            response.setStatus(400);
+        } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e){
+            registrationStatus = new GenericOperationError("Bad Request");
+            response.setStatus(400);
         }
+        ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gson.toJson(registrationStatus));
     }
 

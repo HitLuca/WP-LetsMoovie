@@ -30,7 +30,6 @@ public class DatabaseConnection {
 
             Class.forName("org.postgresql.Driver");
             dbUri = new URI(System.getenv("DATABASE_URL"));
-            System.out.println(System.getenv("DATABASE_URL"));
             String username = dbUri.getUserInfo().split(":")[0];
             String password = dbUri.getUserInfo().split(":")[1];
 

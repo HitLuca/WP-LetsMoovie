@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import json.GenericOperationError;
 import json.GenericSuccessfullOperation;
 import json.OperationStatus;
-import json.logout.response.InvalidLogout;
 import types.exceptions.InvalidLogoutException;
 
 import javax.servlet.ServletException;
@@ -33,10 +32,9 @@ public class doLogout extends HttpServlet {
             }
             session.invalidate();
             logoutStatus = new GenericSuccessfullOperation();
-        } catch (InvalidLogoutException e) {
-            logoutStatus = new InvalidLogout();
-        } catch (IllegalStateException e){
+        } catch (InvalidLogoutException | IllegalStateException e){
             logoutStatus = new GenericOperationError(e.getMessage());
+            response.setStatus(400);
         }
         response.getOutputStream().print(gson.toJson(logoutStatus));
     }

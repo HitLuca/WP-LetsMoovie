@@ -12,11 +12,10 @@ import java.util.regex.Pattern;
  * Created by marco on 06/07/15.
  */
 public class ModelValidator {
-    public static List<String> validate(Object object) throws InvocationTargetException, IllegalAccessException {
+    public static List<String> validate(Object object) throws InvocationTargetException, IllegalAccessException, NullPointerException {
         List<String> invalidParameters = new ArrayList<String>();
         for(Method m : object.getClass().getMethods())
         {
-
             toSanitize a = m.getAnnotation(toSanitize.class);
             if(a!=null)
             {
