@@ -15,7 +15,7 @@ public class LoginRequest {
         return username;
     }
 
-    @toSanitize (name = "password", reg = Regex.USERNAME) //TODO fix PASSWORD VALIDATOR
+    @toSanitize(name = "password", reg = Regex.PASSWORD)
     public String getPassword() {
         return password;
     }
