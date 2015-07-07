@@ -67,13 +67,13 @@ public class doLogin extends HttpServlet {
                 loginStatus = new SuccessfullLogin(loginRequest.getUsername());
             }
         } catch (InvalidLoginException e) {
-            loginStatus = new OperationError("Invalid Data");
+            loginStatus = new OperationError(2); //TODO usare il codice specifico
             response.setStatus(400);
         } catch (AlreadyLoggedInException e) {
-            loginStatus = new OperationError("Already Logged In");
+            loginStatus = new OperationError(2); //TODO usare il codice specifico
             response.setStatus(400);
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
-            loginStatus = new OperationError("Bad Request");
+            loginStatus = new OperationError(2); //TODO usare il codice specifico
             response.setStatus(400);
         }
         ServletOutputStream outputStream = response.getOutputStream();

@@ -75,7 +75,7 @@ public class doRegister extends HttpServlet {
             registrationStatus = new InvalidRegistration(e.getInvalidParameters());
             response.setStatus(400);
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e){
-            registrationStatus = new OperationError("Bad Request");
+            registrationStatus = new OperationError(2); //TODO usare il codice specifico
             response.setStatus(400);
         }
         ServletOutputStream outputStream = response.getOutputStream();
