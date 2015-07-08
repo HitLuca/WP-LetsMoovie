@@ -5,8 +5,10 @@ package database.datatypes;
  */
 public class Seat {
     private int id_seat;
+    private int room_number;
     private int row;
     private int column;
+    private String status;
 
     public int getRow() {
         return row;
@@ -30,5 +32,21 @@ public class Seat {
 
     public void setId_seat(int id_seat) {
         this.id_seat = id_seat;
+    }
+
+    public int getRoom_number() {
+        return room_number;
+    }
+
+    public void setRoom_number(int room_number) {
+        this.room_number = room_number;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

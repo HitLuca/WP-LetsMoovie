@@ -1,8 +1,9 @@
 package database.mappers;
 
-import org.apache.ibatis.annotations.Select;
 import database.datatypes.Actor;
 import database.datatypes.FilmData;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -11,8 +12,8 @@ import java.util.List;
  */
 public interface FilmMapper {
 
-    @Select("SELECT id_film FROM films WHERE film_title=#{film_title} AND year=#{year}")
-    int getFilmId(String film_title, int year);
+    @Select("SELECT id_film FROM films WHERE film_title= #{film_title} AND year= #{year}")
+    Integer getFilmId(@Param("film_title") String film_title, @Param("year") int year);
 
     @Select("SELECT * FROM films WHERE id_film=#{id_film}")
     FilmData getFilmData(int id_film);
@@ -22,4 +23,7 @@ public interface FilmMapper {
 
     @Select("SELECT actor_name, role, url_photo FROM film_actors NATURAL JOIN actors WHERE id_film=#{id_film}")
     List<Actor> getFilmActors(int id_film);
+
+    @Select("SELECT url_photo FROM actors WHERE actor_name=#{actor_name}")
+    String getActorPhoto(String actor_name);
 }
