@@ -18,7 +18,7 @@
 <c:import url="/jsp/header.jsp"/>
 <div class="row content">
     <h3>Completa i seguenti campi per effettuare la registrazione:</h3>
-    <form action="doRegister" method="post" data-abide="ajax">
+    <form action="doRegister" method="post" data-abide="ajax" id="registerForm">
         <fieldset>
             <legend>Generalità utente</legend>
             <div class="row">
@@ -99,7 +99,7 @@
         <p></p>
 
         <div class="medium-12 centered text-center columns">
-            <button type="submit" class="button radius">
+            <button class="button radius">
                 Conferma registrazione
             </button>
         </div>
@@ -108,5 +108,21 @@
 
 
 <c:import url="/jsp/footer.jsp"/>
+
+<script>
+
+    function successNotifier(data) {
+        alertify.success("Registrazione effettuata!");
+    }
+    function errorNotifier(data) {
+        console.log(data.responseJSON.errorCode);
+//        alertify.error(data.errorCode,0);
+    }
+
+    $(document).ready(function () {
+        PostForm("registerForm", successNotifier, errorNotifier)
+    });
+</script>
+
 </body>
 </html>

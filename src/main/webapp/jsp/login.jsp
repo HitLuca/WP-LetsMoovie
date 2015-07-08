@@ -12,12 +12,13 @@
 <div class="row content">
     <div class="small-11 small-centered large-6 medium-8 columns">
         <h3>Accedi al tuo account:</h3>
+
         <form action="doLogin" id="loginForm" data-abide="ajax">
             <%--<input type="hidden" value="${param.sourcePage}" name="sourcePage">--%>
             <div>
                 <label>
                     Username
-                    <input type="text" name="username" required pattern="alpha"
+                    <input type="text" name="username" required
                            placeholder="Inserisci il tuo username"/>
                 </label>
                 <small class="error">Username richiesto!</small>
@@ -26,7 +27,7 @@
             <div>
                 <label>
                     Password
-                    <input type="password" name="password" pattern="alpha"
+                    <input type="password" name="password" required
                            placeholder="Inserisci la tua password"/>
                     <%--TODO:CHECK PASSWORD RICHIESTA--%>
                 </label>
@@ -52,11 +53,20 @@
 
     function successNotifier(data) {
         alertify.success("Benvenuto, " + data.username + "!");
-        window.location = "/";
+        var storage = $.sessionStorage;
+        //storage.set("notification", "example");
+        window.setTimeout(
+                function () {
+                    window.location.assign("/");
+                },
+                1000
+        );
     }
     function errorNotifier(data) {
         alertify.error("Username o password errata!");
-        $("input[type='password']").val('');
+        //console.log(data.responseJSON.errorCode);
+        var passwordField = $("input[type='password']");
+        passwordField.val('');
     }
 
     $(document).ready(function () {

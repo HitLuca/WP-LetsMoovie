@@ -22,7 +22,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
 
+<%--JQUERY PLUGINS--%>
 <script src="<c:url value="/lib/jquery.serialize-object.min.js"/>"></script>
+<script src="<c:url value="/lib/jquery.storageapi.min.js"/>"></script>
 
 <%--JAVASCRIPT PERSONALE--%>
 <script src="<c:url value="/javascript/main.js"/>"></script>
