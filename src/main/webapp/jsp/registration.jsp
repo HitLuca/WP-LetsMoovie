@@ -112,6 +112,7 @@
 <script>
 
     function successNotifier(data) {
+        saveNotification("success", "Registrazione effettuata!");
         alertify.success("Registrazione effettuata!");
     }
     function errorNotifier(data) {

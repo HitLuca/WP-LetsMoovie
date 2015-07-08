@@ -2,7 +2,10 @@
  * Created by mion00 on 19/06/15.
  */
 
-"use srict";
+"use strict";
+
+alertify.set('notifier', 'position', 'top-right');
+
 function PostForm(formID, doneCallback, failCallback) {
     $("#" + formID).on('valid.fndtn.abide', function (event) {
         event.preventDefault();
@@ -30,4 +33,55 @@ function PostForm(formID, doneCallback, failCallback) {
 
 }
 
-alertify.set('notifier', 'position', 'top-right');
+function saveNotification(type, message, position) {
+    var storage = $.localStorage;
+
+    var notificationCount;
+
+    notificationCount = storage.get("notificationCount");
+
+    if (notificationCount == null) {
+        notificationCount = 0;
+    }
+
+    var notification = {
+        type: type,
+        message: message
+    };
+
+    if (position != null) {
+        notification.position = position;
+    }
+
+    notificationCount++;
+
+    storage.set("notification" + notificationCount, notification);
+    storage.set("notificationCount", notificationCount);
+}
+
+function showNotification() {
+    var storage = $.localStorage;
+
+    var notificationCount;
+
+    notificationCount = storage.get("notificationCount");
+
+    if (notificationCount != null) {
+        for (notificationCount; notificationCount > 0; notificationCount--) {
+            var nome = "notification" + notificationCount;
+            var notification = storage.get(nome);
+            storage.remove(nome);
+            switch (notification.type) {
+                case "success":
+                    alertify.success(notification.message);
+                    break;
+            }
+        }
+    } else {
+        notificationCount = 0;
+    }
+    //console.log(notificationCount);
+    storage.set("notificationCount", notificationCount);
+}
+
+showNotification();

@@ -52,19 +52,12 @@
 <script>
 
     function successNotifier(data) {
-        alertify.success("Benvenuto, " + data.username + "!");
-        var storage = $.sessionStorage;
-        //storage.set("notification", "example");
-        window.setTimeout(
-                function () {
-                    window.location.assign("/");
-                },
-                1000
-        );
+        saveNotification("success", "Benvenuto, " + data.username + "!");
+        window.location.assign("/");
+
     }
     function errorNotifier(data) {
         alertify.error("Username o password errata!");
-        //console.log(data.responseJSON.errorCode);
         var passwordField = $("input[type='password']");
         passwordField.val('');
     }
@@ -72,6 +65,7 @@
     $(document).ready(function () {
         PostForm("loginForm", successNotifier, errorNotifier)
     });
+
 </script>
 
 </body>
