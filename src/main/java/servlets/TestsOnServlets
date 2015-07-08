@@ -11,3 +11,12 @@ Test da effettuare sulle servlet:
         tentativo di login quando sessione già stabilita
 
     DoRegister
+        registrazione con tutti campi vuoti
+        registrazione con username già presente nel db
+        registrazione con mail già presente nel db
+        registrazione con username E mail già presente nel db
+        tentativo di registrazione con sessione GIA' loggata
+        registrazione con campi che non superano le REGEX
+        registrazione con campi corretti
+
+

@@ -8,14 +8,14 @@ import java.util.List;
 /**
  * Created by etrunon on 06/07/15.
  */
-public class InvalidLoginException extends Exception {
+public class BadRequestException extends Exception {
     private ErrorCode code;
 
     public ErrorCode getCode() {
         return code;
     }
 
-    public InvalidLoginException(ErrorCode code) {
+    public BadRequestException(ErrorCode code) {
         this.code = code;
     }
 
