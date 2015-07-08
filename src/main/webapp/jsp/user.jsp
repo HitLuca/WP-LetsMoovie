@@ -101,14 +101,88 @@
             <a href="#panel2a">Acquisti</a>
 
             <div id="panel2a" class="content">
-                Informazioni storico acquisti
+                <div class="panel radius">
+                    <h3>Storico acquisti</h3>
+
+                    <p></p>
+
+                    <div class="row">
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    Film 1
+                                </div>
+                            </div>
+                        </div>
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    Film 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    Film 3
+                                </div>
+                            </div>
+                        </div>
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    Film 4
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </li>
         <li class="accordion-navigation">
             <a href="#panel3a">Portafoglio</a>
 
             <div id="panel3a" class="content">
-                Informazioni pagamenti/carte
+                <div class="panel radius">
+                    <h3>Carte registrate e credito disponibile</h3>
+
+                    <p></p>
+
+                    <div class="row">
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    Carta 1
+                                </div>
+                            </div>
+                        </div>
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    Carta 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    Carta 3
+                                </div>
+                            </div>
+                        </div>
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    Carta 4
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </li>
     </ul>
