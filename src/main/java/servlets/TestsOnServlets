@@ -8,5 +8,6 @@ Test da effettuare sulle servlet:
         login con password che non supera la REGEX
         login con username e password errati
         login con uername e password corretti
+        tentativo di login quando sessione già stabilita
 
     DoRegister

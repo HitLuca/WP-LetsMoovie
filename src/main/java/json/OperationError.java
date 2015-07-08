@@ -7,7 +7,7 @@ import types.enums.ErrorCode;
  * Created by marco on 07/07/15.
  */
 public class OperationError extends OperationResult {
-    private ErrorCode errorCode;
+    private int errorCode;
 
     /**
      * Costruttore che imposta l'errore definito. Utilizzare come OperationError(ErrorCode.QUALCHE_ERRORE);
@@ -16,12 +16,13 @@ public class OperationError extends OperationResult {
      */
     public OperationError(ErrorCode errorCode)
     {
-        this.errorCode = errorCode;
+        this.errorCode = errorCode.getValue();
     }
 
     /**
      * Costruttore vuoto che inizializza il codice errore a null per indicare un errore non definibile.
      */
     public OperationError() {
-        errorCode=null;}
+        errorCode = -1;
+    }
 }

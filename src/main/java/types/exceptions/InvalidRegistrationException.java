@@ -1,5 +1,7 @@
 package types.exceptions;
 
+import types.enums.ErrorCode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +10,20 @@ import java.util.List;
  */
 public class InvalidRegistrationException extends Exception{
     private List<String> invalidParameters;
-    public InvalidRegistrationException(List<String> invalidParameters)
-    {
-        this.invalidParameters = invalidParameters;
+    private ErrorCode code;
+
+    public ErrorCode getCode() {
+        return code;
     }
-    public InvalidRegistrationException(String invalidParameter)
+
+    public InvalidRegistrationException(ErrorCode code, List<String> invalidParameters) {
+        this.invalidParameters = invalidParameters;
+        this.code = code;
+    }
+
+    public InvalidRegistrationException(ErrorCode code, String invalidParameter)
     {
+        this.code = code;
         invalidParameters = new ArrayList<String>();
         invalidParameters.add(invalidParameter);
     }
