@@ -12,7 +12,8 @@ public enum ErrorCode {
     USER_NOT_FOUND(6),
     ALREADY_LOGGED(7),
     ALREADY_LOGGED_OUT(8),
-    INVALID_MAIL(9);
+    INVALID_MAIL(9),
+    NOT_LOGGED_IN(10);
 
     private int value;
 

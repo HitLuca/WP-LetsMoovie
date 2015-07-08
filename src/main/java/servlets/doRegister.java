@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
-import database.datatypes.UserLoginCredential;
 import database.mappers.UserMapper;
 import json.OperationError;
 import json.OperationResult;
@@ -13,8 +12,8 @@ import json.register.response.InvalidRegistration;
 import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
-import types.exceptions.AlreadyLoggedInException;
-import types.exceptions.InvalidRegistrationException;
+import types.exceptions.BadRequestException;
+import types.exceptions.BadParametersException;
 import utilities.InputValidator.ModelValidator;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
@@ -62,7 +61,7 @@ public class doRegister extends HttpServlet {
             //Check sulla sessione già presente e l'utente è già loggato con un username e lo si spara fuori
             HttpSession session = request.getSession(false);
             if (session != null)
-                throw new AlreadyLoggedInException();
+                throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
 
             //Provo a parsare il Json nell'oggetto RegistrationRequest. Se exception esce dalla sevlet
             RegistrationRequest registrationRequest = gson.fromJson(request.getReader(), RegistrationRequest.class);
@@ -71,7 +70,7 @@ public class doRegister extends HttpServlet {
             List<String> invalidParameters = ModelValidator.validate(registrationRequest);
             //Se ho stringhe invalide lancio l'eccezione di registrazione
             if (!invalidParameters.isEmpty())
-                throw new InvalidRegistrationException(ErrorCode.EMPTY_WRONG_FIELD, invalidParameters);
+                throw new BadParametersException(ErrorCode.EMPTY_WRONG_FIELD, invalidParameters);
 
             //Controllo se l'username e la password da registrare non sono già presenti nel db
             String username = userMapper.getDuplicateUsername(registrationRequest.getUsername());
@@ -80,28 +79,28 @@ public class doRegister extends HttpServlet {
                 List<String> invList = new ArrayList<String>();
                 invList.add(username);
                 invList.add(mail);
-                throw new InvalidRegistrationException(ErrorCode.DUPLICATE_USERNAME_AND_MAIL, invList);
+                throw new BadParametersException(ErrorCode.DUPLICATE_USERNAME_AND_MAIL, invList);
             } else if (username != null)
-                throw new InvalidRegistrationException(ErrorCode.DUPLICATE_USERNAME, username);
+                throw new BadParametersException(ErrorCode.DUPLICATE_USERNAME, username);
             else if (mail != null)
-                throw new InvalidRegistrationException(ErrorCode.DUPLICATE_MAIL, mail);
+                throw new BadParametersException(ErrorCode.DUPLICATE_MAIL, mail);
 
             //verificationMailSender.checkDuplicates(RegistrationRequest registrationRequest) ritorna la lista di stringhe
             // che corrispondono ai campi duplicati, lista vuota se va bene
 
             //Invio la mail di verifica, se mail invalida tiro eccezione
             if (!verificationMailSender.sendEmail(registrationRequest, request.getRequestURL().toString())) {
-                throw new InvalidRegistrationException(ErrorCode.INVALID_MAIL, "email");
+                throw new BadParametersException(ErrorCode.INVALID_MAIL, "email");
             }
 
             registrationStatus = new SuccessfullRegistration(registrationRequest.getEmail());
 
-        } catch (InvalidRegistrationException e) {
+        } catch (BadParametersException e) {
             registrationStatus = new InvalidRegistration(e.getCode(), e.getInvalidParameters());
             response.setStatus(400);
 
-        } catch (AlreadyLoggedInException e) {
-            registrationStatus = new OperationError(ErrorCode.ALREADY_LOGGED);
+        } catch (BadRequestException e) {
+            registrationStatus = new OperationError(e.getCode());
             response.setStatus(400);
 
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {

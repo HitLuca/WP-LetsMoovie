@@ -13,8 +13,7 @@ import json.login.response.LoginError;
 import json.login.response.SuccessfullLogin;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
-import types.exceptions.AlreadyLoggedInException;
-import types.exceptions.InvalidLoginException;
+import types.exceptions.BadRequestException;
 import utilities.InputValidator.ModelValidator;
 
 import javax.servlet.ServletException;
@@ -44,30 +43,29 @@ public class doLogin extends HttpServlet {
         try {
             //Check sulla sessione già presente e l'utente è già loggato con un username
             HttpSession session = request.getSession(false);
-
             if (session != null) {
-                throw new AlreadyLoggedInException();
+                throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
             }
 
             //Check sulla richiesta vuota
             LoginRequest loginRequest = gson.fromJson(request.getReader(), LoginRequest.class);
             if (loginRequest == null) {
-                throw new InvalidLoginException(ErrorCode.EMPTY_REQ);
+                throw new BadRequestException(ErrorCode.EMPTY_REQ);
             }
 
             //Parso e valido la request
             //Check sulla parametri non parsabili
             List<String> invalidParameters = ModelValidator.validate(loginRequest);
             if (!invalidParameters.isEmpty()) {
-                throw new InvalidLoginException(ErrorCode.EMPTY_WRONG_FIELD);
+                throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
             }
 
             //Controllo sui dati nel DB
             UserLoginCredential userCredential = userMapper.getUserCredential(loginRequest.getUsername());
             if (userCredential == null) {   //username non nel db
-                throw new InvalidLoginException(ErrorCode.EMPTY_WRONG_FIELD);
+                throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
             } else if (!loginRequest.getPassword().equals(userCredential.getPassword())) { //password errata
-                throw new InvalidLoginException(ErrorCode.EMPTY_WRONG_FIELD);
+                throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
             }
 
             //L'utente era nel db e la password era corretta
@@ -76,13 +74,9 @@ public class doLogin extends HttpServlet {
             session.setAttribute("username", loginRequest.getUsername());
             loginStatus = new SuccessfullLogin(loginRequest.getUsername());
 
-        } catch (InvalidLoginException e) {
+        } catch (BadRequestException e) {
             //Oggetto di errore con all'interno già i campi password e username
             loginStatus = new LoginError(e.getCode());
-            response.setStatus(400);
-
-        } catch (AlreadyLoggedInException e) {
-            loginStatus = new OperationError(ErrorCode.ALREADY_LOGGED);
             response.setStatus(400);
 
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {

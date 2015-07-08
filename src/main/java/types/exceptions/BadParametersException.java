@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by marco on 06/07/15.
  */
-public class InvalidRegistrationException extends Exception{
+public class BadParametersException extends Exception {
     private List<String> invalidParameters;
     private ErrorCode code;
 
@@ -16,12 +16,12 @@ public class InvalidRegistrationException extends Exception{
         return code;
     }
 
-    public InvalidRegistrationException(ErrorCode code, List<String> invalidParameters) {
+    public BadParametersException(ErrorCode code, List<String> invalidParameters) {
         this.invalidParameters = invalidParameters;
         this.code = code;
     }
 
-    public InvalidRegistrationException(ErrorCode code, String invalidParameter)
+    public BadParametersException(ErrorCode code, String invalidParameter)
     {
         this.code = code;
         invalidParameters = new ArrayList<String>();
