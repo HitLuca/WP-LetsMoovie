@@ -22,7 +22,7 @@
                         <a href="#" class="button radius">${sessionScope.username}</a>
                             <%--TODO: fix dropdown--%>
                         <ul class="dropdown">
-                            <li><a href="<c:url value="/doLogout"/>" class="button radius">Logout</a></li>
+                            <li><a href="<c:url value="/doLogout"/>" class="button radius" id="logout">Logout</a></li>
                         </ul>
                     </li>
                 </c:when>

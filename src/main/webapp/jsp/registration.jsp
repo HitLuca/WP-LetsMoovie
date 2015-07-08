@@ -42,13 +42,13 @@
                         <label>Data di nascita:
                             <input type="date" name="birthday" placeholder="AAAA-MM-GG" required/>
                         </label>
-                        <small class="error">Inserire la data nel giusto formato!</small>
+                        <small class="error">Inserire la data nel giusto formato! (AAAA-MM-GG)</small>
                     </div>
                     <div class="medium-6 columns">
                         <label>Telefono:
                             <input type="tel" name="phone" placeholder="3481330331" required/>
                         </label>
-                        <small class="error">Questo campo è obbligatorio!</small>
+                        <small class="error">Inserire il numero di telefono nel giusto formato!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -57,11 +57,12 @@
                             <input type="email" id="emailadd" name="email" placeholder="mario.rossi@gmail.com"
                                    required/>
                         </label>
-                        <small class="error">Questo campo è obbligatorio!</small>
+                        <small class="error">Indirizzo email non valido!</small>
                     </div>
                     <div class="medium-6 columns">
                         <label>Conferma indirizzo email:
-                            <input type="email" name="email" placeholder="mario.rossi@gmail.com" required
+                            <input type="email" name="email" placeholder="mario.rossi@gmail.com" autocomplete="off"
+                                   required
                                    data-equalto="emailadd"/>
                         </label>
                         <small class="error">Gli indirizzi email devono corrispondere!</small>
@@ -73,15 +74,12 @@
                 <div class="row">
                     <div class="medium-6 columns">
                         <label>Username:
-                            <input type="text" name="username" placeholder="MRossi" required/>
+                            <input type="text" name="username" placeholder="MRossi" required pattern=".{4,}"/>
                         </label>
-                        <small class="error">Questo campo è obbligatorio!</small>
+                        <small class="error">Lo username deve contenere almeno 4 caratteri</small>
                     </div>
                 </div>
                 <div class="row">
-                    <p class="columns" id="textpsw">
-                        La password deve includere almeno 4 caratteri di cui almeno uno speciale.
-                    </p>
                 </div>
                 <div class="row">
                     <div class="medium-6 columns">
@@ -89,6 +87,8 @@
                             <input type="password" id="password" name="password" placeholder="Password" required
                                    aria-describedby="textpsw"/>
                         </label>
+                        <small class="error">La password deve includere almeno 4 caratteri di cui almeno uno speciale.
+                        </small>
                     </div>
                     <div class="medium-6 columns">
                         <label>Conferma password:

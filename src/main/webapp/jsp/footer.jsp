@@ -26,6 +26,7 @@
 
 <%--JAVASCRIPT PERSONALE--%>
 <script src="<c:url value="/javascript/main.js"/>"></script>
+<script src="<c:url value="/javascript/header.js"/>"></script>
 
 <script>
     $(document).foundation();
