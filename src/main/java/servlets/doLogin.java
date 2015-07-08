@@ -49,17 +49,15 @@ public class doLogin extends HttpServlet {
                 throw new AlreadyLoggedInException();
             }
 
-            LoginRequest loginRequest = gson.fromJson(request.getReader(), LoginRequest.class);
-
             //Check sulla richiesta vuota
+            LoginRequest loginRequest = gson.fromJson(request.getReader(), LoginRequest.class);
             if (loginRequest == null) {
                 throw new InvalidLoginException(ErrorCode.EMPTY_REQ);
             }
 
             //Parso e valido la request
-            List<String> invalidParameters = ModelValidator.validate(loginRequest);
-
             //Check sulla parametri non parsabili
+            List<String> invalidParameters = ModelValidator.validate(loginRequest);
             if (!invalidParameters.isEmpty()) {
                 throw new InvalidLoginException(ErrorCode.EMPTY_WRONG_FIELD);
             }
