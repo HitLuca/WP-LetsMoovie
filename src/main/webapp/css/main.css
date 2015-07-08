@@ -6,14 +6,6 @@
     max-height: 2.8rem;
 }
 
-.top-bar-section ul li {
-    margin-left: 0.5rem;
-}
-
-.top-bar-section ul {
-    margin-right: 0.5rem;
-}
-
 .content {
     margin-top: 3rem;
     margin-bottom: 3rem;
@@ -57,3 +49,7 @@ body {
 }
 
 /*fine css per lo sticky footer*/
+
+.right {
+    text-align: center;
+}
