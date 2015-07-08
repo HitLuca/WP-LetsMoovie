@@ -105,8 +105,6 @@
         </div>
     </form>
 </div>
-
-
 <c:import url="/jsp/footer.jsp"/>
 </body>
 </html>
