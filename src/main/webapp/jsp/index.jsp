@@ -8,13 +8,16 @@
 </c:url>
 <c:import url="${url}"/>
 <body>
-<c:import url="header.jsp"/>
+<div class="wrapper">
+    <c:import url="header.jsp"/>
 
-<div class="content">
-    <h2>Hello World!</h2>
+    <div class="content">
+        <h2>Hello World!</h2>
+    </div>
+    <div class="push"></div>
 </div>
-
 <c:import url="footer.jsp"/>
+
 </body>
 
 </html>
