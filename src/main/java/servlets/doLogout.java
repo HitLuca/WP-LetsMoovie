@@ -1,10 +1,10 @@
 package servlets;
 
 import com.google.gson.Gson;
-import json.OperationError;
+import com.google.gson.GsonBuilder;
 import json.OperationResult;
 import types.enums.ErrorCode;
-import types.exceptions.InvalidLogoutException;
+import types.exceptions.BadRequestException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,35 +21,41 @@ import java.io.IOException;
 public class doLogout extends HttpServlet {
     Gson gson;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
-        OperationResult logoutStatus;
 
+    protected void doAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        OperationResult logoutStatus = null;
         try {
             //Prendo la sessione dell'utente
             HttpSession session = request.getSession(false);
             //Se è nulla allora vuol dire che è già sloggato o non autenticato
             if (session == null) {
-                throw new InvalidLogoutException();
+                throw new BadRequestException(ErrorCode.NOT_LOGGED_IN);
             }
 
             session.invalidate();
-            //todo controllare se invalidate cancella il cookie al client
-            logoutStatus = new OperationResult();
 
-        } catch (InvalidLogoutException | IllegalStateException e){
-            logoutStatus = new OperationError(ErrorCode.ALREADY_LOGGED_OUT);
+        } catch (BadRequestException e) {
+            logoutStatus = e;
+            response.setStatus(400);
+
+        } catch (IllegalStateException e) {
             response.setStatus(400);
         }
         response.getOutputStream().print(gson.toJson(logoutStatus));
     }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doAll(request,response);
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doAll(request,response);
     }
 
     @Override
     public void init() {
-        gson = new Gson();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        gson = gsonBuilder.create();
     }
 }

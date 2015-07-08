@@ -4,6 +4,9 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.SendGridException;
 import json.register.request.RegistrationRequest;
 import org.apache.commons.lang3.RandomStringUtils;
+import utilities.mail.request.UserEmailRequest;
+import utilities.mail.request.UserRegistrationRequest;
+import utilities.mail.MailCleanerThread;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,13 +18,12 @@ import java.util.List;
 public class VerificationMailSender {
     private final int MAIL_TIME = 120;
     private final int SECURE_CODE_SIZE = 30;
-    private VerificationMailCleanerThread verificationMailCleanerThread;
+    private MailCleanerThread mailCleanerThread;
     private SendGrid sendgrid;
 
-    public VerificationMailSender()
+    public VerificationMailSender(MailCleanerThread mailCleanerThread)
     {
-        verificationMailCleanerThread = new VerificationMailCleanerThread();
-        verificationMailCleanerThread.start();
+        this.mailCleanerThread = mailCleanerThread;
         String api_user = System.getenv("API_USER");
         String api_key = System.getenv("API_KEY");
         sendgrid = new SendGrid(api_user, api_key);
@@ -30,10 +32,10 @@ public class VerificationMailSender {
     public List<String> checkDuplicates(RegistrationRequest registrationRequest)  {
         List<String> duplicates = new ArrayList<>();
         try {
-            if (verificationMailCleanerThread.checkUsername(registrationRequest.getUsername())) {
+            if (mailCleanerThread.checkUsername(registrationRequest.getUsername())) {
                 duplicates.add("username");
             }
-            if (verificationMailCleanerThread.checkEmail(registrationRequest.getEmail())) {
+            if (mailCleanerThread.checkEmail(registrationRequest.getEmail())) {
                 duplicates.add("email");
             }
         } catch (InterruptedException e) {
@@ -55,18 +57,18 @@ public class VerificationMailSender {
         email.setText("Benvenuto "+registrationRequest.getUsername()+"\nClicca sul link per confermare la registrazione "+url + "?verificationCode=" + verificationCode);
 
         try {
-            System.out.println(sendgrid.send(email).getMessage());
+            sendgrid.send(email).getMessage();
         } catch (SendGridException e) {
             return false;
         }
 
-        verificationMailCleanerThread.add(verificationCode,new UserRegistrationRequest(registrationRequest,expirationDate));
+        mailCleanerThread.add(verificationCode,new UserRegistrationRequest(registrationRequest,expirationDate));
         return true;
     }
 
     public RegistrationRequest verify(String verificationCode)
     {
-        UserRegistrationRequest request = verificationMailCleanerThread.getUserRegistrationRequest(verificationCode);
+        UserEmailRequest request = mailCleanerThread.getUserEmailRequest(verificationCode);
         if(request==null)
         {
             return null;
@@ -74,7 +76,7 @@ public class VerificationMailSender {
         else if((new Date()).getTime()-request.getExpireDate()>0)
         {
             try {
-                verificationMailCleanerThread.remove(verificationCode);
+                mailCleanerThread.remove(verificationCode);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -82,12 +84,18 @@ public class VerificationMailSender {
         }
         else
         {
-            try {
-                verificationMailCleanerThread.remove(verificationCode);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(request instanceof UserRegistrationRequest) {
+                try {
+                    mailCleanerThread.remove(verificationCode);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return ((UserRegistrationRequest)request).getRegistrationRequest();
             }
-            return request.getRegistrationRequest();
+            else
+            {
+                return null;
+            }
         }
     }
 }

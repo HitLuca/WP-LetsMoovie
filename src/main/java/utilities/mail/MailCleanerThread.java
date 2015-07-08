@@ -1,6 +1,7 @@
-package utilities.mail.verification;
+package utilities.mail;
 
-import utilities.mail.verification.UserRegistrationRequest;
+import utilities.mail.request.UserEmailRequest;
+import utilities.mail.request.UserRegistrationRequest;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -10,8 +11,8 @@ import java.util.concurrent.Semaphore;
 /**
  * Created by marco on 25/06/15.
  */
-public class VerificationMailCleanerThread extends Thread {
-    private Map<String, UserRegistrationRequest> pendingRequests;
+public class MailCleanerThread extends Thread {
+    private Map<String, UserEmailRequest> pendingRequests;
     private Semaphore mutex;
     private Semaphore noRequest;
     private final long CLEANROUTINETIME = 60*10;
@@ -19,12 +20,12 @@ public class VerificationMailCleanerThread extends Thread {
     @Override
     public void start()
     {
-        pendingRequests=new HashMap<String, UserRegistrationRequest>();
+        pendingRequests=new HashMap<String, UserEmailRequest>();
         mutex = new Semaphore(1,true);
         noRequest = new Semaphore(0,true);
     }
 
-    public void add(String verificationCode,UserRegistrationRequest request)
+    public void add(String verificationCode,UserEmailRequest request)
     {
         try {
             mutex.acquire();
@@ -45,7 +46,7 @@ public class VerificationMailCleanerThread extends Thread {
                 mutex.acquire();
                 while (pendingRequests.size() > 0) {
                     Date currentDate = new Date();
-                    for (UserRegistrationRequest request : pendingRequests.values()) {
+                    for (UserEmailRequest request : pendingRequests.values()) {
                         if (currentDate.getTime() - request.getExpireDate() > 0) {
                             pendingRequests.remove(request);
                         }
@@ -61,23 +62,23 @@ public class VerificationMailCleanerThread extends Thread {
         }
     }
 
-    public UserRegistrationRequest getUserRegistrationRequest(String verificationCode) {
-        UserRegistrationRequest userRegistrationRequest = null;
+    public UserEmailRequest getUserEmailRequest(String verificationCode) {
+        UserEmailRequest userEmailRequest = null;
         try {
             mutex.acquire();
-            userRegistrationRequest = pendingRequests.get(verificationCode);
+            userEmailRequest = pendingRequests.get(verificationCode);
             mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return userRegistrationRequest;
+        return userEmailRequest;
     }
 
     public boolean checkUsername(String username) throws InterruptedException {
         mutex.acquire();
-        for(UserRegistrationRequest userRegistrationRequest: pendingRequests.values())
+        for(UserEmailRequest userEmailRequest: pendingRequests.values())
         {
-            if(userRegistrationRequest.getRegistrationRequest().getUsername().equals(username))
+            if(userEmailRequest.getUsername().equals(username))
             {
                 mutex.release();
                 return false;
@@ -89,9 +90,9 @@ public class VerificationMailCleanerThread extends Thread {
 
     public boolean checkEmail(String email) throws InterruptedException {
         mutex.acquire();
-        for(UserRegistrationRequest userRegistrationRequest: pendingRequests.values())
+        for(UserEmailRequest userEmailRequest: pendingRequests.values())
         {
-            if(userRegistrationRequest.getRegistrationRequest().getEmail().equals(email))
+            if(userEmailRequest.getEmail().equals(email))
             {
                 mutex.release();
                 return false;
