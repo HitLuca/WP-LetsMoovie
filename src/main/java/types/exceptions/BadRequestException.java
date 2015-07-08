@@ -8,14 +8,19 @@ import types.enums.ErrorCode;
  * Created by etrunon on 06/07/15.
  */
 public class BadRequestException extends Exception implements OperationResult{
-    @Expose private ErrorCode code;
+
+    private ErrorCode code;
+    @Expose
+    private int errorCode;
+
+    public BadRequestException(ErrorCode code) {
+
+        this.code = code;
+        this.errorCode = code.getValue();
+    }
 
     public ErrorCode getCode() {
         return code;
-    }
-
-    public BadRequestException(ErrorCode code) {
-        this.code = code;
     }
 
 }

@@ -115,14 +115,10 @@ public class doRegister extends HttpServlet {
 
         RegistrationRequest registrationRequest = verificationMailSender.verify(request.getParameter("verificationCode"));
         response.getWriter().print("Bella sei dentro! " + registrationRequest.getUsername());
-        //TODO implementare e testare le funzionalità mancanti
-        /*userMapper.insertUser(registrationRequest.getEmail(),
-                registrationRequest.getName(),
-                registrationRequest.getSurname(),
-                registrationRequest.getUsername(),
-                registrationRequest.getPassword(),
-                registrationRequest.getPhone(),
-                registrationRequest.getBirthday());*/
+        //TODO testare le funzionalità mancanti
+        userMapper.insertUser(registrationRequest);
+        session.commit();   //Per essere sicuri che vada nel DB
+
         HttpSession session = request.getSession(true);
         session.setAttribute("username",registrationRequest.getUsername());
         session.setAttribute("role",0);
