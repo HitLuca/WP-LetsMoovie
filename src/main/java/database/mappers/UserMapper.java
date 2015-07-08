@@ -19,6 +19,12 @@ public interface UserMapper {
     @Select("SELECT * FROM users WHERE username=#{username}")
     UserData getUserData(String username);
 
+    @Select("SELECT username FROM users WHERE username = #{username}")
+    String checkUsername(String username);
+
+    @Select("SELECT email FROM users WHERE email = #{email}")
+    String checkEmail(String email);
+
     @Insert("INSERT INTO users (email, name, surname, username, password, phone_number, birthday, residual_credit, role) SELECT " +
             "#{email}," +
             "#{name}," +
