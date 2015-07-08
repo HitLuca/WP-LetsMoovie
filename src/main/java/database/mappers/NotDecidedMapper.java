@@ -10,11 +10,9 @@ import java.util.List;
  */
 public interface NotDecidedMapper {
 
-    //TODO:Test
     @Select("SELECT price FROM prices WHERE ticket_type=#{ticket_type}")
     float getTicketPrice(String ticket_type);
 
-    //TODO:Test
     @Select("SELECT * FROM prices")
     List<Ticket> getAllTickets();
 }
