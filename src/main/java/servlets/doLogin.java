@@ -26,7 +26,20 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-/**
+/** Servlet che gestisce il login degli utenti. Risponde a richieste POST in cui viene inviato un Json contenente l'username e
+ *  la password dell'utente da loggare.
+ *  Se l'utente è già loggato gli viene impedito l'accesso alla servlet, a quel punto vengono fatti controlli sulla leggitimità
+ *  dell'input e infine viene creata una sessione per l'utente.
+ *
+ *  Questa servlet lancia i seguenti errori con questo formato:
+ *
+ *  - (1)    EMPTY_REQ          Con payload {}, nel caso in cui arrivi alla servlet una richiesta vuota
+ *  - (2)    EMPTY_WRONG_FIELD  Con payload variabile nelle seguenti possibilità, quando uno o più campi non sono ritenuti
+ *                              validi dal validatore o non sono presenti nel DB.
+ *                              {Lista dei parametri in input non validabili}
+ *                              {2} nel caso l'username o la pass non sono validi (Non specifichiamo per scelta)
+ *   - (7)    ALREADY_LOGGED     con payload {}, quando l'utente non dispone di una sessione valida da cui sloggare
+ *
  * Created by etrunon on 24/06/15.
  */
 @WebServlet(name = "doLogin", urlPatterns = "/doLogin")

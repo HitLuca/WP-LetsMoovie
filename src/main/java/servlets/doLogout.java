@@ -14,7 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
+/** Servlet che gestisce il logout dalla sessione di un utente. Non riceve input, nel momento in cui un utente fa una richiesta
+ *  GET o POST se si trova in una sessione valida questa viene automaticamente invalidata e cancellata.
+ *
+ *  Questa servlet lancia i seguenti errori con questo formato:
+ *
+ *  - (10)    NOT_LOGGED_IN                 con payload {}, quando l'utente non dispone di una sessione valida da cui sloggare
+ *
  * Created by marco on 26/06/15.
  */
 @WebServlet(name = "doLogout", urlPatterns = "/doLogout")
