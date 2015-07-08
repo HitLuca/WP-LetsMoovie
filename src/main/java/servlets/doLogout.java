@@ -1,7 +1,7 @@
 package servlets;
 
 import com.google.gson.Gson;
-import json.OperationError;
+import com.google.gson.GsonBuilder;
 import json.OperationResult;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
@@ -21,10 +21,10 @@ import java.io.IOException;
 public class doLogout extends HttpServlet {
     Gson gson;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
-        OperationResult logoutStatus;
 
+    protected void doAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        OperationResult logoutStatus = null;
         try {
             //Prendo la sessione dell'utente
             HttpSession session = request.getSession(false);
@@ -34,26 +34,28 @@ public class doLogout extends HttpServlet {
             }
 
             session.invalidate();
-            //todo controllare se invalidate cancella il cookie al client
-            logoutStatus = new OperationResult();
 
         } catch (BadRequestException e) {
-            logoutStatus = new OperationError(e.getCode());
+            logoutStatus = e;
             response.setStatus(400);
 
         } catch (IllegalStateException e) {
-            logoutStatus = new OperationError();
             response.setStatus(400);
         }
         response.getOutputStream().print(gson.toJson(logoutStatus));
     }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doAll(request,response);
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doAll(request,response);
     }
 
     @Override
     public void init() {
-        gson = new Gson();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        gson = gsonBuilder.create();
     }
 }

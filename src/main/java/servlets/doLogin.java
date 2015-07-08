@@ -1,15 +1,14 @@
 package servlets;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
 import database.datatypes.UserLoginCredential;
 import database.mappers.UserMapper;
-import json.OperationError;
 import json.OperationResult;
 import json.login.request.LoginRequest;
-import json.login.response.LoginError;
 import json.login.response.SuccessfullLogin;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
@@ -32,23 +31,25 @@ import java.util.List;
  */
 @WebServlet(name = "doLogin", urlPatterns = "/doLogin")
 public class doLogin extends HttpServlet {
-    Gson gson;
+    Gson gsonWriter;
+    Gson gsonReader;
     private SqlSession session;
     private UserMapper userMapper;
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        OperationResult loginStatus;
+        OperationResult loginStatus = null;
         try {
             //Check sulla sessione già presente e l'utente è già loggato con un username
-            HttpSession session = request.getSession(false);
-            if (session != null) {
+            HttpSession session = request.getSession();
+            if (session.getAttribute("username") != null) {
+
                 throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
             }
 
             //Check sulla richiesta vuota
-            LoginRequest loginRequest = gson.fromJson(request.getReader(), LoginRequest.class);
+            LoginRequest loginRequest = gsonReader.fromJson(request.getReader(), LoginRequest.class);
             if (loginRequest == null) {
                 throw new BadRequestException(ErrorCode.EMPTY_REQ);
             }
@@ -76,16 +77,15 @@ public class doLogin extends HttpServlet {
 
         } catch (BadRequestException e) {
             //Oggetto di errore con all'interno già i campi password e username
-            loginStatus = new LoginError(e.getCode());
+            loginStatus = e;
             response.setStatus(400);
 
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
-            loginStatus = new OperationError(); //TODO Check comportamento null errorcode nel Json
             response.setStatus(400);
         }
 
         ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.print(gson.toJson(loginStatus));
+        outputStream.print(gsonWriter.toJson(loginStatus));
     }
 
     @Override
@@ -93,7 +93,9 @@ public class doLogin extends HttpServlet {
 
         session = DatabaseConnection.getFactory().openSession();
         userMapper = session.getMapper(UserMapper.class);
-        gson = new Gson();
-
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        gsonWriter = gsonBuilder.create();
+        gsonReader = new Gson();
     }
 }

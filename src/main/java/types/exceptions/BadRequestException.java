@@ -1,15 +1,14 @@
 package types.exceptions;
 
+import com.google.gson.annotations.Expose;
+import json.OperationResult;
 import types.enums.ErrorCode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by etrunon on 06/07/15.
  */
-public class BadRequestException extends Exception {
-    private ErrorCode code;
+public class BadRequestException extends Exception implements OperationResult{
+    @Expose private ErrorCode code;
 
     public ErrorCode getCode() {
         return code;

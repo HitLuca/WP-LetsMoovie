@@ -1,5 +1,6 @@
 package types.exceptions;
 
+import com.google.gson.annotations.Expose;
 import types.enums.ErrorCode;
 
 import java.util.ArrayList;
@@ -8,28 +9,23 @@ import java.util.List;
 /**
  * Created by marco on 06/07/15.
  */
-public class BadParametersException extends Exception {
-    private List<String> invalidParameters;
-    private ErrorCode code;
+public class BadParametersException extends BadRequestException {
+    @Expose private List<String> invalidParameters;
 
-    public ErrorCode getCode() {
-        return code;
-    }
-
-    public BadParametersException(ErrorCode code, List<String> invalidParameters) {
+    public BadParametersException(ErrorCode code,List<String> invalidParameters) {
+        super(code);
         this.invalidParameters = invalidParameters;
-        this.code = code;
     }
 
-    public BadParametersException(ErrorCode code, String invalidParameter)
+    public BadParametersException(ErrorCode code,String invalidParameter)
     {
-        this.code = code;
+        super(code);
         invalidParameters = new ArrayList<String>();
         invalidParameters.add(invalidParameter);
     }
+
     public List<String> getInvalidParameters()
     {
         return invalidParameters;
     }
-
 }
