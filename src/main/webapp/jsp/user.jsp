@@ -18,7 +18,8 @@
 <c:import url="/jsp/header.jsp"/>
 <div class="row content">
     <h3>Informazioni utente</h3>
-    <ul class="accordion" data-accordion>
+
+    <div class="accordion" data-accordion>
         <li class="accordion-navigation">
             <a href="#panel1a">Generalità</a>
 
@@ -29,67 +30,67 @@
                     <p></p>
 
                     <div class="row">
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
-                                <div class="medium-5 columns">
-                                    Nome:
+                                <div class="medium-4 columns">
+                                    <strong>Nome:</strong>
                                 </div>
-                                <div class="medium-7 text-center columns">
-                                    <span id="name"></span>
+                                <div class="medium-8 small-only-text-center columns">
+                                    <span id="name">Alessandro</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
-                                <div class="medium-5 columns">
-                                    Cognome:
+                                <div class="medium-4 columns">
+                                    <strong>Cognome:</strong>
                                 </div>
-                                <div class="medium-7 text-center columns">
-                                    <span id="surname"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="medium-6 columns">
-                            <div class="row">
-                                <div class="medium-5 columns">
-                                    Data di nascita:
-                                </div>
-                                <div class="medium-7 text-center columns">
-                                    <span id="birthday"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="medium-6 columns">
-                            <div class="row">
-                                <div class="medium-5 columns">
-                                    Indirizzo email:
-                                </div>
-                                <div class="medium-7 text-center columns">
-                                    <span id="email"></span>
+                                <div class="medium-8 small-only-text-center columns">
+                                    <span id="surname">Bacchiega</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
-                                <div class="medium-5 columns">
-                                    Telefono:
+                                <div class="medium-4 columns">
+                                    <strong>Data di nascita:</strong>
                                 </div>
-                                <div class="medium-7 text-center columns">
-                                    <span id="phone_number"></span>
+                                <div class="medium-8 small-only-text-center columns">
+                                    <span id="birthday">1994-06-28</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
-                                <div class="medium-5 columns">
-                                    Username:
+                                <div class="medium-4 columns">
+                                    <strong>Indirizzo email:</strong>
                                 </div>
-                                <div class="medium-7 text-center columns">
-                                    <span id="username"></span>
+                                <div class="medium-8 small-only-text-center columns">
+                                    <span id="email">alebacchiega51@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <div class="row">
+                                <div class="medium-4 columns">
+                                    <strong>Telefono:</strong>
+                                </div>
+                                <div class="medium-8 small-only-text-center columns">
+                                    <span id="phone_number">3481330281</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="medium-12 columns">
+                            <div class="row">
+                                <div class="medium-4 columns">
+                                    <strong>Username:</strong>
+                                </div>
+                                <div class="medium-8 small-only-text-center columns">
+                                    <span id="username">AleBacchiega</span>
                                 </div>
                             </div>
                         </div>
@@ -107,14 +108,14 @@
                     <p></p>
 
                     <div class="row">
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
                                 <div class="medium-12 columns">
                                     Film 1
                                 </div>
                             </div>
                         </div>
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
                                 <div class="medium-12 columns">
                                     Film 2
@@ -123,14 +124,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
                                 <div class="medium-12 columns">
                                     Film 3
                                 </div>
                             </div>
                         </div>
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
                                 <div class="medium-12 columns">
                                     Film 4
@@ -151,14 +152,14 @@
                     <p></p>
 
                     <div class="row">
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
                                 <div class="medium-12 columns">
                                     Carta 1
                                 </div>
                             </div>
                         </div>
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
                                 <div class="medium-12 columns">
                                     Carta 2
@@ -167,14 +168,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
                                 <div class="medium-12 columns">
                                     Carta 3
                                 </div>
                             </div>
                         </div>
-                        <div class="medium-6 columns">
+                        <div class="medium-12 columns">
                             <div class="row">
                                 <div class="medium-12 columns">
                                     Carta 4
@@ -185,7 +186,7 @@
                 </div>
             </div>
         </li>
-    </ul>
+    </div>
 </div>
 <c:import url="/jsp/footer.jsp"/>
 </body>
