@@ -16,6 +16,8 @@ import types.enums.ErrorCode;
 import types.exceptions.AlreadyLoggedInException;
 import types.exceptions.InvalidRegistrationException;
 import utilities.InputValidator.ModelValidator;
+import utilities.mail.MailCleanerThread;
+import utilities.mail.MailCleanerThreadFactory;
 import utilities.mail.verification.VerificationMailSender;
 
 import javax.servlet.ServletException;
@@ -49,7 +51,7 @@ public class doRegister extends HttpServlet {
     private SqlSession session;
     private UserMapper userMapper;
     private VerificationMailSender verificationMailSender;
-    private Gson gson;
+    Gson gson;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -123,15 +125,19 @@ public class doRegister extends HttpServlet {
                 registrationRequest.getPassword(),
                 registrationRequest.getPhone(),
                 registrationRequest.getBirthday());*/
+        HttpSession session = request.getSession(true);
+        session.setAttribute("username",registrationRequest.getUsername());
+        session.setAttribute("role",0);
+        response.sendRedirect("/index.jsp"); //TODO SET USER PAGE
     }
 
 
     @Override
     public void init() throws ServletException {
-
-        session = DatabaseConnection.getFactory().openSession();
+        session = DatabaseConnection.getFactory().openSession(true);
         userMapper = session.getMapper(UserMapper.class);
-        verificationMailSender = new VerificationMailSender();
+        MailCleanerThread mailCleanerThread = MailCleanerThreadFactory.getMailCleanerThread();
+        verificationMailSender = new VerificationMailSender(mailCleanerThread);
         gson = new Gson();
     }
 }
