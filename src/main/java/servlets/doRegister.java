@@ -11,8 +11,8 @@ import json.register.request.RegistrationRequest;
 import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
-import types.exceptions.BadRequestException;
 import types.exceptions.BadParametersException;
+import types.exceptions.BadRequestException;
 import utilities.InputValidator.ModelValidator;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
@@ -46,11 +46,11 @@ import java.util.List;
 @WebServlet(name = "doRegister", urlPatterns = "/doRegister")
 public class doRegister extends HttpServlet {
 
+    Gson gsonWriter;
+    Gson gsonReader;
     private SqlSession session;
     private UserMapper userMapper;
     private VerificationMailSender verificationMailSender;
-    Gson gsonWriter;
-    Gson gsonReader;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -75,7 +75,7 @@ public class doRegister extends HttpServlet {
             //Controllo se l'username e la password da registrare non sono già presenti nel db
             String username = userMapper.getDuplicateUsername(registrationRequest.getUsername());
             String mail = userMapper.getDuplicateEmail(registrationRequest.getEmail());
-            if (username != null || mail != null) {
+            if (username != null && mail != null) {
                 List<String> invList = new ArrayList<String>();
                 invList.add("username");
                 invList.add("email");
