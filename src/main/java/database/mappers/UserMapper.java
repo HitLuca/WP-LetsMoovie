@@ -1,12 +1,10 @@
 package database.mappers;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 import database.datatypes.DetailedPayment;
 import database.datatypes.UserData;
 import database.datatypes.UserLoginCredential;
+import json.register.request.RegistrationRequest;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -27,26 +25,31 @@ public interface UserMapper {
             "#{surname}," +
             "#{username}," +
             "#{password}," +
-            "#{phone_number}," +
-            "#{birthday}::DATE" +
-            "#{residual_credit}," +
-            "#{role},")
-    void insertUser(String email,String name, String surname, String username,String password, String phone_number, String birthday);
+            "#{phone}," +
+            "#{birthday}::DATE," +
+            "0," +
+            "0")
+    void insertUser(RegistrationRequest user);
 
-    @Delete("DELETE FROM user_credit_cards WHERE username=#{username}")
+    @Delete("DELETE FROM users WHERE username=#{username}")
     void deleteUser(String username);
 
     @Update("UPDATE users SET residual_credit=#{credit} + (SELECT residual_credit FROM users WHERE username=#{username}) WHERE username=#{username}")
-    void addCredit(String username, float credit);
+    void addCredit(@Param("username") String username, @Param("credit") float credit);
 
     @Update("UPDATE users SET residual_credit=(SELECT residual_credit FROM users WHERE username=#{username})-#{credit} WHERE username=#{username}")
-    void removeCredit(String username, float credit);
+    void removeCredit(@Param("username") String username, @Param("credit") float credit);
 
+    //TODO:Test
     @Select("SELECT payment_date, payment_time, id_show, username, ticket_type, price, row, 'column', room_number" +
             "FROM payments NATURAL JOIN prices NATURAL JOIN seats" +
             "WHERE username=#{username}")
     List<DetailedPayment> getUserPayments(String username);
 
+    //TODO:Test
     @Select("SELECT sum(price) FROM payments NATURAL JOIN prices WHERE username=#{username}")
     float getUserTotalPayments(String username);
+
+    @Select("SELECT credit_card_number FROM user_credit_cards WHERE username=#{username}")
+    List<String> getCreditCards(String username);
 }
