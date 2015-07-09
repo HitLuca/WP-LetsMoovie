@@ -12,7 +12,7 @@ import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
-import types.exceptions.BadParametersException;
+import types.exceptions.BadRequestExceptionWithParameters;
 import utilities.InputValidator.ModelValidator;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
@@ -65,13 +65,14 @@ public class doRegister extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("application/json");
-        OperationResult registrationStatus = null;
+        OperationResult registrationStatus;
         try {
 
             //Check sulla sessione già presente e l'utente è già loggato con un username e lo si spara fuori
             HttpSession session = request.getSession();
-            if (session.getAttribute("username") != null)
-                throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
+            if (session.getAttribute("username") != null) {
+                throw new BadRequestExceptionWithParameters(ErrorCode.ALREADY_LOGGED, (String)session.getAttribute("username"));
+            }
 
             //Provo a parsare il Json nell'oggetto RegistrationRequest. Se exception esce dalla sevlet
             RegistrationRequest registrationRequest = gsonReader.fromJson(request.getReader(), RegistrationRequest.class);
@@ -80,7 +81,7 @@ public class doRegister extends HttpServlet {
             List<String> invalidParameters = ModelValidator.validate(registrationRequest);
             //Se ho stringhe invalide lancio l'eccezione di registrazione
             if (!invalidParameters.isEmpty())
-                throw new BadParametersException(ErrorCode.EMPTY_WRONG_FIELD,invalidParameters);
+                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,invalidParameters);
 
             //Controllo se l'username e la password da registrare non sono già presenti nel db
             String username = userMapper.getDuplicateUsername(registrationRequest.getUsername());
@@ -89,18 +90,18 @@ public class doRegister extends HttpServlet {
                 List<String> invList = new ArrayList<String>();
                 invList.add("username");
                 invList.add("email");
-                throw new BadParametersException(ErrorCode.DUPLICATE_USERNAME_AND_MAIL,invList);
+                throw new BadRequestExceptionWithParameters(ErrorCode.DUPLICATE_FIELD,invList);
             } else if (username != null)
-                throw new BadParametersException(ErrorCode.DUPLICATE_USERNAME, "username");
+                throw new BadRequestExceptionWithParameters(ErrorCode.DUPLICATE_FIELD, "username");
             else if (mail != null)
-                throw new BadParametersException(ErrorCode.DUPLICATE_MAIL, "email");
+                throw new BadRequestExceptionWithParameters(ErrorCode.DUPLICATE_FIELD, "email");
 
             //verificationMailSender.checkDuplicates(RegistrationRequest registrationRequest) ritorna la lista di stringhe
             // che corrispondono ai campi duplicati, lista vuota se va bene
 
             //Invio la mail di verifica, se mail invalida tiro eccezione
             if (!verificationMailSender.sendEmail(registrationRequest, request.getRequestURL().toString())) {
-                throw new BadParametersException(ErrorCode.INVALID_MAIL, "email");
+                throw new BadRequestExceptionWithParameters(ErrorCode.INVALID_MAIL, "email");
             }
 
             registrationStatus = new SuccessfullRegistration(registrationRequest.getEmail());
@@ -110,6 +111,7 @@ public class doRegister extends HttpServlet {
             response.setStatus(400);
 
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
+            registrationStatus = new BadRequestException();
             response.setStatus(400);
         }
         ServletOutputStream outputStream = response.getOutputStream();

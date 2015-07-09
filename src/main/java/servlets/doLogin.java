@@ -52,7 +52,7 @@ public class doLogin extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        OperationResult loginStatus = null;
+        OperationResult loginStatus;
         try {
             //Check sulla sessione già presente e l'utente è già loggato con un username
             HttpSession session = request.getSession();
@@ -94,6 +94,7 @@ public class doLogin extends HttpServlet {
             response.setStatus(400);
 
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
+            loginStatus = new BadRequestException();
             response.setStatus(400);
         }
 

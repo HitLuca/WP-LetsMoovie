@@ -10,7 +10,8 @@ import json.OperationResult;
 import json.password_recovery.PasswordRecoveryRequest;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
-import types.exceptions.BadParametersException;
+import types.exceptions.BadRequestExceptionWithParameters;
+import types.exceptions.BadRequestException;
 import utilities.InputValidator.ModelValidator;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
@@ -37,30 +38,31 @@ public class PasswordRecovery extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OperationResult recoveryStatus = null;
+        OperationResult recoveryStatus;
         try
         {
             PasswordRecoveryRequest passwordRecoveryRequest = gsonReader.fromJson(request.getReader(),PasswordRecoveryRequest.class);
             List<String> invalidParameters = ModelValidator.validate(passwordRecoveryRequest);
             if(!invalidParameters.isEmpty())
             {
-                throw new BadParametersException(ErrorCode.EMPTY_WRONG_FIELD,"email");
+                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,"email");
             }
 
             String username = userMapper.getUsernameByEmail(passwordRecoveryRequest.getEmail());
 
             if(username==null)
             {
-                throw new BadParametersException(ErrorCode.EMPTY_WRONG_FIELD,"email");
+                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,"email");
             }
             passwordRecoveryMailSender.sendEmail(passwordRecoveryRequest.getEmail(),username,request.getRequestURL().toString());
 
 
-        }catch (BadParametersException e) {
+        }catch (BadRequestExceptionWithParameters e) {
             recoveryStatus = e;
             response.setStatus(400);
 
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
+            new BadRequestException();
             response.setStatus(400);
         }
     }

@@ -46,12 +46,13 @@ public class doLogout extends HttpServlet {
             response.setStatus(400);
 
         } catch (IllegalStateException e) {
+            logoutStatus = new BadRequestException();
             response.setStatus(400);
         }
         response.getOutputStream().print(gson.toJson(logoutStatus));
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doAll(request,response);
+        doAll(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

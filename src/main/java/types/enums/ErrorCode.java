@@ -4,11 +4,10 @@ package types.enums;
  * Created by marco on 07/07/15.
  */
 public enum ErrorCode {
+    BAD_REQUEST(0),
     EMPTY_REQ(1),
     EMPTY_WRONG_FIELD(2),
-    DUPLICATE_USERNAME(3),//TODO remove and fix
-    DUPLICATE_MAIL(4),
-    DUPLICATE_USERNAME_AND_MAIL(5),
+    DUPLICATE_FIELD(3),
     USER_NOT_FOUND(6),
     ALREADY_LOGGED(7),
     NON_USATO_DA_SOSTITUIRE(8),

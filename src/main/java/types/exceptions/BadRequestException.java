@@ -19,6 +19,11 @@ public class BadRequestException extends Exception implements OperationResult{
         this.errorCode = code.getValue();
     }
 
+    public BadRequestException()
+    {
+        code = ErrorCode.BAD_REQUEST;
+    }
+
     public ErrorCode getCode() {
         return code;
     }
