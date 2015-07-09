@@ -51,24 +51,7 @@
 </div>
 <c:import url="/jsp/footer.jsp"/>
 
-<script>
-
-    function successNotifier(data) {
-        saveNotification("success", "Benvenuto, " + data.username + "!");
-        window.location.assign("/");
-
-    }
-    function errorNotifier(data) {
-        alertify.error("Username o password errata!");
-        var passwordField = $("input[type='password']");
-        passwordField.val('');
-    }
-
-    $(document).ready(function () {
-        PostForm("loginForm", successNotifier, errorNotifier)
-    });
-
-</script>
+<script src="<c:url value="/javascript/login.js"/>"></script>
 
 </body>
 </html>

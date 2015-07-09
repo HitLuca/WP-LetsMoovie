@@ -75,6 +75,11 @@ function showNotification() {
                 case "success":
                     alertify.success(notification.message);
                     break;
+                case "error":
+                    alertify.error(notification.message);
+                    break;
+                case "warning":
+                    alertify.warning(notification.message);
             }
         }
     } else {
