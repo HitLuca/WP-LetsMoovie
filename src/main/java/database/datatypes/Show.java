@@ -53,4 +53,12 @@ public class Show {
     public void setId_show(int id_show) {
         this.id_show = id_show;
     }
+
+    public void setShow_date(String show_date) {
+        this.show_date = java.sql.Date.valueOf(show_date);
+    }
+
+    public void setShow_time(String show_time) {
+        this.show_time = java.sql.Time.valueOf(show_time);
+    }
 }
