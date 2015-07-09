@@ -4,6 +4,7 @@ package database.datatypes;
  * Created by hitluca on 06/07/15.
  */
 public class Actor {
+    private int id_film;
     private String actor_name;
     private String role;
     private String url_photo;
@@ -30,5 +31,13 @@ public class Actor {
 
     public void setUrl_photo(String url_photo) {
         this.url_photo = url_photo;
+    }
+
+    public int getId_film() {
+        return id_film;
+    }
+
+    public void setId_film(int id_film) {
+        this.id_film = id_film;
     }
 }
