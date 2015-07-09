@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <%--FOUNDATION--%>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/normalize.min.css">
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/lib/css/normalize.min.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/lib/css/foundation.min.css"/>">
 
     <%--MODERNIZR--%>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/modernizr.js"></script>
+    <script src="<c:url value="/lib/js/modernizr.js"/>"></script>
 
     <%--ALERTIFY (NOTIFICHE E POPUP)--%>
-    <script src="http://cdn.jsdelivr.net/alertifyjs/1.4.1/alertify.min.js"></script>
-    <link rel="stylesheet" href="http://cdn.jsdelivr.net/alertifyjs/1.4.1/css/alertify.min.css"/>
-    <link rel="stylesheet" href="http://cdn.jsdelivr.net/alertifyjs/1.4.1/css/themes/default.min.css"/>
+    <link rel="stylesheet" href="<c:url value="/lib/css/alertify.min.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/lib/css/default.min.css"/>"/>
 
     <%--CSS PERSONALE--%>
     <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
