@@ -1,5 +1,5 @@
 INSERT INTO users (email, name, surname, username, password, phone_number, birthday, residual_credit, role) VALUES
-  ('mario.rossi@gmail.com', 'Mario', 'Rossi', 'MarioRossi', '1mariorossi', '+39 3216598564', '1990-05-13', 12.50, 0)
+  ('mario.rossi@gmail.com', 'Mario', 'Rossi', 'MarioRossi', '1mariorossi', '+39 3216598564', '1990-05-13', 12.50, 0);
 INSERT INTO users (email, name, surname, username, password, phone_number, birthday, residual_credit, role) VALUES
   ('andrea.bianchi@gmail.com', 'Andrea', 'Bianchi', 'AndreaBianchi', '2andreabianchi', '+39 3678542102', '1989-01-01',
    3.00, 0);
