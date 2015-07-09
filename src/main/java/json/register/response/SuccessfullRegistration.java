@@ -7,9 +7,9 @@ import json.OperationResult;
  * Created by marco on 07/07/15.
  */
 public class SuccessfullRegistration implements OperationResult {
-    @Expose String email;
-    public SuccessfullRegistration(String email)
+    @Expose String username;
+    public SuccessfullRegistration(String username)
     {
-        this.email = email;
+        this.username = username;
     }
 }
