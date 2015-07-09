@@ -104,6 +104,6 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>resetPassword</servlet-name>
-        <url-pattern>/setNewPassword</url-pattern>
+        <url-pattern>/passwordRecovery</url-pattern>
     </servlet-mapping>
 </web-app>
