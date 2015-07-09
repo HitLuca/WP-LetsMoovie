@@ -14,7 +14,7 @@
         <div class="small-11 small-centered large-6 medium-8 columns">
             <h3>Accedi al tuo account:</h3>
 
-            <form action="doLogin" id="loginForm" data-abide="ajax" method="post">
+            <form action="/api/login" id="loginForm" data-abide="ajax" method="post">
                 <%--<input type="hidden" value="${param.sourcePage}" name="sourcePage">--%>
                 <div>
                     <label>
@@ -48,7 +48,7 @@
 
             <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
                  role="dialog">
-                <form id="passwordRecovery" data-abide="ajax" action="">
+                <form id="passwordRecovery" data-abide="ajax" action="/api/passwordRecovery">
                     <h2 id="modalTitle">Hai dimenticato la tua password?</h2>
 
                     <p></p>
@@ -83,7 +83,7 @@
                  role="dialog" data-options="close_on_background_click:false">
                 <h2 id="secondModalTitle"> Controlla la tua casella di posta elettronica!</h2>
 
-                <form id="resendEmail" data-abide="ajax" action="">
+                <form id="resendEmail" data-abide="ajax" action="/api/passwordRecovery">
                     <%--TODO: CONTROLLARE SE NECESSARIO--%>
                     <p></p>
 

@@ -20,7 +20,7 @@
     <div class="row content">
         <h3>Completa i seguenti campi per effettuare la registrazione:</h3>
 
-        <form action="doRegister" method="post" data-abide="ajax" id="registerForm">
+        <form action="/api/register" method="post" data-abide="ajax" id="registerForm">
             <fieldset>
                 <legend>Generalità utente</legend>
                 <div class="row">

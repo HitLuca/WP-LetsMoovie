@@ -11,8 +11,8 @@ import json.password_recovery.request.PasswordRecoveryRequest;
 import json.password_recovery.response.SuccessfullPasswordRecovery;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
-import types.exceptions.BadRequestExceptionWithParameters;
 import types.exceptions.BadRequestException;
+import types.exceptions.BadRequestExceptionWithParameters;
 import utilities.InputValidator.ModelValidator;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
@@ -41,6 +41,7 @@ public class PasswordRecovery extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OperationResult recoveryStatus;
+        response.setContentType("application/json");
         try
         {
             PasswordRecoveryRequest passwordRecoveryRequest = gsonReader.fromJson(request.getReader(),PasswordRecoveryRequest.class);

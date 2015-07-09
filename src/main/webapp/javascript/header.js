@@ -6,7 +6,7 @@
 $("#logout").click(function (event) {
     event.preventDefault();
 
-    var url = "/doLogout";
+    var url = "/api/logout";
 
     var posting = $.post(url);
 

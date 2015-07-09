@@ -12,7 +12,7 @@ function successNotifier(data) {
 function errorNotifier(data) {
     var JSON = data.responseJSON;
     var error = JSON.errorCode;
-    var fields = JSON.invalidParameters;
+    var fields = JSON.parameters;
     var i = 0;
     switch (error) {
         case 2:
