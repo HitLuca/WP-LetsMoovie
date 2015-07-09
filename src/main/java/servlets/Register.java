@@ -98,8 +98,8 @@ public class Register extends HttpServlet {
                 throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,invalidParameters);
 
             //Controllo se l'username e la password da registrare non sono già presenti nel db
-            String username = userMapper.getDuplicateUsername(registrationRequest.getUsername());
-            String mail = userMapper.getDuplicateEmail(registrationRequest.getEmail());
+            String username = userMapper.checkUsername(registrationRequest.getUsername());
+            String mail = userMapper.checkEmail(registrationRequest.getEmail());
             if (username != null && mail != null) {
                 List<String> invList = new ArrayList<String>();
                 invList.add("username");

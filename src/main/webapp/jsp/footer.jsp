@@ -15,6 +15,6 @@
     </div>
 </div>
 
-<c:import url="scripts.jsp"/>
+<c:import url="/jsp/scripts.jsp"/>
 
 <%-- contattaci apre pagina per inviare la mail, about us descrizione azienda, T&C: Tn'C fittizzi, sito crato da: una nostra mini bio --%>
