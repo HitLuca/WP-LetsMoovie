@@ -19,6 +19,9 @@ public interface UserMapper {
     @Select("SELECT * FROM users WHERE username=#{username}")
     UserData getUserData(String username);
 
+    @Select("SELECT username FROM users WHERE email = #{email}")
+    String getUsernameByEmail(String email);
+
     @Select("SELECT username FROM users WHERE username = #{username}")
     String getDuplicateUsername(String username);
 

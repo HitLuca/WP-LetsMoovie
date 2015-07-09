@@ -1,4 +1,4 @@
-package utilities.mail.verification;
+package utilities.mail;
 
 import com.sendgrid.SendGrid;
 import com.sendgrid.SendGridException;

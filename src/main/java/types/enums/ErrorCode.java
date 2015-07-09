@@ -6,7 +6,7 @@ package types.enums;
 public enum ErrorCode {
     EMPTY_REQ(1),
     EMPTY_WRONG_FIELD(2),
-    DUPLICATE_USERNAME(3),
+    DUPLICATE_USERNAME(3),//TODO remove and fix
     DUPLICATE_MAIL(4),
     DUPLICATE_USERNAME_AND_MAIL(5),
     USER_NOT_FOUND(6),

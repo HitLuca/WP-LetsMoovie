@@ -11,12 +11,12 @@ import json.register.request.RegistrationRequest;
 import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
-import types.exceptions.BadParametersException;
 import types.exceptions.BadRequestException;
+import types.exceptions.BadParametersException;
 import utilities.InputValidator.ModelValidator;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
-import utilities.mail.verification.VerificationMailSender;
+import utilities.mail.VerificationMailSender;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;

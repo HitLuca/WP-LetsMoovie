@@ -8,7 +8,7 @@ public class UserEmailRequest {
     private String username;
     private String email;
 
-    protected UserEmailRequest(long expireDate, String username, String email)
+    public UserEmailRequest(long expireDate, String username, String email)
     {
         this.expireDate = expireDate;
         this.username = username;
