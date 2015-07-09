@@ -40,6 +40,9 @@ public interface UserMapper {
             "0")
     void insertUser(RegistrationRequest user);
 
+    @Update("UPDATE users SET password=#{password} WHERE username=#{username}")
+    void updatePassword(@Param("username") String username, @Param("password") String password);
+
     @Delete("DELETE FROM users WHERE username=#{username}")
     void deleteUser(String username);
 

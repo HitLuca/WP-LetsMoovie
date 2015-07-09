@@ -1,4 +1,4 @@
-package json.password_recovery;
+package json.password_recovery.request;
 
 import types.annotations.toSanitize;
 import utilities.InputValidator.Regex;
