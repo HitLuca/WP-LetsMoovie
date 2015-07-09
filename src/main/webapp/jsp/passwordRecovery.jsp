@@ -23,7 +23,8 @@
                     </p>
                 </div>
             </div>
-            <form action="/api/setNeWPassword" id="setNewPassoword" data-abide="ajax">
+            <form action="<c:url value="/api/setNewPassword"/>" id="setNewPassoword" data-abide="ajax">
+                <input type="hidden" name="verificationCode" value="${param.verificationCode}">
                 <div class="row">
                     <div class="medium-12 columns">
                         <label>Password:
@@ -53,6 +54,6 @@
 </div>
 <c:import url="/jsp/footer.jsp"/>
 
-<script src="<c:url value="/javascript/login.js"/>"></script>
+<script src="<c:url value="/javascript/passwordRecovery.js"/>"></script>
 </body>
 </html>
