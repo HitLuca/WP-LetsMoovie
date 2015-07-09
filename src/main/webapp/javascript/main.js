@@ -1,7 +1,3 @@
-/**
- * Created by mion00 on 19/06/15.
- */
-
 "use strict";
 
 alertify.set('notifier', 'position', 'top-right');
@@ -11,9 +7,14 @@ function PostForm(formID, doneCallback, failCallback) {
         event.preventDefault();
         var form = $(this);
 
-        var button = form.find('input[type="submit"]').first();
-        //console.log(button);
-        button.attr("disabled", true);
+        var button = form.find(".ladda-button").first();
+
+        if (button != null) {
+            //ANIMAZIONE DI CARICAMENTO
+            button.attr("disabled", '');
+            var l = Ladda.create(button[0]);
+            l.start();
+        }
         //Serializza la form in JSON
         var JSON = form.serializeJSON();
 
@@ -28,7 +29,10 @@ function PostForm(formID, doneCallback, failCallback) {
         posting.done(doneCallback);
         posting.fail(failCallback);
         posting.always(function () {
-            button.attr("disabled", false);
+            if (button != null) {
+                button.removeAttr("disabled");
+                l.stop();
+            }
         });
     });
 

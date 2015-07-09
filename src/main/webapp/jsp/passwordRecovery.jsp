@@ -19,7 +19,7 @@
                 <div class="medium-12 columns">
                     <p>
                         Completando i campi sottostanti con una nuova password avrai la possibilità
-                        di impostarne una nuova.<br>
+                        di impostarne una nuova.
                     </p>
                 </div>
             </div>
@@ -44,7 +44,11 @@
 
                 <div class="row">
                     <div class="medium-12 text-center columns">
-                        <button class="button radius ">Conferma</button>
+                        <button class="button radius ladda-button" data-style="zoom-out">
+                            <span class="ladda-label">
+                                Conferma
+                            </span>
+                        </button>
                     </div>
                 </div>
             </form>
