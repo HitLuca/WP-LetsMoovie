@@ -40,11 +40,68 @@
                         <button class="button radius expand">Login</button>
                     </div>
                     <div class="medium-6 columns">
-                        <button class="button radius expand">Password dimenticata?</button>
-                        <%--TODO: inserire link a password dimenticata--%>
+                        <a href="#" class="button radius expand" data-reveal-id="firstModal">Password dimenticata?</a>
                     </div>
                 </div>
             </form>
+            <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+                 role="dialog">
+                <form id="passwordRecovery">
+                    <h2 id="modalTitle">Hai dimenticato la tua password?</h2>
+
+                    <p></p>
+
+                    <p>Per reimpostare la nuova password, inserisci il tuo indirizzo email nel campo sottostante.<br>
+                        Let's Moovie ti invierà le istruzioni per reimpostare la nuova password all'inidirizzo email
+                        collegato a questo account.</p>
+
+                    <div class="row text-center">
+                        <div class="medium-4 columns">
+                            <h3>Email:</h3>
+                        </div>
+                        <div class="medium-8 columns">
+                            <input type="email" id="emailadd" name="email" placeholder="mario.rossi@gmail.com"
+                                   required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="medium-12 centered text-center columns">
+                            <a href="#" class="button radius" data-reveal-id="secondModal">Invia</a>
+                        </div>
+                    </div>
+                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                </form>
+                <form id="sendEmail">
+                    <div id="secondModal" class="reveal-modal" data-reveal aria-labelledby="secondModalTitle"
+                         aria-hidden="true" role="dialog" data-options="close_on_background_click:false">
+                        <h2 id="secondModalTitle"> Controlla la tua casella di posta elettronica!</h2>
+
+                        <p></p>
+
+                        <p>Abbiamo provveduto ad inviarti una e-mail all'indirizzo inserito.<br>
+                            Per completare correttamente la procedura di recupero password segui le istruzioni che trovi
+                            nell'e-mail.
+                        </p>
+
+                        <p></p>
+
+                        <h3>L'e-mail non ti è ancora arrivata?</h3>
+
+                        <p>Ti consigliamo di attendere qualche minuto o di controllare nella cartella Spam. <br>
+                            Nel caso tu non l'abbia effettivamente ricevuta, fai click sul bottone "Invia nuovamente".
+                        </p>
+
+                        <form id="resendEmail">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    <button class="button radius">Invia nuovamente</button>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <div class="push"></div>
