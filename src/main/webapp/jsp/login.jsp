@@ -46,7 +46,7 @@
             </form>
             <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
                  role="dialog">
-                <form id="passwordRecovery">
+                <form id="passwordRecovery" data-abide="ajax">
                     <h2 id="modalTitle">Hai dimenticato la tua password?</h2>
 
                     <p></p>
@@ -60,13 +60,16 @@
                             <h3>Email:</h3>
                         </div>
                         <div class="medium-8 columns">
-                            <input type="email" id="emailadd" name="email" placeholder="mario.rossi@gmail.com"
-                                   required/>
+                            <label>
+                                <input type="email" id="emailadd" name="email" placeholder="mario.rossi@gmail.com"
+                                       required/>
+                            </label>
+                            <small class="error">Indirizzo email obbligatorio!</small>
                         </div>
                     </div>
                     <div class="row">
                         <div class="medium-12 centered text-center columns">
-                            <a href="#" class="button radius" data-reveal-id="secondModal">Invia</a>
+                            <button class="button radius">Invia</button>
                         </div>
                     </div>
                     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
