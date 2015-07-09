@@ -10,6 +10,8 @@ import types.enums.ErrorCode;
 public class BadRequestException extends Exception implements OperationResult{
 
     private ErrorCode code;
+
+    //Permette di stampare l'intero al posto dell'identificatore dell'Enum
     @Expose
     private int errorCode;
 

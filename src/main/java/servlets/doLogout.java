@@ -18,7 +18,7 @@ import java.io.IOException;
  *  GET o POST se si trova in una sessione valida questa viene automaticamente invalidata e cancellata.
  *
  *  Questa servlet lancia i seguenti errori con questo formato:
- *
+ *  - (0)   BAD_REQUEST         con payload vuoto, lanciato quando succedono errori gravi all'interno della servlet
  *  - (10)    NOT_LOGGED_IN                 con payload {}, quando l'utente non dispone di una sessione valida da cui sloggare
  *
  * Created by marco on 26/06/15.
