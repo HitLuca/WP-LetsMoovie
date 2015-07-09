@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <c:url var="url" value="/jsp/head.jsp">
-    <c:param name="title" value="Registration"/>
+    <c:param name="title" value="Registrazione"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
@@ -113,21 +113,7 @@
 
 <c:import url="/jsp/footer.jsp"/>
 
-<script>
-
-    function successNotifier(data) {
-        saveNotification("success", "Registrazione effettuata!");
-        alertify.success("Registrazione effettuata!");
-    }
-    function errorNotifier(data) {
-        console.log(data.responseJSON.errorCode);
-//        alertify.error(data.errorCode,0);
-    }
-
-    $(document).ready(function () {
-        PostForm("registerForm", successNotifier, errorNotifier)
-    });
-</script>
+<script src="<c:url value="/javascript/registration.js"/>"></script>
 
 </body>
 </html>

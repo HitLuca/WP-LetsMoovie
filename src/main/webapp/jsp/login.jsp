@@ -14,7 +14,7 @@
         <div class="small-11 small-centered large-6 medium-8 columns">
             <h3>Accedi al tuo account:</h3>
 
-            <form action="doLogin" id="loginForm" data-abide="ajax">
+            <form action="doLogin" id="loginForm" data-abide="ajax" method="post">
                 <%--<input type="hidden" value="${param.sourcePage}" name="sourcePage">--%>
                 <div>
                     <label>
@@ -40,35 +40,83 @@
                         <button class="button radius expand">Login</button>
                     </div>
                     <div class="medium-6 columns">
-                        <button class="button radius expand">Password dimenticata?</button>
-                        <%--TODO: inserire link a password dimenticata--%>
+                        <a href="#" class="button radius expand" data-reveal-id="firstModal">Password dimenticata?</a>
                     </div>
                 </div>
             </form>
+
+
+            <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+                 role="dialog">
+                <form id="passwordRecovery" data-abide="ajax" action="">
+                    <h2 id="modalTitle">Hai dimenticato la tua password?</h2>
+
+                    <p></p>
+
+                    <p>Per reimpostare la nuova password, inserisci il tuo indirizzo email nel campo sottostante.<br>
+                        Let's Moovie ti invierà le istruzioni per reimpostare la nuova password all'inidirizzo email
+                        collegato a questo account.</p>
+
+                    <div class="row text-center">
+                        <div class="medium-4 columns">
+                            <h3>Email:</h3>
+                        </div>
+                        <div class="medium-8 columns">
+                            <label>
+                                <input type="email" id="emailadd" name="email" placeholder="mario.rossi@gmail.com"
+                                       required/>
+                            </label>
+                            <small class="error">Indirizzo email obbligatorio!</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="medium-12 centered text-center columns">
+                            <button class="button radius">Invia</button>
+                        </div>
+                    </div>
+                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                </form>
+            </div>
+
+
+            <div id="secondModal" class="reveal-modal" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true"
+                 role="dialog" data-options="close_on_background_click:false">
+                <h2 id="secondModalTitle"> Controlla la tua casella di posta elettronica!</h2>
+
+                <form id="resendEmail" data-abide="ajax" action="">
+                    <%--TODO: CONTROLLARE SE NECESSARIO--%>
+                    <p></p>
+
+                    <p>Abbiamo provveduto ad inviarti una e-mail all'indirizzo inserito.<br>
+                        Per completare correttamente la procedura di recupero password segui le istruzioni che trovi
+                        nell'e-mail.
+                    </p>
+
+                    <p></p>
+
+                    <h3>L'e-mail non ti è ancora arrivata?</h3>
+
+                    <p>Ti consigliamo di attendere qualche minuto o di controllare nella cartella Spam. <br>
+                        Nel caso tu non l'abbia effettivamente ricevuta, fai click sul bottone "Invia nuovamente".
+                    </p>
+
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <button class="button radius">Invia nuovamente</button>
+                        </div>
+                    </div>
+                </form>
+                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+            </div>
+
+
         </div>
     </div>
     <div class="push"></div>
 </div>
 <c:import url="/jsp/footer.jsp"/>
 
-<script>
-
-    function successNotifier(data) {
-        saveNotification("success", "Benvenuto, " + data.username + "!");
-        window.location.assign("/");
-
-    }
-    function errorNotifier(data) {
-        alertify.error("Username o password errata!");
-        var passwordField = $("input[type='password']");
-        passwordField.val('');
-    }
-
-    $(document).ready(function () {
-        PostForm("loginForm", successNotifier, errorNotifier)
-    });
-
-</script>
+<script src="<c:url value="/javascript/login.js"/>"></script>
 
 </body>
 </html>
