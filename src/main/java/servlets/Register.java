@@ -39,18 +39,34 @@ import java.util.List;
  * Fatto questo, invia una mail all'utente. Quando viene clickato il link viene fatto il controllo sulla scadenza
  * inserisce nel db il nuovo utente con tutti i dati associati e reindirizza l'utente sulla pagina dove si trovava
  * prima di fare la registrazione.
+ * @api {post} /api/register
+ * @apiName Register
+ * @apiGroup Registration
  *
- * Questa servlet lancia i seguenti errori con questo formato:
- *  - (0)   BAD_REQUEST                     con payload vuoto, lanciato quando succedono errori gravi all'interno della servlet
- *  - (2)   EMPTY_WRONG_FIELD               con payload avente la seguente possibilità. Viene lanciato quando uno o più campi sono vuoti
- *                                          oppure errati (non validabili)
- *                                              {tutti i parametri di input che non passano la validazione}
- *  - (3)    DUPLICATE_FIELD                con payload {"username"} per esempio quando l'username e/o la mail in input è già
- *                                          presente nel DB
- *  - (7)    ALREADY_LOGGED                 con payload vuoto. Se è già presente una sessione valida con quel client
- *  - (9)    INVALID_MAIL                   con payload {"mail"} quando la mail in input non è valida e non può ricevere
- *                                          la mail di registrazione
- * Created by etrunon on 24/06/15.
+ * @apiParam {String} username Username.
+ * @apiParam {String} password password.
+ * @apiParam {String} birthday data di nascita
+ * @apiParam {String} name nome dell'utente
+ * @apiParam {String} surname cognome dell'utente
+ * @apiParam {String} email email dell'utente
+ * @apiParam {String} phone numero di telefono dell'utente
+ *
+ * @apiSuccess {String} email l'indirizzo email a cui è stata inviata la mail
+ *
+ * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
+ *
+ * @apiError (2) {int} errorCode Viene lanciato quando uno o più campi sono vuoti oppure errati (non validabili)
+ * @apiError (2) {String[]} parameters parametri di input che non passano la validazione
+ *
+ * @apiError (3) {int} errorCode Viene lanciato quando uno o più campi sono già presenti nel database
+ * @apiError (3) {String[]} parameters parametri di input duplicati
+ *
+ *
+ * @apiError (7) {int} errorCode è già presente una sessione valida
+ *
+ * @apiError (9) {int} errorCode la mail in input non è valida e non può ricevere la mail di registrazione
+ * @apiError (9) {String[]} parameters la mail non valida
+ *
  */
 @WebServlet(name = "Register", urlPatterns = "/api/register")
 public class Register extends HttpServlet {

@@ -29,7 +29,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * Created by marco on 08/07/15.
+ * @api {post} /api/passwordRecovery
+ * @apiName PasswordRecovery
+ * @apiGroup PasswordRecovery
+ *
+ * @apiParam {String} email l'email a cui inviare il recupero password
+ *
+ * @apiSuccess {String} email l'indirizzo email a cui è stata inviata la mail
+ *
+ * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
+ *
+ * @apiError (2) {int} errorCode Viene lanciato quando uno o più campi sono vuoti oppure errati (non validabili)
+ * @apiError (2) {String[]} parameters parametri di input che non passano la validazione
+ *
+ * @apiError (7) {int} errorCode è già presente una sessione valida
+ *
+ * @apiError (9) {int} errorCode la mail in input non è valida e non può ricevere la mail di registrazione
+ * @apiError (9) {String[]} parameters la mail non valida
+ *
  */
 @WebServlet(name = "PasswordRecovery",  urlPatterns = "/api/passwordRecovery")
 public class PasswordRecovery extends HttpServlet {
@@ -57,7 +74,10 @@ public class PasswordRecovery extends HttpServlet {
             {
                 throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,"email");
             }
-            passwordRecoveryMailSender.sendEmail(passwordRecoveryRequest.getEmail(),username,request.getRequestURL().toString());
+            if(!passwordRecoveryMailSender.sendEmail(passwordRecoveryRequest.getEmail(),username,request.getRequestURL().toString()))
+            {
+                throw new BadRequestExceptionWithParameters(ErrorCode.INVALID_MAIL,"email");
+            }
             recoveryStatus = new SuccessfullPasswordRecovery(passwordRecoveryRequest.getEmail());
 
         }catch (BadRequestExceptionWithParameters e) {

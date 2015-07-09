@@ -27,15 +27,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+
 /**
- * Servlet di conferma registrazione
+ * @api {post} /api/confirmRegistration
+ * @apiName ConfirmRegistration
+ * @apiGroup Registration
  *
- * Questa servlet lancia i seguenti errori con questo formato:
+ * @apiParam {String} verificationCode il codice di verifica spedito via mail
  *
- *  - (7)    ALREADY_LOGGED                 con payload vuoto. Se è già presente una sessione valida con quel client
- *  - (11)   WRONG_VERIFICATION_CODE
+ * @apiSuccess {String} username l'username dell'utente appena registrato.
  *
- * Created by marco on 09/07/15.
+ * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
+ *
+ * @apiError (7) {int} errorCode è già presente una sessione valida con quel client
+ *
+ * @apiError (11) {int} errorCode l'utente non dispone di una sessione valida da cui sloggare
  */
 @WebServlet(name = "ConfirmRegistration", urlPatterns = "/api/confirmRegistration")
 public class ConfirmRegistration extends HttpServlet {

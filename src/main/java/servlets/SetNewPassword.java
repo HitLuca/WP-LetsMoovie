@@ -29,8 +29,22 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * Created by marco on 09/07/15.
+ * @api {post} /api/setNewPassword
+ * @apiName SetNewPassword
+ * @apiGroup PasswordRecovery
+ *
+ * @apiParam {String} password password.
+ * @apiParam {String} verificationCode il codice di verifica relativo
+ *
+ *
+ * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
+ *
+ * @apiError (2) {int} errorCode Viene lanciato quando uno o più campi sono vuoti oppure errati (non validabili)
+ * @apiError (2) {String[]} parameters parametri di input che non passano la validazione
+ *
+ * @apiError (11) {int} errorCode Codice di conferma non valido
  */
+
 @WebServlet(name = "SetNewPassword", urlPatterns = "/api/setNewPassword")
 public class SetNewPassword extends HttpServlet {
     Gson gsonWriter;

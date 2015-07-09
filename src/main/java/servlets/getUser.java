@@ -37,6 +37,35 @@ import java.util.List;
  * <p/>
  * Created by etrunon on 08/07/15.
  */
+
+/**
+ * @api {get} /api/getUser
+ * @apiName GetUser
+ * @apiGroup GetUser
+ *
+ * @apiParam {String} username l'username di cui si vogliono ottenere i dati
+ *
+ * @apiSuccess {String} username l'username dell'utente richiesto
+ * @apiSuccess {String} name il nome dell'utente
+ * @apiSuccess {String} surname il cognome dell'utente
+ * @apiSuccess {String} email l'email dell'utente
+ * @apiSuccess {String} phone_number il numero di telefono dell'utente
+ * @apiSuccess {String} bithday la data di nascita dell'utente
+ * @apiSuccess {float} residual_credit il credito residuo dell'utente
+ * @apiSuccess {int} role i privilegi dell'utente
+ *
+ * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
+ *
+ * @apiError (1) {int} errorCode Json in input non ha contenuto.
+ *
+ * @apiError (7) {int} errorCode l'utente non ha nessun login effettuato.
+ *
+ * @apiError (8) {int} errorCode l'utente non dispone di un livello di autentificazione sufficente a vedere i dati.
+ *
+ * @apiError (10) {int} errorCode l'utente non è loggato
+ */
+
+
 @WebServlet(name = "getUser", urlPatterns = "/api/getUser")
 public class getUser extends HttpServlet {
     Gson gsonWriter;

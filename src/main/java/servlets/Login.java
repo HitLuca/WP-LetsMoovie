@@ -43,6 +43,30 @@ import java.util.List;
  *
  * Created by etrunon on 24/06/15.
  */
+
+
+
+/**
+ * @api {post} /api/login
+ * @apiName Login
+ * @apiGroup Login
+ *
+ * @apiParam {String} username Username.
+ * @apiParam {String} password password.
+ *
+ * @apiSuccess {String} username Username.
+ *
+ *
+ * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
+ *
+ * @apiError (1) {int} errorCode richiesta vuota
+ *
+ * @apiError (2) {int} errorCode quando uno o più campi non sono ritenuti validi dal validatore o non sono presenti nel DB
+ * @apiError (2) {String[]} invalidParameters parametri invalidi
+ *
+ * @apiError (7) {int} errorCode l'utente non dispone di una sessione valida da cui sloggare
+ *
+ */
 @WebServlet(name = "Login", urlPatterns = "/api/login")
 public class Login extends HttpServlet {
     Gson gsonWriter;
