@@ -33,6 +33,7 @@ import java.util.List;
  *
  *  Questa servlet lancia i seguenti errori con questo formato:
  *
+ *  - (0)   BAD_REQUEST         con payload vuoto, lanciato quando succedono errori gravi all'interno della servlet
  *  - (1)    EMPTY_REQ          Con payload {}, nel caso in cui arrivi alla servlet una richiesta vuota
  *  - (2)    EMPTY_WRONG_FIELD  Con payload variabile nelle seguenti possibilità, quando uno o più campi non sono ritenuti
  *                              validi dal validatore o non sono presenti nel DB.
@@ -89,7 +90,6 @@ public class doLogin extends HttpServlet {
             loginStatus = new SuccessfullLogin(loginRequest.getUsername());
 
         } catch (BadRequestException e) {
-            //Oggetto di errore con all'interno già i campi password e username
             loginStatus = e;
             response.setStatus(400);
 

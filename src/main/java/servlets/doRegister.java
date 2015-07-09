@@ -41,13 +41,12 @@ import java.util.List;
  * prima di fare la registrazione.
  *
  * Questa servlet lancia i seguenti errori con questo formato:
+ *  - (0)   BAD_REQUEST                     con payload vuoto, lanciato quando succedono errori gravi all'interno della servlet
  *  - (2)   EMPTY_WRONG_FIELD               con payload avente la seguente possibilità. Viene lanciato quando uno o più campi sono vuoti
  *                                          oppure errati (non validabili)
  *                                              {tutti i parametri di input che non passano la validazione}
- *  - (3)    DUPLICATE_USERNAME             con payload {"username"} quando l'username in input è già presente nel DB
- *  - (4)    DUPLICATE_MAIL                 con payload {"mail"} quando la mail in input è già presente nel DB
- *  - (5)    DUPLICATE_USERNAME_AND_MAIL    con payload {"username", "mail"} quando l'username e la mail in input sono
- *                                          già presente nel DB
+ *  - (3)    DUPLICATE_FIELD                con payload {"username"} per esempio quando l'username e/o la mail in input è già
+ *                                          presente nel DB
  *  - (7)    ALREADY_LOGGED                 con payload vuoto. Se è già presente una sessione valida con quel client
  *  - (9)    INVALID_MAIL                   con payload {"mail"} quando la mail in input non è valida e non può ricevere
  *                                          la mail di registrazione
