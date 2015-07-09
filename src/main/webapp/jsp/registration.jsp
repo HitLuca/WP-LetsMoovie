@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <c:url var="url" value="/jsp/head.jsp">
-    <c:param name="title" value="Registration"/>
+    <c:param name="title" value="Registrazione"/>
 </c:url>
 <c:import url="${url}"/>
 <body>

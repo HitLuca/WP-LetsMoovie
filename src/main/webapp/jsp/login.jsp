@@ -15,7 +15,6 @@
             <h3>Accedi al tuo account:</h3>
 
             <form action="doLogin" id="loginForm" data-abide="ajax">
-                <%--<input type="hidden" value="${param.sourcePage}" name="sourcePage">--%>
                 <div>
                     <label>
                         Username

@@ -58,7 +58,11 @@
     </servlet>
     <servlet>
         <servlet-name>error500</servlet-name>
-        <jsp-file>/jsp/errror/500.jsp</jsp-file>
+        <jsp-file>/jsp/error/500.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>setNewPassword</servlet-name>
+        <jsp-file>/jsp/setNewPassword.jsp</jsp-file>
     </servlet>
 
     <!-- MAPPING JPS-->
@@ -97,5 +101,9 @@
     <servlet-mapping>
         <servlet-name>error500</servlet-name>
         <url-pattern>/500</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>setNewPassword</servlet-name>
+        <url-pattern>/setNewPassword</url-pattern>
     </servlet-mapping>
 </web-app>
