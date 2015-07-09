@@ -20,7 +20,7 @@
     <div class="row content">
         <h3>Informazioni utente</h3>
 
-        <div class="accordion" data-accordion>
+        <ul class="accordion" data-accordion>
             <li class="accordion-navigation">
                 <a href="#panel1a">Generalità</a>
 
@@ -37,7 +37,7 @@
                                         <strong>Nome:</strong>
                                     </div>
                                     <div class="medium-8 small-only-text-center columns">
-                                        <span id="name">Alessandro</span>
+                                        <span id="name"></span>
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                         <strong>Cognome:</strong>
                                     </div>
                                     <div class="medium-8 small-only-text-center columns">
-                                        <span id="surname">Bacchiega</span>
+                                        <span id="surname"></span>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                         <strong>Data di nascita:</strong>
                                     </div>
                                     <div class="medium-8 small-only-text-center columns">
-                                        <span id="birthday">1994-06-28</span>
+                                        <span id="birthday"></span>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                                         <strong>Indirizzo email:</strong>
                                     </div>
                                     <div class="medium-8 small-only-text-center columns">
-                                        <span id="email">alebacchiega51@gmail.com</span>
+                                        <span id="email"></span>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                                         <strong>Telefono:</strong>
                                     </div>
                                     <div class="medium-8 small-only-text-center columns">
-                                        <span id="phone_number">3481330281</span>
+                                        <span id="phone_number"></span>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                                         <strong>Username:</strong>
                                     </div>
                                     <div class="medium-8 small-only-text-center columns">
-                                        <span id="username">AleBacchiega</span>
+                                        <span id="username"></span>
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +187,7 @@
                     </div>
                 </div>
             </li>
-        </div>
+        </ul>
     </div>
     <div class="push"></div>
 </div>

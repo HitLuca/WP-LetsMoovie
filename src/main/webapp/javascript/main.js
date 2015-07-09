@@ -9,17 +9,18 @@ alertify.set('notifier', 'position', 'top-right');
 function PostForm(formID, doneCallback, failCallback) {
     $("#" + formID).on('valid.fndtn.abide', function (event) {
         event.preventDefault();
+        var form = $(this);
 
-        var button = $(this).find('input[type="submit"]').first();
+        var button = form.find('input[type="submit"]').first();
         //console.log(button);
         button.attr("disabled", true);
         //Serializza la form in JSON
-        var JSON = $(this).serializeJSON();
+        var JSON = form.serializeJSON();
 
         // Stop form from submitting normally
 
         // Get some values from elements on the page:
-        var url = $(this).attr("action");
+        var url = form.attr("action");
 
         // Send the data using post
         var posting = $.post(url, JSON);
@@ -87,6 +88,10 @@ function showNotification() {
     }
     //console.log(notificationCount);
     storage.set("notificationCount", notificationCount);
+}
+
+function redirectToUser(userName) {
+    window.location.assign("/user/" + userName);
 }
 
 showNotification();

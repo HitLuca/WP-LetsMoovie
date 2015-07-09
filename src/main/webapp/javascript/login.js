@@ -10,16 +10,22 @@ function successNotifier(data) {
 function errorNotifier(data) {
     var error = data.responseJSON.errorCode;
     switch (error) {
-        case 7:
+        case 0:
         {
-            saveNotification("warning", "Sei già autenticato!");
-            window.location.assign("/");
+            alertify.error("Errore, riprova!");
         }
             break;
-        default:
+        case 2:
         {
             alertify.error("Username o password errata!");
         }
+            break;
+        case 7:
+        {
+            saveNotification("warning", "Sei già autenticato!");
+            redirectToUser(JSON.username);
+        }
+            break;
     }
 
     var passwordField = $("input[type='password']");

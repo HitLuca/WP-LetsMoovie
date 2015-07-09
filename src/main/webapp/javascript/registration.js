@@ -8,14 +8,16 @@ function successNotifier(data) {
     saveNotification("success", "Registrazione effettuata!");
     window.location.assign("user/" + data.username);
 }
+
 function errorNotifier(data) {
     var JSON = data.responseJSON;
     var error = JSON.errorCode;
+    var fields = JSON.invalidParameters;
+    var i = 0;
     switch (error) {
         case 2:
         { //EMPTY WRONG FIELD
-            var fields = JSON.invalidParameters;
-            for (var i = 0; i < fields.length; i++) {
+            for (i = 0; i < fields.length; i++) {
                 switch (fields[i]) {
                     case "password":
                     {
@@ -57,16 +59,35 @@ function errorNotifier(data) {
             }
         }
             break;
-        case 3:
+        case 3: //USERNAME O MAIL GIÀ ASSOCIATA AD ACCOUNT
         {
-            alertify.error("Username non disponibile!");
-            //    TODO:finire
+            for (i = 0; i < fields.length; i++) {
+                switch (fields[i]) {
+                    case "email":
+                        alertify.error("L'email è già associata ad un account esistente");
+                        break;
+                    case "username":
+                        alertify.error("Lo username scelto è già associato ad un account esistente");
+                        break;
+                }
+                $("input[name=" + fields[i].toString() + "]").val('');
+            }
         }
             break;
+        case 7: //GIÀ LOGGATO
+        {
+            saveNotification("error", "Non puoi registrarti se sei autenticato!");
+            redirectToUser(JSON.username);
+        }
+            break;
+        case 0:
+        {
+            alertify.error("Errore, riprova!");
+        }
     }
 
 }
 
 $(document).ready(function () {
-    PostForm("registerForm", successNotifier, errorNotifier)
+    PostForm("registerForm", successNotifier, errorNotifier);
 });
