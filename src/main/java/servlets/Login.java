@@ -43,8 +43,8 @@ import java.util.List;
  *
  * Created by etrunon on 24/06/15.
  */
-@WebServlet(name = "doLogin", urlPatterns = "/doLogin")
-public class doLogin extends HttpServlet {
+@WebServlet(name = "Login", urlPatterns = "/api/login")
+public class Login extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
     private SqlSession session;

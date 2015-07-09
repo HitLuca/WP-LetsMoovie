@@ -8,6 +8,7 @@ public enum ErrorCode {
     EMPTY_REQ(1),
     EMPTY_WRONG_FIELD(2),
     DUPLICATE_FIELD(3),
+    //todo buco
     USER_NOT_FOUND(6),
     ALREADY_LOGGED(7),
     NOT_AUTHORIZED(8),

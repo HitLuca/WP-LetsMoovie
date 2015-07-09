@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
+import database.datatypes.UserData;
 import database.mappers.UserMapper;
 import json.OperationResult;
 import json.userPersonalData.request.PersonalRequest;
@@ -13,6 +14,8 @@ import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.enums.Role;
 import types.exceptions.BadRequestException;
+import types.exceptions.BadRequestExceptionWithParameters;
+import utilities.InputValidator.ModelValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -22,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * Questa servlet lancia i seguenti errori con questo formato:
@@ -48,7 +53,8 @@ public class getUser extends HttpServlet {
         try {
 
             //Check se l'utente NON è loggato (da sloggato non vedi dati di nessuno
-            HttpSession session = request.getSession(false);
+            HttpSession session = request.getSession();
+
             if (session.getAttribute("username") == null) {
                 throw new BadRequestException(ErrorCode.NOT_LOGGED_IN);
             }
@@ -59,10 +65,23 @@ public class getUser extends HttpServlet {
             if (personalRequest == null) {
                 throw new BadRequestException(ErrorCode.EMPTY_REQ);
             }
+
+            List<String> invalidParameters = ModelValidator.validate(personalRequest);
+            //Se ho stringhe invalide lancio l'eccezione di registrazione
+            if (!invalidParameters.isEmpty())
+                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,invalidParameters);
+
             String usernameSearched = personalRequest.getUsername();
 
             //Se sei un utente normale puoi vedere solo i tuoi dati
-            if (session.getAttribute("role") == Role.USER && !(userMapper.getUserData(personalRequest.getUsername())).equals(usernameSession)) {
+            UserData user = userMapper.getUserData(personalRequest.getUsername());
+
+            if(user == null)
+            {
+                throw new BadRequestException(ErrorCode.USER_NOT_FOUND);
+            }
+
+            if ((int) session.getAttribute("role") == Role.USER.getValue() && !user.getUsername().equals(usernameSession)) {
                 throw new BadRequestException(ErrorCode.NOT_AUTHORIZED);
             }
             getUserStatus = new PersonalRespose(userMapper.getUserData(usernameSearched));
@@ -70,7 +89,8 @@ public class getUser extends HttpServlet {
         } catch (BadRequestException e) {
             getUserStatus = e;
             response.setStatus(400);
-        } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
+        } catch (JsonIOException | JsonSyntaxException | NullPointerException | IllegalAccessException | InvocationTargetException e) {
+            getUserStatus = new BadRequestException();
             response.setStatus(400);
         }
 

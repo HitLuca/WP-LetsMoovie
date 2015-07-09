@@ -23,8 +23,8 @@ import java.io.IOException;
  *
  * Created by marco on 26/06/15.
  */
-@WebServlet(name = "doLogout", urlPatterns = "/doLogout")
-public class doLogout extends HttpServlet {
+@WebServlet(name = "Logout", urlPatterns = "/api/logout")
+public class Logout extends HttpServlet {
     Gson gson;
 
 
