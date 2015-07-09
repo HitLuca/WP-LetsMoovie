@@ -1,9 +1,6 @@
 package database;
 
-import database.mappers.FilmMapper;
-import database.mappers.SeatMapper;
-import database.mappers.ShowMapper;
-import database.mappers.UserMapper;
+import database.mappers.*;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -47,6 +44,8 @@ public class DatabaseConnection {
                 configuration.addMapper(FilmMapper.class);
                 configuration.addMapper(SeatMapper.class);
                 configuration.addMapper(ShowMapper.class);
+                configuration.addMapper(NotDecidedMapper.class);
+
                 SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
                 newFactory = builder.build(configuration);
 
