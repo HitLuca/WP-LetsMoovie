@@ -14,7 +14,8 @@
         <div class="small-11 small-centered large-6 medium-8 columns">
             <h3>Accedi al tuo account:</h3>
 
-            <form action="doLogin" id="loginForm" data-abide="ajax">
+            <form action="doLogin" id="loginForm" data-abide="ajax" method="post">
+                <%--<input type="hidden" value="${param.sourcePage}" name="sourcePage">--%>
                 <div>
                     <label>
                         Username
@@ -43,9 +44,11 @@
                     </div>
                 </div>
             </form>
+
+
             <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
                  role="dialog">
-                <form id="passwordRecovery" data-abide="ajax">
+                <form id="passwordRecovery" data-abide="ajax" action="">
                     <h2 id="modalTitle">Hai dimenticato la tua password?</h2>
 
                     <p></p>
@@ -73,37 +76,40 @@
                     </div>
                     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
                 </form>
-                <form id="sendEmail">
-                    <div id="secondModal" class="reveal-modal" data-reveal aria-labelledby="secondModalTitle"
-                         aria-hidden="true" role="dialog" data-options="close_on_background_click:false">
-                        <h2 id="secondModalTitle"> Controlla la tua casella di posta elettronica!</h2>
+            </div>
 
-                        <p></p>
 
-                        <p>Abbiamo provveduto ad inviarti una e-mail all'indirizzo inserito.<br>
-                            Per completare correttamente la procedura di recupero password segui le istruzioni che trovi
-                            nell'e-mail.
-                        </p>
+            <div id="secondModal" class="reveal-modal" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true"
+                 role="dialog" data-options="close_on_background_click:false">
+                <h2 id="secondModalTitle"> Controlla la tua casella di posta elettronica!</h2>
 
-                        <p></p>
+                <form id="resendEmail" data-abide="ajax" action="">
+                    <%--TODO: CONTROLLARE SE NECESSARIO--%>
+                    <p></p>
 
-                        <h3>L'e-mail non ti è ancora arrivata?</h3>
+                    <p>Abbiamo provveduto ad inviarti una e-mail all'indirizzo inserito.<br>
+                        Per completare correttamente la procedura di recupero password segui le istruzioni che trovi
+                        nell'e-mail.
+                    </p>
 
-                        <p>Ti consigliamo di attendere qualche minuto o di controllare nella cartella Spam. <br>
-                            Nel caso tu non l'abbia effettivamente ricevuta, fai click sul bottone "Invia nuovamente".
-                        </p>
+                    <p></p>
 
-                        <form id="resendEmail">
-                            <div class="row">
-                                <div class="medium-12 columns">
-                                    <button class="button radius">Invia nuovamente</button>
-                                </div>
-                            </div>
-                        </form>
-                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    <h3>L'e-mail non ti è ancora arrivata?</h3>
+
+                    <p>Ti consigliamo di attendere qualche minuto o di controllare nella cartella Spam. <br>
+                        Nel caso tu non l'abbia effettivamente ricevuta, fai click sul bottone "Invia nuovamente".
+                    </p>
+
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <button class="button radius">Invia nuovamente</button>
+                        </div>
                     </div>
                 </form>
+                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
+
+
         </div>
     </div>
     <div class="push"></div>

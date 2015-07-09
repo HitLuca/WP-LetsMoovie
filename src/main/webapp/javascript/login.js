@@ -2,12 +2,12 @@
  * Created by mion00 on 08/07/15.
  */
 
-function successNotifier(data) {
+function successLogin(data) {
     saveNotification("success", "Benvenuto, " + data.username + "!");
     window.location.assign("/");
 
 }
-function errorNotifier(data) {
+function errorLogin(data) {
     var error = data.responseJSON.errorCode;
     switch (error) {
         case 0:
@@ -32,6 +32,18 @@ function errorNotifier(data) {
     passwordField.val('');
 }
 
+function successSendMail(data) {
+    alertify.success("È stata inviata una mail a " + data.email);
+    $("#secondModal").foundation('reveal', 'open');
+}
+
+function errorSendMail(data) {
+    alertify.error("La mail non è valida");
+    $("#secondModal").foundation('reveal', 'open');
+}
+
 $(document).ready(function () {
-    PostForm("loginForm", successNotifier, errorNotifier)
+    PostForm("loginForm", successLogin, errorLogin);
+    PostForm("passwordRecovery", successSendMail, errorSendMail);
+    PostForm("resendEmail", successSendMail, errorSendMail);
 });
