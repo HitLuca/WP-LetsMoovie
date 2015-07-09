@@ -53,12 +53,11 @@ import java.util.List;
  *                                          la mail di registrazione
  * Created by etrunon on 24/06/15.
  */
-@WebServlet(name = "doRegister", urlPatterns = "/doRegister")
-public class doRegister extends HttpServlet {
+@WebServlet(name = "Register", urlPatterns = "/api/register")
+public class Register extends HttpServlet {
 
     Gson gsonWriter;
     Gson gsonReader;
-    private SqlSession session;
     private UserMapper userMapper;
     private VerificationMailSender verificationMailSender;
 
@@ -121,22 +120,12 @@ public class doRegister extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RegistrationRequest registrationRequest = verificationMailSender.verify(request.getParameter("verificationCode"));
-        response.getWriter().print("Bella sei dentro! " + registrationRequest.getUsername());
-        //TODO testare le funzionalità mancanti
-        userMapper.insertUser(registrationRequest);
-        session.commit();   //Per essere sicuri che vada nel DB
-
-        HttpSession session = request.getSession(true);
-        session.setAttribute("username",registrationRequest.getUsername());
-        session.setAttribute("role",0);
-        response.sendRedirect("/index.jsp"); //TODO SET USER PAGE
     }
 
 
     @Override
     public void init() throws ServletException {
-        session = DatabaseConnection.getFactory().openSession(true);
+        SqlSession session = DatabaseConnection.getFactory().openSession();
         userMapper = session.getMapper(UserMapper.class);
         MailCleanerThread mailCleanerThread = MailCleanerThreadFactory.getMailCleanerThread();
         verificationMailSender = new VerificationMailSender(mailCleanerThread);

@@ -12,7 +12,8 @@ public enum ErrorCode {
     ALREADY_LOGGED(7),
     NON_USATO_DA_SOSTITUIRE(8),
     INVALID_MAIL(9),
-    NOT_LOGGED_IN(10);
+    NOT_LOGGED_IN(10),
+    WRONG_CONFIRMATION_CODE(11);
 
     private int value;
 
