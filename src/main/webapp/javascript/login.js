@@ -38,7 +38,20 @@ function successSendMail(data) {
 }
 
 function errorSendMail(data) {
-    alertify.error("La mail non è valida");
+    var JSON = data.responseJSON;
+
+    var code = JSON.errorCode;
+
+    switch (code) {
+        case 0:case 2:case 9: {
+        alertify.error("Email non valida!");
+        $("input[type='email']").val('');
+    } break;
+        case 7: {
+            saveNotification("error", "Sei autenticato!");
+            window.location.assign("/");
+        }
+    }
     $("#secondModal").foundation('reveal', 'open');
 }
 
