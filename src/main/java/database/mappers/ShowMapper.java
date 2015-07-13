@@ -3,6 +3,7 @@ package database.mappers;
 import database.datatypes.Show;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.sql.Date;
@@ -22,8 +23,11 @@ public interface ShowMapper {
     @Select("SELECT * FROM shows WHERE id_show=#{id_show}")
     Show getShowData(int id_show);
 
-    @Select("SELECT * FROM shows WHERE shows.show_date=#{show_date}")
-    List<Show> getDayShows(Date show_date);
+    @Select("SELECT show_time FROM shows WHERE shows.show_date=#{show_date} AND shows.id_film=#{id_film}")
+    List<String> getDayShowsId(@Param("show_date") Date show_date, @Param("id_film") int id_film);
+
+    @Select("SELECT DISTINCT id_film FROM shows WHERE shows.show_date=#{show_date}")
+    List<Integer> getDayShows(Date show_date);
 
     @Insert("INSERT INTO shows (room_number, id_film, show_date, show_time) VALUES (#{room_number}, #{id_film}, #{show_date}, #{show_time})")
     void insertShow(Show show);
