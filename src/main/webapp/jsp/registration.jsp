@@ -28,13 +28,13 @@
                         <label>Nome:
                             <input type="text" name="name" placeholder="Mario" required/>
                         </label>
-                        <small class="error">Questo campo è obbligatorio!</small>
+                        <small class="error">Il nome deve iniziare con una maiuscola</small>
                     </div>
                     <div class="medium-6 columns">
                         <label>Cognome:
                             <input type="text" name="surname" placeholder="Rossi" required/>
                         </label>
-                        <small class="error">Questo campo è obbligatorio!</small>
+                        <small class="error">Il cognome deve iniziare con una maiuscola</small>
                     </div>
                 </div>
                 <div class="row">
@@ -109,6 +109,8 @@
                 </button>
             </div>
         </form>
+
+        <%--TODO: AGGIUNGERE MODALE CHE INDICHI L'INVIO DELLA MAIL DI CONFERMA--%>
     </div>
     <div class="push"></div>
 </div>

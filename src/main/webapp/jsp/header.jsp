@@ -4,7 +4,7 @@
 <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
     <ul class="title-area">
         <li class="name">
-            <h1><a href="<c:url value="/"/>"><img id="logo" src="http://placehold.it/100x50"></a></h1>
+            <%--<h1><a href="<c:url value="/"/>"><img id="logo" src="http://placehold.it/100x50"></a></h1>--%>
         </li>
 
         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
@@ -21,7 +21,7 @@
                     <li class="has-dropdown"><a href="#">${sessionScope.username}</a>
                         <ul class="dropdown">
                             <li><a href="<c:url value="/user/${sessionScope.username}"/>">Area Utente</a></li>
-                            <li><a href="<c:url value="/doLogout"/>" id="logout">Logout</a></li>
+                            <li><a href="<c:url value="/api/logout"/>" id="logout">Logout</a></li>
                         </ul>
                     </li>
                 </c:when>
@@ -34,3 +34,15 @@
         </ul>
     </section>
 </nav>
+
+<div id="oldBrowser" class="hide">
+    <%--TODO: MIGLIORARE MESSAGGIO DI AVVISO--%>
+    <p class="title">Browser non supportato!</p>
+
+    <p class="content">
+        Siamo spiacenti, ma il tuo browser non supporta alcune tecnologie WEB moderne usate dal nostro sito.<br>
+        Non siamo quindi in grado di garantirti una degna esperienza di navigazione.
+        Se desideri utilizzare il nostro sito, per favore aggiorna il tuo browser!<br>
+        Puoi utilizzare questo ottimo browser: <a href="http://www.netscape.ca/ns/browsers/7/download/">http://www.netscape.ca/ns/browsers/7/download/</a>
+    </p>
+</div>

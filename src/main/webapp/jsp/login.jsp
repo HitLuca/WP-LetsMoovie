@@ -89,7 +89,7 @@
                  role="dialog" data-options="close_on_background_click:false">
                 <h2 id="secondModalTitle"> Controlla la tua casella di posta elettronica!</h2>
 
-                <form id="resendEmail" data-abide="ajax" action="<c:url value="/api/passwordRecovery"/>">
+                <form id="resendEmail" action="<c:url value="/api/passwordRecovery"/>">
                     <%--TODO: CONTROLLARE SE NECESSARIO--%>
                     <p></p>
 
@@ -105,10 +105,15 @@
                     <p>Ti consigliamo di attendere qualche minuto o di controllare nella cartella Spam. <br>
                         Nel caso tu non l'abbia effettivamente ricevuta, fai click sul bottone "Invia nuovamente".
                     </p>
-
+                        <input type="hidden" id="emailresend" name="email" placeholder="mario.rossi@gmail.com"
+                               value=""/>
                     <div class="row">
                         <div class="medium-12 columns">
-                            <button class="button radius">Invia nuovamente</button>
+                            <button class="button radius ladda-button" data-style="zoom-out">
+                                <span class="ladda-label">
+                                    Invia nuovamente
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </form>
