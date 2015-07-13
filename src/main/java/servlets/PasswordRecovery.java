@@ -54,6 +54,7 @@ public class PasswordRecovery extends HttpServlet {
     Gson gsonReader;
     UserMapper userMapper;
     PasswordRecoveryMailSender passwordRecoveryMailSender;
+    private final String url = "/api/passwordRecovery";
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -74,7 +75,9 @@ public class PasswordRecovery extends HttpServlet {
             {
                 throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,"email");
             }
-            if(!passwordRecoveryMailSender.sendEmail(passwordRecoveryRequest.getEmail(),username,request.getRequestURL().toString()))
+            String recoveryMailUrl = request.getRequestURL().toString().replace(url,"");
+            recoveryMailUrl+="/passwordRecovery?verificationCode=";
+            if(!passwordRecoveryMailSender.sendEmail(passwordRecoveryRequest.getEmail(),username,recoveryMailUrl))
             {
                 throw new BadRequestExceptionWithParameters(ErrorCode.INVALID_MAIL,"email");
             }

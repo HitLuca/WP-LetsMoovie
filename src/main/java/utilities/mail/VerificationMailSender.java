@@ -50,11 +50,13 @@ public class VerificationMailSender {
         String verificationCode = RandomStringUtils.randomAlphanumeric(SECURE_CODE_SIZE);
         SendGrid.Email email = new SendGrid.Email();
 
+        url+=verificationCode;
+
         email.addTo(registrationRequest.getEmail());
         email.setFrom("info@letsmoovie.com");
         email.setSubject("Verify your account");
         email.setTemplateId("62710ec1-548f-4b62-a4fa-757187194b9f");
-        email.setText("Benvenuto "+registrationRequest.getUsername()+"\nClicca sul link per confermare la registrazione "+url + "?verificationCode=" + verificationCode);
+        email.setText("Benvenuto "+registrationRequest.getUsername()+"\nClicca "+url+" per confermare la registrazione");
 
         try {
             sendgrid.send(email).getMessage();

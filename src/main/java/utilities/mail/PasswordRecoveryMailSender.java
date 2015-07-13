@@ -32,11 +32,14 @@ public class PasswordRecoveryMailSender {
         String verificationCode = RandomStringUtils.randomAlphanumeric(SECURE_CODE_SIZE);
         SendGrid.Email email = new SendGrid.Email();
 
+        url+=verificationCode;
+
         email.addTo(userEmail);
         email.setFrom("info@letsmoovie.com");
         email.setSubject("Password Recovery");
         email.setTemplateId("62710ec1-548f-4b62-a4fa-757187194b9f");
-        email.setText("Ciao "+username+" Abbiamo ricevuto una richiesta di cambio password, clicca il seguente link "+ url + "?verificationCode=" + verificationCode);
+
+        email.setText("Ciao "+username+" Abbiamo ricevuto una richiesta di cambio password, clicca Clicca "+url+" per procedere con l'operazione");
 
         try {
             sendgrid.send(email).getMessage();
