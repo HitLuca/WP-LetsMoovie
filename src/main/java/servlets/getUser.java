@@ -91,21 +91,8 @@ public class getUser extends HttpServlet {
             }
             String usernameSession = session.getAttribute("username").toString();
 
-            //Check sulla richiesta vuota
-/*
-            PersonalRequest personalRequest = gsonReader.fromJson(request.getReader(), PersonalRequest.class);
-            if (personalRequest == null) {
-                throw new BadRequestException(ErrorCode.EMPTY_REQ);
-            }
-
-            List<String> invalidParameters = ModelValidator.validate(personalRequest);
-            //Se ho stringhe invalide lancio l'eccezione di registrazione
-            if (!invalidParameters.isEmpty())
-                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,invalidParameters);
-*/
             //String matcher che preleva il nome utente da cercare dall'url e lancia Err.2 in caso sia mal formattato
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
-
 
             String usernameSearched = rs.getParameter();
 
@@ -129,7 +116,7 @@ public class getUser extends HttpServlet {
             }
 
             user.setPassword(null);
-            getUserStatus = new PersonalRespose(userMapper.getUserData(usernameSearched));
+            getUserStatus = new PersonalRespose(user);
 
         } catch (BadRequestException e) {
             getUserStatus = e;
