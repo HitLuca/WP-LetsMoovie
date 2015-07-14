@@ -71,8 +71,10 @@
 
         var manager = new THREE.LoadingManager();
         var loader = new THREE.OBJLoader( manager );
-        loader.load( '/obj/Armchair.obj', function ( object ) {
-            object.position.y = - 80;
+        loader.load( '/obj/TotalArmchair.obj', function ( object ) {
+           object.position.y =  40;
+            //object.rotateByAxis(1,90);
+            //object.scale(10);
             scene.add( object );
 
         });
