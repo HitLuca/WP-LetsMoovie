@@ -29,10 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by etrunon on 14/07/15.
- */
-
-/**
  * @api {get} /api/pagamenti/*
  * @apiName pagamenti
  * @apiGroup pagamenti

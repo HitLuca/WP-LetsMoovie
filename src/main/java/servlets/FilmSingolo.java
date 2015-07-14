@@ -32,7 +32,7 @@ import java.io.IOException;
  * @apiName FilmSingolo
  * @apiGroup FilmSingolo
  * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- * @apiError (2) {int} errorCode Lanciato quanto i parametri passati tramite la url non matchano
+ * @apiError (2) {int} errorCode Lanciato quanto i parametri passati tramite la url non sono parsabili
  * @apiError (4) {int} errorCode lanciato quando il film cercato non esiste nel DB
  */
 @WebServlet(name = "FilmSingolo", urlPatterns = "/api/film/*")
