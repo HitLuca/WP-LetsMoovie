@@ -1,6 +1,7 @@
 package database.mappers;
 
 import database.datatypes.DetailedPayment;
+import database.datatypes.Payment;
 import database.datatypes.UserData;
 import database.datatypes.UserLoginCredential;
 import json.register.request.RegistrationRequest;
@@ -29,14 +30,14 @@ public interface UserMapper {
     String getUsernameByEmail(String email);
     
     @Insert("INSERT INTO users (email, name, surname, username, password, phone_number, birthday, residual_credit, role) SELECT " +
-            "#{email}," +
-            "#{name}," +
-            "#{surname}," +
-            "#{username}," +
-            "#{password}," +
-            "#{phone}," +
-            "#{birthday}::DATE," +
-            "0," +
+            "#{email}, " +
+            "#{name}, " +
+            "#{surname}, " +
+            "#{username}, " +
+            "#{password}, " +
+            "#{phone}, " +
+            "#{birthday}::DATE, " +
+            "0, " +
             "0")
     void insertUser(RegistrationRequest user);
 
@@ -64,4 +65,15 @@ public interface UserMapper {
 
     @Select("SELECT credit_card_number FROM user_credit_cards WHERE username=#{username}")
     List<String> getCreditCards(String username);
+
+    //TODO:Test
+    @Insert("INSERT INTO payments (payment_date, payment_time, ticket_type, id_seat, id_show, username) VALUES (" +
+            "#{payment_date}, " +
+            "#{payment_time}, " +
+            "\'#{ticket_type}\', " +
+            "#{id_seat}, " +
+            "#{id_show}, " +
+            "\'#{username}\'" +
+            ")")
+    void insertPayment(Payment payment);
 }

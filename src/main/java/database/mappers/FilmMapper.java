@@ -61,19 +61,15 @@ public interface FilmMapper {
     @Delete("DELETE FROM film_genres WHERE id_film=#{id_film} AND genre=#{genre}")
     void deleteFilmGenre(@Param("id_film") int id_film, @Param("genre") String genre);
 
-    //todo test
     @Select("SELECT * FROM films")
     List<FilmData> getAllFilms();
 
-    //todo test
     @Update("UPDATE films SET poster=#{poster}, plot=#{plot} WHERE id_film=#{id_film}")
     void updateFilm(FilmData f);
 
-    //todo test
     @Select("SELECT * FROM actors")
     List<Actor> getAllActors();
 
-    //todo test
     @Update("UPDATE actors SET url_photo=#{url_photo} WHERE actor_name=#{actor_name}")
     void updateActor(Actor a);
 }
