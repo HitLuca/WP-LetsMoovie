@@ -4,13 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import database.DatabaseConnection;
 import database.datatypes.FilmData;
+import database.datatypes.ShowIdTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
 import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
-import types.Film;
-import types.FilmList;
+import json.film.Film;
+import json.film.FilmList;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -53,7 +54,7 @@ public class FilmWeek extends HttpServlet {
 
             for (Integer j : idList) {
 
-                List<String> hours = showMapper.getDayShowsId(Date.valueOf(today), j);
+                List<ShowIdTime> hours = showMapper.getShowTimeAndId(Date.valueOf(today), j);
                 filmList.addId(today, j, hours);
             }
 

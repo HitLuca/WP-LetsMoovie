@@ -1,6 +1,7 @@
 package database.mappers;
 
 import database.datatypes.Show;
+import database.datatypes.ShowIdTime;
 import org.apache.ibatis.annotations.*;
 
 import java.sql.Date;
@@ -20,8 +21,8 @@ public interface ShowMapper {
     @Select("SELECT * FROM shows WHERE id_show=#{id_show}")
     Show getShowData(int id_show);
 
-    @Select("SELECT show_time FROM shows WHERE shows.show_date=#{show_date} AND shows.id_film=#{id_film}")
-    List<String> getDayShowsId(@Param("show_date") Date show_date, @Param("id_film") int id_film);
+    @Select("SELECT show_time, id_show FROM shows WHERE shows.show_date=#{show_date} AND shows.id_film=#{id_film}")
+    List<ShowIdTime> getShowTimeAndId(@Param("show_date") Date show_date, @Param("id_film") int id_film);
 
     @Select("SELECT DISTINCT id_film FROM shows WHERE shows.show_date=#{show_date}")
     List<Integer> getDayFilms(Date show_date);

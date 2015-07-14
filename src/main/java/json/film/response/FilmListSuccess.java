@@ -2,8 +2,8 @@ package json.film.response;
 
 import com.google.gson.annotations.Expose;
 import json.OperationResult;
-import types.Film;
-import types.FilmList;
+import json.film.Film;
+import json.film.FilmList;
 
 import java.util.ArrayList;
 import java.util.List;

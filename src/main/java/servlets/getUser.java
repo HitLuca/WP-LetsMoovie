@@ -57,8 +57,6 @@ import java.util.List;
  *
  * @apiError (2) {int} errorCode Json in input non ha contenuto o è imparsabile.
  *
- * @apiError (7) {int} errorCode l'utente non ha nessun login effettuato.
- *
  * @apiError (8) {int} errorCode l'utente non dispone di un livello di autentificazione sufficente a vedere i dati.
  *
  * @apiError (10) {int} errorCode l'utente non è loggato

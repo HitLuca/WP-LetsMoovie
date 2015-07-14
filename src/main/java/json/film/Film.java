@@ -1,8 +1,9 @@
-package types;
+package json.film;
 
 import com.google.gson.annotations.Expose;
 import database.datatypes.FilmData;
-import database.datatypes.Show;
+import database.datatypes.ShowIdTime;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class Film {
     private List<Shows> shows;
 
 
-    public Film(FilmData filmData, List<String> hours) {
+    public Film(FilmData filmData, List<ShowIdTime> hours) {
 
         this.id_film = filmData.getId_film();
         this.film_title = filmData.getFilm_title();
@@ -75,7 +76,7 @@ public class Film {
     }
 
 
-    public void addHours(String date, List<String> hours) {
+    public void addHours(String date, List<ShowIdTime> hours) {
 
         Shows shows1 = new Shows(date, hours);
         shows.add(shows1);
@@ -90,7 +91,7 @@ public class Film {
         return id_film;
     }
 
-    public Film(String date, int id_film, List<String> shows) {
+    public Film(String date, int id_film, List<ShowIdTime> shows) {
 
         this.id_film = id_film;
         this.shows = new ArrayList<Shows>();
@@ -117,9 +118,9 @@ class Shows {
     @Expose
     private String date;
     @Expose
-    private List<String> orari;
+    private List<ShowIdTime> orari;
 
-    public Shows(String date, List<String> orari) {
+    public Shows(String date, List<ShowIdTime> orari) {
         this.date = date;
         this.orari = orari;
     }

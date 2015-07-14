@@ -1,6 +1,7 @@
-package types;
+package json.film;
 
 import com.google.gson.annotations.Expose;
+import database.datatypes.ShowIdTime;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class FilmList {
         this.filmList = new ArrayList<>();
     }
 
-    public void addId(LocalDate date, int id, List<String> shows) {
+    public void addId(LocalDate date, int id, List<ShowIdTime> shows) {
 
         //cerco nella lista se ho un film con id = id e
         for (Film f : filmList) {

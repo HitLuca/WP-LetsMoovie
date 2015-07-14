@@ -6,12 +6,14 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
 import database.datatypes.FilmData;
+import database.datatypes.ShowIdTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
+import javafx.util.Pair;
 import json.OperationResult;
 import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
-import types.Film;
+import json.film.Film;
 import types.exceptions.BadRequestException;
 import utilities.RestUrlMatcher;
 
@@ -68,7 +70,7 @@ public class FilmDay extends HttpServlet {
                 //Prendo le info del film con id I proiettato in quella data
                 FilmData filmData = filmMapper.getFilmData(i);
                 //Prendo i differenti
-                List<String> hours = showMapper.getDayShowsId(date, i);
+                List<ShowIdTime> hours = showMapper.getShowTimeAndId(date, i);
                 //Creo l'oggetto Film e lo riempio
                 Film film = new Film(filmData, hours);
                 film.addHours(rs.getParameter(), hours);
