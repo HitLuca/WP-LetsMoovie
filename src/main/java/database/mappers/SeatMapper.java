@@ -16,6 +16,9 @@ public interface SeatMapper {
     @Select("SELECT * FROM cinema_rooms WHERE room_number=#{room_number}")
     RoomData getRoomData(int room_number);
 
+    @Select("SELECT * FROM cinema_rooms c JOIN shows s ON c.room_number = s.room_number WHERE s.id_show=#{id_show}")
+    RoomData getShowRoomData(int id_show);
+
     @Select("SELECT * FROM seats WHERE room_number=#{room_number} AND status='broken'")
     List<Seat> getBrokenSeats(int room_number);
 
@@ -24,6 +27,10 @@ public interface SeatMapper {
 
     @Select("SELECT * FROM seats s JOIN seat_reservations sr ON s.id_seat=sr.id_seat WHERE sr.id_show=#{id_show} AND sr.status='broken'")
     List<Seat> getShowBrokenSeats(int id_show);
+
+    //@Select("SELECT * FROM seats s JOIN seat_reservation sr ON s..id_seat=sr.id_seat WHERE sr.id_show=#{id_show} AND sr.status<>'reserved' AND s.status<>'broken'")
+    @Select("SELECT * FROM seats s JOIN seat_reservation sr ON s..id_seat=sr.id_seat WHERE NOT IN (SELECT * FROM seats s JOIN seat_reservations sr ON s.id_seat=sr.id_seat WHERE sr.id_show=#{id_show} AND sr.status='reserved') AND NOT IN (SELECT * FROM seats s JOIN seat_reservations sr ON s.id_seat=sr.id_seat WHERE sr.id_show=#{id_show} AND sr.status='broken') ")
+    List<Seat> getFreeSeat(int id_show);
 
     @Select("SELECT * FROM seats WHERE room_number=#{room_number}")
     List<Seat> getRoomSeats(int room_number);

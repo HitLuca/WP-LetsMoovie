@@ -45,6 +45,8 @@ public class FilmSingolo extends HttpServlet {
         SqlSession sessionSql;
         sessionSql = DatabaseConnection.getFactory().openSession();
         FilmMapper filmMapper = sessionSql.getMapper(FilmMapper.class);
+        response.setContentType("application/json");
+
 
         OperationResult getFilm;
 

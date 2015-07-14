@@ -45,6 +45,7 @@ public class FilmWeek extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         OperationResult getFilmOfWeek = null;
+        response.setContentType("application/json");
 
         LocalDate today = LocalDate.now();
         FilmList filmList = new FilmList();
