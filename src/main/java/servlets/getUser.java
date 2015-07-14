@@ -57,7 +57,7 @@ import java.util.List;
  *
  * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
  *
- * @apiError (1) {int} errorCode Json in input non ha contenuto.
+ * @apiError (2) {int} errorCode Json in input non ha contenuto o è imparsabile.
  *
  * @apiError (7) {int} errorCode l'utente non ha nessun login effettuato.
  *
@@ -91,8 +91,9 @@ public class getUser extends HttpServlet {
             }
             String usernameSession = session.getAttribute("username").toString();
 
-            //String matcher che preleva il nome utente da cercare dall'url e lancia Err.2 in caso sia mal formattato
+            //String matcher che preleva il nome utente da cercare dall'url e lancia Err.2 in caso sia nullo o mal formattato
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
+
 
             String usernameSearched = rs.getParameter();
 

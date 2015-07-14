@@ -63,6 +63,36 @@ public class Film {
         Shows shows1 = new Shows(date, hours);
         shows.add(shows1);
     }
+
+    public void setId_film(int id_film) {
+        this.id_film = id_film;
+    }
+
+    public int getId_film() {
+
+        return id_film;
+    }
+
+    public Film(String date, int id_film, List<String> shows) {
+
+        this.id_film = id_film;
+        this.shows = new ArrayList<Shows>();
+        addHours(date.toString(), shows);
+    }
+
+    public void setData(FilmData filmData) {
+
+        this.film_title = filmData.getFilm_title();
+        this.poster = filmData.getPoster();
+        this.duration = filmData.getDuration();
+        this.trailer = filmData.getTrailer();
+        this.metascore = filmData.getMetascore();
+        this.rating = filmData.getRating();
+        this.year = filmData.getYear();
+        this.plot = filmData.getPlot();
+        this.director = filmData.getDirector();
+        this.vm = filmData.getVm();
+    }
 }
 
 class Shows {
@@ -77,5 +107,11 @@ class Shows {
         this.orari = orari;
     }
 
-
+    @Override
+    public String toString() {
+        return "Shows{" +
+                "date='" + date + '\'' +
+                ", orari=" + orari +
+                '}';
+    }
 }
