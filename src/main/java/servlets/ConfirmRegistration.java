@@ -41,7 +41,7 @@ import java.io.IOException;
  *
  * @apiError (7) {int} errorCode è già presente una sessione valida con quel client
  *
- * @apiError (11) {int} errorCode l'utente non dispone di una sessione valida da cui sloggare
+ * @apiError (11) {int} errorCode il codice di conferma della registrazione è errato
  */
 @WebServlet(name = "ConfirmRegistration", urlPatterns = "/api/confirmRegistration")
 public class ConfirmRegistration extends HttpServlet {
