@@ -16,6 +16,7 @@ public class PasswordRecoveryMailSender {
     private final int SECURE_CODE_SIZE = 30;
     private MailCleanerThread mailCleanerThread;
     private SendGrid sendgrid;
+    private boolean sendEmail;
 
     public PasswordRecoveryMailSender(MailCleanerThread mailCleanerThread)
     {
@@ -23,6 +24,9 @@ public class PasswordRecoveryMailSender {
         String api_user = System.getenv("API_USER");
         String api_key = System.getenv("API_KEY");
         sendgrid = new SendGrid(api_user, api_key);
+        try {
+            sendEmail = System.getenv("SEND_EMAIL").equals("TRUE") ? true : false;
+        } catch (Exception e) {}
     }
 
 
@@ -41,10 +45,12 @@ public class PasswordRecoveryMailSender {
 
         email.setText("Ciao "+username+" Abbiamo ricevuto una richiesta di cambio password, clicca Clicca "+url+" per procedere con l'operazione");
 
-        try {
-            sendgrid.send(email).getMessage();
-        } catch (SendGridException e) {
-            return false;
+        if(sendEmail) {
+            try {
+                sendgrid.send(email).getMessage();
+            } catch (SendGridException e) {
+                return false;
+            }
         }
 
         mailCleanerThread.add(verificationCode,new UserEmailRequest(expirationDate,username,userEmail));
