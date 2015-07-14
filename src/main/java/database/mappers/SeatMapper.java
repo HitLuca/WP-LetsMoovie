@@ -2,7 +2,9 @@ package database.mappers;
 
 import database.datatypes.RoomData;
 import database.datatypes.Seat;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -26,5 +28,7 @@ public interface SeatMapper {
     @Select("SELECT * FROM seats WHERE room_number=#{room_number}")
     List<Seat> getRoomSeats(int room_number);
 
-
+    //TODO:Test
+    @Update("UPDATE seats SET status=#{status} WHERE id_seat=#{id_seat};")
+    void updateSeatStatus(@Param("status") String status, @Param("id_seat") int id_seat);
 }
