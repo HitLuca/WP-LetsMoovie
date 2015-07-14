@@ -49,7 +49,7 @@ public class FilmWeek extends HttpServlet {
         FilmList filmList = new FilmList();
 
         for (int i = 0; i < 7; i++) {
-            List<Integer> idList = showMapper.getDayShows(Date.valueOf(today));
+            List<Integer> idList = showMapper.getDayFilms(Date.valueOf(today));
 
             for (Integer j : idList) {
 

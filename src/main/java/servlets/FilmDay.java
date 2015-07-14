@@ -59,7 +59,7 @@ public class FilmDay extends HttpServlet {
 
             //Converto la data a SqlDate per il Db e cerco tutti gli spettacoli della giornata
             Date date = java.sql.Date.valueOf(rs.getParameter());
-            List<Integer> idList = showMapper.getDayShows(date);
+            List<Integer> idList = showMapper.getDayFilms(date);
             //Inizializzo la lista della risposta vuota
             List<Film> timetable = new ArrayList<>();
 
