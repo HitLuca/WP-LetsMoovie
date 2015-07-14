@@ -16,7 +16,6 @@ public class FilmList {
     }
 
     @Expose
-
     List<Film> filmList;
 
     public FilmList() {

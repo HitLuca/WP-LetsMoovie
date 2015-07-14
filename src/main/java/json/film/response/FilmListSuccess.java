@@ -11,20 +11,20 @@ import java.util.List;
 /**
  * Created by etrunon on 09/07/15.
  */
-public class FilmSuccessfulResponse implements OperationResult {
+public class FilmListSuccess implements OperationResult {
 
     @Expose
     List<Film> filmList;
 
-    public FilmSuccessfulResponse(List<Film> filmList) {
+    public FilmListSuccess(List<Film> filmList) {
         this.filmList = filmList;
     }
 
-    public FilmSuccessfulResponse(FilmList filmList) {
+    public FilmListSuccess(FilmList filmList) {
         this.filmList = filmList.getFilmList();
     }
 
-    public FilmSuccessfulResponse() {
+    public FilmListSuccess() {
         filmList = new ArrayList<Film>();
     }
 

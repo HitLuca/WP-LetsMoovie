@@ -9,7 +9,7 @@ import database.datatypes.FilmData;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.film.response.FilmSuccessfulResponse;
+import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
 import types.Film;
 import types.exceptions.BadRequestException;
@@ -40,7 +40,7 @@ import java.util.List;
  * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
  * @apiError (2) {int} errorCode Lanciato quanto i parametri passati tramite la url non matchano
  */
-@WebServlet(name = "FilmDay", urlPatterns = "/api/film/*")
+@WebServlet(name = "FilmDay", urlPatterns = "/api/filmDay/*")
 public class FilmDay extends HttpServlet {
 
     private Gson gsonWriter;
@@ -77,7 +77,7 @@ public class FilmDay extends HttpServlet {
             }
 
             //Creo l'oggetto da trascrivere come Json di risposta
-            getFilmOfDay = new FilmSuccessfulResponse(timetable);
+            getFilmOfDay = new FilmListSuccess(timetable);
 
         } catch (BadRequestException e) {
             getFilmOfDay = e;

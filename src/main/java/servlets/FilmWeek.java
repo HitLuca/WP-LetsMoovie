@@ -7,7 +7,7 @@ import database.datatypes.FilmData;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.film.response.FilmSuccessfulResponse;
+import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
 import types.Film;
 import types.FilmList;
@@ -24,7 +24,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by etrunon on 13/07/15.
+ * @api {post} /api/filmWeek
+ * @apiName FilmWeek
+ * @apiGroup eek
+ * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {int} errorCode Lanciato quanto i parametri passati tramite la url non matchano
  */
 @WebServlet(name = "FilmWeek", urlPatterns = "/api/filmWeek")
 public class FilmWeek extends HttpServlet {
@@ -61,7 +65,7 @@ public class FilmWeek extends HttpServlet {
             f.setData(filmData);
         }
 
-        getFilmOfWeek = new FilmSuccessfulResponse(filmList);
+        getFilmOfWeek = new FilmListSuccess(filmList);
 
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(getFilmOfWeek));

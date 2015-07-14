@@ -58,6 +58,23 @@ public class Film {
         shows = new ArrayList<Shows>();
     }
 
+    public Film(FilmData filmData) {
+
+        this.id_film = filmData.getId_film();
+        this.film_title = filmData.getFilm_title();
+        this.poster = filmData.getPoster();
+        this.duration = filmData.getDuration();
+        this.trailer = filmData.getTrailer();
+        this.metascore = filmData.getMetascore();
+        this.rating = filmData.getRating();
+        this.year = filmData.getYear();
+        this.plot = filmData.getPlot();
+        this.director = filmData.getDirector();
+        this.vm = filmData.getVm();
+
+    }
+
+
     public void addHours(String date, List<String> hours) {
 
         Shows shows1 = new Shows(date, hours);
