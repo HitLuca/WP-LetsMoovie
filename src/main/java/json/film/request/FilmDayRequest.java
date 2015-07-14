@@ -1,4 +1,4 @@
-package json.filmDay.request;
+package json.film.request;
 
 import types.annotations.toSanitize;
 import utilities.InputValidator.Regex;

@@ -9,7 +9,7 @@ import database.datatypes.FilmData;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.filmDay.response.FilmSuccessfulResponse;
+import json.film.response.FilmSuccessfulResponse;
 import org.apache.ibatis.session.SqlSession;
 import types.Film;
 import types.exceptions.BadRequestException;
@@ -34,13 +34,13 @@ import java.util.List;
  */
 
 /**
- * @api {post} /api/filmDay
+ * @api {post} /api/film
  * @apiName FilmDay
  * @apiGroup FilmDay
  * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
  * @apiError (2) {int} errorCode Lanciato quanto i parametri passati tramite la url non matchano
  */
-@WebServlet(name = "FilmDay", urlPatterns = "/api/filmDay/*")
+@WebServlet(name = "FilmDay", urlPatterns = "/api/film/*")
 public class FilmDay extends HttpServlet {
 
     private Gson gsonWriter;
@@ -49,6 +49,7 @@ public class FilmDay extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        //Todo non inviare punteggi dei films se sono a -1
         response.setContentType("application/json");
         OperationResult getFilmOfDay = null;
 

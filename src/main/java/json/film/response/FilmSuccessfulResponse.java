@@ -1,4 +1,4 @@
-package json.filmDay.response;
+package json.film.response;
 
 import com.google.gson.annotations.Expose;
 import json.OperationResult;

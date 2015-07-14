@@ -37,6 +37,7 @@ public class FilmList {
         //Altrimenti non l'ho trovato e devo crearne uno nuovo
         Film film = new Film(date.toString(), id, shows);
         filmList.add(film);
+
     }
 
     @Override
@@ -45,4 +46,5 @@ public class FilmList {
                 "filmList=" + filmList +
                 '}';
     }
+
 }

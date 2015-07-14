@@ -7,7 +7,7 @@ import database.datatypes.FilmData;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.filmDay.response.FilmSuccessfulResponse;
+import json.film.response.FilmSuccessfulResponse;
 import org.apache.ibatis.session.SqlSession;
 import types.Film;
 import types.FilmList;
@@ -65,6 +65,8 @@ public class FilmWeek extends HttpServlet {
 
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(getFilmOfWeek));
+
+        //todo chiudere sessioni sql
 
     }
 
