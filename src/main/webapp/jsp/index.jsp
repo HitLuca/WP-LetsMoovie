@@ -9,7 +9,7 @@
 <c:import url="${url}"/>
 <body>
 <div class="wrapper">
-    <c:import url="header.jsp"/>
+    <c:import url="/jsp/header.jsp"/>
 
     <div class="content">
         <h2>Hello World!</h2>

@@ -12,11 +12,10 @@ $(function () {
     } else {
         $.getJSON("/api/user/"+name)
             .done(function (data) {
-                console.log(data);
                 $("#panel1a").render(data);
             })
             .fail(function (data) {
-                console.log(data.responseJSON);
+
             });
     }
 

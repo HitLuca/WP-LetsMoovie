@@ -84,8 +84,8 @@ var Registration = {
         }
     },
     success: function (data) {
-        saveNotification("success", "Registrazione effettuata!");
-        Session.setUsername(data.username);
+        alertify.warning("Registrazione effettuata, conferma il tuo account!");
+        $("#confirmModal").foundation('reveal', 'open');
     }
 
 };
