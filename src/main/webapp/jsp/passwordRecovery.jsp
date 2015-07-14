@@ -19,11 +19,12 @@
                 <div class="medium-12 columns">
                     <p>
                         Completando i campi sottostanti con una nuova password avrai la possibilità
-                        di impostarne una nuova.<br>
+                        di impostarne una nuova.
                     </p>
                 </div>
             </div>
-            <form action="/api/setNeWPassword" id="setNewPassoword" data-abide="ajax">
+            <form action="<c:url value="/api/setNewPassword"/>" id="setNewPassoword" data-abide="ajax">
+                <input type="hidden" name="verificationCode" value="${param.verificationCode}">
                 <div class="row">
                     <div class="medium-12 columns">
                         <label>Password:
@@ -43,7 +44,11 @@
 
                 <div class="row">
                     <div class="medium-12 text-center columns">
-                        <button class="button radius ">Conferma</button>
+                        <button class="button radius ladda-button" data-style="zoom-out">
+                            <span class="ladda-label">
+                                Conferma
+                            </span>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -53,6 +58,6 @@
 </div>
 <c:import url="/jsp/footer.jsp"/>
 
-<script src="<c:url value="/javascript/login.js"/>"></script>
+<script src="<c:url value="/javascript/passwordRecovery.js"/>"></script>
 </body>
 </html>

@@ -20,7 +20,7 @@
     <div class="row content">
         <h3>Completa i seguenti campi per effettuare la registrazione:</h3>
 
-        <form action="/api/register" method="post" data-abide="ajax" id="registerForm">
+        <form action="<c:url value="/api/register"/>" method="post" data-abide="ajax" id="registerForm">
             <fieldset>
                 <legend>Generalità utente</legend>
                 <div class="row">
@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="medium-6 columns">
                         <label>Data di nascita:
-                            <input type="date" name="birthday" placeholder="AAAA-MM-GG" required/>
+                            <input type="parameter" name="birthday" placeholder="AAAA-MM-GG" required/>
                         </label>
                         <small class="error">Inserire la data nel giusto formato! (AAAA-MM-GG)</small>
                     </div>
@@ -102,8 +102,10 @@
             <p></p>
 
             <div class="medium-12 centered text-center columns">
-                <button class="button radius">
-                    Conferma registrazione
+                <button class="button radius ladda-button" data-style="zoom-out">
+                    <span class="ladda-label">
+                    Conferma
+                    </span>
                 </button>
             </div>
         </form>

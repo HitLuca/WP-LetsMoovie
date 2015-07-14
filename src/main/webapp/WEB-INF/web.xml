@@ -61,8 +61,12 @@
         <jsp-file>/jsp/error/500.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>resetPassword</servlet-name>
-        <jsp-file>/jsp/resetPassword.jsp</jsp-file>
+        <servlet-name>passwordRecovery</servlet-name>
+        <jsp-file>/jsp/passwordRecovery.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>tester</servlet-name>
+        <jsp-file>/jsp/tester.jsp</jsp-file>
     </servlet>
 
     <!-- MAPPING JPS-->
@@ -103,7 +107,11 @@
         <url-pattern>/500</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>resetPassword</servlet-name>
+        <servlet-name>passwordRecovery</servlet-name>
         <url-pattern>/passwordRecovery</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>tester</servlet-name>
+        <url-pattern>/tester/*</url-pattern>
     </servlet-mapping>
 </web-app>
