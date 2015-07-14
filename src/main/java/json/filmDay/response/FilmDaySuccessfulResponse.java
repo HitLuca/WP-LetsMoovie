@@ -1,8 +1,8 @@
 package json.filmDay.response;
 
 import com.google.gson.annotations.Expose;
-import database.datatypes.FilmData;
 import json.OperationResult;
+import types.Film;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +13,17 @@ import java.util.List;
 public class FilmDaySuccessfulResponse implements OperationResult {
 
     @Expose
-    List<FilmDayShows> filmList;
+    List<Film> filmList;
 
-    public FilmDaySuccessfulResponse(List<FilmDayShows> filmList) {
+    public FilmDaySuccessfulResponse(List<Film> filmList) {
         this.filmList = filmList;
     }
 
     public FilmDaySuccessfulResponse() {
-        filmList = new ArrayList<FilmDayShows>();
+        filmList = new ArrayList<Film>();
     }
 
-    public void addFilm(FilmDayShows film) {
+    public void addFilm(Film film) {
         filmList.add(film);
     }
 }

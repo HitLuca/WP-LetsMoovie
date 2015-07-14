@@ -14,7 +14,7 @@
         <div class="small-11 small-centered large-6 medium-8 columns">
             <h3>Accedi al tuo account:</h3>
 
-            <form action="/api/login" id="loginForm" data-abide="ajax" method="post">
+            <form action="<c:url value="/api/login"/>" id="loginForm" data-abide="ajax" method="post">
                 <%--<input type="hidden" value="${param.sourcePage}" name="sourcePage">--%>
                 <div>
                     <label>
@@ -37,7 +37,9 @@
 
                 <div class="row">
                     <div class="medium-6 columns">
-                        <button class="button radius expand">Login</button>
+                        <button class="button radius expand ladda-button" data-style="zoom-out">
+                            <span class="ladda-label">Login</span>
+                        </button>
                     </div>
                     <div class="medium-6 columns">
                         <a href="#" class="button radius expand" data-reveal-id="firstModal">Password dimenticata?</a>
@@ -48,7 +50,7 @@
 
             <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
                  role="dialog">
-                <form id="passwordRecovery" data-abide="ajax" action="/api/passwordRecovery">
+                <form id="passwordRecovery" data-abide="ajax" action="<c:url value="/api/passwordRecovery"/>">
                     <h2 id="modalTitle">Hai dimenticato la tua password?</h2>
 
                     <p></p>
@@ -71,7 +73,11 @@
                     </div>
                     <div class="row">
                         <div class="medium-12 centered text-center columns">
-                            <button class="button radius">Invia</button>
+                            <button class="button radius ladda-button" data-style="zoom-out">
+                                <span class="ladda-label">
+                                    Invia
+                                </span>
+                            </button>
                         </div>
                     </div>
                     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
@@ -83,7 +89,7 @@
                  role="dialog" data-options="close_on_background_click:false">
                 <h2 id="secondModalTitle"> Controlla la tua casella di posta elettronica!</h2>
 
-                <form id="resendEmail" data-abide="ajax" action="/api/passwordRecovery">
+                <form id="resendEmail" data-abide="ajax" action="<c:url value="/api/passwordRecovery"/>">
                     <%--TODO: CONTROLLARE SE NECESSARIO--%>
                     <p></p>
 

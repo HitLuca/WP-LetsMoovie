@@ -16,6 +16,7 @@ import types.enums.Role;
 import types.exceptions.BadRequestException;
 import types.exceptions.BadRequestExceptionWithParameters;
 import utilities.InputValidator.ModelValidator;
+import utilities.RestUrlMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -66,7 +67,7 @@ import java.util.List;
  */
 
 
-@WebServlet(name = "getUser", urlPatterns = "/api/getUser")
+@WebServlet(name = "getUser", urlPatterns = "/api/user/*")
 public class getUser extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
@@ -90,38 +91,37 @@ public class getUser extends HttpServlet {
             }
             String usernameSession = session.getAttribute("username").toString();
 
-            //Check sulla richiesta vuota
-            PersonalRequest personalRequest = gsonReader.fromJson(request.getReader(), PersonalRequest.class);
-            if (personalRequest == null) {
-                throw new BadRequestException(ErrorCode.EMPTY_REQ);
-            }
+            //String matcher che preleva il nome utente da cercare dall'url e lancia Err.2 in caso sia mal formattato
+            RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
 
-            List<String> invalidParameters = ModelValidator.validate(personalRequest);
-            //Se ho stringhe invalide lancio l'eccezione di registrazione
-            if (!invalidParameters.isEmpty())
-                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,invalidParameters);
-
-            String usernameSearched = personalRequest.getUsername();
+            String usernameSearched = rs.getParameter();
 
             //Se sei un utente normale puoi vedere solo i tuoi dati
-            UserData user = userMapper.getUserData(personalRequest.getUsername());
+            UserData user = userMapper.getUserData(rs.getParameter());
 
-            if(user == null)
-            {
+            //Se sei un admin e stai cercando un utente che non esiste te lo dico
+            if (user == null && (int) session.getAttribute("role") != Role.USER.getValue()) {
                 throw new BadRequestException(ErrorCode.USER_NOT_FOUND);
             }
 
+            //Se sei un utente e stai cercando un utente diverso da te ti blocco
             if ((int) session.getAttribute("role") == Role.USER.getValue() && !user.getUsername().equals(usernameSession)) {
                 throw new BadRequestException(ErrorCode.NOT_AUTHORIZED);
             }
 
+            //Se sei un utente che cerca sè stesso (devi andare in un tempio buddhista) e se non esisti allora ci sono
+            // problemi gravi nel db del server
+            if (user == null) {
+                throw new NullPointerException();
+            }
+
             user.setPassword(null);
-            getUserStatus = new PersonalRespose(userMapper.getUserData(usernameSearched));
+            getUserStatus = new PersonalRespose(user);
 
         } catch (BadRequestException e) {
             getUserStatus = e;
             response.setStatus(400);
-        } catch (JsonIOException | JsonSyntaxException | NullPointerException | IllegalAccessException | InvocationTargetException e) {
+        } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
             getUserStatus = new BadRequestException();
             response.setStatus(400);
         }

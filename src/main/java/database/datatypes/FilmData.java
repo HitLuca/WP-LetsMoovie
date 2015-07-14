@@ -4,6 +4,7 @@ package database.datatypes;
  * Created by hitluca on 06/07/15.
  */
 public class FilmData {
+
     private int id_film;
     private String film_title;
     private String poster;
@@ -102,5 +103,22 @@ public class FilmData {
 
     public void setDirector(String director) {
         this.director = director;
+    }
+
+    @Override
+    public String toString() {
+        return "FilmData{" +
+                "id_film=" + id_film +
+                ", film_title='" + film_title + '\'' +
+                ", poster='" + poster + '\'' +
+                ", duration=" + duration +
+                ", trailer='" + trailer + '\'' +
+                ", metascore=" + metascore +
+                ", rating=" + rating +
+                ", year=" + year +
+                ", plot='" + plot + '\'' +
+                ", director='" + director + '\'' +
+                ", vm=" + vm +
+                '}';
     }
 }

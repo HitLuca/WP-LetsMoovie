@@ -5,17 +5,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
-import database.datatypes.UserData;
-import database.mappers.UserMapper;
+import database.datatypes.FilmData;
+import database.mappers.FilmMapper;
+import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.filmDay.request.FilmDayRequest;
-import json.userPersonalData.response.PersonalRespose;
+import json.filmDay.response.FilmDaySuccessfulResponse;
 import org.apache.ibatis.session.SqlSession;
+import types.Film;
 import types.enums.ErrorCode;
-import types.enums.Role;
 import types.exceptions.BadRequestException;
-import types.exceptions.BadRequestExceptionWithParameters;
-import utilities.InputValidator.ModelValidator;
+import utilities.RestUrlMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -24,8 +23,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Servlet che spedisce la lista di tutti i film proiettati durante la data ricevuta in input. Per ogni film, oltre ai
@@ -33,45 +35,62 @@ import java.util.List;
  * <p/>
  * Created by etrunon on 09/07/15.
  */
-@WebServlet(name = "FilmDay", urlPatterns = "/api/filmDay")
+
+/**
+ * @api {post} /api/filmDay
+ * @apiName FilmDay
+ * @apiGroup FilmDay
+ * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {int} errorCode Lanciato quanto i parametri passati tramite la url non matchano
+ */
+@WebServlet(name = "FilmDay", urlPatterns = "/api/filmDay/*")
 public class FilmDay extends HttpServlet {
 
     private Gson gsonWriter;
-    private Gson gsonReader;
-    private UserMapper userMapper;
+    private ShowMapper showMapper;
+    private FilmMapper filmMapper;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("application/json");
-        OperationResult getUserStatus = null;
+        OperationResult getFilmOfDay = null;
 
         try {
+            // Creo un UrlMatcher con la mia url. Se non matcha la url lancia l'eccezione 2
+            RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
 
-            //Check sulla richiesta vuota
-            FilmDayRequest inputDate = gsonReader.fromJson(request.getReader(), FilmDayRequest.class);
-            if (inputDate == null) {
-                throw new BadRequestException(ErrorCode.EMPTY_REQ);
+            //Converto la data a SqlDate per il Db e cerco tutti gli spettacoli della giornata
+            Date date = java.sql.Date.valueOf(rs.getParameter());
+            List<Integer> shows = showMapper.getDayShows(date);
+            //Inizializzo la lista della risposta vuota
+            List<Film> timetable = new ArrayList<>();
+
+            for (Integer i : shows) {
+
+                //Prendo le info del film con id I proiettato in quella data
+                FilmData filmData = filmMapper.getFilmData(i);
+                //Prendo i differenti
+                List<String> hours = showMapper.getDayShowsId(date, i);
+                //Creo l'oggetto Film e lo riempio
+                Film film = new Film(filmData, hours);
+                film.addHours(rs.getParameter(), hours);
+                //Aggiungo il Film alla lista
+                timetable.add(film);
             }
-            List<String> invalidParameters = ModelValidator.validate(inputDate);
-            //Se ho stringhe invalide lancio l'eccezione di registrazione
-            if (!invalidParameters.isEmpty()) {
-                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD, invalidParameters);
-            }
 
-            String dateSearched = inputDate.getdate();
-            //todo
-
+            //Creo l'oggetto da trascrivere come Json di risposta
+            getFilmOfDay = new FilmDaySuccessfulResponse(timetable);
 
         } catch (BadRequestException e) {
-            getUserStatus = e;
+            getFilmOfDay = e;
             response.setStatus(400);
-        } catch (JsonIOException | JsonSyntaxException | NullPointerException | IllegalAccessException | InvocationTargetException e) {
-            getUserStatus = new BadRequestException();
+        } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
+            getFilmOfDay = new BadRequestException();
             response.setStatus(400);
         }
 
         ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.print(gsonWriter.toJson(getUserStatus));
+        outputStream.print(gsonWriter.toJson(getFilmOfDay));
 
     }
 
@@ -84,11 +103,13 @@ public class FilmDay extends HttpServlet {
 
         SqlSession sessionSql;
         sessionSql = DatabaseConnection.getFactory().openSession();
-        userMapper = sessionSql.getMapper(UserMapper.class);
+        showMapper = sessionSql.getMapper(ShowMapper.class);
+        filmMapper = sessionSql.getMapper(FilmMapper.class);
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.create();
-        gsonReader = new Gson();
     }
+
 }
+

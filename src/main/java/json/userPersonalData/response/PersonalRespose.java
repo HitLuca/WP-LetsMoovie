@@ -31,7 +31,7 @@ public class PersonalRespose implements OperationResult {
         username = userData.getUsername();
         name = userData.getName();
         surname = userData.getSurname();
-        birthday = userData.getBirthday().toString();
+        birthday = userData.getBirthday();
         phone = userData.getPhone_number();
         residual_credit = userData.getResidual_credit();
         role = userData.getRole();
