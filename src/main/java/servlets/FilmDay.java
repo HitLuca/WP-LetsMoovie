@@ -9,10 +9,9 @@ import database.datatypes.FilmData;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.filmDay.response.FilmDaySuccessfulResponse;
+import json.filmDay.response.FilmSuccessfulResponse;
 import org.apache.ibatis.session.SqlSession;
 import types.Film;
-import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.RestUrlMatcher;
 
@@ -26,8 +25,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Servlet che spedisce la lista di tutti i film proiettati durante la data ricevuta in input. Per ogni film, oltre ai
@@ -50,7 +47,7 @@ public class FilmDay extends HttpServlet {
     private ShowMapper showMapper;
     private FilmMapper filmMapper;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("application/json");
         OperationResult getFilmOfDay = null;
@@ -61,11 +58,11 @@ public class FilmDay extends HttpServlet {
 
             //Converto la data a SqlDate per il Db e cerco tutti gli spettacoli della giornata
             Date date = java.sql.Date.valueOf(rs.getParameter());
-            List<Integer> shows = showMapper.getDayShows(date);
+            List<Integer> idList = showMapper.getDayShows(date);
             //Inizializzo la lista della risposta vuota
             List<Film> timetable = new ArrayList<>();
 
-            for (Integer i : shows) {
+            for (Integer i : idList) {
 
                 //Prendo le info del film con id I proiettato in quella data
                 FilmData filmData = filmMapper.getFilmData(i);
@@ -79,7 +76,7 @@ public class FilmDay extends HttpServlet {
             }
 
             //Creo l'oggetto da trascrivere come Json di risposta
-            getFilmOfDay = new FilmDaySuccessfulResponse(timetable);
+            getFilmOfDay = new FilmSuccessfulResponse(timetable);
 
         } catch (BadRequestException e) {
             getFilmOfDay = e;
@@ -94,7 +91,7 @@ public class FilmDay extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 

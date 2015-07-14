@@ -1,7 +1,6 @@
 package database.datatypes;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Created by hitluca on 26/06/15.
