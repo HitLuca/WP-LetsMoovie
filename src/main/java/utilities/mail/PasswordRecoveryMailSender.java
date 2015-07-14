@@ -16,6 +16,7 @@ public class PasswordRecoveryMailSender {
     private final int SECURE_CODE_SIZE = 30;
     private MailCleanerThread mailCleanerThread;
     private SendGrid sendgrid;
+    private boolean sendEmail;
 
     public PasswordRecoveryMailSender(MailCleanerThread mailCleanerThread)
     {
@@ -23,6 +24,9 @@ public class PasswordRecoveryMailSender {
         String api_user = System.getenv("API_USER");
         String api_key = System.getenv("API_KEY");
         sendgrid = new SendGrid(api_user, api_key);
+        try {
+            sendEmail = System.getenv("SEND_EMAIL").equals("TRUE") ? true : false;
+        } catch (Exception e) {}
     }
 
 
@@ -32,16 +36,21 @@ public class PasswordRecoveryMailSender {
         String verificationCode = RandomStringUtils.randomAlphanumeric(SECURE_CODE_SIZE);
         SendGrid.Email email = new SendGrid.Email();
 
+        url+=verificationCode;
+
         email.addTo(userEmail);
         email.setFrom("info@letsmoovie.com");
         email.setSubject("Password Recovery");
         email.setTemplateId("62710ec1-548f-4b62-a4fa-757187194b9f");
-        email.setText("Ciao "+username+" Abbiamo ricevuto una richiesta di cambio password, clicca il seguente link "+ url + "?verificationCode=" + verificationCode);
 
-        try {
-            sendgrid.send(email).getMessage();
-        } catch (SendGridException e) {
-            return false;
+        email.setText("Ciao "+username+" Abbiamo ricevuto una richiesta di cambio password, clicca Clicca "+url+" per procedere con l'operazione");
+
+        if(sendEmail) {
+            try {
+                sendgrid.send(email).getMessage();
+            } catch (SendGridException e) {
+                return false;
+            }
         }
 
         mailCleanerThread.add(verificationCode,new UserEmailRequest(expirationDate,username,userEmail));

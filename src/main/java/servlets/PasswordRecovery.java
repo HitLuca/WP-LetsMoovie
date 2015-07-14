@@ -24,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -54,14 +55,23 @@ public class PasswordRecovery extends HttpServlet {
     Gson gsonReader;
     UserMapper userMapper;
     PasswordRecoveryMailSender passwordRecoveryMailSender;
+    private final String url = "/api/passwordRecovery";
 
+    //TODO Lanciare errore 7 se già presente la sessione
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OperationResult recoveryStatus;
         response.setContentType("application/json");
         try
         {
-            PasswordRecoveryRequest passwordRecoveryRequest = gsonReader.fromJson(request.getReader(),PasswordRecoveryRequest.class);
+            //Check sulla sessione già presente e l'utente è già loggato con un username
+            HttpSession session = request.getSession();
+            if (session.getAttribute("username") != null) {
+
+                throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
+            }
+
+            PasswordRecoveryRequest passwordRecoveryRequest = gsonReader.fromJson(request.getReader(), PasswordRecoveryRequest.class);
             List<String> invalidParameters = ModelValidator.validate(passwordRecoveryRequest);
             if(!invalidParameters.isEmpty())
             {
@@ -74,19 +84,20 @@ public class PasswordRecovery extends HttpServlet {
             {
                 throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,"email");
             }
-            if(!passwordRecoveryMailSender.sendEmail(passwordRecoveryRequest.getEmail(),username,request.getRequestURL().toString()))
+            String recoveryMailUrl = request.getRequestURL().toString().replace(url,"");
+            recoveryMailUrl+="/passwordRecovery?verificationCode=";
+            if(!passwordRecoveryMailSender.sendEmail(passwordRecoveryRequest.getEmail(),username,recoveryMailUrl))
             {
                 throw new BadRequestExceptionWithParameters(ErrorCode.INVALID_MAIL,"email");
             }
             recoveryStatus = new SuccessfullPasswordRecovery(passwordRecoveryRequest.getEmail());
 
-        }catch (BadRequestExceptionWithParameters e) {
+        } catch (BadRequestException e) {
             recoveryStatus = e;
             response.setStatus(400);
 
         } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
             recoveryStatus = new BadRequestException();
-            e.printStackTrace();
             response.setStatus(400);
         }
         ServletOutputStream outputStream = response.getOutputStream();

@@ -45,6 +45,8 @@ import java.util.List;
  * @apiError (11) {int} errorCode Codice di conferma non valido
  */
 
+
+//TODO RITORNARE L'USERNAME
 @WebServlet(name = "SetNewPassword", urlPatterns = "/api/setNewPassword")
 public class SetNewPassword extends HttpServlet {
     Gson gsonWriter;

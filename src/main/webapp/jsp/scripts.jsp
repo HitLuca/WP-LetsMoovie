@@ -16,7 +16,11 @@
 <%--NOTIFICHE JS--%>
 <script src="<c:url value="/lib/js/alertify.min.js"/>"></script>
 
+<%--LADDA BUTTONS--%>
+<script src="<c:url value="/lib/js/spin.min.js"/>"></script>
+<script src="<c:url value="/lib/js/ladda.min.js"/>"></script>
 
+<script src="<c:url value="/lib/js/transparency.min.js"/>"></script>
 <%--JAVASCRIPT PERSONALE--%>
 <script src="<c:url value="/javascript/main.js"/>"></script>
 <script src="<c:url value="/javascript/header.js"/>"></script>

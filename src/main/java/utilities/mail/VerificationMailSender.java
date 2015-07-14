@@ -20,6 +20,7 @@ public class VerificationMailSender {
     private final int SECURE_CODE_SIZE = 30;
     private MailCleanerThread mailCleanerThread;
     private SendGrid sendgrid;
+    private boolean sendEmail = false;
 
     public VerificationMailSender(MailCleanerThread mailCleanerThread)
     {
@@ -27,6 +28,9 @@ public class VerificationMailSender {
         String api_user = System.getenv("API_USER");
         String api_key = System.getenv("API_KEY");
         sendgrid = new SendGrid(api_user, api_key);
+        try {
+            sendEmail = System.getenv("SEND_EMAIL").equals("TRUE") ? true : false;
+        } catch (Exception e) {}
     }
 
     public List<String> checkDuplicates(RegistrationRequest registrationRequest)  {
@@ -50,16 +54,20 @@ public class VerificationMailSender {
         String verificationCode = RandomStringUtils.randomAlphanumeric(SECURE_CODE_SIZE);
         SendGrid.Email email = new SendGrid.Email();
 
+        url+=verificationCode;
+
         email.addTo(registrationRequest.getEmail());
         email.setFrom("info@letsmoovie.com");
         email.setSubject("Verify your account");
         email.setTemplateId("62710ec1-548f-4b62-a4fa-757187194b9f");
-        email.setText("Benvenuto "+registrationRequest.getUsername()+"\nClicca sul link per confermare la registrazione "+url + "?verificationCode=" + verificationCode);
+        email.setText("Benvenuto "+registrationRequest.getUsername()+"\nClicca "+url+" per confermare la registrazione");
 
-        try {
-            sendgrid.send(email).getMessage();
-        } catch (SendGridException e) {
-            return false;
+        if(sendEmail) {
+            try {
+                sendgrid.send(email).getMessage();
+            } catch (SendGridException e) {
+                return false;
+            }
         }
 
         mailCleanerThread.add(verificationCode,new UserRegistrationRequest(registrationRequest,expirationDate));

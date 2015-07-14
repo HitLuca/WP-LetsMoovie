@@ -14,8 +14,6 @@ public class PersonalRespose implements OperationResult {
     @Expose
     private String username;
     @Expose
-    private String password;
-    @Expose
     private String name;
     @Expose
     private String surname;
@@ -23,17 +21,29 @@ public class PersonalRespose implements OperationResult {
     private String birthday;
     @Expose
     private String phone;
+    @Expose
+    private float residual_credit;
+    @Expose
+    private int role;
 
     public PersonalRespose(UserData userData) {
         email = userData.getEmail();
         username = userData.getUsername();
-        password = userData.getPassword();
         name = userData.getName();
         surname = userData.getSurname();
-        birthday = userData.getBirthday().toString();
+        birthday = userData.getBirthday();
         phone = userData.getPhone_number();
+        residual_credit = userData.getResidual_credit();
+        role = userData.getRole();
     }
 
+    public float getResidual_credit() {
+        return residual_credit;
+    }
+
+    public int getRole() {
+        return role;
+    }
 
     public String getEmail() {
         return email;
@@ -41,10 +51,6 @@ public class PersonalRespose implements OperationResult {
 
     public String getUsername() {
         return username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getName() {

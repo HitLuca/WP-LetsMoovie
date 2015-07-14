@@ -18,6 +18,7 @@ import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
 import utilities.mail.VerificationMailSender;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -74,10 +75,10 @@ public class Register extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
     private UserMapper userMapper;
+    private final String url = "/api/register";
     private VerificationMailSender verificationMailSender;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         response.setContentType("application/json");
         OperationResult registrationStatus;
         try {
@@ -114,7 +115,9 @@ public class Register extends HttpServlet {
             // che corrispondono ai campi duplicati, lista vuota se va bene
 
             //Invio la mail di verifica, se mail invalida tiro eccezione
-            if (!verificationMailSender.sendEmail(registrationRequest, request.getRequestURL().toString())) {
+            String registrationMailUrl = request.getRequestURL().toString().replace(url,"");
+            registrationMailUrl+="/confirmRegistration?verificationCode=";
+            if (!verificationMailSender.sendEmail(registrationRequest,registrationMailUrl)){
                 throw new BadRequestExceptionWithParameters(ErrorCode.INVALID_MAIL, "email");
             }
 

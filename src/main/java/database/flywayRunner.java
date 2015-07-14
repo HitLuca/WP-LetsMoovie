@@ -15,7 +15,7 @@ public class flywayRunner implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         // Create the Flyway instance
         Flyway flyway = new Flyway();
-        flyway.setLocations("db_migrations");
+        flyway.setLocations("db_migrations", "database");
         try {
             URI dbUri;
             dbUri = new URI(System.getenv("DATABASE_URL"));
