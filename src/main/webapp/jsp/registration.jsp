@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="medium-6 columns">
                         <label>Data di nascita:
-                            <input type="parameter" name="birthday" placeholder="AAAA-MM-GG" required/>
+                            <input type="date" name="birthday" placeholder="AAAA-MM-GG" required/>
                         </label>
                         <small class="error">Inserire la data nel giusto formato! (AAAA-MM-GG)</small>
                     </div>
