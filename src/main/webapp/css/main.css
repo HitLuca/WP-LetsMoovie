@@ -14,8 +14,8 @@
 }
 
 .accordion {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    /*margin-top: 3rem;*/
+    /*margin-bottom: 3rem;*/
     padding-left: 0.25rem;
     padding-right: 0.25rem;
     word-wrap: break-word;
@@ -56,4 +56,55 @@ body {
 
 .reveal-modal {
     text-align: center;
+}
+
+#panel1 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+#panel2 {
+    /*margin-top: 0rem;*/
+    /*margin-bottom: 0rem;*/
+    /*padding-left: 0rem;*/
+    /*padding-right: 0rem;*/
+}
+
+#listItem {
+    min-height: 10rem;
+}
+
+#home {
+    padding-left: 0rem;
+    padding-right: 0rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+#panelLunedì {
+    margin: 0rem;
+}
+
+#panelMartedì {
+    margin: 0rem;
+}
+
+#panelMercoledì {
+    margin: 0rem;
+}
+
+#panelGiovedì {
+    margin: 0rem;
+}
+
+#panelVenerdì {
+    margin: 0rem;
+}
+
+#panelSabato {
+    margin: 0rem;
+}
+
+#panelDomenica {
+    margin: 0rem;
 }
