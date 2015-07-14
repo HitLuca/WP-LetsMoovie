@@ -121,16 +121,16 @@ var Notifications = {
 var Session = {
     storage: $.localStorage,
     getUsername: function () {
-        return this.storage.get("username");
+        return Session.storage.get("username");
     },
     setUsername: function (username) {
-        this.storage.set("username", username);
+        Session.storage.set("username", username);
     },
     logout: function () {
-        this.storage.remove("username");
+        Session.storage.remove("username");
     },
     redirectToUser: function () {
-        window.location.assign("/user/" + Session.getUsername);
+        window.location.assign("/user/" + Session.getUsername());
     },
     redirectToLogin: function () {
         Notifications.saveNotification("error", "Non hai effettuato l'accesso!");

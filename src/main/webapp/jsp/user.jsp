@@ -81,7 +81,7 @@
                                         <strong>Telefono:</strong>
                                     </div>
                                     <div class="medium-8 small-only-text-center columns">
-                                        <span id="phone_number"></span>
+                                        <span id="phone"></span>
                                     </div>
                                 </div>
                             </div>
@@ -192,5 +192,8 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/footer.jsp"/>
+
+<script src="<c:url value="/javascript/user.js"/>"></script>
+
 </body>
 </html>
