@@ -16,7 +16,7 @@
             <div class="small-12 columns">
                 <ul class="tabs show-for-medium-up" data-tab>
                     <li class="tab-title active"><a href="#panel1">Questa settimana</a></li>
-                    <li class="tab-title"><a href="#panel2">Lista completa</a></li>
+                    <li class="tab-title" id=""><a href="#panel2">Lista completa</a></li>
                 </ul>
 
                 <dl id="home" class="accordion" data-accordion>
@@ -37,25 +37,18 @@
                                 </ul>
                                 <div class="tabs-content">
                                     <div class="content active" id="panelLunedì">
-                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelMartedì">
-                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelMercoledì">
-                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelGiovedì">
-                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelVenerdì">
-                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelSabato">
-                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelDomenica">
-                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                 </div>
                             </div>
@@ -72,6 +65,14 @@
 
             </div>
         </div>
+    </div>
+    <div id="templateDay" class="hide">
+        <c:set scope="request" value="true" var="orario"/>
+        <c:import url="filmItemList.jsp"/>
+    </div>
+    <div id="templateWeek" class="hide">
+        <c:set scope="request" value="false" var="orario"/>
+        <c:import url="filmItemList.jsp"/>
     </div>
     <div class="push"></div>
 </div>

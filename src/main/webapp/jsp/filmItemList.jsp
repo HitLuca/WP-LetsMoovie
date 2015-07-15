@@ -26,12 +26,17 @@
             culpa qui officia deserunt mollit anim id est laborum.
         </p>
 
-        <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown">Orari
-            proiezioni
-        </button>
-        <br>
-        <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
-            <c:import url="orarioFilm.jsp"/>
-        </ul>
+        <c:if test="${requestScope.orario == true}">
+            <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown">
+                Orari
+                proiezioni
+            </button>
+            <br>
+            <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
+                <c:import url="orarioFilm.jsp"/>
+            </ul>
+
+        </c:if>
+
     </div>
 </div>
