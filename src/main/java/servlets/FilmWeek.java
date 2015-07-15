@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public class FilmWeek extends HttpServlet {
     private Gson gsonWriter;
     private ShowMapper showMapper;
     private FilmMapper filmMapper;
+    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -45,7 +48,7 @@ public class FilmWeek extends HttpServlet {
         FilmList filmList = new FilmList();
 
         for (int i = 0; i < 7; i++) {
-            List<Integer> idList = showMapper.getDayFilms(Date.valueOf(today));
+            List<Integer> idList = showMapper.getDayFilms(dateFormat.format(today));
 
             for (Integer j : idList) {
 

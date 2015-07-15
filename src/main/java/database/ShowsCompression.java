@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +26,15 @@ public class ShowsCompression {
     private static ShowMapper showMapper;
     private static FilmMapper filmMapper;
     private static SqlSession session;
+    private static DateTimeFormatter dateFormat;
+    private static DateTimeFormatter timeFormat;
 
     public ShowsCompression() {
         try {
             conn = getConnection();
             statement = conn.createStatement();
+            dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
             session = DatabaseConnection.getFactory().openSession(true);
             showMapper = session.getMapper(ShowMapper.class);
             filmMapper = session.getMapper(FilmMapper.class);
@@ -50,7 +55,7 @@ public class ShowsCompression {
         LocalTime startingTime = LocalTime.now();
         LocalTime localTime = startingTime;
         LocalDate localDate = LocalDate.now();
-        List<Show> shows = showMapper.getDayShows(Date.valueOf(localDate));
+        List<Show> shows = showMapper.getDayShows(localDate.format(dateFormat));
         ArrayList<ArrayList<Show>> array = new ArrayList<>();
 
         for (int i = 0; i < 6; i++) {
@@ -63,7 +68,8 @@ public class ShowsCompression {
 
         for (int i = 0; i < 6; i++) {
             for (Show s : array.get(i)) {
-                showMapper.updateShowDuration(s.getId_show(), Time.valueOf(localTime));
+                System.out.println(localTime.format(timeFormat));
+                showMapper.updateShowDuration(s.getId_show(), localTime.format(timeFormat));
                 localTime = localTime.plusMinutes(duration);
             }
             localTime = startingTime;
@@ -74,7 +80,7 @@ public class ShowsCompression {
         LocalTime startingTime = LocalTime.of(15, 00, 00);
         LocalTime localTime = startingTime;
         LocalDate localDate = LocalDate.now();
-        List<Show> shows = showMapper.getDayShows(Date.valueOf(localDate));
+        List<Show> shows = showMapper.getDayShows(localDate.format(dateFormat));
         ArrayList<ArrayList<Show>> array = new ArrayList<>();
 
         for (int i = 0; i < 6; i++) {
@@ -87,7 +93,7 @@ public class ShowsCompression {
 
         for (int i = 0; i < 6; i++) {
             for (Show s : array.get(i)) {
-                showMapper.updateShowDuration(s.getId_show(), Time.valueOf(localTime));
+                showMapper.updateShowDuration(s.getId_show(), localTime.format(timeFormat));
                 localTime = localTime.plusMinutes(filmMapper.getFilmData(s.getId_film()).getDuration() + 30);
             }
             localTime = startingTime;

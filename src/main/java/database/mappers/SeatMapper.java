@@ -37,6 +37,10 @@ public interface SeatMapper {
     void removeSeatReservation(@Param("id_show") int id_show, @Param("id_seat") int id_seat);
 
     //TODO:Test
-    @Insert("INSERT INTO seat_reservations (id_show, id_seat, status) VALUES (#{id_show}, #{id_seat}, \'reserved\')")
-    void insertSeatReservation(@Param("id_show") int id_show, @Param("id_seat") int id_seat);
+    @Insert("INSERT INTO seat_reservations (id_show, id_seat, status) VALUES (#{id_show}, #{id_seat}, \'#{status}')")
+    void insertSeatReservation(@Param("id_show") int id_show, @Param("id_seat") int id_seat, @Param("status") String status);
+
+    //TODO:Test
+    @Update("UPDATE seat_reservations SET status=#{status} WHERE id_seat=#{id_seat} AND id_show=#{id_show}")
+    void updateShowSeatStatus(@Param("id_show") int id_show, @Param("id_seat") int id_seat, @Param("status") String status);
 }
