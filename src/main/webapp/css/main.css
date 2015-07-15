@@ -67,3 +67,8 @@ body {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
+#poster {
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+}
