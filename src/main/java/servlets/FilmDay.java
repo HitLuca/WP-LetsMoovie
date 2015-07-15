@@ -36,11 +36,16 @@ import java.util.List;
  */
 
 /**
- * @api {post} /api/film
+ * @api {get} /api/filmDay/*
  * @apiName FilmDay
- * @apiGroup FilmDay
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- * @apiError (2) {int} errorCode Lanciato quanto i parametri passati tramite la url non matchano
+ * @apiGroup Film
+ *
+ * @apiParam {String} Stringa con la data su cui interrogare (in formato "yyyy-mm-dd")
+ * @apiSuccess {String} Lista dei film proiettati in quella giornata. Contenente tutti i dati del film e la lista
+ *                          degli spettacoli relativi a quel film in quella giornata con data, orario e codice spettacolo.
+ *
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {int} errorCode EMPTY_WRONG_FIELD: Lanciato quanto i parametri passati tramite la url non matchano
  */
 @WebServlet(name = "FilmDay", urlPatterns = "/api/filmDay/*")
 public class FilmDay extends HttpServlet {

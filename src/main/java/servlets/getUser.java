@@ -40,7 +40,7 @@ import java.util.List;
  */
 
 /**
- * @api {get} /api/getUser
+ * @api {get} /api/user/*
  * @apiName GetUser
  * @apiGroup GetUser
  *
@@ -53,13 +53,11 @@ import java.util.List;
  * @apiSuccess {float} residual_credit il credito residuo dell'utente
  * @apiSuccess {int} role i privilegi dell'utente
  *
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- *
- * @apiError (2) {int} errorCode Json in input non ha contenuto o è imparsabile.
- *
- * @apiError (8) {int} errorCode l'utente non dispone di un livello di autentificazione sufficente a vedere i dati.
- *
- * @apiError (10) {int} errorCode l'utente non è loggato
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {int} errorCode EMPTY_WRONG_FIELD: Json in input non ha contenuto o è imparsabile.
+ * @apiError (6) {int} errorCode USER_NOT_FOUND: L'utente è un admin o più e ha cercato dati di un utente non esistente.
+ * @apiError (8) {int} errorCode NOT_AUTHORIZED: l'utente non dispone di un livello di autentificazione sufficente a vedere i dati.
+ * @apiError (10) {int} errorCode NOT_LOGGED_IN: l'utente non è loggato
  */
 @WebServlet(name = "getUser", urlPatterns = "/api/user/*")
 public class getUser extends HttpServlet {

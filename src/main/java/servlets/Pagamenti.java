@@ -32,6 +32,7 @@ import java.util.List;
  * @api {get} /api/pagamenti/*
  * @apiName pagamenti
  * @apiGroup pagamenti
+ *
  * @apiSuccess {String} username l'username dell'utente richiesto
  * @apiSuccess {String} name il nome dell'utente
  * @apiSuccess {String} surname il cognome dell'utente
@@ -40,11 +41,12 @@ import java.util.List;
  * @apiSuccess {String} bithday la data di nascita dell'utente
  * @apiSuccess {float} residual_credit il credito residuo dell'utente
  * @apiSuccess {int} role i privilegi dell'utente
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- * @apiError (2) {int} errorCode l'Url di richiesta in input non ha contenuto o è imparsabile.
- * @apiError (7) {int} errorCode l'utente non ha nessun login effettuato.
- * @apiError (8) {int} errorCode l'utente non dispone di un livello di autentificazione sufficente a vedere i dati.
- * @apiError (10) {int} errorCode l'utente non è loggato
+ *
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {int} errorCode EMPTY_WRONG_FIELD: l'Url di richiesta in input non ha contenuto o è imparsabile.
+ * @apiError (6) {int} errorCode USER_NOT_FOUND: L'utente è un admin che ha cercato informazioni su un utente inesistente
+ * @apiError (8) {int} errorCode NOT_AUTHORIZED: l'utente non dispone di un livello di autentificazione sufficente a vedere i dati.
+ * @apiError (10) {int} errorCode NOT_LOGGED_IN: l'utente non è loggato
  */
 @WebServlet(name = "Pagamenti", urlPatterns = "/api/pagamenti/*")
 public class Pagamenti extends HttpServlet {

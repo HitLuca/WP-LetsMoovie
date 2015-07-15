@@ -28,12 +28,17 @@ import java.io.IOException;
  */
 
 /**
- * @api {post} /api/film
+ * @api {get} /api/film/*
  * @apiName FilmSingolo
- * @apiGroup FilmSingolo
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- * @apiError (2) {int} errorCode Lanciato quanto i parametri passati tramite la url non sono parsabili
- * @apiError (4) {int} errorCode lanciato quando il film cercato non esiste nel DB
+ * @apiGroup Film
+ *
+ * @apiParam {Int} Numero intero codice del film da restituire
+ * @apiSuccess {Film}   Oggetto contenente tutti i dati del film degli spettacoli relativi a quel film in quella giornata
+ *                      con data, orario e codice spettacolo.
+ *
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {int} errorCode EMPTY_WRONG_FIELD: Lanciato quanto i parametri passati tramite la url non matchano
+ * @apiError (4) {int} errorCode FILM_NOT_FOUND: lanciato quando il film cercato non esiste nel DB
  */
 @WebServlet(name = "FilmSingolo", urlPatterns = "/api/film/*")
 public class FilmSingolo extends HttpServlet {
