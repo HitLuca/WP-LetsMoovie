@@ -11,7 +11,7 @@
 <div class="wrapper">
     <c:import url="/jsp/header.jsp"/>
 
-    <div class="content">
+    <div id="content">
         <div class="row">
             <div class="small-12 columns">
                 <ul class="tabs show-for-medium-up" data-tab>
@@ -36,40 +36,26 @@
                                     <li class="tab-title"><a href="#panelDomenica">Domenica</a></li>
                                 </ul>
                                 <div class="tabs-content">
-                                    <div class="content" id="panelLunedì">
-                                        <div id="listItem" class="panel callout radius">
-                                            <c:import url="filmItemList.jsp"/>
-                                        </div>
+                                    <div class="content active" id="panelLunedì">
+                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelMartedì">
-                                        <div id="listItem" class="panel callout radius">
-                                            <c:import url="filmItemList.jsp"/>
-                                        </div>
+                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelMercoledì">
-                                        <div id="listItem" class="panel callout radius">
-                                            <c:import url="filmItemList.jsp"/>
-                                        </div>
+                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelGiovedì">
-                                        <div id="listItem" class="panel callout radius">
-                                            <c:import url="filmItemList.jsp"/>
-                                        </div>
+                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelVenerdì">
-                                        <div id="listItem" class="panel callout radius">
-                                            <c:import url="filmItemList.jsp"/>
-                                        </div>
+                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelSabato">
-                                        <div id="listItem" class="panel callout radius">
-                                            <c:import url="filmItemList.jsp"/>
-                                        </div>
+                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                     <div class="content" id="panelDomenica">
-                                        <div id="listItem" class="panel callout radius">
-                                            <c:import url="filmItemList.jsp"/>
-                                        </div>
+                                        <c:import url="filmItemList.jsp"/>
                                     </div>
                                 </div>
                             </div>
@@ -78,9 +64,7 @@
 
                         <div id="panel2" class="content">
                             <div class="content-box section-box">
-                                <div id="listItem" class="panel callout radius">
-                                    <c:import url="filmItemList.jsp"/>
-                                </div>
+                                <c:import url="filmItemList.jsp"/>
                             </div>
                         </div>
                     </dd>
