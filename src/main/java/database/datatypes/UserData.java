@@ -1,7 +1,5 @@
 package database.datatypes;
 
-import java.time.LocalDate;
-
 /**
  * Created by hitluca on 26/06/15.
  */
@@ -12,12 +10,10 @@ public class UserData {
     private String username;
     private String password;
     private String phone_number;
-    private LocalDate birthday;
+    private String birthday;
     private float residual_credit;
     private int role;
 
-    
-    
     public String getEmail() {
         return email;
     }
@@ -67,11 +63,11 @@ public class UserData {
     }
 
     public String getBirthday() {
-        return birthday.toString();
+        return birthday;
     }
 
     public void setBirthday(String birthday) {
-        this.birthday = LocalDate.parse(birthday);
+        this.birthday = birthday;
     }
 
     public float getResidual_credit() {

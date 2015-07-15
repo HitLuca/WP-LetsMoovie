@@ -4,14 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import database.DatabaseConnection;
 import database.datatypes.FilmData;
-import database.datatypes.ShowIdTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.film.response.FilmListSuccess;
+import json.filmDay.response.FilmSuccessfulResponse;
 import org.apache.ibatis.session.SqlSession;
-import json.film.Film;
-import json.film.FilmList;
+import types.Film;
+import types.FilmList;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -22,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -39,6 +39,10 @@ import java.util.List;
 public class FilmWeek extends HttpServlet {
 
     private Gson gsonWriter;
+    private ShowMapper showMapper;
+    private FilmMapper filmMapper;
+    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -57,11 +61,11 @@ public class FilmWeek extends HttpServlet {
         FilmList filmList = new FilmList();
 
         for (int i = 0; i < 7; i++) {
-            List<Integer> idList = showMapper.getDayFilms(Date.valueOf(today));
+            List<Integer> idList = showMapper.getDayFilms(dateFormat.format(today));
 
             for (Integer j : idList) {
 
-                List<ShowIdTime> hours = showMapper.getShowTimeAndId(Date.valueOf(today), j);
+                List<String> hours = showMapper.getDayShowsId(Date.valueOf(today), j);
                 filmList.addId(today, j, hours);
             }
 
@@ -73,7 +77,7 @@ public class FilmWeek extends HttpServlet {
             f.setData(filmData);
         }
 
-        getFilmOfWeek = new FilmListSuccess(filmList);
+        getFilmOfWeek = new FilmSuccessfulResponse(filmList);
 
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(getFilmOfWeek));

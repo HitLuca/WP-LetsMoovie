@@ -1,40 +1,29 @@
 package database.datatypes;
 
-import java.sql.Date;
-import java.sql.Time;
-
 /**
  * Created by hitluca on 14/07/15.
  */
 public class Payment {
-    Date payment_date;
-    Time payment_time;
-    String ticket_type;
-    int id_seat;
-    int id_show;
-    String username;
+    private String payment_date;
+    private String payment_time;
+    private String ticket_type;
+    private int id_seat;
+    private int id_show;
+    private String username;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Date getPayment_date() {
+    public String getPayment_date() {
         return payment_date;
     }
 
-    public void setPayment_date(Date payment_date) {
+    public void setPayment_date(String payment_date) {
         this.payment_date = payment_date;
     }
 
-    public Time getPayment_time() {
+    public String getPayment_time() {
         return payment_time;
     }
 
-    public void setPayment_time(Time payment_time) {
+    public void setPayment_time(String payment_time) {
         this.payment_time = payment_time;
     }
 
@@ -62,11 +51,11 @@ public class Payment {
         this.id_show = id_show;
     }
 
-    public void setShow_date(String payment_date) {
-        this.payment_date = java.sql.Date.valueOf(payment_date);
+    public String getUsername() {
+        return username;
     }
 
-    public void setShow_time(String payment_time) {
-        this.payment_time = java.sql.Time.valueOf(payment_time);
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
