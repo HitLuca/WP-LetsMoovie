@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class FilmDay extends HttpServlet {
     private Gson gsonWriter;
     private ShowMapper showMapper;
     private FilmMapper filmMapper;
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -58,7 +61,7 @@ public class FilmDay extends HttpServlet {
 
             //Converto la data a SqlDate per il Db e cerco tutti gli spettacoli della giornata
             Date date = java.sql.Date.valueOf(rs.getParameter());
-            List<Integer> idList = showMapper.getDayShows(date);
+            List<Integer> idList = showMapper.getDayFilms(dateFormat.format(date));
             //Inizializzo la lista della risposta vuota
             List<Film> timetable = new ArrayList<>();
 

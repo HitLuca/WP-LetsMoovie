@@ -1,8 +1,5 @@
 package database.datatypes;
 
-import java.sql.Date;
-import java.sql.Time;
-
 /**
  * Created by hitluca on 06/07/15.
  */
@@ -11,8 +8,16 @@ public class Show {
     private int id_show;
     private int room_number;
     private int id_film;
-    private Date show_date;
-    private Time show_time;
+    private String show_date; //DATE
+    private String show_time;
+
+    public int getId_show() {
+        return id_show;
+    }
+
+    public void setId_show(int id_show) {
+        this.id_show = id_show;
+    }
 
     public int getRoom_number() {
         return room_number;
@@ -30,35 +35,19 @@ public class Show {
         this.id_film = id_film;
     }
 
-    public Date getShow_date() {
+    public String getShow_date() {
         return show_date;
     }
 
-    public void setShow_date(Date show_date) {
+    public void setShow_date(String show_date) {
         this.show_date = show_date;
     }
 
-    public Time getShow_time() {
+    public String getShow_time() {
         return show_time;
     }
 
-    public void setShow_time(Time show_time) {
-        this.show_time = show_time;
-    }
-
-    public int getId_show() {
-        return id_show;
-    }
-
-    public void setId_show(int id_show) {
-        this.id_show = id_show;
-    }
-
-    public void setShow_date(String show_date) {
-        this.show_date = java.sql.Date.valueOf(show_date);
-    }
-
     public void setShow_time(String show_time) {
-        this.show_time = java.sql.Time.valueOf(show_time);
+        this.show_time = show_time;
     }
 }
