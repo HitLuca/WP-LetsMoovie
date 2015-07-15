@@ -37,11 +37,9 @@ import java.io.IOException;
  *
  * @apiSuccess {String} username l'username dell'utente appena registrato.
  *
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- *
- * @apiError (7) {int} errorCode è già presente una sessione valida con quel client
- *
- * @apiError (11) {int} errorCode il codice di conferma della registrazione è errato
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (7) {int} errorCode ALREADY_LOGGED: è già presente una sessione valida con quel client
+ * @apiError (11) {int} errorCode WRONG_CONFIRMATION_CODE: il codice di conferma della registrazione è errato
  */
 @WebServlet(name = "ConfirmRegistration", urlPatterns = "/api/confirmRegistration")
 public class ConfirmRegistration extends HttpServlet {

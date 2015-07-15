@@ -36,17 +36,11 @@ import java.util.List;
  * @apiParam {String} password password.
  * @apiParam {String} verificationCode il codice di verifica relativo
  *
- *
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- *
- * @apiError (2) {int} errorCode Viene lanciato quando uno o più campi sono vuoti oppure errati (non validabili)
- * @apiError (2) {String[]} parameters parametri di input che non passano la validazione
- *
- * @apiError (11) {int} errorCode Codice di conferma non valido
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {String[]} errorCode EMPTY_WRONG_FIELD: parameters parametri di input che non passano la validazione
+ * @apiError (7) {int} errorCode ALREADY_LOGGED: L'utente è già loggato e fino all'implementazione del cambio password non può fare niente
+ * @apiError (11) {int} errorCode WRONG_CONFIRMATION_CODE: Codice di conferma non valido
  */
-
-
-//TODO RITORNARE L'USERNAME
 @WebServlet(name = "SetNewPassword", urlPatterns = "/api/setNewPassword")
 public class SetNewPassword extends HttpServlet {
     Gson gsonWriter;
@@ -54,6 +48,7 @@ public class SetNewPassword extends HttpServlet {
     UserMapper userMapper;
     PasswordRecoveryCodeCheck passwordRecoveryCodeCheck;
 
+    //TODO RITORNARE L'USERNAME
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OperationResult setPasswordOperation;
@@ -62,7 +57,8 @@ public class SetNewPassword extends HttpServlet {
             HttpSession session = request.getSession();
             if(session.getAttribute("username") != null)
             {
-                //TODO aggiungere cambio password
+                throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
+                //TODO aggiungere cambio password e modificare conseguentemente documentazione
             }
             else {
                 SetNewPasswordRequest setNewPasswordRequest = gsonReader.fromJson(request.getReader(), SetNewPasswordRequest.class);

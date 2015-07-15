@@ -25,11 +25,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * @api {post} /api/filmWeek
+ * @api {get} /api/filmWeek
  * @apiName FilmWeek
- * @apiGroup eek
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- * @apiError (2) {int} errorCode Lanciato quanto i parametri passati tramite la url non matchano
+ * @apiGroup Film
+ *
+ * @apiSuccess {String} filmList Lista dei film proiettati in quella settimana. Contenente tutti i dati del film e la lista
+ *                          degli spettacoli relativi a quel film in quella settimana con data, orario e codice spettacolo.
+ *
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (4) {int} errorCode FILM_NOT_FOUND: lanciato quando il film cercato non esiste nel DB
  */
 @WebServlet(name = "FilmWeek", urlPatterns = "/api/filmWeek")
 public class FilmWeek extends HttpServlet {
