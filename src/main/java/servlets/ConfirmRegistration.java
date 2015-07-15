@@ -37,21 +37,21 @@ import java.io.IOException;
  *
  * @apiSuccess {String} username l'username dell'utente appena registrato.
  *
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- *
- * @apiError (7) {int} errorCode è già presente una sessione valida con quel client
- *
- * @apiError (11) {int} errorCode l'utente non dispone di una sessione valida da cui sloggare
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (7) {int} errorCode ALREADY_LOGGED: è già presente una sessione valida con quel client
+ * @apiError (11) {int} errorCode WRONG_CONFIRMATION_CODE: il codice di conferma della registrazione è errato
  */
 @WebServlet(name = "ConfirmRegistration", urlPatterns = "/api/confirmRegistration")
 public class ConfirmRegistration extends HttpServlet {
 
     Gson gsonWriter;
     Gson gsonReader;
-    private UserMapper userMapper;
     private VerificationMailCodeChecker verificationMailCodeChecker;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession(true);
+        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
 
         response.setContentType("application/json");
         OperationResult registrationConfirmStatus;
@@ -90,12 +90,12 @@ public class ConfirmRegistration extends HttpServlet {
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(registrationConfirmStatus));
 
+        sessionSql.close();
     }
 
     @Override
     public void init() throws ServletException {
-        SqlSession session = DatabaseConnection.getFactory().openSession(true);
-        userMapper = session.getMapper(UserMapper.class);
+
         MailCleanerThread mailCleanerThread = MailCleanerThreadFactory.getMailCleanerThread();
         verificationMailCodeChecker = new VerificationMailCodeChecker(mailCleanerThread);
         GsonBuilder gsonBuilder = new GsonBuilder();

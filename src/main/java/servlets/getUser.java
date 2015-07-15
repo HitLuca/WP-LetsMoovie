@@ -40,11 +40,9 @@ import java.util.List;
  */
 
 /**
- * @api {get} /api/getUser
+ * @api {get} /api/user/*
  * @apiName GetUser
  * @apiGroup GetUser
- *
- * @apiParam {String} username l'username di cui si vogliono ottenere i dati
  *
  * @apiSuccess {String} username l'username dell'utente richiesto
  * @apiSuccess {String} name il nome dell'utente
@@ -55,28 +53,24 @@ import java.util.List;
  * @apiSuccess {float} residual_credit il credito residuo dell'utente
  * @apiSuccess {int} role i privilegi dell'utente
  *
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- *
- * @apiError (1) {int} errorCode Json in input non ha contenuto.
- *
- * @apiError (7) {int} errorCode l'utente non ha nessun login effettuato.
- *
- * @apiError (8) {int} errorCode l'utente non dispone di un livello di autentificazione sufficente a vedere i dati.
- *
- * @apiError (10) {int} errorCode l'utente non è loggato
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {int} errorCode EMPTY_WRONG_FIELD: Json in input non ha contenuto o è imparsabile.
+ * @apiError (6) {int} errorCode USER_NOT_FOUND: L'utente è un admin o più e ha cercato dati di un utente non esistente.
+ * @apiError (8) {int} errorCode NOT_AUTHORIZED: l'utente non dispone di un livello di autentificazione sufficente a vedere i dati.
+ * @apiError (10) {int} errorCode NOT_LOGGED_IN: l'utente non è loggato
  */
-
-
 @WebServlet(name = "getUser", urlPatterns = "/api/user/*")
 public class getUser extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
-    private UserMapper userMapper;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession();
+        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
 
         response.setContentType("application/json");
         OperationResult getUserStatus = null;
@@ -91,13 +85,14 @@ public class getUser extends HttpServlet {
             }
             String usernameSession = session.getAttribute("username").toString();
 
-            //String matcher che preleva il nome utente da cercare dall'url e lancia Err.2 in caso sia mal formattato
+            //String matcher che preleva il nome utente da cercare dall'url e lancia Err.2 in caso sia nullo o mal formattato
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
+
 
             String usernameSearched = rs.getParameter();
 
             //Se sei un utente normale puoi vedere solo i tuoi dati
-            UserData user = userMapper.getUserData(rs.getParameter());
+            UserData user = userMapper.getUserData(usernameSearched);
 
             //Se sei un admin e stai cercando un utente che non esiste te lo dico
             if (user == null && (int) session.getAttribute("role") != Role.USER.getValue()) {
@@ -128,14 +123,13 @@ public class getUser extends HttpServlet {
 
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(getUserStatus));
+
+        sessionSql.close();
     }
 
     @Override
     public void init() throws ServletException {
 
-        SqlSession sessionSql;
-        sessionSql = DatabaseConnection.getFactory().openSession();
-        userMapper = sessionSql.getMapper(UserMapper.class);
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.create();

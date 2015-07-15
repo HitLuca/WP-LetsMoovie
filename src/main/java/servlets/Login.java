@@ -57,25 +57,24 @@ import java.util.List;
  * @apiSuccess {String} username Username.
  *
  *
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- *
- * @apiError (1) {int} errorCode richiesta vuota
- *
- * @apiError (2) {int} errorCode quando uno o più campi non sono ritenuti validi dal validatore o non sono presenti nel DB
- * @apiError (2) {String[]} invalidParameters parametri invalidi
- *
- * @apiError (7) {int} errorCode l'utente non dispone di una sessione valida da cui sloggare
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (1) {int} errorCode EMPTY_REQ: richiesta vuota
+ * @apiError (2) {String[]} errorCode EMPTY_WRONG_FIELD: invalidParameters parametri invalidi
+ * @apiError (7) {int} errorCode ALREADY_LOGGED: l'utente è già loggato e non può loggare di nuovo senza prima effettuare il logout
  *
  */
 @WebServlet(name = "Login", urlPatterns = "/api/login")
 public class Login extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
-    private SqlSession session;
-    private UserMapper userMapper;
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        SqlSession sessionSql;
+        sessionSql = DatabaseConnection.getFactory().openSession();
+        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
+
         response.setContentType("application/json");
         OperationResult loginStatus;
         try {
@@ -124,13 +123,13 @@ public class Login extends HttpServlet {
 
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(loginStatus));
+
+        sessionSql.close();
     }
 
     @Override
     public void init() throws ServletException {
 
-        session = DatabaseConnection.getFactory().openSession();
-        userMapper = session.getMapper(UserMapper.class);
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.create();

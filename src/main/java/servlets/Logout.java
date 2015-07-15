@@ -16,18 +16,17 @@ import java.io.IOException;
 
 /**
  * @api {post} /api/logout
+ *
  * @apiName Logout
  * @apiGroup Logout
  *
  *
- * @apiError (0) {int} errorCode lanciato quando succedono errori gravi all'interno della servlet
- *
- * @apiError (10) {int} errorCode l'utente non dispone di una sessione valida da cui sloggare
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (10) {int} errorCode NOT_LOGGED_IN: l'utente non dispone di una sessione valida da cui sloggare
  */
 @WebServlet(name = "Logout", urlPatterns = "/api/logout")
 public class Logout extends HttpServlet {
     Gson gson;
-
 
     protected void doAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
