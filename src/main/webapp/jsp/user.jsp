@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: alessandro
-  Date: 08/07/15
-  Time: 10.37
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -17,7 +10,7 @@
 <body>
 <div class="wrapper">
     <c:import url="/jsp/header.jsp"/>
-    <div class="row content">
+    <div id="content" class="row">
         <h3>Informazioni utente</h3>
 
         <ul class="accordion" data-accordion>

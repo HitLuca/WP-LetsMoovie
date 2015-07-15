@@ -11,7 +11,7 @@
 <body>
 <div class="wrapper">
     <c:import url="/jsp/header.jsp"/>
-    <div class="row content">
+    <div class="row" id="content">
         <div class="small-11 small-centered large-6 medium-8 columns">
             <h3>Reimposta la nuova password:</h3>
 
@@ -25,6 +25,7 @@
             </div>
             <form action="<c:url value="/api/setNewPassword"/>" id="setNewPassoword" data-abide="ajax">
                 <input type="hidden" name="verificationCode" value="${param.verificationCode}">
+
                 <div class="row">
                     <div class="medium-12 columns">
                         <label>Password:

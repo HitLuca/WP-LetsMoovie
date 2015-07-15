@@ -10,18 +10,15 @@
 <body>
 <div class="wrapper">
     <c:import url="/jsp/header.jsp"/>
+    <div id="content" class="row">
+        <div class="column small-12">
+            <h2>
+                Attendi per favore
+            </h2>
 
-    <div class="content">
-        <div class="row">
-            <div class="column small-12">
-                <h2>
-                    Attendi per favore
-                </h2>
-
-                <p>
-                    Stiamo verificando il tuo account...
-                </p>
-            </div>
+            <p>
+                Stiamo verificando il tuo account...
+            </p>
         </div>
     </div>
     <div class="push"></div>
@@ -29,5 +26,4 @@
 <c:import url="/jsp/footer.jsp"/>
 <script src="<c:url value="/javascript/confirmRegistration.js"/>"></script>
 </body>
-
 </html>
