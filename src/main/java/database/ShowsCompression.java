@@ -68,7 +68,6 @@ public class ShowsCompression {
 
         for (int i = 0; i < 6; i++) {
             for (Show s : array.get(i)) {
-                System.out.println(localTime.format(timeFormat));
                 showMapper.updateShowDuration(s.getId_show(), localTime.format(timeFormat));
                 localTime = localTime.plusMinutes(duration);
             }
