@@ -28,8 +28,11 @@ public interface SeatMapper {
     @Select("SELECT * FROM seats s JOIN seat_reservations sr ON s.id_seat=sr.id_seat WHERE sr.id_show=#{id_show} AND sr.status='broken'")
     List<Seat> getShowBrokenSeats(int id_show);
 
-    //@Select("SELECT * FROM seats s JOIN seat_reservation sr ON s..id_seat=sr.id_seat WHERE sr.id_show=#{id_show} AND sr.status<>'reserved' AND s.status<>'broken'")
-    @Select("SELECT * FROM seats s JOIN seat_reservation sr ON s..id_seat=sr.id_seat WHERE NOT IN (SELECT * FROM seats s JOIN seat_reservations sr ON s.id_seat=sr.id_seat WHERE sr.id_show=#{id_show} AND sr.status='reserved') AND NOT IN (SELECT * FROM seats s JOIN seat_reservations sr ON s.id_seat=sr.id_seat WHERE sr.id_show=#{id_show} AND sr.status='broken') ")
+    //TODO test
+    @Select("SELECT * " +
+            "FROM shows sh NATURAL JOIN seats se " +
+            "WHERE status='ok' AND id_show=#{id_show} " +
+            "AND id_seat NOT IN (SELECT id_seat FROM seat_reservations WHERE id_show=#{id_show})")
     List<Seat> getFreeSeat(int id_show);
 
     @Select("SELECT * FROM seats WHERE room_number=#{room_number}")
