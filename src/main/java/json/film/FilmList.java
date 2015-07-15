@@ -2,6 +2,7 @@ package json.film;
 
 import com.google.gson.annotations.Expose;
 import database.datatypes.ShowIdTime;
+import json.OperationResult;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by etrunon on 14/07/15.
  */
-public class FilmList {
+public class FilmList implements OperationResult {
 
     public List<Film> getFilmList() {
         return filmList;

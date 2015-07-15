@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,8 +53,8 @@ import java.util.List;
 public class FilmDay extends HttpServlet {
 
     private Gson gsonWriter;
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -69,8 +70,8 @@ public class FilmDay extends HttpServlet {
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
 
             //Converto la data a SqlDate per il Db e cerco tutti gli spettacoli della giornata
-            Date date = java.sql.Date.valueOf(rs.getParameter());
-            List<Integer> idList = showMapper.getDayFilms(dateFormat.format(date));
+            String date = rs.getParameter();
+            List<Integer> idList = showMapper.getDayFilms(date);
             //Inizializzo la lista della risposta vuota
             List<Film> timetable = new ArrayList<>();
 
@@ -82,7 +83,7 @@ public class FilmDay extends HttpServlet {
                 List<ShowIdTime> hours = showMapper.getShowTimeAndId(date, i);
                 //Creo l'oggetto Film e lo riempio
                 Film film = new Film(filmData, hours);
-                film.addHours(rs.getParameter(), hours);
+                film.addHours(date, hours);
                 //Aggiungo il Film alla lista
                 timetable.add(film);
             }
