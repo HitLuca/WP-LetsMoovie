@@ -135,6 +135,9 @@ var Session = {
     redirectToLogin: function () {
         Notifications.saveNotification("error", "Non hai effettuato l'accesso!");
         window.location.assign("/login");
+    },
+    redirectToRegister: function () {
+        window.location.assign("/registration");
     }
 };
 

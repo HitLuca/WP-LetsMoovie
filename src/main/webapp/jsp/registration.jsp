@@ -109,8 +109,14 @@
                 </button>
             </div>
         </form>
+        <div id="confirmModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog" data-options="close_on_background_click: false">
+            <h2 id="modalTitle">Conferma la tua registrazione</h2>
+            <p>
+                Controlla l'indirizzo email indicato e segui le istruzioni riportate per abilitare il tuo account!
+            </p>
 
-        <%--TODO: AGGIUNGERE MODALE CHE INDICHI L'INVIO DELLA MAIL DI CONFERMA--%>
+            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
     </div>
     <div class="push"></div>
 </div>

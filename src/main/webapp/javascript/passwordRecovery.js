@@ -1,6 +1,6 @@
 var PasswordRecovery = {
     success: function (data) {
-        saveNotification("success", "La password è stata correttamente modificata!");
+        Notifications.saveNotification("success", "La password è stata correttamente modificata!");
         window.location.assign("/");
 
     },
@@ -11,12 +11,12 @@ var PasswordRecovery = {
             case 0:
             case 2:
             {
-                alertify.error("Errore, riprova!");
+                alertify.error("Password non valida!");
             }
                 break;
             case 11:
             {
-                saveNotification("error", "Il token non è più valido!");
+                Notifications.saveNotification("error", "Il token non è più valido!");
                 window.location.assign("/login");
             }
                 break;

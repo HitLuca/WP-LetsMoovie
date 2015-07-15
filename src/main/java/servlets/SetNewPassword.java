@@ -57,6 +57,7 @@ public class SetNewPassword extends HttpServlet {
         UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
 
         OperationResult setPasswordOperation;
+        response.setContentType("application/json");
         try
         {
             HttpSession session = request.getSession();

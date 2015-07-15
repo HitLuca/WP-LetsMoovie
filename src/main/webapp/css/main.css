@@ -6,7 +6,7 @@
     max-height: 2.8rem;
 }
 
-.content {
+#content {
     margin-top: 3rem;
     margin-bottom: 3rem;
     padding-left: 1rem;
@@ -14,8 +14,8 @@
 }
 
 .accordion {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    /*margin-top: 3rem;*/
+    /*margin-bottom: 3rem;*/
     padding-left: 0.25rem;
     padding-right: 0.25rem;
     word-wrap: break-word;
@@ -56,4 +56,14 @@ body {
 
 .reveal-modal {
     text-align: center;
+}
+
+#panel1 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#panel2 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }

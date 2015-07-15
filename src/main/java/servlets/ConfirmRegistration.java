@@ -54,7 +54,7 @@ public class ConfirmRegistration extends HttpServlet {
         UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
 
         response.setContentType("application/json");
-        OperationResult registrationConfirmStatus = null;
+        OperationResult registrationConfirmStatus;
         try {
 
             //Check sulla sessione già presente e l'utente è già loggato con un username e lo si spara fuori
@@ -84,6 +84,7 @@ public class ConfirmRegistration extends HttpServlet {
             response.setStatus(400);
 
         } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
+            registrationConfirmStatus = new BadRequestException();
             response.setStatus(400);
         }
         ServletOutputStream outputStream = response.getOutputStream();
