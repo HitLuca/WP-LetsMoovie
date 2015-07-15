@@ -30,7 +30,7 @@
                         <label>Password:
                             <input type="password" id="password" name="password" placeholder="Password" required/>
                         </label>
-                        <small class="error">Nuova password richesta!
+                        <small class="error">La password deve contenere almeno 4 caratteri di cui uno non alfabetico
                         </small>
                     </div>
                     <div class="medium-12 columns">

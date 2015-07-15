@@ -10,7 +10,7 @@
             database.flywayRunner
         </listener-class>
     </listener>
-
+    <absolute-ordering/>
     <error-page>
         <error-code>404</error-code>
         <location>/404</location>

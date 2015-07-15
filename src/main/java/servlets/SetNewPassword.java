@@ -57,6 +57,7 @@ public class SetNewPassword extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OperationResult setPasswordOperation;
+        response.setContentType("application/json");
         try
         {
             HttpSession session = request.getSession();
