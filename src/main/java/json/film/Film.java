@@ -41,8 +41,7 @@ public class Film {
     @Expose
     private List<Shows> shows;
 
-
-    public Film(FilmData filmData, List<ShowIdTime> hours) {
+    public void setData(FilmData filmData) {
 
         this.id_film = filmData.getId_film();
         this.film_title = filmData.getFilm_title();
@@ -55,26 +54,26 @@ public class Film {
         this.plot = filmData.getPlot();
         this.director = filmData.getDirector();
         this.vm = filmData.getVm();
+    }
 
+    public Film(FilmData filmData, List<ShowIdTime> hours) {
+
+        setData(filmData);
         shows = new ArrayList<Shows>();
     }
 
     public Film(FilmData filmData) {
 
-        this.id_film = filmData.getId_film();
-        this.film_title = filmData.getFilm_title();
-        this.poster = filmData.getPoster();
-        this.duration = filmData.getDuration();
-        this.trailer = filmData.getTrailer();
-        this.metascore = filmData.getMetascore();
-        this.rating = filmData.getRating();
-        this.year = filmData.getYear();
-        this.plot = filmData.getPlot();
-        this.director = filmData.getDirector();
-        this.vm = filmData.getVm();
-
+        setData(filmData);
     }
 
+
+    public Film(String date, int id_film, List<ShowIdTime> shows) {
+
+        this.id_film = id_film;
+        this.shows = new ArrayList<Shows>();
+        addHours(date.toString(), shows);
+    }
 
     public void addHours(String date, List<ShowIdTime> hours) {
 
@@ -87,30 +86,9 @@ public class Film {
     }
 
     public int getId_film() {
-
         return id_film;
     }
 
-    public Film(String date, int id_film, List<ShowIdTime> shows) {
-
-        this.id_film = id_film;
-        this.shows = new ArrayList<Shows>();
-        addHours(date.toString(), shows);
-    }
-
-    public void setData(FilmData filmData) {
-
-        this.film_title = filmData.getFilm_title();
-        this.poster = filmData.getPoster();
-        this.duration = filmData.getDuration();
-        this.trailer = filmData.getTrailer();
-        this.metascore = filmData.getMetascore();
-        this.rating = filmData.getRating();
-        this.year = filmData.getYear();
-        this.plot = filmData.getPlot();
-        this.director = filmData.getDirector();
-        this.vm = filmData.getVm();
-    }
 }
 
 class Shows {
@@ -123,13 +101,5 @@ class Shows {
     public Shows(String date, List<ShowIdTime> orari) {
         this.date = date;
         this.orari = orari;
-    }
-
-    @Override
-    public String toString() {
-        return "Shows{" +
-                "date='" + date + '\'' +
-                ", orari=" + orari +
-                '}';
     }
 }

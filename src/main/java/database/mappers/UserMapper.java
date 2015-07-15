@@ -54,9 +54,9 @@ public interface UserMapper {
     void removeCredit(@Param("username") String username, @Param("credit") float credit);
 
     //TODO:Test
-    @Select("SELECT payment_date, payment_time, id_show, ticket_type, price, row, \"column\", room_number" +
-            "FROM payments NATURAL JOIN prices NATURAL JOIN seats" +
-            "WHERE username=#{username}")
+    @Select("SELECT payment_date, payment_time, id_show, ticket_type, price, row, \"column\", room_number " +
+            "FROM payments NATURAL JOIN prices NATURAL JOIN seats " +
+            "WHERE username=#{username} ")
     List<DetailedPayment> getUserPayments(String username);
 
     //TODO:Test
