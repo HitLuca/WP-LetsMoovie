@@ -45,12 +45,17 @@ import java.util.List;
 public class SetNewPassword extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
-    UserMapper userMapper;
+
     PasswordRecoveryCodeCheck passwordRecoveryCodeCheck;
 
     //TODO RITORNARE L'USERNAME
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        //Inizializzo la sessione Sql
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession(true);
+        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
+
         OperationResult setPasswordOperation;
         try
         {
@@ -90,6 +95,7 @@ public class SetNewPassword extends HttpServlet {
         }
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(setPasswordOperation));
+        sessionSql.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -97,8 +103,6 @@ public class SetNewPassword extends HttpServlet {
     }
 
     public void init() throws ServletException {
-        SqlSession session = DatabaseConnection.getFactory().openSession(true);
-        userMapper = session.getMapper(UserMapper.class);
 
         MailCleanerThread mailCleanerThread = MailCleanerThreadFactory.getMailCleanerThread();
         passwordRecoveryCodeCheck = new PasswordRecoveryCodeCheck(mailCleanerThread);

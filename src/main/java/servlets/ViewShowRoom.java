@@ -34,6 +34,16 @@ import java.util.List;
  * Servlet che mostra la lista di posti con il relativo stato di una specifica proiezione
  * Created by etrunon on 14/07/15.
  */
+
+/**
+ * @api {get} /api/viewShowRoom/*
+ * @apiName ViewShowRoom
+ * @apiGroup ViewShowRoom
+ * @apiParam {int} show id_code.
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {String[]} errorCode EMPTY_WRONG_FIELD: parameters parametri di input che non passano la validazione
+ * @apiError (10) {int} errorCode NOT_LOGGED_IN: L'utente è già loggato e fino all'implementazione del cambio password non può fare niente
+ */
 @WebServlet(name = "ViewShowRoom", urlPatterns = "/api/viewShowRoom/*")
 public class ViewShowRoom extends HttpServlet {
 
@@ -94,6 +104,7 @@ public class ViewShowRoom extends HttpServlet {
 
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(viewResult));
+        sessionSql.close();
     }
 
     @Override

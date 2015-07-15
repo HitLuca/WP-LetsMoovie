@@ -49,13 +49,17 @@ import java.util.List;
 public class PasswordRecovery extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
-    UserMapper userMapper;
     PasswordRecoveryMailSender passwordRecoveryMailSender;
     private final String url = "/api/passwordRecovery";
 
     //TODO Lanciare errore 7 se già presente la sessione
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession(true);
+        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
+
+
         OperationResult recoveryStatus;
         response.setContentType("application/json");
         try
@@ -98,6 +102,8 @@ public class PasswordRecovery extends HttpServlet {
         }
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(recoveryStatus));
+
+        sessionSql.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -105,8 +111,6 @@ public class PasswordRecovery extends HttpServlet {
     }
 
     public void init() throws ServletException {
-        SqlSession session = DatabaseConnection.getFactory().openSession(true);
-        userMapper = session.getMapper(UserMapper.class);
 
         MailCleanerThread mailCleanerThread = MailCleanerThreadFactory.getMailCleanerThread();
         passwordRecoveryMailSender = new PasswordRecoveryMailSender(mailCleanerThread);

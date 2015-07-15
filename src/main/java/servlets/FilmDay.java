@@ -51,10 +51,12 @@ import java.util.List;
 public class FilmDay extends HttpServlet {
 
     private Gson gsonWriter;
-    private ShowMapper showMapper;
-    private FilmMapper filmMapper;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession();
+        ShowMapper showMapper = sessionSql.getMapper(ShowMapper.class);
+        FilmMapper filmMapper = sessionSql.getMapper(FilmMapper.class);
 
         //Todo non inviare punteggi dei films se sono a -1
         response.setContentType("application/json");
@@ -97,6 +99,8 @@ public class FilmDay extends HttpServlet {
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(getFilmOfDay));
 
+        sessionSql.close();
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -105,11 +109,6 @@ public class FilmDay extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-
-        SqlSession sessionSql;
-        sessionSql = DatabaseConnection.getFactory().openSession();
-        showMapper = sessionSql.getMapper(ShowMapper.class);
-        filmMapper = sessionSql.getMapper(FilmMapper.class);
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();

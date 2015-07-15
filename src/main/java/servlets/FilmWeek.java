@@ -39,14 +39,16 @@ import java.util.List;
 public class FilmWeek extends HttpServlet {
 
     private Gson gsonWriter;
-    private ShowMapper showMapper;
-    private FilmMapper filmMapper;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession();
+        ShowMapper showMapper = sessionSql.getMapper(ShowMapper.class);
+        FilmMapper filmMapper = sessionSql.getMapper(FilmMapper.class);
 
         OperationResult getFilmOfWeek = null;
         response.setContentType("application/json");
@@ -76,17 +78,11 @@ public class FilmWeek extends HttpServlet {
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(getFilmOfWeek));
 
-        //todo chiudere sessioni sql
-
+        sessionSql.close();
     }
 
     @Override
     public void init() throws ServletException {
-
-        SqlSession sessionSql;
-        sessionSql = DatabaseConnection.getFactory().openSession();
-        showMapper = sessionSql.getMapper(ShowMapper.class);
-        filmMapper = sessionSql.getMapper(FilmMapper.class);
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();

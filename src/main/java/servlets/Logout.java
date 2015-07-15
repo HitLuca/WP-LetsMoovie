@@ -28,7 +28,6 @@ import java.io.IOException;
 public class Logout extends HttpServlet {
     Gson gson;
 
-
     protected void doAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         OperationResult logoutStatus = null;

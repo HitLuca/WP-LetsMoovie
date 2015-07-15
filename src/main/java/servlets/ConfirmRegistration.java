@@ -46,10 +46,12 @@ public class ConfirmRegistration extends HttpServlet {
 
     Gson gsonWriter;
     Gson gsonReader;
-    private UserMapper userMapper;
     private VerificationMailCodeChecker verificationMailCodeChecker;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession(true);
+        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
 
         response.setContentType("application/json");
         OperationResult registrationConfirmStatus = null;
@@ -87,12 +89,12 @@ public class ConfirmRegistration extends HttpServlet {
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(registrationConfirmStatus));
 
+        sessionSql.close();
     }
 
     @Override
     public void init() throws ServletException {
-        SqlSession session = DatabaseConnection.getFactory().openSession(true);
-        userMapper = session.getMapper(UserMapper.class);
+
         MailCleanerThread mailCleanerThread = MailCleanerThreadFactory.getMailCleanerThread();
         verificationMailCodeChecker = new VerificationMailCodeChecker(mailCleanerThread);
         GsonBuilder gsonBuilder = new GsonBuilder();

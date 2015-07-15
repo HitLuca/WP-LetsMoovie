@@ -68,11 +68,15 @@ public class Register extends HttpServlet {
 
     Gson gsonWriter;
     Gson gsonReader;
-    private UserMapper userMapper;
     private final String url = "/api/register";
     private VerificationMailSender verificationMailSender;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        //Inizializzo la sessione Sql
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession();
+        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
+
         response.setContentType("application/json");
         OperationResult registrationStatus;
         try {
@@ -127,6 +131,8 @@ public class Register extends HttpServlet {
         }
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(registrationStatus));
+
+        sessionSql.close();
     }
 
 
@@ -137,8 +143,7 @@ public class Register extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        SqlSession session = DatabaseConnection.getFactory().openSession();
-        userMapper = session.getMapper(UserMapper.class);
+
         MailCleanerThread mailCleanerThread = MailCleanerThreadFactory.getMailCleanerThread();
         verificationMailSender = new VerificationMailSender(mailCleanerThread);
         GsonBuilder gsonBuilder = new GsonBuilder();

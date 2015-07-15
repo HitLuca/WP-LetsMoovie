@@ -117,6 +117,8 @@ public class Pagamenti extends HttpServlet {
 
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(getUserStatus));
+
+        sessionSql.close();
     }
 
     @Override

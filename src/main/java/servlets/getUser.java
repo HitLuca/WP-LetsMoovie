@@ -63,12 +63,14 @@ import java.util.List;
 public class getUser extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
-    private UserMapper userMapper;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession();
+        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
 
         response.setContentType("application/json");
         OperationResult getUserStatus = null;
@@ -121,14 +123,13 @@ public class getUser extends HttpServlet {
 
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(getUserStatus));
+
+        sessionSql.close();
     }
 
     @Override
     public void init() throws ServletException {
 
-        SqlSession sessionSql;
-        sessionSql = DatabaseConnection.getFactory().openSession();
-        userMapper = sessionSql.getMapper(UserMapper.class);
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.create();
