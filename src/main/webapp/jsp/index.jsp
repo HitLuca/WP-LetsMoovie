@@ -3,13 +3,13 @@
 
 <!DOCTYPE HTML>
 <html>
-<c:url var="url" value="/jsp/head.jsp">
+<c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Let's Moovie"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
 <div class="wrapper">
-    <c:import url="/jsp/header.jsp"/>
+    <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">
         <div class="small-12 columns">
             <ul class="tabs show-for-medium-up" data-tab>
@@ -53,7 +53,7 @@
 
                     <div id="panel2" class="content">
                         <div class="content-box section-box">
-                            <c:import url="filmItemList.jsp"/>
+                            <c:import url="template/filmItemList.jsp"/>
                         </div>
                     </div>
                 </dd>
@@ -62,14 +62,14 @@
     </div>
     <div id="templateDay" class="hide">
         <c:set scope="request" value="true" var="orario"/>
-        <c:import url="filmItemList.jsp"/>
+        <c:import url="template/filmItemList.jsp"/>
     </div>
     <div id="templateWeek" class="hide">
         <c:set scope="request" value="false" var="orario"/>
-        <c:import url="filmItemList.jsp"/>
+        <c:import url="template/filmItemList.jsp"/>
     </div>
     <div class="push"></div>
 </div>
-<c:import url="footer.jsp"/>
+<c:import url="layout/footer.jsp"/>
 </body>
 </html>

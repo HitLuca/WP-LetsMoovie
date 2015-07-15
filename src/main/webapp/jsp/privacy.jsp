@@ -3,14 +3,14 @@
 
 <!DOCTYPE html>
 <html>
-<c:url var="url" value="/jsp/head.jsp">
+<c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Privacy"/>
 </c:url>
 <c:import url="${url}"/>
 
 <body>
 <div class="wrapper">
-    <c:import url="/jsp/header.jsp"/>
+    <c:import url="/jsp/layout/header.jsp"/>
 
     <div id="content" class="row">
         <h3><strong>Privacy</strong></h3>
@@ -42,6 +42,6 @@
 
     <div class="push"></div>
 </div>
-<c:import url="/jsp/footer.jsp"/>
+<c:import url="/jsp/layout/footer.jsp"/>
 </body>
 </html>

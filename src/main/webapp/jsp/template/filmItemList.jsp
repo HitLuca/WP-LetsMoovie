@@ -33,7 +33,7 @@
             </button>
             <br>
             <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
-                <c:import url="orarioFilm.jsp"/>
+                <c:import url="/jsp/template/orarioFilm.jsp"/>
             </ul>
         </c:if>
 
