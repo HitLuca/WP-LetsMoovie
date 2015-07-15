@@ -67,38 +67,3 @@ body {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
-
-#home {
-    padding-left: 0rem;
-    padding-right: 0rem;
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-}
-
-#panelLunedì {
-    margin: 0rem;
-}
-
-#panelMartedì {
-    margin: 0rem;
-}
-
-#panelMercoledì {
-    margin: 0rem;
-}
-
-#panelGiovedì {
-    margin: 0rem;
-}
-
-#panelVenerdì {
-    margin: 0rem;
-}
-
-#panelSabato {
-    margin: 0rem;
-}
-
-#panelDomenica {
-    margin: 0rem;
-}
