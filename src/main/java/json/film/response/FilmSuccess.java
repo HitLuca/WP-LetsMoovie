@@ -1,7 +1,7 @@
 package json.film.response;
 
 import com.google.gson.annotations.Expose;
-import database.datatypes.FilmData;
+import database.datatypes.film.FilmData;
 import json.OperationResult;
 import json.film.Film;
 

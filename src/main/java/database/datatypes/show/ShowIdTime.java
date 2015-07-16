@@ -1,4 +1,4 @@
-package database.datatypes;
+package database.datatypes.show;
 
 import com.google.gson.annotations.Expose;
 

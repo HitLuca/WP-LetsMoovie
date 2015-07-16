@@ -1,7 +1,7 @@
 package json.payments;
 
 import com.google.gson.annotations.Expose;
-import database.datatypes.DetailedPayment;
+import database.datatypes.user.DetailedPayment;
 
 /**
  * f

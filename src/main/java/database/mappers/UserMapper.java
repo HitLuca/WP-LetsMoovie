@@ -1,9 +1,6 @@
 package database.mappers;
 
-import database.datatypes.DetailedPayment;
-import database.datatypes.Payment;
-import database.datatypes.UserData;
-import database.datatypes.UserLoginCredential;
+import database.datatypes.user.*;
 import json.register.request.RegistrationRequest;
 import org.apache.ibatis.annotations.*;
 
@@ -75,4 +72,12 @@ public interface UserMapper {
 
     @Delete("DELETE FROM payments WHERE payment_date=#{payment_date}::DATE AND payment_time=#{payment_time}::TIME AND ticket_type=#{ticket_type} AND id_seat=#{id_seat} AND id_show=#{id_show} AND username=#{username}")
     void deletePayment(Payment payment);
+
+    //TODO:Test
+    @Select("SELECT * FROM payments WHERE id_seat=#{id_seat} AND id_show=#{id_show}")
+    Payment getPaymentData(@Param("id_show") int id_show, @Param("id_seat") int id_seat);
+
+    //TODO:Test
+    @Select("SELECT username, SUM(price) FROM payments NATURAL JOIN prices GROUP BY username ORDER BY SUM(price) DESC")
+    List<UserPaid> getRankedUserTotalPayments();
 }

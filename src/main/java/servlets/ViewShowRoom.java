@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
-import database.datatypes.RoomData;
-import database.datatypes.Seat;
+import database.datatypes.seat.RoomData;
+import database.datatypes.seat.Seat;
 import database.mappers.SeatMapper;
 import json.OperationResult;
 import json.showRoom.SeatList;
@@ -82,7 +82,7 @@ public class ViewShowRoom extends HttpServlet {
                 showSeats.addSeat(showSeat);
             }
 
-            List<Seat> showFreeSeat = seatMapper.getFreeSeat(showId);
+            List<Seat> showFreeSeat = seatMapper.getShowFreeSeat(showId);
             for (Seat s : showFreeSeat) {
                 ShowSeat showSeat = new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.FREE);
                 showSeats.addSeat(showSeat);

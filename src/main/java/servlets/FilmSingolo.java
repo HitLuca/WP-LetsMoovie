@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
-import database.datatypes.FilmData;
+import database.datatypes.film.FilmData;
 import database.mappers.FilmMapper;
 import json.OperationResult;
 import json.film.response.FilmSuccess;

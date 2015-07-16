@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
-import database.datatypes.FilmData;
-import database.datatypes.ShowIdTime;
+import database.datatypes.film.FilmData;
+import database.datatypes.show.ShowIdTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
@@ -79,7 +79,7 @@ public class FilmDay extends HttpServlet {
                 //Prendo i differenti
                 List<ShowIdTime> hours = showMapper.getShowTimeAndId(date.format(dateFormat), i);
 
-                hours.forEach(database.datatypes.ShowIdTime::convertTime);
+                hours.forEach(database.datatypes.show.ShowIdTime::convertTime);
 
                 //Creo l'oggetto Film e lo riempio
                 Film film = new Film(filmData, hours);

@@ -1,7 +1,7 @@
 package json.userPersonalData.response;
 
 import com.google.gson.annotations.Expose;
-import database.datatypes.UserData;
+import database.datatypes.user.UserData;
 import json.OperationResult;
 
 /**
