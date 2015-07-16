@@ -1,5 +1,14 @@
 #trailerContainer {
-    padding: 1rem;
+    padding-bottom: 1rem;
+}
+
+#copertina {
+    padding-bottom: 1rem;
+}
+
+#proiezioni {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .video-container {

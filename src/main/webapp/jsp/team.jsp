@@ -11,7 +11,32 @@
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">
-        <%--Insert content here--%>
+        <h3>I componenti del team di sviluppo</h3>
+
+        <div id="first" class="row">
+            <div class="medium-6 centered columns">
+
+            </div>
+            <div class="medium-6 centered columns">
+
+            </div>
+        </div>
+        <div id="second" class="row">
+            <div class="medium-6 centered columns">
+
+            </div>
+            <div class="medium-6 centered columns">
+
+            </div>
+        </div>
+        <div id="third" class="row">
+            <div class="medium-6 centered columns">
+
+            </div>
+            <div class="medium-6 centered columns">
+
+            </div>
+        </div>
     </div>
     <div class="push"></div>
 </div>
