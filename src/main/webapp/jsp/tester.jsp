@@ -8,10 +8,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<c:import url="/jsp/head.jsp"/>
+<c:import url="/jsp/layout/head.jsp"/>
 <body>
 <div class="wrapper">
-    <c:import url="/jsp/header.jsp"/>
+    <c:import url="/jsp/layout/header.jsp"/>
 
     <div class="content">
         <form id="tester" action="/api/getUser" data-abide="ajax" method="post">
@@ -55,7 +55,7 @@
     <div class="push"></div>
 </div>
 
-<c:import url="/jsp/footer.jsp"/>
+<c:import url="/jsp/layout/footer.jsp"/>
 <script>
     var id = 0;
 

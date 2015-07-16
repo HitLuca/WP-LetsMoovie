@@ -15,7 +15,7 @@
         <!-- Right Nav Section -->
         <ul class="right">
             <li><a href="#">Listino prezzi</a></li>
-            <li><a href="#">Info cinema</a></li>
+            <li><a href="<c:url value="/info"/>">Info cinema</a></li>
             <c:choose>
                 <c:when test="${sessionScope.username != null}">
                     <li class="has-dropdown"><a href="#">${sessionScope.username}</a>

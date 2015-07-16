@@ -3,14 +3,14 @@
 
 <!DOCTYPE html>
 <html>
-<c:url var="url" value="/jsp/head.jsp">
+<c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Login"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
 <div class="wrapper">
-    <c:import url="/jsp/header.jsp"/>
-    <div class="row content">
+    <c:import url="/jsp/layout/header.jsp"/>
+    <div id="content" class="row">
         <div class="small-11 small-centered large-6 medium-8 columns">
             <h3>Accedi al tuo account:</h3>
 
@@ -46,7 +46,6 @@
                     </div>
                 </div>
             </form>
-
 
             <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
                  role="dialog">
@@ -84,7 +83,6 @@
                 </form>
             </div>
 
-
             <div id="secondModal" class="reveal-modal" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true"
                  role="dialog" data-options="close_on_background_click:false">
                 <h2 id="secondModalTitle"> Controlla la tua casella di posta elettronica!</h2>
@@ -107,7 +105,8 @@
                     </p>
                         <input type="hidden" id="emailresend" name="email" placeholder="mario.rossi@gmail.com"
                                value=""/>
-                    <div class="row">
+
+                        <div class="row">
                         <div class="medium-12 columns">
                             <button class="button radius ladda-button" data-style="zoom-out">
                                 <span class="ladda-label">
@@ -120,12 +119,11 @@
                 <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
 
-
         </div>
     </div>
     <div class="push"></div>
 </div>
-<c:import url="/jsp/footer.jsp"/>
+<c:import url="/jsp/layout/footer.jsp"/>
 
 <script src="<c:url value="/javascript/login.js"/>"></script>
 

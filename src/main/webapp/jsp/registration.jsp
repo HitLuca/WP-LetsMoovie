@@ -1,23 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: alessandro
-  Date: 25/06/15
-  Time: 19.26
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
 <html>
-<c:url var="url" value="/jsp/head.jsp">
+<c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Registrazione"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
 <div class="wrapper">
-    <c:import url="/jsp/header.jsp"/>
-    <div class="row content">
+    <c:import url="/jsp/layout/header.jsp"/>
+    <div id="content" class="row">
         <h3>Completa i seguenti campi per effettuare la registrazione:</h3>
 
         <form action="<c:url value="/api/register"/>" method="post" data-abide="ajax" id="registerForm">
@@ -121,7 +114,7 @@
     <div class="push"></div>
 </div>
 
-<c:import url="/jsp/footer.jsp"/>
+<c:import url="/jsp/layout/footer.jsp"/>
 
 <script src="<c:url value="/javascript/registration.js"/>"></script>
 

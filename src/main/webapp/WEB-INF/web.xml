@@ -72,6 +72,11 @@
         <servlet-name>confirmRegistration</servlet-name>
         <jsp-file>/jsp/confirmRegistration.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>film</servlet-name>
+        <jsp-file>/jsp/film.jsp</jsp-file>
+    </servlet>
+
 
     <!-- MAPPING JPS-->
     <servlet-mapping>
@@ -122,4 +127,9 @@
         <servlet-name>confirmRegistration</servlet-name>
         <url-pattern>/confirmRegistration/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>film</servlet-name>
+        <url-pattern>/film/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

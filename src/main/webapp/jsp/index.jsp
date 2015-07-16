@@ -3,81 +3,87 @@
 
 <!DOCTYPE HTML>
 <html>
-<c:url var="url" value="/jsp/head.jsp">
+<c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Let's Moovie"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
+<link rel="stylesheet" href="<c:url value="/css/index.css"/>">
 <div class="wrapper">
-    <c:import url="/jsp/header.jsp"/>
+    <c:import url="/jsp/layout/header.jsp"/>
+    <div id="content" class="row">
+        <div class="small-12 columns">
+            <ul class="tabs show-for-medium-up" data-tab>
+                <li class="tab-title active"><a href="#panel1">Questa settimana</a></li>
+                <li class="tab-title" id=""><a href="#panel2">Lista completa</a></li>
+            </ul>
+            <dl id="home" class="accordion" data-accordion>
+                <dd class="accordion-navigation">
+                    <a href="#panel1" class="show-for-small-only">Questa settimana</a>
 
-    <div id="content">
-        <div class="row">
-            <div class="small-12 columns">
-                <ul class="tabs show-for-medium-up" data-tab>
-                    <li class="tab-title active"><a href="#panel1">Questa settimana</a></li>
-                    <li class="tab-title" id=""><a href="#panel2">Lista completa</a></li>
-                </ul>
-
-                <dl id="home" class="accordion" data-accordion>
-
-                    <dd class="accordion-navigation">
-                        <a href="#panel1" class="show-for-small-only">Questa settimana</a>
-
-                        <div id="panel1" class="content active">
-                            <div class="content-box section-box">
-                                <ul class="tabs" data-tab>
-                                    <li class="tab-title active"><a href="#panelLunedì">Lunedì</a></li>
-                                    <li class="tab-title"><a href="#panelMartedì">Martedì</a></li>
-                                    <li class="tab-title"><a href="#panelMercoledì">Mercoledì</a></li>
-                                    <li class="tab-title"><a href="#panelGiovedì">Giovedì</a></li>
-                                    <li class="tab-title"><a href="#panelVenerdì">Venerdì</a></li>
-                                    <li class="tab-title"><a href="#panelSabato">Sabato</a></li>
-                                    <li class="tab-title"><a href="#panelDomenica">Domenica</a></li>
-                                </ul>
-                                <div class="tabs-content">
-                                    <div class="content active" id="panelLunedì">
-                                    </div>
-                                    <div class="content" id="panelMartedì">
-                                    </div>
-                                    <div class="content" id="panelMercoledì">
-                                    </div>
-                                    <div class="content" id="panelGiovedì">
-                                    </div>
-                                    <div class="content" id="panelVenerdì">
-                                    </div>
-                                    <div class="content" id="panelSabato">
-                                    </div>
-                                    <div class="content" id="panelDomenica">
-                                    </div>
-                                </div>
+                    <div id="panel1" class="content active">
+                        <ul class="tabs" data-tab id="daysLabel">
+                            <li class="tab-title"><a href="#panelLunedì">Lunedì</a></li>
+                            <li class="tab-title"><a href="#panelMartedì">Martedì</a></li>
+                            <li class="tab-title"><a href="#panelMercoledì">Mercoledì</a></li>
+                            <li class="tab-title"><a href="#panelGiovedì">Giovedì</a></li>
+                            <li class="tab-title"><a href="#panelVenerdì">Venerdì</a></li>
+                            <li class="tab-title"><a href="#panelSabato">Sabato</a></li>
+                            <li class="tab-title"><a href="#panelDomenica">Domenica</a></li>
+                        </ul>
+                        <div class="tabs-content" id="daysTab">
+                            <div class="content active filmList" id="panelLunedì">
+                                <c:set scope="request" value="true" var="orario"/>
+                                <c:import url="template/filmItemList.jsp"/>
+                            </div>
+                            <div class="content" id="panelMartedì">
+                                <c:set scope="request" value="true" var="orario"/>
+                                <c:import url="template/filmItemList.jsp"/>
+                            </div>
+                            <div class="content" id="panelMercoledì">
+                                <c:set scope="request" value="true" var="orario"/>
+                                <c:import url="template/filmItemList.jsp"/>
+                            </div>
+                            <div class="content" id="panelGiovedì">
+                                <c:set scope="request" value="true" var="orario"/>
+                                <c:import url="template/filmItemList.jsp"/>
+                            </div>
+                            <div class="content" id="panelVenerdì">
+                                <c:set scope="request" value="true" var="orario"/>
+                                <c:import url="template/filmItemList.jsp"/>
+                            </div>
+                            <div class="content" id="panelSabato">
+                                <c:set scope="request" value="true" var="orario"/>
+                                <c:import url="template/filmItemList.jsp"/>
+                            </div>
+                            <div class="content" id="panelDomenica">
+                                <c:set scope="request" value="true" var="orario"/>
+                                <c:import url="template/filmItemList.jsp"/>
                             </div>
                         </div>
-                        <a href="#panel2" class="show-for-small-only">Lista completa</a>
+                    </div>
+                    <a href="#panel2" class="show-for-small-only">Lista completa</a>
 
-                        <div id="panel2" class="content">
-                            <div class="content-box section-box">
-                                <c:import url="filmItemList.jsp"/>
-                            </div>
+                    <div id="panel2" class="content">
+                        <div class="content-box section-box">
+                            <c:import url="template/filmItemList.jsp"/>
                         </div>
-                    </dd>
-                </dl>
-
-            </div>
+                    </div>
+                </dd>
+            </dl>
         </div>
     </div>
     <div id="templateDay" class="hide">
         <c:set scope="request" value="true" var="orario"/>
-        <c:import url="filmItemList.jsp"/>
+        <c:import url="template/filmItemList.jsp"/>
     </div>
     <div id="templateWeek" class="hide">
         <c:set scope="request" value="false" var="orario"/>
-        <c:import url="filmItemList.jsp"/>
+        <c:import url="template/filmItemList.jsp"/>
     </div>
     <div class="push"></div>
 </div>
-<c:import url="footer.jsp"/>
-
+<c:import url="layout/footer.jsp"/>
+<script src="<c:url value="/javascript/index.js"/>"></script>
 </body>
-
 </html>

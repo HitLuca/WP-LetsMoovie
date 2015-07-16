@@ -1,0 +1,18 @@
+.film {
+    -moz-animation-duration: 0.25s;
+    -webkit-animation-duration: 0.5s;
+}
+
+ul#daysLabel a {
+    padding: 1rem;
+}
+
+#panel1 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#panel2 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

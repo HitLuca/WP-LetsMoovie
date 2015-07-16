@@ -21,6 +21,8 @@
     <%--LADDA BUTTON--%>
     <link rel="stylesheet" href="<c:url value="/lib/css/ladda-themeless.min.css"/>"/>
 
+    <link rel="stylesheet" href="<c:url value="/lib/css/animate.min.css"/>">
+
     <%--CSS PERSONALE--%>
     <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
 
