@@ -1,9 +1,8 @@
 package json.film;
 
 import com.google.gson.annotations.Expose;
-import database.datatypes.FilmData;
-import database.datatypes.ShowIdTime;
-import javafx.util.Pair;
+import database.datatypes.film.FilmData;
+import database.datatypes.show.ShowIdTime;
 
 import java.util.ArrayList;
 import java.util.List;

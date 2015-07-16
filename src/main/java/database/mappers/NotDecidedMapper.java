@@ -1,6 +1,6 @@
 package database.mappers;
 
-import database.datatypes.Ticket;
+import database.datatypes.other.Ticket;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;

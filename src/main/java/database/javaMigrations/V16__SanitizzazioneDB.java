@@ -1,9 +1,9 @@
-package database;
+package database.javaMigrations;
 
-import database.datatypes.Actor;
-import database.datatypes.FilmData;
+import database.DatabaseConnection;
+import database.datatypes.film.Actor;
+import database.datatypes.film.FilmData;
 import database.mappers.FilmMapper;
-import database.mappers.ShowMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 

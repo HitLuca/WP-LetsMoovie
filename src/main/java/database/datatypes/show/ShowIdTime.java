@@ -1,8 +1,7 @@
-package database.datatypes;
+package database.datatypes.show;
 
 import com.google.gson.annotations.Expose;
 
-import java.sql.Date;
 import java.sql.Time;
 
 /**

@@ -1,4 +1,4 @@
-package database.datatypes;
+package database.datatypes.seat;
 
 /**
  * Created by hitluca on 29/06/15.

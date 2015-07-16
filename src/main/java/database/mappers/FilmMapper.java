@@ -1,7 +1,8 @@
 package database.mappers;
 
-import database.datatypes.Actor;
-import database.datatypes.FilmData;
+import database.datatypes.film.Actor;
+import database.datatypes.film.FilmData;
+import database.datatypes.film.FilmIncome;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -72,4 +73,12 @@ public interface FilmMapper {
 
     @Update("UPDATE actors SET url_photo=#{url_photo} WHERE actor_name=#{actor_name}")
     void updateActor(Actor a);
+
+    //TODO:Test
+    @Select("SELECT SUM(price) FROM shows NATURAL JOIN prices NATURAL JOIN payments WHERE id_film=#{id_film}")
+    float getFilmIncome(int id_film);
+
+    //TODO:Test
+    @Select("SELECT id_film, SUM(price) FROM shows NATURAL JOIN prices NATURAL JOIN payments GROUP BY id_film")
+    List<FilmIncome> getAllFilmsIncome();
 }

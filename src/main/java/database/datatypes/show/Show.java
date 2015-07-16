@@ -1,4 +1,4 @@
-package database.datatypes;
+package database.datatypes.show;
 
 /**
  * Created by hitluca on 06/07/15.

@@ -1,10 +1,9 @@
 package database.mappers;
 
-import database.datatypes.Show;
-import database.datatypes.ShowIdTime;
+import database.datatypes.show.Show;
+import database.datatypes.show.ShowIdTime;
 import org.apache.ibatis.annotations.*;
 
-import java.sql.Date;
 import java.util.List;
 
 /**

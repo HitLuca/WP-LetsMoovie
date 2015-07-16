@@ -1,4 +1,4 @@
-package database.datatypes;
+package database.datatypes.other;
 
 /**
  * Created by root on 07/07/15.

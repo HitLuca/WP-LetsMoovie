@@ -1,4 +1,4 @@
-package database.datatypes;
+package database.datatypes.user;
 
 /**
  * Created by hitluca on 26/06/15.

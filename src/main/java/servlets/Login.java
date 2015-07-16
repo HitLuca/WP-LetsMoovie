@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
-import database.datatypes.UserLoginCredential;
+import database.datatypes.user.UserLoginCredential;
 import database.mappers.UserMapper;
 import json.OperationResult;
 import json.login.request.LoginRequest;

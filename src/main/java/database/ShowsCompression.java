@@ -1,13 +1,16 @@
 package database;
 
-import database.datatypes.Show;
+import database.datatypes.show.Show;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import org.apache.ibatis.session.SqlSession;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -21,8 +24,6 @@ import java.util.List;
 public class ShowsCompression {
     private Connection conn;
     private Statement statement;
-    private PreparedStatement preparedStatement;
-    private String sql;
     private static ShowMapper showMapper;
     private static FilmMapper filmMapper;
     private static SqlSession session;
