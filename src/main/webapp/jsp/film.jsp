@@ -12,29 +12,29 @@
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">
-        <div class="medium-3 text-center columns">
-            <img id="copertina" data-bind="poster" src="http://placehold.it/214x317">
+        <div class="medium-3 text-center columns animated wow fadeInLeft" data-wow-duration="0.25s">
+            <img id="copertina" data-bind="poster" src="">
         </div>
-        <div class="medium-9 columns">
+        <div class="medium-9 columns animated fadeIn">
             <div class="panel radius">
                 <div class="row">
-                    <div data-bind="film_title" class="medium-7 columns">
-                        <h2>Titolo</h2>
+                    <div class="medium-7 columns">
+                        <h2 data-bind="film_title">Titolo</h2>
                     </div>
-                    <div data-bind="year" class="medium-5 columns">
-                        <p>Anno:</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="medium-12 columns">
-                        <strong data-bind="director">Regista: </strong>
+                    <div class="medium-5 columns">
+                        <p>Anno: <span data-bind="year"></span></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="medium-12 columns">
-                        <strong data-bind="plot">Trama: </strong>
+                        <strong>Regista: <span data-bind="director"></span></strong>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="medium-12 columns">
+                        <strong>Trama:</strong>
 
-                        <p align="justify">
+                        <p align="justify" data-bind="plot">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -53,7 +53,8 @@
                             <li class="accordion-navigation">
                                 <a href="#panel1d" role="tab" id="panel1d-heading" aria-controls="panel1d">Lunedì</a>
 
-                                <div id="panel1d" class="content" role="tabpanel" aria-labelledby="panel1d-heading">
+                                <div id="panel1d" class="content wow fadeIn" role="tabpanel"
+                                     aria-labelledby="panel1d-heading">
                                     <ul class="small-block-grid-3 medium-block-grid-4">
                                         <li><a href="#" class="small radius button expand"
                                                data-bind="show_time">19:30</a></li>
@@ -75,20 +76,20 @@
                     </div>
                 </div>
 
-                <div class="row collapse">
+                <div class="row collapse wow zoomIn">
                     <div class="medium-12 text-center columns">
                         <strong>Guarda il trailer:</strong>
 
                         <div id="trailerContainer" class="text-center row">
                             <div class="video-container">
                                 <iframe data-bind="trailer" width="420" height="315"
-                                        src="https://www.youtube.com/embed/6bh4mvJ5jUg">
+                                        src="">
                                 </iframe>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row wow fadeInUp">
                     <div class="medium-7 columns">
                         <strong>Rating:</strong>
                         <span data-bind="rating"></span>
@@ -98,14 +99,14 @@
                         <span data-bind="metascore"></span>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row wow fadeInUp">
                     <div class="medium-7 columns">
                         <strong>Durata:</strong>
-                        <span data-bind="vm"></span>
+                        <span data-bind="duration"></span> minuti
                     </div>
                     <div class="medium-5 columns">
                         <strong>Vietato ai minori:</strong>
-                        <span data-bind="duration"></span>
+                        <span data-bind="vm"></span>
                     </div>
                 </div>
             </div>
@@ -113,7 +114,7 @@
     </div>
     <div class="push"></div>
 </div>
-</div>
 <c:import url="/jsp/layout/footer.jsp"/>
+<script src="<c:url value="/javascript/film.js"/>"></script>
 </body>
 </html>

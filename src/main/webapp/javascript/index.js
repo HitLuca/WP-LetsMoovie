@@ -1,9 +1,15 @@
 "use strict";
 
 var Films = {
+        url: "/film/",
         renderDay: function (data) {
             var template = $(this);
             var directives = {
+                filmLink: {
+                    href: function (params) {
+                        return Films.url + this.id_film;
+                    }
+                },
                 poster: {
                     src: function (params) {
                         return this.poster;

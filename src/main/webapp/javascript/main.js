@@ -138,6 +138,9 @@ var Session = {
     },
     redirectToRegister: function () {
         window.location.assign("/registration");
+    },
+    redirectToHome: function () {
+        window.location.assign("/");
     }
 };
 

@@ -3,14 +3,14 @@
 
 <div class="row panel callout radius large-uncollapse film animated zoomIn wow" data-wow-duration="0.25s" data-equalizer>
     <div class="medium-3 text-center columns" data-equalizer-watch>
-        <a class="th" href="#">
+        <a class="th filmLink" href="#">
             <img id="poster" src="">
         </a>
 
         <p></p>
     </div>
     <div class="medium-9 columns" data-equalizer-watch>
-        <a href="#">
+        <a href="#" class="filmLink">
             <h3 id="film_title"></h3>
         </a>
 
