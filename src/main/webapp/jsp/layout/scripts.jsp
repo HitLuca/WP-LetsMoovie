@@ -26,10 +26,14 @@
 <%--MOMENT.JS GESTIONE DATE--%>
 <script src="<c:url value="/lib/js/moment-with-locales.min.js"/>"></script>
 
+<%--WOW.JS--%>
+<script src="<c:url value="/lib/js/wow.min.js"/>"></script>
+
 <%--JAVASCRIPT PERSONALE--%>
 <script src="<c:url value="/javascript/main.js"/>"></script>
 <script src="<c:url value="/javascript/header.js"/>"></script>
 
 <script>
     $(document).foundation();
+    new WOW().init();
 </script>

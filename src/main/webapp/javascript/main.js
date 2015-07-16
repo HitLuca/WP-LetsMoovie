@@ -141,5 +141,6 @@ var Session = {
     }
 };
 
+moment.locale('it');
 
 Notifications.showNotifications();
