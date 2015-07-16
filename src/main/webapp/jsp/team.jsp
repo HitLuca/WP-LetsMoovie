@@ -19,54 +19,54 @@
             <div id="first" class="row">
                 <div class="medium-6 centered columns">
                     <div class="medium-4 columns">
-                        <img class="img-circle" src="http://www.placehold.it/150x150">
+                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Alberigo.jpg">
                     </div>
                     <div class="medium-8 columns">
-                        <h5>Luca Alberigo</h5>
+                        <strong>Luca Alberigo</strong>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
                     <div class="medium-4 columns">
-                        <img class="img-circle" src="http://www.placehold.it/150x150">
+                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Bacchiega.png">
                     </div>
                     <div class="medium-8 columns">
-                        <h5>Alessandro Bacchiega</h5>
+                        <strong>Alessandro Bacchiega</strong>
                     </div>
                 </div>
             </div>
             <div id="second" class="row">
                 <div class="medium-6 centered columns">
                     <div class="medium-4 columns">
-                        <img class="img-circle" src="http://www.placehold.it/150x150">
+                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Bosotti.jpeg">
                     </div>
                     <div class="medium-8 columns">
-                        <h5>Luca Bosotti</h5>
+                        <strong>Luca Bosotti</strong>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
                     <div class="medium-4 columns">
-                        <img class="img-circle" src="http://www.placehold.it/150x150">
+                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Federici.png">
                     </div>
                     <div class="medium-8 columns">
-                        <h5>Marco Federici</h5>
+                        <strong>Marco Federici</strong>
                     </div>
                 </div>
             </div>
             <div id="third" class="row">
                 <div class="medium-6 centered columns">
                     <div class="medium-4 columns">
-                        <img class="img-circle" src="http://www.placehold.it/150x150">
+                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Mion.png">
                     </div>
                     <div class="medium-8 columns">
-                        <h5>Carlo Mion</h5>
+                        <strong>Carlo Mion</strong>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
                     <div class="medium-4 columns">
-                        <img class="img-circle" src="http://www.placehold.it/150x150">
+                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Simonetto.png">
                     </div>
                     <div class="medium-8 columns">
-                        <h5>Luca Simonetto</h5>
+                        <strong>Luca Simonetto</strong>
                     </div>
                 </div>
             </div>
