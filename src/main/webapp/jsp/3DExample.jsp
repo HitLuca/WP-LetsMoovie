@@ -12,7 +12,9 @@
         <div id="test" style="height: 80%; width: 100%;"></div>
     </div>
     <div class="push"></div>
+
 </div>
+<input type="button" onclick="resetCamera()" value="top View">
 <c:import url="footer.jsp"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
 <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
@@ -40,7 +42,7 @@
         }
     }
 
-    init(document.getElementById( 'test' ),select,deSelect,sl,16,16);
+    init(document.getElementById( 'test' ),select,deSelect,sl,17,17);
     render();
 
 </script>

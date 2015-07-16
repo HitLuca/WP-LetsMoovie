@@ -36,6 +36,8 @@ var hoveredSeat;
 var addFunction = function(){};
 var removeFunction = function(){};
 
+var lastLight;
+
 
 
 
@@ -150,7 +152,7 @@ function computeSeat(standMaterial,chairMaterial, broken)
     pillow.name="cloth";
     back.position.z+=20+backSize.z/2.0;
     back.name="cloth";
-    var armSize = new THREE.Vector3(6,25,7);
+    var armSize = new THREE.Vector3(7,20,10);
     var arm = new THREE.Mesh( new THREE.CubeGeometry(armSize.x,armSize.y,armSize.z ),  chairMaterial );
     arm.position.z+=35;
     arm.position.x-=pillowSize.x/2.0;
@@ -244,7 +246,7 @@ function init(cont,add,remove, seatsList,sx,sy) {
     $(container).bind('touchend',onTouchEnd);
 
     renderer = new THREE.WebGLRenderer( { antialias: false } );
-    renderer.setClearColor(0xffffff,1);
+    renderer.setClearColor(0x000000,1);
     renderer.setPixelRatio( 3/2.0 );
     renderer.setSize( $('#test').width(),$('#test').height() );
 
@@ -296,6 +298,10 @@ function init(cont,add,remove, seatsList,sx,sy) {
     light = new THREE.AmbientLight( 0x555555 );
     scene.add( light );
 
+    lastLight = new THREE.PointLight(0xffff66);
+    lastLight.intensity=0;
+    //scene.add(lastLight)
+
     // light = new THREE.AmbientLight( 0x222222 );
     // scene.add( light );
 
@@ -324,11 +330,17 @@ function init(cont,add,remove, seatsList,sx,sy) {
         scene.add(singleStep);
     }
 
-    var floorSize = THREE.Vector3(sizeX*(distanceX+5),sizeX*(distanceX+5),distanceY);
+    var floorSize = new THREE.Vector3(sizeX*(distanceX+5),sizeX*(distanceX+5),distanceY);
     var floor = new THREE.Mesh( new THREE.CubeGeometry( sizeX*(distanceX+5),distanceY, sizeX*(distanceX+5) ), new THREE.MeshLambertMaterial({color:0x555555}) );
     floor.position.y= (-sizeY * distanceY) / 2.0;
-    floor.position.z+= 250;
+    floor.position.z+= 680;
     scene.add(floor);
+
+    var screenSize = new THREE.Vector2(sizeX*distanceX*0.9,sizeX*distanceX*0.5);
+    var screen = new THREE.Mesh( new THREE.CubeGeometry(screenSize.x,screenSize.y,0.001), new THREE.MeshLambertMaterial({color:0xeeeeee}));
+    screen.position.y = 0;
+    screen.position.z = (sizeY+1)*distanceY;
+    scene.add(screen);
 
 
 
@@ -346,6 +358,17 @@ function init(cont,add,remove, seatsList,sx,sy) {
     window.addEventListener( 'resize', onWindowResize, false );
 
     animate();
+
+}
+
+function resetCamera()
+{
+    var min = sizeX/$(container).width()>sizeY/$(container).clientHeight?sizeX:sizeY;
+    controls.reset();
+
+    camera.position.x=0;
+    camera.position.y=82*min/2.0;
+    camera.position.z=-9*min/2.0;
 
 }
 
@@ -391,11 +414,11 @@ function placeSeat(seatPos)
 
 
 function onWindowResize() {
-    camera.aspect = $('#test').width()/$('#test').height() ;
+    camera.aspect = $(container).width()/$(container).height() ;
     camera.updateProjectionMatrix();
 
 
-    renderer.setSize( $('#test').width(),$('#test').height() );
+    renderer.setSize( $(container).width(),$(container).height() );
 
     render();
 }
@@ -448,6 +471,8 @@ function onTouchEnd( event ) {
 }
 
 function onMouseDown( event ) {
+    console.log(camera.position);
+    console.log(camera.rotation);
     event.preventDefault();
     if(leftClick==false) {
         if(event.button==0) {
@@ -515,6 +540,10 @@ function selectChair(clicked)
     if (clicked.name == "chair" ) {
         console.log(seatMap[clicked.parent.uuid]);
         if(seatMap[clicked.parent.uuid].status == 0) {
+            lastLight.position.x=clicked.parent.position.x;
+            lastLight.position.y=clicked.parent.position.y;
+            lastLight.position.z=clicked.parent.position.z;
+            lastLight.intensity=0.1;
             seatMap[clicked.parent.uuid].status = 1;
             addFunction(seatMap[clicked.parent.uuid].x,seatMap[clicked.parent.uuid].y);
             clicked.children.forEach(function (obj) {
@@ -523,12 +552,14 @@ function selectChair(clicked)
         }
         else{
             seatMap[clicked.parent.uuid].status = 0;
+            lastLight.intensity=0;
             removeFunction(seatMap[clicked.parent.uuid].x,seatMap[clicked.parent.uuid].y);
             clicked.children.forEach(function (obj) {
                 obj.material = freeChairMaterial;
             });
         }
     }
+
 }
 
 function hoverChair(hover)
@@ -562,6 +593,7 @@ function hoverChair(hover)
                 });
             }
             else {
+                lastLight.intensity=0;
                 seatMap[clicked.parent.uuid].status = 0;
                 clicked.children.forEach(function (obj) {
                     obj.material = freeChairMaterial;
