@@ -25,7 +25,7 @@ public interface ShowMapper {
     @Select("SELECT DISTINCT id_film FROM shows WHERE shows.show_date=#{show_date}::DATE")
     List<Integer> getDayFilms(String show_date);
 
-    @Select("SELECT * FROM shows WHERE show_date=#{show_date}::DATE ORDER BY id_show")
+    @Select("SELECT * FROM shows WHERE show_date=#{show_date}::DATE ORDER BY show_time")
     List<Show> getDayShows(String show_date);
 
     @Insert("INSERT INTO shows (room_number, id_film, show_date, show_time) VALUES (#{room_number}, #{id_film}, #{show_date}::DATE, #{show_time}::TIME)")
