@@ -63,7 +63,7 @@ public class FilmWeek extends HttpServlet {
             for (Integer j : idList) {
 
                 List<ShowIdTime> hours = showMapper.getShowTimeAndId(today.format(dateFormat), j);
-                hours.forEach(database.datatypes.ShowIdTime::convertTime);
+                hours.forEach(database.datatypes.show.ShowIdTime::convertTime);
                 filmList.addId(today, j, hours);
             }
 
