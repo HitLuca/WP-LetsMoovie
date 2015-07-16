@@ -38,8 +38,8 @@ import java.util.List;
 @WebServlet(name = "FilmWeek", urlPatterns = "/api/filmWeek")
 public class FilmWeek extends HttpServlet {
 
-    private Gson gsonWriter;
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private Gson gsonWriter;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -63,7 +63,7 @@ public class FilmWeek extends HttpServlet {
             for (Integer j : idList) {
 
                 List<ShowIdTime> hours = showMapper.getShowTimeAndId(today.format(dateFormat), j);
-                hours.forEach(database.datatypes.ShowIdTime::convertTime);
+                hours.forEach(database.datatypes.show.ShowIdTime::convertTime);
                 filmList.addId(today, j, hours);
             }
 

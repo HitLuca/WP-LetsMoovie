@@ -1,8 +1,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%-- footer da usare in tutte le pagine --%>
 <div class="row footer">
     <div class="small-6 medium-3 columns">
-        <a href="<c:url value="/contattaci"/>" class="button small expand radius">Contattaci</a>
+        <a href="#" class="button small expand radius" data-reveal-id="contactUs">Contattaci</a>
+
+        <div id="contactUs" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+             role="dialog">
+            <h3>Hai bisogno di aiuto?</h3>
+
+            <p align="justify">
+                Se per qualsiasi motivo riscontrassi difficoltà nell'utilizzo del sito,
+                del sistema di prenotazione dei posti, durante le operazioni di pagamento o,
+                più semplicemente, avessi qualche domanda particolare da porci sentiti
+                libero di contattarci scrivendoci una email oppure telefonando.
+            </p>
+            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
     </div>
     <div class="small-6 medium-3 columns">
         <a href="<c:url value="/privacy"/>" class="button small expand radius">Privacy</a>

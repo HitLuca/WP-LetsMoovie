@@ -19,7 +19,7 @@
             <div class="panel radius">
                 <div class="collapse row">
                     <div data-bind="film_title" class="medium-7 columns">
-                        <h3>Titolo</h3>
+                        <h2>Titolo</h2>
                     </div>
                     <div data-bind="year" class="medium-5 columns">
                         <p>Anno:</p>
