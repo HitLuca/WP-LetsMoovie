@@ -8,31 +8,32 @@
 </c:url>
 <c:import url="${url}"/>
 <body>
+<link rel="stylesheet" href="/css/film.css">
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
-    <div id="content" class=" collapse row">
+    <div id="content" class="collapse row">
         <div class="medium-3 text-center columns">
-            <img id="poster" src="http://placehold.it/214x317">
+            <img data-bind="poster" src="http://placehold.it/214x317">
         </div>
         <div class="medium-9 columns">
             <div class="panel radius">
                 <div class="collapse row">
-                    <div id="film_title" class="medium-7 columns">
+                    <div data-bind="film_title" class="medium-7 columns">
                         <h3>Titolo</h3>
                     </div>
-                    <div id="year" class="medium-5 columns">
+                    <div data-bind="year" class="medium-5 columns">
                         <p>Anno:</p>
                     </div>
                 </div>
                 <div class="row">
-                    <strong id="director">Regista: </strong>
+                    <strong data-bind="director">Regista: </strong>
                 </div>
                 <div class="hide">
-                    <strong id="id_film"></strong>
+                    <strong data-bind="id_film"></strong>
                 </div>
                 <div class="collapse row">
                     <div class="medium-12 columns">
-                        <strong id="plot">Trama: </strong>
+                        <strong data-bind="plot">Trama: </strong>
 
                         <p align="justify">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -45,24 +46,34 @@
                         </p>
                     </div>
                 </div>
+                <strong>Guarda il trailer:</strong>
+
+                <div id="trailerContainer" class="collapse text-center row">
+                    <div class="video-container">
+                        <iframe data-bind="trailer" width="420" height="315"
+                                src="https://www.youtube.com/embed/6bh4mvJ5jUg">
+                        </iframe>
+                    </div>
+                </div>
                 <div class="collapse row">
                     <div class="medium-7 columns">
-                        <strong id="trailer">Trailer:</strong>
+                        <strong>Rating:</strong>
+                        <span data-bind="rating"></span>
                     </div>
                     <div class="medium-5 columns">
-                        <strong id="duration">Durata:</strong>
+                        <strong>Metascore:</strong>
+                        <span data-bind="metascore"></span>
                     </div>
                 </div>
                 <div class="collapse row">
-                    <div class="medium-7 rating columns">
-                        <strong id="rating">Rating:</strong>
+                    <div class="medium-7 columns">
+                        <strong>Durata:</strong>
+                        <span data-bind="vm"></span>
                     </div>
                     <div class="medium-5 columns">
-                        <strong id="metascore">Metascore:</strong>
+                        <strong>Vietato ai minori:</strong>
+                        <span data-bind="duration"></span>
                     </div>
-                </div>
-                <div class="collapse row">
-                    <strong id="vm">Vietato ai minori:</strong>
                 </div>
             </div>
         </div>
