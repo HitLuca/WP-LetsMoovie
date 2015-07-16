@@ -3,29 +3,28 @@
 var Films = {
         renderDay: function (data) {
             var template = $(this);
-
             var directives = {
                 poster: {
                     src: function (params) {
                         return this.poster;
                     }
                 },
-                dropdown: {
+                show: {
                     "data-dropdown": function (params) {
-                        return "drop" + params.index;
+                        return "drop" + params.index + template.attr("data-day");
                     }
                 },
                 drop1: {
                     id: function (params) {
-                        return "drop" + params.index;
+                        return "drop" + params.index + template.attr("data-day");
                     }
                 },
                 shows: {
                     orari: {
                         show_time: {
                             text: function (params) {
-                                var time = moment(this.show_time, "HH:MM:SS");
-                                return time.format("HH:MM");
+                                var time = moment(this.show_time, "HH:mm:ss");
+                                return time.format("LT");
                             }
                         }
 
