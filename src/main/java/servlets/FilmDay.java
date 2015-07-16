@@ -9,11 +9,10 @@ import database.datatypes.FilmData;
 import database.datatypes.ShowIdTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
-import javafx.util.Pair;
 import json.OperationResult;
+import json.film.Film;
 import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
-import json.film.Film;
 import types.exceptions.BadRequestException;
 import utilities.RestUrlMatcher;
 
@@ -24,8 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +52,6 @@ public class FilmDay extends HttpServlet {
 
     private Gson gsonWriter;
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -70,8 +67,8 @@ public class FilmDay extends HttpServlet {
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
 
             //Converto la data a SqlDate per il Db e cerco tutti gli spettacoli della giornata
-            String date = rs.getParameter();
-            List<Integer> idList = showMapper.getDayFilms(date);
+            LocalDate date = LocalDate.parse(rs.getParameter());
+            List<Integer> idList = showMapper.getDayFilms(date.format(dateFormat));
             //Inizializzo la lista della risposta vuota
             List<Film> timetable = new ArrayList<>();
 
@@ -80,10 +77,13 @@ public class FilmDay extends HttpServlet {
                 //Prendo le info del film con id I proiettato in quella data
                 FilmData filmData = filmMapper.getFilmData(i);
                 //Prendo i differenti
-                List<ShowIdTime> hours = showMapper.getShowTimeAndId(date, i);
+                List<ShowIdTime> hours = showMapper.getShowTimeAndId(date.format(dateFormat), i);
+
+                hours.forEach(database.datatypes.ShowIdTime::convertTime);
+
                 //Creo l'oggetto Film e lo riempio
                 Film film = new Film(filmData, hours);
-                film.addHours(date, hours);
+                film.addHours(date.format(dateFormat), hours);
                 //Aggiungo il Film alla lista
                 timetable.add(film);
             }

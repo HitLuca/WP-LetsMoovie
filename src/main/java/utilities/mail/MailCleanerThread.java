@@ -1,7 +1,6 @@
 package utilities.mail;
 
 import utilities.mail.request.UserEmailRequest;
-import utilities.mail.request.UserRegistrationRequest;
 
 import java.util.Date;
 import java.util.HashMap;

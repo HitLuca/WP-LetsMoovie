@@ -3,7 +3,6 @@ package json.film;
 import com.google.gson.annotations.Expose;
 import database.datatypes.FilmData;
 import database.datatypes.ShowIdTime;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

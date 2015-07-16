@@ -4,9 +4,7 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.SendGridException;
 import json.register.request.RegistrationRequest;
 import org.apache.commons.lang3.RandomStringUtils;
-import utilities.mail.request.UserEmailRequest;
 import utilities.mail.request.UserRegistrationRequest;
-import utilities.mail.MailCleanerThread;
 
 import java.util.ArrayList;
 import java.util.Date;

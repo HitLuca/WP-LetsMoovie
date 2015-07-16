@@ -3,7 +3,6 @@ package database;
 import database.datatypes.Actor;
 import database.datatypes.FilmData;
 import database.mappers.FilmMapper;
-import database.mappers.ShowMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 

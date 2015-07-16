@@ -1,7 +1,6 @@
 package utilities.mail.request;
 
 import json.register.request.RegistrationRequest;
-import utilities.mail.request.UserEmailRequest;
 
 /**
  * Created by marco on 25/06/15.

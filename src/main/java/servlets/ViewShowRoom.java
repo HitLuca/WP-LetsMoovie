@@ -8,9 +8,7 @@ import database.DatabaseConnection;
 import database.datatypes.RoomData;
 import database.datatypes.Seat;
 import database.mappers.SeatMapper;
-import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.film.response.FilmListSuccess;
 import json.showRoom.SeatList;
 import json.showRoom.ShowSeat;
 import org.apache.ibatis.session.SqlSession;
@@ -27,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

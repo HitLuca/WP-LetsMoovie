@@ -4,7 +4,6 @@ import database.datatypes.Show;
 import database.datatypes.ShowIdTime;
 import org.apache.ibatis.annotations.*;
 
-import java.sql.Date;
 import java.util.List;
 
 /**

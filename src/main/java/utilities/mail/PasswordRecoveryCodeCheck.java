@@ -1,8 +1,5 @@
 package utilities.mail;
 
-import com.sendgrid.SendGrid;
-import com.sendgrid.SendGridException;
-import org.apache.commons.lang3.RandomStringUtils;
 import utilities.mail.request.UserEmailRequest;
 import utilities.mail.request.UserRegistrationRequest;
 

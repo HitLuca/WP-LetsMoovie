@@ -2,8 +2,8 @@ package database.datatypes;
 
 import com.google.gson.annotations.Expose;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by etrunon on 14/07/15.
@@ -13,7 +13,10 @@ public class ShowIdTime {
     @Expose
     private int id_show;
     @Expose
-    private Time show_time;
+    private String show_time;
+
+
+    private static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     public int getId_show() {
         return id_show;
@@ -23,11 +26,12 @@ public class ShowIdTime {
         this.id_show = id_show;
     }
 
-    public Time getShow_time() {
-        return show_time;
+    public String getShow_time() { return show_time;    }
+
+    public void convertTime(){
+        LocalTime localTime = LocalTime.parse(show_time);
+
+        show_time = localTime.format(timeFormat);
     }
 
-    public void setShow_time(Time show_time) {
-        this.show_time = show_time;
-    }
 }

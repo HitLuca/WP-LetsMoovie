@@ -8,14 +8,11 @@ import database.DatabaseConnection;
 import database.datatypes.UserData;
 import database.mappers.UserMapper;
 import json.OperationResult;
-import json.userPersonalData.request.PersonalRequest;
 import json.userPersonalData.response.PersonalRespose;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.enums.Role;
 import types.exceptions.BadRequestException;
-import types.exceptions.BadRequestExceptionWithParameters;
-import utilities.InputValidator.ModelValidator;
 import utilities.RestUrlMatcher;
 
 import javax.servlet.ServletException;
@@ -26,8 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 /**
  * Questa servlet lancia i seguenti errori con questo formato:

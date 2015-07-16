@@ -1,7 +1,7 @@
 package json.register.request;
 
-import utilities.InputValidator.Regex;
 import types.annotations.toSanitize;
+import utilities.InputValidator.Regex;
 
 /**
  * Created by etrunon on 25/06/15.

@@ -18,7 +18,6 @@ import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
 import utilities.mail.VerificationMailSender;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;

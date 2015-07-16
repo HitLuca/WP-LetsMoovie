@@ -16,7 +16,6 @@ import types.exceptions.BadRequestException;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
 import utilities.mail.VerificationMailCodeChecker;
-import utilities.mail.VerificationMailSender;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
