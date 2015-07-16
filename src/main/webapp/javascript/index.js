@@ -9,14 +9,14 @@ var Films = {
                         return this.poster;
                     }
                 },
-                show: {
-                    "data-dropdown": function (params) {
-                        return "drop" + params.index + template.attr("data-day");
+                openModal: {
+                    "data-reveal-id": function (params) {
+                        return "modal" + params.index + template.attr("data-day");
                     }
                 },
-                drop1: {
+                'reveal-modal': {
                     id: function (params) {
-                        return "drop" + params.index + template.attr("data-day");
+                        return "modal" + params.index + template.attr("data-day");
                     }
                 },
                 shows: {
@@ -35,25 +35,47 @@ var Films = {
             Transparency.render(template[0], data.filmList, directives);
             $(document).foundation();
         },
-        now: moment(),
-        getFilms: function (day, tab) {
+        renderWeek: function (data) {
+            var template = $(this);
+            var directives = {
+                poster: {
+                    src: function (params) {
+                        return this.poster;
+                    }
+                }
+            };
+            Transparency.render(template[0], data.filmList, directives);
+            $(document).foundation();
+        },
+        getFilmsDay: function (day, tab) {
             return $.ajax({
                 dataType: "json",
                 async: true,
                 url: "/api/filmDay/" + day,
                 context: tab
             });
-        }
-        ,
+        },
+        getFilmsWeek: function (tab) {
+            return $.ajax({
+                dataType: "json",
+                async: true,
+                url: "/api/filmWeek",
+                context: tab
+            });
+        },
         bind: function () {
             $('#daysTab').find('.content').on('toggled', function (event, tab) {
                 event.preventDefault();
                 var day = $(tab).attr('data-day');
-                var request = Films.getFilms(day, $(tab));
+                var request = Films.getFilmsDay(day, $(tab));
                 request.done(Films.renderDay);
-            })
-        }
-        ,
+            });
+            $('#panel2').on('toggled', function (event, tab) {
+                event.preventDefault();
+                var request = Films.getFilmsWeek($(tab));
+                request.done(Films.renderWeek);
+            });
+        },
         first: function () {
             $('#daysLabel').find('a').first().click();
         }

@@ -4,7 +4,7 @@
 <div class="row panel callout radius large-uncollapse film animated zoomIn wow" data-wow-duration="0.25s" data-equalizer>
     <div class="medium-3 text-center columns" data-equalizer-watch>
         <a class="th" href="#">
-            <img id="poster" src="http://placehold.it/214x317">
+            <img id="poster" src="">
         </a>
 
         <p></p>
