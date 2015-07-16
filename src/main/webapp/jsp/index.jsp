@@ -66,20 +66,13 @@
 
                     <div id="panel2" class="content">
                         <div class="content-box section-box">
+                            <c:set scope="request" value="false" var="orario"/>
                             <c:import url="template/filmItemList.jsp"/>
                         </div>
                     </div>
                 </dd>
             </dl>
         </div>
-    </div>
-    <div id="templateDay" class="hide">
-        <c:set scope="request" value="true" var="orario"/>
-        <c:import url="template/filmItemList.jsp"/>
-    </div>
-    <div id="templateWeek" class="hide">
-        <c:set scope="request" value="false" var="orario"/>
-        <c:import url="template/filmItemList.jsp"/>
     </div>
     <div class="push"></div>
 </div>
