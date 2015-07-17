@@ -5,16 +5,23 @@
     <div class="small-6 medium-3 columns">
         <a href="#" class="button small expand radius" data-reveal-id="contactUs">Contattaci</a>
 
-        <div id="contactUs" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+        <div id="contactUs" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
              role="dialog">
             <h3>Hai bisogno di aiuto?</h3>
 
-            <p align="justify">
-                Se per qualsiasi motivo riscontrassi difficoltà nell'utilizzo del sito,
-                del sistema di prenotazione dei posti, durante le operazioni di pagamento o,
-                più semplicemente, avessi qualche domanda particolare da porci sentiti
-                libero di contattarci scrivendoci una email oppure telefonando.
-            </p>
+            <div class="row">
+                <div class="medium-9 small-centered columns">
+                    <p align="justify">
+                        Se per qualsiasi motivo riscontrassi difficoltà nell'utilizzo del sito,
+                        del sistema di prenotazione dei posti, durante le operazioni di pagamento o,
+                        più semplicemente, avessi qualche domanda particolare da porci, sentiti
+                        libero di contattarci con una email oppure una telefonata.<br><br>
+                        Tutte le informazioni utili puoi trovarle su
+                        <a href="/info">questa</a>
+                        pagina."
+                    </p>
+                </div>
+            </div>
             <a class="close-reveal-modal" aria-label="Close">&#215;</a>
         </div>
     </div>
