@@ -12,7 +12,7 @@ var Films = {
                 },
                 poster: {
                     src: function (params) {
-                        return this.poster;
+                        return "/img/poster/" + this.id_film + ".jpg";
                     }
                 },
                 openModal: {
@@ -39,18 +39,36 @@ var Films = {
 
             };
             Transparency.render(template[0], data.filmList, directives);
+            $(this).find("img").each(function (index, elem) {
+                $(elem).on('load', function () {
+                    var hidden = $(elem).parents(".hide").first();
+                    hidden.removeClass("hide");
+                })
+            });
             $(document).foundation();
+            template.attr("loaded", "");
         },
         renderWeek: function (data) {
             var template = $(this);
             var directives = {
                 poster: {
                     src: function (params) {
-                        return this.poster;
+                        return "/img/poster/" + this.id_film + ".jpg";
+                    }
+                },
+                filmLink: {
+                    href: function (params) {
+                        return Films.url + this.id_film;
                     }
                 }
             };
             Transparency.render(template[0], data.filmList, directives);
+            $(this).find("img").each(function (index, elem) {
+                $(elem).on('load', function () {
+                    var hidden = $(elem).parents(".hide").first();
+                    hidden.removeClass("hide");
+                })
+            });
             $(document).foundation();
         },
         getFilmsDay: function (day, tab) {
@@ -72,12 +90,17 @@ var Films = {
         bind: function () {
             $('#daysTab').find('.content').on('toggled', function (event, tab) {
                 event.preventDefault();
+
+                var loaded = $(tab).attr("loaded");
+                if (loaded != null)
+                    return;
                 var day = $(tab).attr('data-day');
                 var request = Films.getFilmsDay(day, $(tab));
                 request.done(Films.renderDay);
             });
             $('#panel2').on('toggled', function (event, tab) {
                 event.preventDefault();
+                //console.log(tab);
                 var request = Films.getFilmsWeek($(tab));
                 request.done(Films.renderWeek);
             });

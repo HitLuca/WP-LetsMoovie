@@ -14,58 +14,58 @@
     <div id="content" class="row">
         <h3>I componenti del team di sviluppo</h3>
 
-        <div id="rowContainer" class="callout radious panel">
+        <div id="rowContainer" class="callout radious panel wow fadeIn">
 
             <div id="first" class="row">
                 <div class="medium-6 centered columns">
-                    <div class="medium-4 columns">
-                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Alberigo.jpg">
+                    <div class="medium-4 columns wow swing">
+                        <img class="img-circle" src="/img/team_photo/Alberigo.jpg">
                     </div>
-                    <div class="medium-8 columns">
+                    <div class="medium-8 columns wow flipInY">
                         <strong>Luca Alberigo</strong>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
-                    <div class="medium-4 columns">
-                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Bacchiega.png">
+                    <div class="medium-4 columns wow swing">
+                        <img class="img-circle" src="/img/team_photo/Bacchiega.png">
                     </div>
-                    <div class="medium-8 columns">
+                    <div class="medium-8 columns wow flipInY">
                         <strong>Alessandro Bacchiega</strong>
                     </div>
                 </div>
             </div>
             <div id="second" class="row">
                 <div class="medium-6 centered columns">
-                    <div class="medium-4 columns">
-                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Bosotti.jpeg">
+                    <div class="medium-4 columns wow swing">
+                        <img class="img-circle" src="/img/team_photo/Bosotti.jpeg">
                     </div>
-                    <div class="medium-8 columns">
+                    <div class="medium-8 columns wow flipInY">
                         <strong>Luca Bosotti</strong>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
-                    <div class="medium-4 columns">
-                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Federici.png">
+                    <div class="medium-4 columns wow swing">
+                        <img class="img-circle" src="/img/team_photo/Federici.png">
                     </div>
-                    <div class="medium-8 columns">
+                    <div class="medium-8 columns wow flipInY">
                         <strong>Marco Federici</strong>
                     </div>
                 </div>
             </div>
             <div id="third" class="row">
                 <div class="medium-6 centered columns">
-                    <div class="medium-4 columns">
-                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Mion.png">
+                    <div class="medium-4 columns wow swing">
+                        <img class="img-circle" src="/img/team_photo/Mion.png">
                     </div>
-                    <div class="medium-8 columns">
+                    <div class="medium-8 columns wow flipInY">
                         <strong>Carlo Mion</strong>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
-                    <div class="medium-4 columns">
-                        <img class="img-circle" height="100" width="100" src="/img/team_photo/Simonetto.png">
+                    <div class="medium-4 columns wow swing">
+                        <img class="img-circle" src="/img/team_photo/Simonetto.png">
                     </div>
-                    <div class="medium-8 columns">
+                    <div class="medium-8 columns wow flipInY">
                         <strong>Luca Simonetto</strong>
                     </div>
                 </div>

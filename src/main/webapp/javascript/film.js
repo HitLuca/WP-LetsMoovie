@@ -22,7 +22,7 @@ var Film = {
             //TODO: mancano le proiezioni
             poster: {
                 src: function (params) {
-                    return this.poster;
+                    return "/img/poster/" + this.id_film + ".jpg";
                 }
             },
             trailer: {
@@ -31,6 +31,12 @@ var Film = {
                 }
             }
         };
+        $("#copertina").on('load', function (event) {
+            event.preventDefault();
+            var c = $("#copertina");
+            c.removeClass("hide");
+            c.addClass("animated fadeInLeft");
+        });
         Transparency.render(template[0], film, directives);
         $(document).foundation();
     },

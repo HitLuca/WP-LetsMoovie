@@ -32,7 +32,7 @@
                             <li class="tab-title"><a href="#panelDomenica">Domenica</a></li>
                         </ul>
                         <div class="tabs-content" id="daysTab">
-                            <div class="content active filmList" id="panelLunedì">
+                            <div class="content" id="panelLunedì">
                                 <c:set scope="request" value="true" var="orario"/>
                                 <c:import url="template/filmItemList.jsp"/>
                             </div>

@@ -35,5 +35,6 @@
 
 <script>
     $(document).foundation();
-    new WOW().init();
+    var wow = new WOW();
+    wow.init();
 </script>

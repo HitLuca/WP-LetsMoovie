@@ -12,10 +12,12 @@
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">
-        <div class="medium-3 text-center columns animated wow fadeInLeft" data-wow-duration="0.25s">
-            <img id="copertina" data-bind="poster" src="">
+        <div class="medium-3 text-center columns">
+
+            <img id="copertina" class="hide" data-wow-duration="0.25s" data-bind="poster" src="about:blank">
+
         </div>
-        <div class="medium-9 columns animated fadeIn">
+        <div class="medium-9 columns wow fadeIn">
             <div class="panel radius">
                 <div class="row">
                     <div class="medium-7 columns">
@@ -82,8 +84,7 @@
 
                         <div id="trailerContainer" class="text-center row">
                             <div class="video-container">
-                                <iframe data-bind="trailer"
-                                        src="">
+                                <iframe data-bind="trailer" src="about:blank">
                                 </iframe>
                             </div>
                         </div>
