@@ -9,7 +9,7 @@
 <c:import url="${url}"/>
 
 <body>
-<link rel="stylesheet" href="<c:url value="/css/choiceSeats.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/seats.css"/>">
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">
@@ -41,9 +41,10 @@
         <div class="row collapse" data-magellan-destination="sceltaPosti">
             <a name="sceltaPosti"></a>
 
-            <div id="roomMap" class="small-12 columns text-center">
-                <%--Qui va inserita la mappa della sala--%>
-                <img src="http://placehold.it/600x500">
+            <div class="small-12 columns text-center">
+                <canvas id="roomMap">
+
+                </canvas>
             </div>
         </div>
         <div class="row collapse">
@@ -67,6 +68,10 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
+<script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
+<script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
 <script src="<c:url value="/javascript/seats.js"/>"></script>
 </body>
 </html>

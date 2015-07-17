@@ -1,10 +1,13 @@
 var map = {
     renderMap: function (data) {
         var container = $("#roomMap")[0];
-        init(
+        Cinema3DView.init(
             container,
             null,
-            null
+            null,
+            data.showSeatList,
+            data.column,
+            data.row
         );
     }
 };
@@ -39,7 +42,7 @@ var seats = {
             Session.redirectToHome();
             return;
         }
-        seats.getShowInfo();
+        seats.getShowInfo(id);
 
     },
     error: function (data) {

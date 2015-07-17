@@ -74,7 +74,7 @@
     </servlet>
     <servlet>
         <servlet-name>choiceSeats</servlet-name>
-        <jsp-file>/jsp/choiceSeats.jsp</jsp-file>
+        <jsp-file>/jsp/seats.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>payment</servlet-name>
