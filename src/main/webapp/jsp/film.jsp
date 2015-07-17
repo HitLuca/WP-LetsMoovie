@@ -20,11 +20,13 @@
         <div class="medium-9 columns wow fadeIn">
             <div class="panel radius">
                 <div class="row">
-                    <div class="medium-7 columns">
+                    <div class="medium-12 columns">
                         <h2 data-bind="film_title">Titolo</h2>
                     </div>
-                    <div class="medium-5 columns">
-                        <p>Anno: <span data-bind="year"></span></p>
+                </div>
+                <div class="row">
+                    <div class="medium-12 columns">
+                        <strong>Anno: <span data-bind="year"></span></strong>
                     </div>
                 </div>
                 <div class="row">

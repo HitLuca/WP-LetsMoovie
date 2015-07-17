@@ -2,6 +2,7 @@
 
 var Films = {
         url: "/film/",
+        seatUrl: "/seats/",
         renderDay: function (data) {
             var template = $(this);
             var directives = {
@@ -31,6 +32,9 @@ var Films = {
                             text: function (params) {
                                 var time = moment(this.show_time, "HH:mm:ss");
                                 return time.format("LT");
+                            },
+                            href: function (params) {
+                                return Films.seatUrl + this.id_show;
                             }
                         }
 
