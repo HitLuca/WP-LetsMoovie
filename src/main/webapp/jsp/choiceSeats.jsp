@@ -18,14 +18,28 @@
             <dl class="sub-nav">
                 <dd data-magellan-arrival="sceltaPosti"><a href="#sceltaPosti">Scegli i posti</a></dd>
                 <dd data-magellan-arrival="riepilogo"><a href="#riepilogo">Riepilogo</a></dd>
-                <dd data-magellan-arrival="pagamento"><a href="#pagamento">Pagamento</a></dd>
             </dl>
+        </div>
+
+        <div class="row">
+            <div class="row collapse" data-magellan-destination="sceltaPosti">
+                <a name="sceltaPosti"></a>
+
+                <div class="medium-6 columns text-center">
+                    Blocca visuale
+                    <div class="switch">
+                        <input id="exampleCheckboxSwitch" type="checkbox">
+                        <label for="exampleCheckboxSwitch"></label>
+                    </div>
+                </div>
+                <div class="medium-6 columns text-center">
+                    <a href="" class="button radius">Resetta visuale</a>
+                </div>
+            </div>
         </div>
 
         <div class="row collapse" data-magellan-destination="sceltaPosti">
             <a name="sceltaPosti"></a>
-
-            <h5>Seleziona dalla mappa i posti che vuoi prenotare:</h5>
 
             <div id="roomMap" class="small-12 columns text-center">
                 <%--Qui va inserita la mappa della sala--%>
@@ -41,8 +55,10 @@
             </div>
         </div>
         <div class="row collapse">
-            <div class="small-12 columns text-center" data-magellan-destination="pagamento">
-                <a name="pagamento"></a>
+            <div class="small-6 columns text-center">
+                <h4>Totale:<span id="total"></span></h4>
+            </div>
+            <div class="small-6 columns text-center">
                 <a href="/payment/" class="button radius">Procedi al pagamento</a>
             </div>
         </div>
