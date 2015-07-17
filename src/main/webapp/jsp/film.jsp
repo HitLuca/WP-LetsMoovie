@@ -82,7 +82,7 @@
 
                         <div id="trailerContainer" class="text-center row">
                             <div class="video-container">
-                                <iframe data-bind="trailer" width="420" height="315"
+                                <iframe data-bind="trailer"
                                         src="">
                                 </iframe>
                             </div>
