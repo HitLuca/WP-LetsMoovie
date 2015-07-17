@@ -1,8 +1,10 @@
 package database.datatypes.film;
 
 /**
- * Created by hitluca on 06/07/15.
+ * Created by HitLuca on 06/07/15.
+ *
  */
+
 public class Actor {
     private int id_film;
     private String actor_name;

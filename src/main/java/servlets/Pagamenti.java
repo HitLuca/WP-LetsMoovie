@@ -64,7 +64,6 @@ public class Pagamenti extends HttpServlet {
         OperationResult getUserStatus = null;
 
         try {
-
             //Check se l'utente NON è loggato (da sloggato non vedi dati di nessuno
             HttpSession session = request.getSession();
 
@@ -80,6 +79,8 @@ public class Pagamenti extends HttpServlet {
 
             //Se sei un utente normale puoi vedere solo i tuoi dati
             List<DetailedPayment> payments = userMapper.getUserPayments(usernameSearched);
+
+            //SOLUZIONE BRUTTA PER Map<Data, List<Pagamenti>>, vedi src.main.java.database.testClasses.Servlet.java, riga
 
             //Se sei un admin e stai cercando un utente che non esiste te lo dico
             if (payments == null && (int) session.getAttribute("role") != Role.USER.getValue()) {

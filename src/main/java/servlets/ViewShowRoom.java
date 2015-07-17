@@ -76,7 +76,7 @@ public class ViewShowRoom extends HttpServlet {
                 showSeats.addSeat(showSeat);
             }
 
-            List<Seat> showReservedSeat = seatMapper.getSeatReservations(showId);
+            List<Seat> showReservedSeat = seatMapper.getShowReservedSeats(showId);
             for (Seat s : showReservedSeat) {
                 ShowSeat showSeat = new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.RESERVED);
                 showSeats.addSeat(showSeat);
