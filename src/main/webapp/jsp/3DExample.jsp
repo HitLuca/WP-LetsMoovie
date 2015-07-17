@@ -1,121 +1,52 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<head>
-    <title>My first Three.js app</title>
-    <style>
-        body { margin: 0; }
-        canvas { width: 100%; height: 100% }
-    </style>
-</head>
-<div id="test" style="height: 600px; width: 800px;"></div>
+<c:url var="url" value="/jsp/head.jsp">
+    <c:param name="title" value="Let's Moovie"/>
+</c:url>
+<c:import url="${url}"/>
+<body>
+<div class="wrapper">
+    <c:import url="header.jsp"/>
+
+    <div class="content">
+        <div id="test" style="height: 80%; width: 100%;"></div>
+    </div>
+    <div class="push"></div>
+
+</div>
+<input type="button" onclick="resetCamera()" value="top View">
+<c:import url="footer.jsp"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
 <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
 <script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
+<script src="/javascript/3DCinemaView.js"></script>
 <script>
 
 
-
-
-    var container, stats;
-
-    var camera, controls, scene, renderer;
-
-    init();
-    render();
-
-    function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
+    function select(x, y) {
+        console.log("added x:" + x, "y:" + y)
     }
 
-    function init() {
-
-        camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 10000 );
-        camera.position.z = 300;
-
-        controls = new THREE.OrbitControls( camera );
-        controls.damping = 0.2;
-        controls.addEventListener( 'change', render );
-
-        scene = new THREE.Scene();
-
-
-        // world
-
-        var geometry = new THREE.CylinderGeometry( 0, 10, 30, 4, 1 );
-        var material =  new THREE.MeshLambertMaterial( { color:0xffffff, shading: THREE.flatShading } );
-
-
-
-       /* var mesh = new THREE.Mesh( geometry, material );
-        mesh.position.x = 0;
-        mesh.position.y = 0;
-        mesh.position.z = 0;
-        mesh.updateMatrix();
-        mesh.matrixAutoUpdate = false;
-        scene.add( mesh );*/
-
-
-
-        // lights
-
-        light = new THREE.DirectionalLight( 0x777766 );
-        light.position.set( 1, 2, 1 );
-        scene.add( light );
-
-        light = new THREE.DirectionalLight( 0x666666 );
-        light.position.set( -1, -1, -1 );
-        scene.add( light );
-
-        light = new THREE.AmbientLight( 0x222222 );
-        scene.add( light );
-
-        var manager = new THREE.LoadingManager();
-        var loader = new THREE.OBJLoader( manager );
-        loader.load( '/obj/TotalArmchair.obj', function ( object ) {
-           object.position.y =  40;
-            //object.rotateByAxis(1,90);
-            //object.scale(10);
-            scene.add( object );
-
-        });
-
-        // renderer
-
-
-        renderer = new THREE.WebGLRenderer( { antialias: true } );
-        renderer.setClearColor(0xffffff,1);
-        renderer.setPixelRatio( 3/2.0 );
-        renderer.setSize( window.innerWidth/2.0, window.innerHeight/1.5 );
-
-        container = document.getElementById( 'test' );
-        container.appendChild( renderer.domElement );
-
-        //
-
-        window.addEventListener( 'resize', onWindowResize, false );
-
-        animate();
-
+    function deSelect(x, y) {
+        console.log("removed x:" + x, "y:" + y)
     }
 
-    function onWindowResize() {
-
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-
-        renderer.setSize( window.innerWidth, window.innerHeight );
-
-        render();
-
+    var sl = [];
+    for (var h = 0; h < 16; h++) {
+        for (var g = 0; g < 16; g++) {
+            if (Math.random() < 0.9) {
+                sl.push({
+                    column: h,
+                    row: g,
+                    status: Math.random() > 0.5 ? 1 : Math.random() > 0.9 ? 2 : 0
+                });
+            }
+        }
     }
 
-    function render() {
+    Cinema3DView.init(document.getElementById('test'), select, deSelect, sl, 17, 17);
 
-        renderer.render( scene, camera );
-
-    }
-
-   // render();
 </script>
 </body>
+
 </html>
