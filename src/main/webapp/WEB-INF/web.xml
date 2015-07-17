@@ -133,7 +133,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>choiceSeats</servlet-name>
-        <url-pattern>/choiceSeats/*</url-pattern>
+        <url-pattern>/seats/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>payment</servlet-name>

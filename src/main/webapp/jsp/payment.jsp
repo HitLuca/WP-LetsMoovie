@@ -11,7 +11,9 @@
 <body>
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
-    <%--Content goes here--%>
+    <div id="content" class="row">
+
+    </div>
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
