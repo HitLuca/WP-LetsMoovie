@@ -37,12 +37,13 @@ var Cinema3DView = {
         requestAnimationFrame(Cinema3DView.render);
         Cinema3DView.renderer.render(Cinema3DView.scene, Cinema3DView.camera);
     },
-    init: function (cont, add, remove, seatsList, sx, sy) {
-        addFunction = add;
-        removeFunction = remove;
-        Cinema3DView.container = cont;
-        Cinema3DView.sizeX = sx;
-        Cinema3DView.sizeY = sy;
+    init: function (CanvasContainer, addFunction, removeFunction, seatsList, numberColumns, numberRows) {
+        addFunction = addFunction;
+        removeFunction = removeFunction;
+
+        Cinema3DView.container = CanvasContainer;
+        Cinema3DView.sizeX = numberColumns;
+        Cinema3DView.sizeY = numberRows;
         $(Cinema3DView.container).on('touchmove', Cinema3DView.onTouchMove);
         Cinema3DView.container.addEventListener('mousedown', Cinema3DView.onMouseDown, false);
         Cinema3DView.container.addEventListener('mouseup', Cinema3DView.onMouseUp, false);
@@ -50,12 +51,15 @@ var Cinema3DView = {
         Cinema3DView.container.addEventListener('touchstart', Cinema3DView.onTouchStart, false);
         $(Cinema3DView.container).bind('touchend', Cinema3DView.onTouchEnd);
 
-        Cinema3DView.renderer = new THREE.WebGLRenderer({antialias: false});
+        Cinema3DView.renderer = new THREE.WebGLRenderer({canvas: CanvasContainer, antialias: false});
         Cinema3DView.renderer.setClearColor(0x000000, 1);
         Cinema3DView.renderer.setPixelRatio(3 / 2.0);
-        Cinema3DView.renderer.setSize($(cont).width(), $(cont).height());
 
-        Cinema3DView.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 3000);
+        Cinema3DView.container.width = Cinema3DView.container.clientWidth;
+        Cinema3DView.container.height = Cinema3DView.container.clientHeight;
+        Cinema3DView.renderer.setViewport(0, 0, Cinema3DView.container.clientWidth, Cinema3DView.container.clientHeight);
+
+        Cinema3DView.camera = new THREE.PerspectiveCamera(60, Cinema3DView.container.clientWidth / Cinema3DView.container.clientHeight, 1, 3000);
         Cinema3DView.camera.position.z = 200;
         Cinema3DView.camera.position.y = 300;
         Cinema3DView.camera.position.x = 300;
@@ -148,11 +152,7 @@ var Cinema3DView = {
 
         // Cinema3DView.renderer
 
-
-        Cinema3DView.container.appendChild(Cinema3DView.renderer.domElement);
-
-
-        window.addEventListener('resize', Cinema3DView.onWindowResize, false);
+        Cinema3DView.container.addEventListener('resize', Cinema3DView.onWindowResize, false);
 
         Cinema3DView.animate();
         Cinema3DView.render();
@@ -323,13 +323,13 @@ var Cinema3DView = {
         Cinema3DView.scene.add(singleChair);
     },
     onWindowResize: function () {
-        Cinema3DView.camera.aspect = $(Cinema3DView.container).width() / $(Cinema3DView.container).height();
+        Cinema3DView.container.width = Cinema3DView.container.clientWidth;
+        Cinema3DView.container.height = Cinema3DView.container.clientHeight;
+
+
+        Cinema3DView.renderer.setViewport(0, 0, Cinema3DView.container.clientWidth, Cinema3DView.container.clientHeight);
+        Cinema3DView.camera.aspect = Cinema3DView.container.clientWidth / Cinema3DView.container.clientHeight;
         Cinema3DView.camera.updateProjectionMatrix();
-
-
-        Cinema3DView.renderer.setSize($(Cinema3DView.container).width(), $(Cinema3DView.container).height());
-
-        Cinema3DView.render();
     },
     onTouchStart: function (event) {
         event.preventDefault();
