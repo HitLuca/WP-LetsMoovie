@@ -172,7 +172,7 @@ public interface UserMapper {
     /**
      *
      * @param top percentuale da usare per filtrare i risultati
-     * @return lista dei (top)% utenti e totali che hanno pagato di più
+     * @return lista dei (top)% utenti e totali che hanno pagato di piu'
      */
     @Select("SELECT username, SUM(price) as paid " +
             "FROM payments NATURAL JOIN prices " +

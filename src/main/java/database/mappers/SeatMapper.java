@@ -180,7 +180,7 @@ public interface SeatMapper {
      *
      * @param room_number numero della stanza
      * @param top percentuale da usare per filtrare i risultati
-     * @return lista dei (top)% posti più prenotati
+     * @return lista dei (top)% posti piu' prenotati
      */
     @Select("SELECT sr.id_seat, COUNT(*) " +
             "FROM seat_reservations sr JOIN seats s ON sr.id_seat=s.id_seat " +
