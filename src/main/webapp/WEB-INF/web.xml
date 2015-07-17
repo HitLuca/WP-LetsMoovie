@@ -72,6 +72,14 @@
         <servlet-name>film</servlet-name>
         <jsp-file>/jsp/film.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>choiceSeats</servlet-name>
+        <jsp-file>/jsp/choiceSeats.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>payment</servlet-name>
+        <jsp-file>/jsp/payment.jsp</jsp-file>
+    </servlet>
 
 
     <!-- MAPPING JPS-->
@@ -123,5 +131,12 @@
         <servlet-name>film</servlet-name>
         <url-pattern>/film/*</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>choiceSeats</servlet-name>
+        <url-pattern>/choiceSeats/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>payment</servlet-name>
+        <url-pattern>/payment/*</url-pattern>
+    </servlet-mapping>
 </web-app>
