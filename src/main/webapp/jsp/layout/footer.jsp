@@ -18,7 +18,7 @@
                         libero di contattarci con una email oppure una telefonata.<br><br>
                         Tutte le informazioni utili puoi trovarle su
                         <a href="/info">questa</a>
-                        pagina."
+                        pagina.
                     </p>
                 </div>
             </div>
