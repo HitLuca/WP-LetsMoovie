@@ -23,27 +23,28 @@
 <script>
 
 
-    function select(x,y)
-    {
-        console.log("added x:"+x,"y:"+y)
+    function select(x, y) {
+        console.log("added x:" + x, "y:" + y)
     }
 
-    function deSelect(x,y)
-    {
-        console.log("removed x:"+x,"y:"+y)
+    function deSelect(x, y) {
+        console.log("removed x:" + x, "y:" + y)
     }
 
     var sl = [];
-    for(var h=0; h< 16;h++) {
-        for (var g = 0; g < 16; g++){
-            if(Math.random()<0.9) {
-                sl.push({x: h, y: g, status: Math.random()>0.5?1:Math.random()>0.9?2:0});
+    for (var h = 0; h < 16; h++) {
+        for (var g = 0; g < 16; g++) {
+            if (Math.random() < 0.9) {
+                sl.push({
+                    column: h,
+                    row: g,
+                    status: Math.random() > 0.5 ? 1 : Math.random() > 0.9 ? 2 : 0
+                });
             }
         }
     }
 
-    init(document.getElementById( 'test' ),select,deSelect,sl,17,17);
-    render();
+    Cinema3DView.init(document.getElementById('test'), select, deSelect, sl, 17, 17);
 
 </script>
 </body>
