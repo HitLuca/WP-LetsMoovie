@@ -37,9 +37,7 @@ var Cinema3DView = {
         requestAnimationFrame(Cinema3DView.render);
         Cinema3DView.renderer.render(Cinema3DView.scene, Cinema3DView.camera);
     },
-    init: function (cont, add, remove, seatsList, sx, sy) {
-        addFunction = add;
-        removeFunction = remove;
+    init: function (cont, seatsList, sx, sy) {
         Cinema3DView.container = cont;
         Cinema3DView.sizeX = sx;
         Cinema3DView.sizeY = sy;
@@ -52,10 +50,10 @@ var Cinema3DView = {
 
         Cinema3DView.renderer = new THREE.WebGLRenderer({antialias: false});
         Cinema3DView.renderer.setClearColor(0x000000, 1);
-        Cinema3DView.renderer.setPixelRatio(3 / 2.0);
+        Cinema3DView.renderer.setPixelRatio($(Cinema3DView.container).width() / $(Cinema3DView.container).height());
         Cinema3DView.renderer.setSize($(cont).width(), $(cont).height());
 
-        Cinema3DView.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 3000);
+        Cinema3DView.camera = new THREE.PerspectiveCamera(60,$(Cinema3DView.container).width() / $(Cinema3DView.container).height(), 1, 3000);
         Cinema3DView.camera.position.z = 200;
         Cinema3DView.camera.position.y = 300;
         Cinema3DView.camera.position.x = 300;
@@ -324,12 +322,11 @@ var Cinema3DView = {
     },
     onWindowResize: function () {
         Cinema3DView.camera.aspect = $(Cinema3DView.container).width() / $(Cinema3DView.container).height();
-        Cinema3DView.camera.updateProjectionMatrix();
-
-
         Cinema3DView.renderer.setSize($(Cinema3DView.container).width(), $(Cinema3DView.container).height());
 
-        Cinema3DView.render();
+        Cinema3DView.camera.updateProjectionMatrix();
+
+        //Cinema3DView.render();
     },
     onTouchStart: function (event) {
         event.preventDefault();
@@ -437,7 +434,7 @@ var Cinema3DView = {
                 Cinema3DView.lastLight.position.z = clicked.parent.position.z;
                 Cinema3DView.lastLight.intensity = 0.1;
                 Cinema3DView.seatMap[clicked.parent.uuid].status = 1;
-                addFunction(Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y);
+                $(Cinema3DView.container).trigger("onSeatAdd",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
                 clicked.children.forEach(function (obj) {
                     obj.material = Materials.selectedChair;
                 });
@@ -445,7 +442,7 @@ var Cinema3DView = {
             else {
                 Cinema3DView.seatMap[clicked.parent.uuid].status = 0;
                 Cinema3DView.lastLight.intensity = 0;
-                removeFunction(Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y);
+                $(Cinema3DView.container).trigger("onRemoveAdd",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
                 clicked.children.forEach(function (obj) {
                     obj.material = Materials.freeChair;
                 });
@@ -491,12 +488,6 @@ var Cinema3DView = {
         }
     }
 
-};
-
-//TODO: USARE EVENTI INVECE DI FUNZIONI
-var addFunction = function () {
-};
-var removeFunction = function () {
 };
 
 
