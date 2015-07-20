@@ -21,20 +21,18 @@
             </dl>
         </div>
 
-        <div class="row">
-            <div class="row collapse" data-magellan-destination="sceltaPosti">
-                <a name="sceltaPosti"></a>
+        <div class="row collapse" data-magellan-destination="sceltaPosti">
+            <a name="sceltaPosti"></a>
 
-                <div class="medium-6 columns text-center">
-                    Blocca visuale
-                    <div class="switch">
-                        <input id="exampleCheckboxSwitch" type="checkbox">
-                        <label for="exampleCheckboxSwitch"></label>
-                    </div>
+            <div class="small-6 columns text-center">
+                Blocca visuale
+                <div class="switch">
+                    <input id="exampleCheckboxSwitch" type="checkbox">
+                    <label for="exampleCheckboxSwitch"></label>
                 </div>
-                <div class="medium-6 columns text-center">
-                    <a href="" class="button radius">Resetta visuale</a>
-                </div>
+            </div>
+            <div class="small-6 columns text-center">
+                <a href="" class="button radius">Resetta visuale</a>
             </div>
         </div>
 
@@ -48,13 +46,13 @@
             </div>
         </div>
 
-        <form action="/api/pagamenti/" method="post">
+        <form id="biglietti" action="/api/pagamenti/" method="post">
             <div id="centralContent" class="row collapse">
                 <h5>Seleziona per ciascun posto la tipologia del biglietto:</h5>
 
                 <div class="small-12 columns" data-magellan-destination="riepilogo">
                     <a name="riepilogo"></a>
-                    <c:import url="/jsp/template/postoItemList.jsp"></c:import>
+                    <c:import url="/jsp/template/postoItemList.jsp"/>
                 </div>
             </div>
             <div class="row collapse">
