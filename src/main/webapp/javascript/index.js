@@ -31,7 +31,7 @@ var Films = {
                         show_time: {
                             text: function (params) {
                                 var time = moment(this.show_time, "HH:mm:ss");
-                                return time.format("LT");
+                                return time.format("LT") + " - Sala " + this.room_number;
                             },
                             href: function (params) {
                                 return Films.seatUrl + this.id_show;

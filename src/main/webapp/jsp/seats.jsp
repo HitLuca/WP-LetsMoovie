@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="small-6 columns text-center">
-                <a href="" class="button radius">Resetta visuale</a>
+                <a href="#" class="button radius" id="resettaVisuale">Resetta visuale</a>
             </div>
         </div>
 
@@ -50,7 +50,7 @@
             <div id="centralContent" class="row collapse">
                 <h5>Seleziona per ciascun posto la tipologia del biglietto:</h5>
 
-                <div class="small-12 columns" data-magellan-destination="riepilogo">
+                <div class="small-12 columns" data-magellan-destination="riepilogo" id="riepilogoBiglietti">
                     <a name="riepilogo"></a>
                     <c:import url="/jsp/template/postoItemList.jsp"/>
                 </div>
@@ -60,7 +60,7 @@
                     <h4>Totale:<span id="total"></span></h4>
                 </div>
                 <div class="small-6 columns text-center">
-                    <a href="/payment/" class="button radius">Procedi al pagamento</a>
+                    <button class="radius">Procedi al pagamento</button>
                 </div>
             </div>
         </form>
