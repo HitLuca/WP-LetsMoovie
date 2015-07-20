@@ -1,21 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<c:url var="url" value="/jsp/head.jsp">
+<c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Let's Moovie"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
 <div class="wrapper">
-    <c:import url="header.jsp"/>
+    <c:import url="/jsp/layout/header.jsp"/>
 
     <div class="content">
-        <div id="test" style="height: 80%; width: 100%;"></div>
+        <div id="test" style="height:70% ; width:90%"></div>
     </div>
     <div class="push"></div>
 
 </div>
-<input type="button" onclick="resetCamera()" value="top View">
-<c:import url="footer.jsp"/>
+<c:import url="/jsp/layout/footer.jsp"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
 <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
 <script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
@@ -44,7 +43,15 @@
         }
     }
 
-    Cinema3DView.init(document.getElementById('test'), select, deSelect, sl, 17, 17);
+    $("#test").on("onSeatAdd",function(e,x,y){
+        alert("hai aggiunto il posto in fila "+y+" e colonna "+x);
+    })
+
+    $("#test").on("onRemoveAdd",function(e,x,y){
+        alert("hai rimosso il posto in fila "+y+" e colonna "+x);
+    })
+
+    Cinema3DView.init(document.getElementById('test'), sl, 17, 17);
 
 </script>
 </body>
