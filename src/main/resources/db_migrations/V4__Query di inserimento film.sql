@@ -1204,7 +1204,7 @@ INSERT INTO films (film_title, poster, duration, trailer, metascore, rating, yea
             Protess. The class seemingly found the real killer, Alstory Simon. Porter was released, becoming the poster
             boy of the anti-death penalty movement. Because of his case, Illinois eventually abolished the death
             penalty. The filmmakers present strong evidence that Northwestern''s investigation led to the release of the
-            real killer, and imprisoned an innocent man. In October 2013, due in part to this film''s investigation, the
+            real killer, and imprisoned an innocent man. In October 2013, due in part to this filmAndShows''s investigation, the
             Cook County State''s Attorney''s office reopened this case.
         ','Christopher S. Rech');
 INSERT INTO actors (actor_name, url_photo)  VALUES ('Dexter Hammett','');

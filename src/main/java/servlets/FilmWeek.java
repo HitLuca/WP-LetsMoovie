@@ -8,7 +8,7 @@ import database.datatypes.show.ShowIdTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.film.Film;
+import json.film.FilmAndShows;
 import json.film.FilmList;
 import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @api {get} /api/filmWeek
  * @apiName FilmWeek
- * @apiGroup Film
+ * @apiGroup FilmAndShows
  *
  * @apiSuccess {String} filmList Lista dei film proiettati in quella settimana. Contenente tutti i dati del film e la lista
  *                          degli spettacoli relativi a quel film in quella settimana con data, orario e codice spettacolo.
@@ -70,8 +70,9 @@ public class FilmWeek extends HttpServlet {
             today = today.plusDays(1);
         }
 
-        for (Film f : filmList.getFilmList()) {
+        for (FilmAndShows f : filmList.getFilmAndShowsList()) {
             FilmData filmData = filmMapper.getFilmData(f.getId_film());
+
             f.setData(filmData);
         }
 

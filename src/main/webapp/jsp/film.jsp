@@ -8,7 +8,7 @@
 </c:url>
 <c:import url="${url}"/>
 <body>
-<link rel="stylesheet" href="/css/film.css">
+<link rel="stylesheet" href="/css/filmAndShows.css">
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">

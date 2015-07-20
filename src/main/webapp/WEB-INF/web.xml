@@ -69,8 +69,8 @@
         <jsp-file>/jsp/confirmRegistration.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>film</servlet-name>
-        <jsp-file>/jsp/film.jsp</jsp-file>
+        <servlet-name>filmAndShows</servlet-name>
+        <jsp-file>/jsp/filmAndShows.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>choiceSeats</servlet-name>
@@ -128,8 +128,8 @@
         <url-pattern>/confirmRegistration/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>film</servlet-name>
-        <url-pattern>/film/*</url-pattern>
+        <servlet-name>filmAndShows</servlet-name>
+        <url-pattern>/filmAndShows/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>choiceSeats</servlet-name>

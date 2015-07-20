@@ -747,6 +747,60 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/api/viewShowRoom/*",
+    "title": "",
+    "name": "ViewShowRoom",
+    "group": "ViewShowRoom",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "show",
+            "description": "<p>id_code.</p> "
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "0": [
+          {
+            "group": "0",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet</p> "
+          }
+        ],
+        "2": [
+          {
+            "group": "2",
+            "type": "<p>String[]</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>EMPTY_WRONG_FIELD: parameters parametri di input che non passano la validazione</p> "
+          }
+        ],
+        "10": [
+          {
+            "group": "10",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>NOT_LOGGED_IN: L'utente è già loggato e fino all'implementazione del cambio password non può fare niente</p> "
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/servlets/ViewShowRoom.java",
+    "groupTitle": "ViewShowRoom"
+  },
+  {
+    "type": "get",
     "url": "/api/pagamenti/*",
     "title": "",
     "name": "pagamenti",

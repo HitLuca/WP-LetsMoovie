@@ -2,7 +2,7 @@ package json.film.response;
 
 import com.google.gson.annotations.Expose;
 import json.OperationResult;
-import json.film.Film;
+import json.film.FilmAndShows;
 import json.film.FilmList;
 
 import java.util.ArrayList;
@@ -14,21 +14,21 @@ import java.util.List;
 public class FilmListSuccess implements OperationResult {
 
     @Expose
-    List<Film> filmList;
+    List<FilmAndShows> filmAndShowsList;
 
-    public FilmListSuccess(List<Film> filmList) {
-        this.filmList = filmList;
+    public FilmListSuccess(List<FilmAndShows> filmAndShowsList) {
+        this.filmAndShowsList = filmAndShowsList;
     }
 
     public FilmListSuccess(FilmList filmList) {
-        this.filmList = filmList.getFilmList();
+        this.filmAndShowsList = filmList.getFilmAndShowsList();
     }
 
     public FilmListSuccess() {
-        filmList = new ArrayList<Film>();
+        filmAndShowsList = new ArrayList<FilmAndShows>();
     }
 
-    public void addFilm(Film film) {
-        filmList.add(film);
+    public void addFilm(FilmAndShows filmAndShows) {
+        filmAndShowsList.add(filmAndShows);
     }
 }
