@@ -3,8 +3,6 @@ var map = {
         var container = $("#roomMap")[0];
         Cinema3DView.init(
             container,
-            null,
-            null,
             data.showSeatList,
             data.column,
             data.row
@@ -48,7 +46,7 @@ var seats = {
     error: function (data) {
         var JSON = data.responseJSON;
         switch (JSON.errorCode) {
-            case 2:
+            case 10:
             {
                 Notifications.saveNotification("warning", "Devi aver effettuato l'accesso per visualizzare la sala!");
                 Session.redirectToLogin();
