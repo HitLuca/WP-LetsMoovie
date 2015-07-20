@@ -16,7 +16,7 @@ var Film = {
         } else return null;
     },
     renderFilm: function (data) {
-        var film = data.filmData;
+        var film = data.filmAndShowsData;
         var template = $("#content");
         var directives = {
             //TODO: mancano le proiezioni
