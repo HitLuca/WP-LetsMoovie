@@ -9,15 +9,15 @@ import types.enums.SeatStatus;
 public class ShowSeat {
 
     @Expose
-    private int seat_row;
+    private int row;
     @Expose
-    private int seat_column;
+    private int column;
     @Expose
     private SeatStatus status;
 
-    public ShowSeat(int seat_row, int seat_column, SeatStatus status) {
-        this.seat_row = seat_row;
-        this.seat_column = seat_column;
+    public ShowSeat(int row, int column, SeatStatus status) {
+        this.row = row;
+        this.column = column;
         this.status = status;
     }
 }

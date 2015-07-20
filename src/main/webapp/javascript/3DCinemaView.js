@@ -23,9 +23,9 @@ var Cinema3DView = {
     distanceX: 35.0,
     distanceY: 45.0,
     offsetZ: -20,
-    busyStatus: 0,
-    freeStatus: 1,
-    brokenStatus: 2,
+    reservedStatus: "RESERVED",
+    freeStatus: "FREE",
+    brokenStatus: "BROKEN",
     leftClick: false,
     seatMap: {},
 
@@ -304,7 +304,7 @@ var Cinema3DView = {
                 }
             });
         }
-        else if (seatPos.status == Cinema3DView.busyStatus) {
+        else if (seatPos.status == Cinema3DView.reservedStatus) {
             singleChair = Cinema3DView.busySeatMesh.clone();
             singleChair.position.set(position.x, position.y, position.z);
             singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
@@ -349,7 +349,7 @@ var Cinema3DView = {
     },
     onTouchEnd: function (event) {
         event.preventDefault();
-        console.log(event);
+        //console.log(event);
 
         if (Cinema3DView.touchStatus == 1) {
 
@@ -370,8 +370,8 @@ var Cinema3DView = {
 
     },
     onMouseDown: function (event) {
-        console.log(Cinema3DView.camera.position);
-        console.log(Cinema3DView.camera.rotation);
+        //console.log(Cinema3DView.camera.position);
+        //console.log(Cinema3DView.camera.rotation);
         event.preventDefault();
         if (Cinema3DView.leftClick == false) {
             if (event.button == 0) {
@@ -396,7 +396,7 @@ var Cinema3DView = {
         }
         else if (!Cinema3DView.leftClick) {
             var intersects = Cinema3DView.raycaster.intersectObjects(Cinema3DView.seats);
-            console.log(intersects);
+            //console.log(intersects);
             if (intersects.length > 0) {
                 Cinema3DView.hoverChair(intersects[0].object.parent);
             }
@@ -427,7 +427,7 @@ var Cinema3DView = {
     selectChair: function (clicked) {
 
         if (clicked.name == "chair") {
-            console.log(Cinema3DView.seatMap[clicked.parent.uuid]);
+            //console.log(Cinema3DView.seatMap[clicked.parent.uuid]);
             if (Cinema3DView.seatMap[clicked.parent.uuid].status == 0) {
                 Cinema3DView.lastLight.position.x = clicked.parent.position.x;
                 Cinema3DView.lastLight.position.y = clicked.parent.position.y;
