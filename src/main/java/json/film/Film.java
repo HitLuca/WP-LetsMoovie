@@ -4,44 +4,38 @@ import com.google.gson.annotations.Expose;
 import database.datatypes.film.FilmData;
 import database.datatypes.show.ShowIdTime;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Oggetto da sparare fuori al frontEnd come Lista di Film (con i dati del film) e un array di
- * Shows che contengono la data degli spettacoli e le ore.
- * <p/>
- * Created by etrunon on 13/07/15.
+ * Created by etrunon on 17/07/15.
  */
 public class Film {
 
     @Expose
-    private int id_film;
+    protected int id_film;
     @Expose
-    private String film_title;
+    protected String film_title;
     @Expose
-    private String poster;
+    protected String poster;
     @Expose
-    private int duration;
+    protected int duration;
     @Expose
-    private String trailer;
+    protected String trailer;
     @Expose
-    private int metascore;
+    protected int metascore;
     @Expose
-    private float rating;
+    protected float rating;
     @Expose
-    private int year;
+    protected int year;
     @Expose
-    private String plot;
+    protected String plot;
     @Expose
-    private String director;
+    protected String director;
     @Expose
-    private int vm;
-    @Expose
-    private List<Shows> shows;
+    protected int vm;
+
 
     public void setData(FilmData filmData) {
-
         this.id_film = filmData.getId_film();
         this.film_title = filmData.getFilm_title();
         this.poster = filmData.getPoster();
@@ -55,29 +49,17 @@ public class Film {
         this.vm = filmData.getVm();
     }
 
-    public Film(FilmData filmData, List<ShowIdTime> hours) {
-
-        setData(filmData);
-        shows = new ArrayList<Shows>();
-    }
-
     public Film(FilmData filmData) {
-
         setData(filmData);
     }
 
-
-    public Film(String date, int id_film, List<ShowIdTime> shows) {
+    public Film(int id_film) {
 
         this.id_film = id_film;
-        this.shows = new ArrayList<Shows>();
-        addHours(date.toString(), shows);
     }
 
-    public void addHours(String date, List<ShowIdTime> hours) {
+    public Film() {
 
-        Shows shows1 = new Shows(date, hours);
-        shows.add(shows1);
     }
 
     public void setId_film(int id_film) {
@@ -88,17 +70,5 @@ public class Film {
         return id_film;
     }
 
-}
 
-class Shows {
-
-    @Expose
-    private String date;
-    @Expose
-    private List<ShowIdTime> orari;
-
-    public Shows(String date, List<ShowIdTime> orari) {
-        this.date = date;
-        this.orari = orari;
-    }
 }

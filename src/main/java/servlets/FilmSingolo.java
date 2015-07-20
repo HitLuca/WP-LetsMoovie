@@ -30,10 +30,10 @@ import java.io.IOException;
 /**
  * @api {get} /api/film/*
  * @apiName FilmSingolo
- * @apiGroup Film
+ * @apiGroup FilmAndShows
  *
  * @apiParam {Int} Numero intero codice del film da restituire
- * @apiSuccess {Film}   Oggetto contenente tutti i dati del film degli spettacoli relativi a quel film in quella giornata
+ * @apiSuccess {FilmAndShows}   Oggetto contenente tutti i dati del film degli spettacoli relativi a quel film in quella giornata
  *                      con data, orario e codice spettacolo.
  *
  * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
