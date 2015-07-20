@@ -15,7 +15,6 @@
             <option selected value="intero">Intero</option>
             <option value="intero3d">Intero 3D</option>
         </select>
-
         <p>Prezzo:<span id="price"></span></p>
     </div>
 </div>

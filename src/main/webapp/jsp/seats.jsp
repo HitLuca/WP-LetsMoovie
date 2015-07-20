@@ -42,27 +42,29 @@
             <a name="sceltaPosti"></a>
 
             <div class="small-12 columns text-center">
-                <canvas id="roomMap">
+                <div id="roomMap">
 
-                </canvas>
+                </div>
             </div>
         </div>
-        <div class="row collapse">
-            <h5>Seleziona per ciascun posto la tipologia del biglietto:</h5>
+        <form action="/api/pagamenti/" method="post">
+            <div class="row collapse">
+                <h5>Seleziona per ciascun posto la tipologia del biglietto:</h5>
 
-            <div class="small-12 columns" data-magellan-destination="riepilogo">
-                <a name="riepilogo"></a>
-                <c:import url="/jsp/template/postoItemList.jsp"></c:import>
+                <div class="small-12 columns" data-magellan-destination="riepilogo">
+                    <a name="riepilogo"></a>
+                    <c:import url="/jsp/template/postoItemList.jsp"></c:import>
+                </div>
             </div>
-        </div>
-        <div class="row collapse">
-            <div class="small-6 columns text-center">
-                <h4>Totale:<span id="total"></span></h4>
+            <div class="row collapse">
+                <div class="small-6 columns text-center">
+                    <h4>Totale:<span id="total"></span></h4>
+                </div>
+                <div class="small-6 columns text-center">
+                    <a href="/payment/" class="button radius">Procedi al pagamento</a>
+                </div>
             </div>
-            <div class="small-6 columns text-center">
-                <a href="/payment/" class="button radius">Procedi al pagamento</a>
-            </div>
-        </div>
+        </form>
 
     </div>
     <div class="push"></div>
@@ -73,5 +75,6 @@
 <script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
 <script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
 <script src="<c:url value="/javascript/seats.js"/>"></script>
+
 </body>
 </html>
