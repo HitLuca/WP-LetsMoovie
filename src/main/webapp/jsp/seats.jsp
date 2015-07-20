@@ -47,8 +47,9 @@
                 </div>
             </div>
         </div>
+
         <form action="/api/pagamenti/" method="post">
-            <div class="row collapse">
+            <div id="centralContent" class="row collapse">
                 <h5>Seleziona per ciascun posto la tipologia del biglietto:</h5>
 
                 <div class="small-12 columns" data-magellan-destination="riepilogo">

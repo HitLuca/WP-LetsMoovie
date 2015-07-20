@@ -1,5 +1,8 @@
 #roomMap {
     width: 90%;
     height: 70%;
+}
 
+#centralContent {
+    margin-bottom: 2rem;
 }

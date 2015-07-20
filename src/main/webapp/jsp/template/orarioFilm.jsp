@@ -8,7 +8,7 @@
 
         <div data-bind="orari" aria-hidden="true">
             <div class="row">
-                <div class="small-11 small-centered large-6 medium-10 columns">
+                <div class="small-centered large-6 medium-12 columns">
                     <a href="#" class="small radius button expand" data-bind="show_time"></a>
                 </div>
             </div>
