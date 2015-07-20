@@ -82,6 +82,7 @@ public class FilmDay extends HttpServlet {
                 hours.forEach(database.datatypes.show.ShowIdTime::convertTime);
 
                 //Creo l'oggetto FilmAndShows e lo riempio
+                //TODO, errore? hours nel costruttore non serve
                 FilmAndShows filmAndShows = new FilmAndShows(filmData, hours);
                 filmAndShows.addHours(date.format(dateFormat), hours);
                 //Aggiungo il FilmAndShows alla lista

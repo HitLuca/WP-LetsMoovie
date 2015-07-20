@@ -3,7 +3,10 @@ package json.film;
 import com.google.gson.annotations.Expose;
 import database.datatypes.film.FilmData;
 import database.datatypes.show.ShowIdTime;
+import database.mappers.ShowMapper;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +18,7 @@ import java.util.List;
  */
 public class FilmAndShows extends Film {
 
+    private static DateTimeFormatter dayFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Expose
     private List<Shows> shows;
@@ -27,6 +31,7 @@ public class FilmAndShows extends Film {
 
     public FilmAndShows(FilmData filmData) {
         super(filmData);
+        shows = new ArrayList<>();
     }
 
 
@@ -43,6 +48,14 @@ public class FilmAndShows extends Film {
         shows.add(shows1);
     }
 
+    public void queryShowsWeek(LocalDate day, ShowMapper showMapper) {
+        for (int i = 0; i < 7; i++) {
+            List<ShowIdTime> temp = showMapper.getShowTimeAndId(day.format(dayFormat), this.id_film);
+            if (temp.size() != 0)
+                this.addHours(day.format(dayFormat), temp);
+            day = day.plusDays(1);
+        }
+    }
 }
 
 class Shows {

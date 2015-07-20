@@ -30,7 +30,6 @@ public interface ShowMapper {
     List<Show> getProjectingShows(int id_film);
 
     /**
-     *
      * @param id_show id dello show
      * @return dati di id_show
      */
@@ -40,18 +39,16 @@ public interface ShowMapper {
     Show getShowData(int id_show);
 
     /**
-     *
      * @param show_date data di proiezione
-     * @param id_film id del film
+     * @param id_film   id del film
      * @return lista degli orari e id_show di tutti gli show che proiettano id_sfilm in data show_date
      */
-    @Select("SELECT show_time, id_show " +
+    @Select("SELECT show_time, id_show, room_number " +
             "FROM shows " +
             "WHERE shows.show_date=#{show_date}::DATE AND shows.id_film=#{id_film}")
     List<ShowIdTime> getShowTimeAndId(@Param("show_date") String show_date, @Param("id_film") int id_film);
 
     /**
-     *
      * @param show_date data di proiezione
      * @return lista di tutti gli id_film che proiettano in data show_date
      */
@@ -61,7 +58,6 @@ public interface ShowMapper {
     List<Integer> getDayFilms(String show_date);
 
     /**
-     *
      * @param show_date data di proiezione
      * @return lista di tutti gli show che proiettano in data show_date
      */
@@ -72,7 +68,6 @@ public interface ShowMapper {
     List<Show> getDayShows(String show_date);
 
     /**
-     *
      * @param show oggetto Show
      */
     @Insert("INSERT INTO shows (room_number, id_film, show_date, show_time) " +
@@ -80,7 +75,6 @@ public interface ShowMapper {
     void insertShow(Show show);
 
     /**
-     *
      * @param show oggetto Show
      * @return id_show dello show show
      */
@@ -90,7 +84,6 @@ public interface ShowMapper {
     int getShowId(Show show);
 
     /**
-     *
      * @param id_show id dello show
      */
     @Delete("DELETE FROM shows " +
@@ -98,8 +91,7 @@ public interface ShowMapper {
     void deleteShow(int id_show);
 
     /**
-     *
-     * @param id_show id dello show
+     * @param id_show   id dello show
      * @param show_time ora di proiezione
      */
     @Update("UPDATE shows " +
@@ -108,11 +100,12 @@ public interface ShowMapper {
     void updateShowDuration(@Param("id_show") int id_show, @Param("show_time") String show_time);
 
     /**
-     *
      * @param id_show id dello show
      * @return numero della stanza associata a id_show
      */
     //TODO:Test
     @Select("SELECT room_number FROM shows WHERE id_show=#{id_Show}")
     int getRoomNumber(int id_show);
+
 }
+
