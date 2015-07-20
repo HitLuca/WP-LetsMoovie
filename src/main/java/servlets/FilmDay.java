@@ -10,7 +10,7 @@ import database.datatypes.show.ShowIdTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.film.Film;
+import json.film.FilmAndShows;
 import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
 import types.exceptions.BadRequestException;
@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * @api {get} /api/filmDay/*
  * @apiName FilmDay
- * @apiGroup Film
+ * @apiGroup FilmAndShows
  *
  * @apiParam {String} Stringa con la data su cui interrogare (in formato "yyyy-mm-dd")
  * @apiSuccess {String} Lista dei film proiettati in quella giornata. Contenente tutti i dati del film e la lista
@@ -70,22 +70,22 @@ public class FilmDay extends HttpServlet {
             LocalDate date = LocalDate.parse(rs.getParameter());
             List<Integer> idList = showMapper.getDayFilms(date.format(dateFormat));
             //Inizializzo la lista della risposta vuota
-            List<Film> timetable = new ArrayList<>();
+            List<FilmAndShows> timetable = new ArrayList<>();
 
             for (Integer i : idList) {
 
-                //Prendo le info del film con id I proiettato in quella data
+                //Prendo le info del filmAndShows con id I proiettato in quella data
                 FilmData filmData = filmMapper.getFilmData(i);
                 //Prendo i differenti
                 List<ShowIdTime> hours = showMapper.getShowTimeAndId(date.format(dateFormat), i);
 
                 hours.forEach(database.datatypes.show.ShowIdTime::convertTime);
 
-                //Creo l'oggetto Film e lo riempio
-                Film film = new Film(filmData, hours);
-                film.addHours(date.format(dateFormat), hours);
-                //Aggiungo il Film alla lista
-                timetable.add(film);
+                //Creo l'oggetto FilmAndShows e lo riempio
+                FilmAndShows filmAndShows = new FilmAndShows(filmData, hours);
+                filmAndShows.addHours(date.format(dateFormat), hours);
+                //Aggiungo il FilmAndShows alla lista
+                timetable.add(filmAndShows);
             }
 
             //Creo l'oggetto da trascrivere come Json di risposta
