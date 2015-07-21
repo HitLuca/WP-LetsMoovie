@@ -1,6 +1,7 @@
 "use strict";
 
 var Film = {
+    seatUrl: "/seats/",
     getId: function () {
         var link = window.location.pathname;
         var re = /\/film\/(\d+)/;
@@ -19,7 +20,40 @@ var Film = {
         var film = data.filmAndShowsData;
         var template = $("#content");
         var directives = {
-            //TODO: mancano le proiezioni
+            rating: {
+                text: function () {
+                    if (this.rating == -1)
+                        return "Non conosciuto";
+                    else return this.rating;
+                }
+            },
+            metascore: {
+                text: function () {
+                    if (this.metascore == -1)
+                        return "Non conosciuto";
+                    else return this.metascore;
+                }
+            },
+            duration: {
+                text: function (params) {
+                    return this.duration + params.value;
+                }
+            },
+            vm: {
+                text: function () {
+                    switch (this.vm) {
+                        case 0:
+                        {
+                            return "No";
+                        }
+                            break;
+                        case 1:
+                        {
+                            return "Si";
+                        }
+                    }
+                }
+            },
             poster: {
                 src: function (params) {
                     return "/img/poster/" + this.id_film + ".jpg";
@@ -28,6 +62,36 @@ var Film = {
             trailer: {
                 src: function () {
                     return this.trailer;
+                }
+            },
+            shows: {
+                dayLabel: {
+                    html: function (params) {
+                        var date = moment(this.date);
+                        return date.format("ddd D MMM");
+                    },
+                    href: function (params) {
+                        var date = moment(this.date);
+                        return "#panel" + date.format("YYYYMMDD");
+                    }
+                },
+                dayPanel: {
+                    id: function (params) {
+                        var date = moment(this.date);
+                        return "panel" + date.format("YYYYMMDD");
+                    }
+                },
+                orari: {
+                    show_time: {
+                        text: function (params) {
+                            var time = moment(this.show_time, "HH:mm:ss");
+                            return time.format("LT") + " - Sala " + this.room_number;
+                        },
+                        href: function (params) {
+                            return Film.seatUrl + this.id_show;
+                        }
+                    }
+
                 }
             }
         };

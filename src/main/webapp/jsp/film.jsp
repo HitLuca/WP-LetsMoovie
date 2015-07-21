@@ -26,50 +26,32 @@
                 </div>
                 <div class="row">
                     <div class="medium-12 columns">
-                        <strong>Anno: <span data-bind="year"></span></strong>
+                        <strong class="label radius info">Anno</strong><span data-bind="year" class="right"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="medium-12 columns">
-                        <strong>Regista: <span data-bind="director"></span></strong>
+                        <span class="label radius info">Regista</span><span data-bind="director" class="right"></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="medium-12 columns">
-                        <strong>Trama:</strong>
+                    <div class="medium-12 columns text-center">
+                        <div class="label radius info">Trama</div>
 
                         <p align="justify" data-bind="plot">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                            culpa qui officia deserunt mollit anim id est laborum.
                         </p>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="medium-12 columns">
-                        <strong>Orari proiezioni: </strong>
-                        <ul id="proiezioni" class="accordion" data-accordion role="tablist">
+                    <div class="medium-12 columns text-center">
+                        <strong class="label radius info">Orari proiezioni</strong>
+                        <ul id="shows" class="accordion" data-accordion role="tablist">
                             <li class="accordion-navigation">
-                                <a href="#panel1d" role="tab" id="panel1d-heading" aria-controls="panel1d">Lunedì</a>
+                                <a href="#dayPanel" id="dayLabel">Lunedì</a>
 
-                                <div id="panel1d" class="content wow fadeIn" role="tabpanel"
-                                     aria-labelledby="panel1d-heading">
-                                    <ul class="small-block-grid-3 medium-block-grid-4">
-                                        <li><a href="#" class="small radius button expand"
-                                               data-bind="show_time">19:30</a></li>
-                                        <li><a href="#" class="small radius button expand"
-                                               data-bind="show_time">19:30</a></li>
-                                        <li><a href="#" class="small radius button expand"
-                                               data-bind="show_time">19:30</a></li>
-                                        <li><a href="#" class="small radius button expand"
-                                               data-bind="show_time">19:30</a></li>
-                                        <li><a href="#" class="small radius button expand"
-                                               data-bind="show_time">19:30</a></li>
+                                <div id="dayPanel" class="content">
+                                    <ul class="small-block-grid-3 medium-block-grid-4" data-bind="orari">
                                         <li><a href="#" class="small radius button expand"
                                                data-bind="show_time">19:30</a></li>
                                     </ul>
@@ -82,7 +64,7 @@
 
                 <div class="row collapse wow zoomIn">
                     <div class="medium-12 text-center columns">
-                        <strong>Guarda il trailer:</strong>
+                        <strong class="label info radius">Trailer</strong>
 
                         <div id="trailerContainer" class="text-center row">
                             <div class="video-container">
@@ -93,23 +75,23 @@
                     </div>
                 </div>
                 <div class="row wow fadeInUp">
-                    <div class="medium-7 columns">
-                        <strong>Rating:</strong>
-                        <span data-bind="rating"></span>
+                    <div class="medium-6 columns">
+                        <strong class="label info radius left">Rating</strong>
+                        <span class="right" data-bind="rating"></span>
                     </div>
-                    <div class="medium-5 columns">
-                        <strong>Metascore:</strong>
-                        <span data-bind="metascore"></span>
+                    <div class="medium-6 columns">
+                        <strong class="label info radius left">Metascore</strong>
+                        <span class="right" data-bind="metascore"></span>
                     </div>
                 </div>
                 <div class="row wow fadeInUp">
-                    <div class="medium-7 columns">
-                        <strong>Durata:</strong>
-                        <span data-bind="duration"></span> minuti
+                    <div class="medium-6 columns">
+                        <strong class="label info radius left">Durata</strong>
+                        <span class="right" data-bind="duration"> minuti</span>
                     </div>
-                    <div class="medium-5 columns">
-                        <strong>Vietato ai minori:</strong>
-                        <span data-bind="vm"></span>
+                    <div class="medium-6 columns">
+                        <strong class="label info radius left">Vietato ai minori</strong>
+                        <span class="right" data-bind="vm"></span>
                     </div>
                 </div>
             </div>
