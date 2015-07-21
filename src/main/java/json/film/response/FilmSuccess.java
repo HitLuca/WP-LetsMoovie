@@ -13,7 +13,7 @@ public class FilmSuccess implements OperationResult {
     @Expose
     FilmAndShows filmAndShowsData;
 
-    public FilmSuccess(FilmData filmData) {
-        this.filmAndShowsData = new FilmAndShows(filmData);
+    public FilmSuccess(FilmAndShows filmAndShowsData) {
+        this.filmAndShowsData = filmAndShowsData;
     }
 }

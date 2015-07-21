@@ -6,8 +6,11 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
 import database.datatypes.film.FilmData;
+import database.datatypes.show.ShowIdTime;
 import database.mappers.FilmMapper;
+import database.mappers.ShowMapper;
 import json.OperationResult;
+import json.film.FilmAndShows;
 import json.film.response.FilmSuccess;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
@@ -21,6 +24,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * Servlet che se interrogata con sintassi REST restituisce un film singolo
@@ -50,6 +56,7 @@ public class FilmSingolo extends HttpServlet {
         SqlSession sessionSql;
         sessionSql = DatabaseConnection.getFactory().openSession();
         FilmMapper filmMapper = sessionSql.getMapper(FilmMapper.class);
+        ShowMapper showMapper = sessionSql.getMapper(ShowMapper.class);
         response.setContentType("application/json");
 
 
@@ -65,7 +72,14 @@ public class FilmSingolo extends HttpServlet {
                 throw new BadRequestException(ErrorCode.FILM_NOT_FOUND);
             }
 
-            getFilm = new FilmSuccess(fd);
+            FilmAndShows filmShows = new FilmAndShows(fd);
+
+            filmShows.setData(fd);
+            LocalDate today = LocalDate.now();
+
+            filmShows.queryShowsWeek(today, showMapper);
+
+            getFilm = new FilmSuccess(filmShows);
 
         } catch (BadRequestException e) {
             getFilm = e;
