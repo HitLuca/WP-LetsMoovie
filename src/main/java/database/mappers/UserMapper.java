@@ -191,6 +191,6 @@ public interface UserMapper {
      * @param username username dell'utente
      */
     //TODO:Test
-    @Insert("INSERT INTO user_credit_cards (credit_card_number, username) VALUES ()")
+    @Insert("INSERT INTO user_credit_cards (credit_card_number, username) VALUES (#{credit_card_number}, #{username})")
     void insertCreditCard(@Param("credit_card_number") String credit_card_number, @Param("username") String username);
 }

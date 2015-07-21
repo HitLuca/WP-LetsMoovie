@@ -45,15 +45,14 @@ public class DebitCard extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         SqlSession sessionSql;
-        sessionSql = DatabaseConnection.getFactory().openSession();
+        sessionSql = DatabaseConnection.getFactory().openSession(true);
         UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
         response.setContentType("application/json");
-        OperationResult opRes;
+        OperationResult opRes = null;
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         Gson gsonReader = gsonBuilder.create();
-
 
         try {
             //Check se l'utente NON è loggato (da sloggato non inserisci dati nel db)
@@ -69,8 +68,7 @@ public class DebitCard extends HttpServlet {
             if (presentCards.contains(newCardId))
                 throw new BadRequestException(ErrorCode.DUPLICATE_FIELD);
 
-//            userMapper.i
-
+            userMapper.insertCreditCard(newCardId, session.getAttribute("username").toString());
 
         } catch (BadRequestException e) {
             opRes = e;
@@ -80,6 +78,10 @@ public class DebitCard extends HttpServlet {
             opRes = new BadRequestException();
             response.setStatus(400);
         }
+
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.print(gsonWriter.toJson(opRes));
+        sessionSql.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
