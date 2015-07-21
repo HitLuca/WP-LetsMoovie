@@ -104,16 +104,18 @@ var Cinema3DView = {
         requestAnimationFrame(Cinema3DView.render);
         Cinema3DView.renderer.render(Cinema3DView.scene, Cinema3DView.camera);
     },
-    init: function (cont, seatsList, sx, sy) {
+    init: function (cont, seatsList, sx, sy, readOnly) {
         Cinema3DView.container = cont;
         Cinema3DView.sizeX = sx;
         Cinema3DView.sizeY = sy;
-        $(Cinema3DView.container).on('touchmove', Cinema3DView.onTouchMove);
-        $(Cinema3DView.container).on('mousedown', Cinema3DView.onMouseDown);
-        $(Cinema3DView.container).on('mouseup', Cinema3DView.onMouseUp);
-        $(Cinema3DView.container).on('mousemove',Cinema3DView.onMouseMove);
-        $(Cinema3DView.container).on('touchstart', Cinema3DView.onTouchStart);
-        $(Cinema3DView.container).on('touchend', Cinema3DView.onTouchEnd);
+        if (!readOnly) {
+            $(Cinema3DView.container).on('touchmove', Cinema3DView.onTouchMove);
+            $(Cinema3DView.container).on('mousedown', Cinema3DView.onMouseDown);
+            $(Cinema3DView.container).on('mouseup', Cinema3DView.onMouseUp);
+            $(Cinema3DView.container).on('mousemove', Cinema3DView.onMouseMove);
+            $(Cinema3DView.container).on('touchstart', Cinema3DView.onTouchStart);
+            $(Cinema3DView.container).on('touchend', Cinema3DView.onTouchEnd);
+        }
 
         Cinema3DView.renderer = new THREE.WebGLRenderer({antialias: true});
         Cinema3DView.renderer.setClearColor(0x000000, 1);
@@ -130,6 +132,7 @@ var Cinema3DView = {
         Cinema3DView.controls.minDistance = 100;
         Cinema3DView.controls.maxPolarAngle = Math.PI / 2.0;
         Cinema3DView.controls.zoomSpeed = 3;
+        Cinema3DView.controls.keyPanSpeed = 4;
         Cinema3DView.cameraSpeed = Cinema3DView.controls.rotateSpeed;
         /*Cinema3DView.controls.autoRotate=true;
          Cinema3DView.controls.autoRotateSpeed=1;*/
@@ -194,14 +197,14 @@ var Cinema3DView = {
         var step = new THREE.Mesh(new THREE.CubeGeometry(Cinema3DView.sizeX * (Cinema3DView.distanceX + 5), Cinema3DView.distanceY, Cinema3DView.distanceY), new THREE.MeshLambertMaterial({color: 0x555555}));
         var stepOffsetZ = -22;
         var stepOffsetY = 5;
-        for (var j = 0; j < Cinema3DView.sizeY; j++) {
+        for (var j = 0; j <= Cinema3DView.sizeY; j++) {
             var singleStep = step.clone();
             singleStep.position.z = (-Cinema3DView.sizeY * Cinema3DView.distanceY) / 2.0 + Cinema3DView.distanceY * j + stepOffsetY;
             singleStep.position.y = stepOffsetZ + j * Cinema3DView.offsetZ;
             Cinema3DView.scene.add(singleStep);
         }
 
-        var floorSize = new THREE.Vector3(Cinema3DView.sizeX * (Cinema3DView.distanceX + 5), Cinema3DView.sizeX * (Cinema3DView.distanceX + 5), Cinema3DView.distanceY);
+
         var floor = new THREE.Mesh(new THREE.CubeGeometry(Cinema3DView.sizeX * (Cinema3DView.distanceX + 5), Cinema3DView.distanceY, Cinema3DView.sizeX * (Cinema3DView.distanceX + 5)), new THREE.MeshLambertMaterial({color: 0x555555}));
         floor.position.y = (-Cinema3DView.sizeY * Cinema3DView.distanceY) / 2.0;
         floor.position.z += 680;
@@ -440,7 +443,7 @@ var Cinema3DView = {
     onTouchEnd: function (e) {
         var event = e.originalEvent;
         event.preventDefault();
-        //console.log(event);
+        console.log(event);
 
 
         if (Cinema3DView.touchStatus == 1) {
