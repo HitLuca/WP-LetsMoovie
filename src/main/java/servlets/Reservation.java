@@ -28,7 +28,7 @@ public class Reservation extends HttpServlet {
     //Accettiamo solo richieste in post
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //riceviamo un oggetto di tipo ReservationRequest da parsare da JSON
+        //riceviamo un oggetto di tipo TemporaryReservationRequest da parsare da JSON
         response.setContentType("application/json");
 
         Gson gsonWriter;
