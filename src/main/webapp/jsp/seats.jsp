@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="small-6 columns text-center">
-                <a href="#" class="button radius" id="resettaVisuale">Resetta visuale</a>
+                <a href="#" class="button small radius" id="resettaVisuale">Resetta visuale</a>
             </div>
         </div>
 

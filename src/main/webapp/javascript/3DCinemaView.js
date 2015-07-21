@@ -94,6 +94,7 @@ var Cinema3DView = {
     previousState: {},
     locked : false,
     cameraSpeed : {},
+    touchStatus : 0,
 
     animate: function () {
         requestAnimationFrame(Cinema3DView.animate);
@@ -112,7 +113,7 @@ var Cinema3DView = {
         $(Cinema3DView.container).on('mouseup', Cinema3DView.onMouseUp);
         $(Cinema3DView.container).on('mousemove',Cinema3DView.onMouseMove);
         $(Cinema3DView.container).on('touchstart', Cinema3DView.onTouchStart);
-        $(Cinema3DView.container).bind('touchend', Cinema3DView.onTouchEnd);
+        $(Cinema3DView.container).on('touchend', Cinema3DView.onTouchEnd);
 
         Cinema3DView.renderer = new THREE.WebGLRenderer({antialias: true});
         Cinema3DView.renderer.setClearColor(0x000000, 1);
@@ -128,6 +129,7 @@ var Cinema3DView = {
         Cinema3DView.controls.maxDistance = 1000;
         Cinema3DView.controls.minDistance = 100;
         Cinema3DView.controls.maxPolarAngle = Math.PI / 2.0;
+        Cinema3DView.controls.zoomSpeed = 3;
         Cinema3DView.cameraSpeed = Cinema3DView.controls.rotateSpeed;
         /*Cinema3DView.controls.autoRotate=true;
          Cinema3DView.controls.autoRotateSpeed=1;*/
@@ -413,32 +415,55 @@ var Cinema3DView = {
             Cinema3DView.touchStatus = -event.targetTouches.length;
         }
         else if (event.targetTouches.length == 1 && Cinema3DView.touchStatus == 0) {
-            Cinema3DView.mouse.x = +( event.targetTouches[0].layerX / window.innerWidth) * 2 - 1;
-            Cinema3DView.mouse.y = -( event.targetTouches[0].layerY / window.innerHeight) * 2 + 1;
+
+            Cinema3DView.mouse.x = +((event.changedTouches[0].clientX) / window.innerWidth) * 2 - 1;
+            Cinema3DView.mouse.y = -((event.changedTouches[0].clientY) / window.innerHeight) * 2 + 1;
+
             Cinema3DView.touchStatus = 1;
         }
     },
-    onTouchMove: function (event) {
+    onTouchMove: function (e) {
+        var event = e.originalEvent;
+        alert("ciao");
         if (Cinema3DView.touchStatus == 1) {
-            Cinema3DView.touchStatus = 2;
+            var pos = new THREE.Vector2();
+            pos.x = +((event.changedTouches[0].clientX) / window.innerWidth) * 2 - 1;
+            pos.y = -((event.changedTouches[0].clientY) / window.innerHeight) * 2 + 1;
+            var distance = Math.sqrt(Math.pow(Cinema3DView.mouse.x - pos.x, 2) + Math.pow(Cinema3DView.mouse.y - pos.y, 2));
+            var maxDistance = 0.01;
+            if (distance > maxDistance) {
+                Cinema3DView.touchStatus = 2;
+            }
         }
 
     },
-    onTouchEnd: function (event) {
+    onTouchEnd: function (e) {
+        var event = e.originalEvent;
         event.preventDefault();
         //console.log(event);
 
+
         if (Cinema3DView.touchStatus == 1) {
 
-            Cinema3DView.raycaster.setFromCamera(Cinema3DView.mouse, Cinema3DView.camera);
-            var intersects = Cinema3DView.raycaster.intersectObjects(Cinema3DView.seats);
-            //console.log(Cinema3DView.seats);
-            //console.log(intersects[0].object);
+            var pos = new THREE.Vector2();
 
-            if (intersects.length > 0) {
-                Cinema3DView.selectChair(intersects[0].object.parent);
+            pos.x = +((event.changedTouches[0].clientX) / window.innerWidth) * 2 - 1;
+            pos.y = -((event.changedTouches[0].clientY) / window.innerHeight) * 2 + 1;
+
+            var distance = Math.sqrt(Math.pow(Cinema3DView.mouse.x - pos.x, 2) + Math.pow(Cinema3DView.mouse.y - pos.y, 2));
+            var maxDistance = 0.2;
+            if (distance < maxDistance) {
+
+                Cinema3DView.raycaster.setFromCamera(pos, Cinema3DView.camera);
+                var intersects = Cinema3DView.raycaster.intersectObjects(Cinema3DView.seats);
+                //console.log(Cinema3DView.seats);
+                //console.log(intersects[0].object);
+
+                if (intersects.length > 0) {
+                    Cinema3DView.selectChair(intersects[0].object.parent);
+                }
+                Cinema3DView.touchStatus = 0;
             }
-            Cinema3DView.touchStatus = 0;
         } else if (Cinema3DView.touchStatus == 2) {
             Cinema3DView.touchStatus = 0;
         } else if (Cinema3DView.touchStatus < 0) {
