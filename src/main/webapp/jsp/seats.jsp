@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <form id="biglietti" class="hide" action="<c:url value="/api/reservation/"/>" method="post">
+        <form id="biglietti" class="hide" action="/api/reservation" method="post">
             <input type="hidden" name="show" id="show">
             <div id="centralContent" class="row collapse">
                 <h5>Seleziona per ciascun posto la tipologia del biglietto:</h5>

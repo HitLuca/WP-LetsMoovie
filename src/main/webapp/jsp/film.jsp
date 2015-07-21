@@ -24,27 +24,41 @@
                         <h2 data-bind="film_title">Titolo</h2>
                     </div>
                 </div>
-                <div class="row">
+                <div id="anno" class="row">
                     <div class="medium-12 columns">
-                        <strong class="label radius info">Anno</strong><span data-bind="year" class="right"></span>
+                        <div class="row">
+                            <div class="medium-2 columns">
+                                <strong>Anno</strong>
+                            </div>
+                            <div class="medium-10 columns">
+                                <span data-bind="year"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
+                <div id="regista" class="row">
                     <div class="medium-12 columns">
-                        <span class="label radius info">Regista</span><span data-bind="director" class="right"></span>
+                        <div class="row">
+                            <div class="medium-2 columns">
+                                <strong>Regista</strong>
+                            </div>
+                            <div class="medium-10 columns">
+                                <span data-bind="director"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row collapse">
                     <div class="medium-12 columns text-center">
                         <div class="label radius info">Trama</div>
 
-                        <p align="justify" data-bind="plot">
+                        <p id="tramaFilm" align="justify" data-bind="plot">
                         </p>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="medium-12 columns text-center">
+                    <div id="tabella" class="medium-12 columns text-center">
                         <strong class="label radius info">Orari proiezioni</strong>
                         <ul id="shows" class="accordion" data-accordion role="tablist">
                             <li class="accordion-navigation">
@@ -76,22 +90,46 @@
                 </div>
                 <div class="row wow fadeInUp">
                     <div class="medium-6 columns">
-                        <strong class="label info radius left">Rating</strong>
-                        <span class="right" data-bind="rating"></span>
+                        <div class="row collapse">
+                            <div class="medium-6 label info radius columns">
+                                <strong>Rating</strong>
+                            </div>
+                            <div class="medium-6 text-center columns">
+                                <span data-bind="rating"></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="medium-6 columns">
-                        <strong class="label info radius left">Metascore</strong>
-                        <span class="right" data-bind="metascore"></span>
+                        <div class="row collapse">
+                            <div class="medium-6 label info radius columns">
+                                <strong>Metascore</strong>
+                            </div>
+                            <div class="medium-6 text-center columns">
+                                <span data-bind="metascore"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row wow fadeInUp">
                     <div class="medium-6 columns">
-                        <strong class="label info radius left">Durata</strong>
-                        <span class="right" data-bind="duration"> minuti</span>
+                        <div class="row collapse">
+                            <div class="medium-6 label info radius columns">
+                                <strong>Durata</strong>
+                            </div>
+                            <div class="medium-6 text-center columns">
+                                <span data-bind="duration"> minuti</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="medium-6 columns">
-                        <strong class="label info radius left">Vietato ai minori</strong>
-                        <span class="right" data-bind="vm"></span>
+                        <div class="row collapse">
+                            <div class="medium-6 label info radius columns">
+                                <strong>VM</strong>
+                            </div>
+                            <div class="medium-6 text-center columns">
+                                <span data-bind="vm"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

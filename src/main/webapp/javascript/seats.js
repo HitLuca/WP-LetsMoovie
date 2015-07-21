@@ -116,14 +116,10 @@ var Reservation = {
     successPost: function (data) {
         //    TODO: REDIRECT A PAGINA DI PAGAMENTO
         Notifications.saveNotification("warning", "Completa il pagamento per prenotare i posti!");
-        window.location.assign(Reservation.redirectUrl);
+        window.location.assign(Reservation.redirectUrl + data.reservationCode);
     },
     errorPost: function (data) {
         //    TODO: GESTIRE ERRORE
-        var error = data.responseJSON.errorCode;
-        switch (error) {
-
-        }
     }
 };
 
