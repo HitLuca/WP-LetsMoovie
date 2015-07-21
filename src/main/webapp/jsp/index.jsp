@@ -76,7 +76,7 @@
     </div>
     <div class="push"></div>
 </div>
-<c:import url="layout/footer.jsp"/>
+<c:import url="/jsp/layout/footer.jsp"/>
 <script src="<c:url value="/javascript/index.js"/>"></script>
 </body>
 </html>
