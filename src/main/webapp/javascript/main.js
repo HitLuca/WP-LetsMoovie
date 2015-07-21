@@ -130,9 +130,11 @@ var Session = {
         Session.storage.remove("username");
     },
     redirectToUser: function () {
+        Session.storage.set("backUrl", window.location.pathname);
         window.location.assign("/user/" + Session.getUsername());
     },
     redirectToLogin: function () {
+        Session.storage.set("backUrl", window.location.pathname);
         Notifications.saveNotification("error", "Non hai effettuato l'accesso!");
         window.location.assign("/login");
     },
@@ -141,6 +143,9 @@ var Session = {
     },
     redirectToHome: function () {
         window.location.assign("/");
+    },
+    redirectToUrl: function (url) {
+        window.location.assign(url);
     }
 };
 

@@ -34,8 +34,8 @@ var Tickets = {
         posto.removeAttr("id");
         posto.removeClass("hide");
         posto.addClass("wow flipInX");
-        posto.find("#columnNumber").html(column);
-        posto.find("#rowNumber").html(row);
+        posto.find("#columnNumber").html(column + 1);
+        posto.find("#rowNumber").html(row + 1);
         posto.attr("data-position", column + "" + row);
         posto.find("[data-seat='column']").attr("value", column);
         posto.find("[data-seat='row']").attr("value", row);

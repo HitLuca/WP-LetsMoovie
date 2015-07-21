@@ -6,7 +6,12 @@ var Login = {
     success: function (data) {
         Notifications.saveNotification("success", "Benvenuto, " + data.username + "!");
         Session.setUsername(data.username);
-        Session.redirectToUser();
+        var url;
+        if ((url = Session.storage.get("backUrl")) != null) {
+            Session.storage.remove("backUrl");
+            Session.redirectToUrl(url);
+        } else
+            Session.redirectToUser();
     },
     error: function (data) {
         var error = data.responseJSON.errorCode;
