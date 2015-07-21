@@ -18,6 +18,8 @@ var Map = {
 };
 
 var Tickets = {
+    total: 0,
+    form: $("#biglietti"),
     posti: $("#riepilogoBiglietti"),
     successPost: function (data) {
         Notifications.saveNotification("warning", "Completa il pagamento per prenotare i posti!");
@@ -29,7 +31,11 @@ var Tickets = {
     addSeat: function (event, column, row) {
         event.preventDefault();
 
-
+        Tickets.total++;
+        if (Tickets.total == 1) {
+            Tickets.form.removeClass("hide");
+            Tickets.form.addClass("wow fadeIn");
+        }
         var posto = Tickets.posti.find("#posto").clone();
         posto.removeAttr("id");
         posto.removeClass("hide");
@@ -44,6 +50,10 @@ var Tickets = {
     },
     removeSeat: function (event, column, row) {
         event.preventDefault();
+        Tickets.total--;
+        if (Tickets.total == 0) {
+            Tickets.form.addClass("hide");
+        }
         var posto = Tickets.posti.find("[data-position=" + column + "" + row + "]");
         posto.remove();
     }
@@ -80,6 +90,7 @@ var Seats = {
             return;
         }
         Seats.getShowInfo(id);
+        $("#show").attr("value", id);
 
     },
     error: function (data) {
@@ -110,6 +121,7 @@ $(function () {
     });
     $("#bloccaVisuale").on("click", function (event) {
         //event.preventDefault();
+        Cinema3DView.resetCamera();
         Cinema3DView.lockView();
     });
 });
