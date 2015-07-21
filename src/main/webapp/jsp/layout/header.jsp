@@ -16,7 +16,7 @@
     <section class="top-bar-section">
         <!-- Right Nav Section -->
         <ul class="right">
-            <li><a href="#">Listino prezzi</a></li>
+            <li><a href="<c:url value="/listinoPrezzi"/>">Listino prezzi</a></li>
             <li><a href="<c:url value="/info"/>">Info cinema</a></li>
             <c:choose>
                 <c:when test="${sessionScope.username != null}">
