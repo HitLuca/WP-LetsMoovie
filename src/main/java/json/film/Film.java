@@ -79,5 +79,18 @@ public class Film {
         return id_film;
     }
 
+    @Override
+    public boolean equals(Object o) {
 
+        if (o instanceof Film)
+            return id_film == ((Film) o).getId_film();
+        else
+            return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id_film;
+    }
 }

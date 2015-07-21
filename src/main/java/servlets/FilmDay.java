@@ -11,7 +11,7 @@ import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
 import json.film.FilmAndShows;
-import json.film.response.FilmListSuccess;
+import json.film.response.FilmAndShowListSuccess;
 import org.apache.ibatis.session.SqlSession;
 import types.exceptions.BadRequestException;
 import utilities.RestUrlMatcher;
@@ -90,7 +90,7 @@ public class FilmDay extends HttpServlet {
             }
 
             //Creo l'oggetto da trascrivere come Json di risposta
-            getFilmOfDay = new FilmListSuccess(timetable);
+            getFilmOfDay = new FilmAndShowListSuccess(timetable);
 
         } catch (BadRequestException e) {
             getFilmOfDay = e;
