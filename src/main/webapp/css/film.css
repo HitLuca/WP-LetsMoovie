@@ -8,6 +8,8 @@
 
 .video-container {
     position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     padding-bottom: 56.25%;
     padding-top: 30px;
     height: 0;
@@ -26,4 +28,26 @@
 
 .label {
     font-size: 1rem;
+}
+
+#tabella {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#shows {
+    margin-top: 1rem;
+}
+
+#tramaFilm {
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+}
+
+#regista {
+    margin-bottom: 1rem;
+}
+
+#anno {
+    margin-top: 1rem;
 }
