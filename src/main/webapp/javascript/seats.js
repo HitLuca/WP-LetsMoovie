@@ -111,10 +111,25 @@ var Seats = {
     }
 };
 
+var Reservation = {
+    redirectUrl: "/payment/",
+    successPost: function (data) {
+        //    TODO: REDIRECT A PAGINA DI PAGAMENTO
+        Notifications.saveNotification("warning", "Completa il pagamento per prenotare i posti!");
+        window.location.assign(Reservation.redirectUrl);
+    },
+    errorPost: function (data) {
+        //    TODO: GESTIRE ERRORE
+        var error = data.responseJSON.errorCode;
+        switch (error) {
+
+        }
+    }
+};
 
 $(function () {
     Seats.init();
-    Forms.PostForm("biglietti", Tickets.successPost, Tickets.errorPost, false);
+    Forms.PostForm("biglietti", Reservation.successPost, Reservation.errorPost, false);
     $("#resettaVisuale").on("click", function (event) {
         event.preventDefault();
         Cinema3DView.resetCamera();

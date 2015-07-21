@@ -16,7 +16,7 @@
         <h3>Hai selezionato questi posti</h3>
 
         <div class="panel callout radius" id="listaPostiScelti">
-            <c:import url="/jsp/template/riepilogoBiglietto.jsp"></c:import>
+            <c:import url="/jsp/template/riepilogoBiglietto.jsp"/>
         </div>
 
         <h3>Procedi al pagamento</h3>
@@ -96,7 +96,7 @@
     </div>
 </div>
 <div class="push"></div>
-</div>
 <c:import url="/jsp/layout/footer.jsp"/>
+<script src="<c:url value="/javascript/payment.js"/>"></script>
 </body>
 </html>
