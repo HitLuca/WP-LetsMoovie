@@ -1,14 +1,11 @@
 package json.payments;
 
-import com.google.gson.annotations.Expose;
-import database.datatypes.user.DetailedPayment;
-
 /**
  * f
  * Created by etrunon on 14/07/15.
  */
 public class Payments {
-
+/*
     @Expose
     private String payment_date;
     @Expose
@@ -28,7 +25,7 @@ public class Payments {
     @Expose
     private String username;
 
-    public Payments(DetailedPayment p, String filmTitle) {
+    public Payments(UniquePayment p, String filmTitle) {
         this.payment_date = p.getPayment_date();
         this.payment_time = p.getPayment_time();
         this.ticket_type = p.getTicket_type();
@@ -38,5 +35,5 @@ public class Payments {
         this.room_number = p.getRoom_number();
         this.filmTitle = filmTitle;
         this.username = p.getUsername();
-    }
+    }*/
 }
