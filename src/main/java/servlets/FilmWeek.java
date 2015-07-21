@@ -4,12 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import database.DatabaseConnection;
 import database.datatypes.film.FilmData;
-import database.datatypes.show.ShowIdTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
-import json.film.FilmAndShows;
-import json.film.FilmList;
+import json.film.Film;
+import json.film.response.FilmAndShowListSuccess;
 import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
 
@@ -22,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,25 +55,33 @@ public class FilmWeek extends HttpServlet {
         response.setContentType("application/json");
 
         LocalDate today = LocalDate.now();
-        FilmList filmList = new FilmList();
+        List<Film> filmList = new ArrayList<>();
+
+        List<Integer> idList;
 
         for (int i = 0; i < 7; i++) {
-            List<Integer> idList = showMapper.getDayFilms(dateFormat.format(today));
+            idList = showMapper.getDayFilms(dateFormat.format(today));
 
             for (Integer j : idList) {
+                Film film = new Film(j);
+                if (!filmList.contains(film))
+                    filmList.add(film);
+            }
+
+            /*for (Integer j : idList) {
 
                 List<ShowIdTime> hours = showMapper.getShowTimeAndId(today.format(dateFormat), j);
                 hours.forEach(database.datatypes.show.ShowIdTime::convertTime);
                 filmList.addId(today, j, hours);
-            }
+            }*/
 
             today = today.plusDays(1);
         }
 
-        for (FilmAndShows f : filmList.getFilmAndShowsList()) {
+        for (Film f : filmList) {
             FilmData filmData = filmMapper.getFilmData(f.getId_film());
 
-            f.setData(filmData);
+            f.setData(filmData, filmMapper);
         }
 
         getFilmOfWeek = new FilmListSuccess(filmList);

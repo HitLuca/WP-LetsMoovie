@@ -33,7 +33,7 @@
 
                 <p>
                     <strong>Indirizzo:</strong>
-                    Via Prato Bovino, Castelnovo di Sotto RE
+                    Via Prato Bovino 2, Castelnovo di Sotto RE
                 </p>
 
                 <p>

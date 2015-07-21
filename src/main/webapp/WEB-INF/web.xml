@@ -80,6 +80,34 @@
         <servlet-name>payment</servlet-name>
         <jsp-file>/jsp/payment.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <jsp-file>/jsp/admin.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>showSeats</servlet-name>
+        <jsp-file>/jsp/featureAdmin/showSeats.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteReservation</servlet-name>
+        <jsp-file>/jsp/featureAdmin/deleteReservation.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>filmCashing</servlet-name>
+        <jsp-file>/jsp/featureAdmin/filmCashing.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>bestCustomer</servlet-name>
+        <jsp-file>/jsp/featureAdmin/bestCustomer.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>reservedSeats</servlet-name>
+        <jsp-file>/jsp/featureAdmin/reservedSeats.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>listinoPrezzi</servlet-name>
+        <jsp-file>/jsp/listinoPrezzi.jsp</jsp-file>
+    </servlet>
 
 
     <!-- MAPPING JPS-->
@@ -138,5 +166,33 @@
     <servlet-mapping>
         <servlet-name>payment</servlet-name>
         <url-pattern>/payment/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/admin/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>showSeats</servlet-name>
+        <url-pattern>/admin/showSeats/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteReservation</servlet-name>
+        <url-pattern>/admin/deleteReservation/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>filmCashing</servlet-name>
+        <url-pattern>/admin/filmCaching/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>bestCustomer</servlet-name>
+        <url-pattern>/admin/bestCustomer/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>reservedSeats</servlet-name>
+        <url-pattern>/admin/reservedSeats/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>listinoPrezzi</servlet-name>
+        <url-pattern>/listinoPrezzi</url-pattern>
     </servlet-mapping>
 </web-app>
