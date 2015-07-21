@@ -3,9 +3,12 @@ package utilities;
 import types.enums.ErrorCode;
 import types.enums.Role;
 import types.exceptions.BadRequestException;
+import types.exceptions.BadRequestExceptionWithParameters;
+import utilities.InputValidator.ModelValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -47,6 +50,30 @@ public class BadReqExeceptionThrower {
         } else if (mapped instanceof String) {
             if (((String) mapped).equals("") && (int) session.getAttribute("role") != Role.USER.getValue())
                 throw new BadRequestException(ErrorCode.USER_NOT_FOUND);
+        }
+    }
+
+    public static void checkAdminSuperAdmin(HttpServletRequest request) throws BadRequestException {
+        HttpSession session = request.getSession();
+        if ((int) session.getAttribute("role") != Role.ADMIN.getValue() && (int) session.getAttribute("role") != Role.SUPER_ADMIN.getValue()) {
+            throw new BadRequestException(ErrorCode.NOT_AUTHORIZED);
+        }
+    }
+
+    public static void checkRegex(Object object) throws BadRequestExceptionWithParameters {
+        try {
+            List<String> invalidParameters = ModelValidator.validate(object);
+            if (!invalidParameters.isEmpty()) {
+                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD, invalidParameters);
+            }
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void checkStatusString(List<String> accepted, String status) throws BadRequestException {
+        if (!accepted.contains(status)) {
+            throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
         }
     }
 }

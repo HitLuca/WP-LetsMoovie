@@ -168,6 +168,17 @@ public interface SeatMapper {
     /**
      *
      * @param id_seat id del posto
+     * @return stato del posto id_seat
+     */
+    //TODO:Test
+    @Select("SELECT status " +
+            "FROM seats " +
+            "WHERE id_seat=#{id_seat}")
+    String getSeatStatus(int id_seat);
+
+    /**
+     *
+     * @param id_seat id del posto
      * @param id_show id dello show
      * @return costo del tipo di biglietto associato a id_seat e a id_show
      */

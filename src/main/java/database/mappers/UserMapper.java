@@ -116,12 +116,16 @@ public interface UserMapper {
      * @param username username dell'utente
      * @return lista di dettagli dei pagamenti di username
      */
-    @Select("SELECT payment_date, payment_time, id_show, ticket_type, price, row, \"column\", room_number " +
-            "FROM payments NATURAL JOIN prices NATURAL JOIN seats " +
+    @Select("SELECT DISTINCT payment_date, payment_time, room_number, film_title " +
+            "FROM payments NATURAL JOIN seats NATURAL JOIN films NATURAL JOIN shows " +
             "WHERE username=#{username} " +
             "ORDER BY payment_date, payment_time")
-    List<DetailedPayment> getUserPayments(String username);
+    List<CompletePayments> getUserUniquePayments(String username);
 
+    @Select("SELECT ticket_type, price, row, \"column\" " +
+            "FROM payments NATURAL JOIN seats NATURAL JOIN prices " +
+            "WHERE payment_date=#{payment_date}::DATE AND payment_time=#{payment_time}::TIME AND username=#{username}")
+    List<UserPayment> getUserPayments(@Param("payment_date") String payment_date, @Param("payment_time") String payment_time, @Param("username") String username);
     /**
      *
      * @param username username dell'utente
@@ -181,4 +185,12 @@ public interface UserMapper {
             "DESC " +
             "LIMIT #{top}")
     List<UserPaid> getRankedUserTotalPayments(int top);
+
+    /**
+     * @param credit_card_number Numero di carta di credito da inserire
+     * @param username           username dell'utente
+     */
+    //TODO:Test
+    @Insert("INSERT INTO user_credit_cards (credit_card_number, username) VALUES ()")
+    void insertCreditCard(@Param("credit_card_number") String credit_card_number, @Param("username") String username);
 }

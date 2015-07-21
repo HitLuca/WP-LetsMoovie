@@ -1,32 +1,7 @@
 package servlets;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import database.DatabaseConnection;
-import database.datatypes.user.DetailedPayment;
-import database.mappers.FilmMapper;
-import database.mappers.UserMapper;
-import json.OperationResult;
-import json.payments.ListPaymentSuccess;
-import json.payments.Payments;
-import org.apache.ibatis.session.SqlSession;
-import types.enums.ErrorCode;
-import types.enums.Role;
-import types.exceptions.BadRequestException;
-import utilities.RestUrlMatcher;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @api {get} /api/pagamenti/*
@@ -50,7 +25,7 @@ import java.util.List;
  */
 @WebServlet(name = "Pagamenti", urlPatterns = "/api/pagamenti/*")
 public class Pagamenti extends HttpServlet {
-
+/*
     Gson gsonWriter;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -78,7 +53,7 @@ public class Pagamenti extends HttpServlet {
             String usernameSearched = rs.getParameter();
 
             //Se sei un utente normale puoi vedere solo i tuoi dati
-            List<DetailedPayment> payments = userMapper.getUserPayments(usernameSearched);
+            List<UniquePayment> payments = userMapper.getUserPayments(usernameSearched);
 
             //SOLUZIONE BRUTTA PER Map<Data, List<Pagamenti>>, vedi src.main.java.database.testClasses.Servlet.java, riga
 
@@ -100,7 +75,7 @@ public class Pagamenti extends HttpServlet {
 
             List<Payments> responses = new ArrayList<>();
 
-            for (DetailedPayment d : payments) {
+            for (UniquePayment d : payments) {
                 String title = filmMapper.getFilmData(d.getId_show()).getFilm_title();
                 Payments p = new Payments(d, title);
                 responses.add(p);
@@ -132,4 +107,5 @@ public class Pagamenti extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
+    */
 }
