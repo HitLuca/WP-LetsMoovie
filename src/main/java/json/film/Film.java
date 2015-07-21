@@ -1,8 +1,9 @@
 package json.film;
 
 import com.google.gson.annotations.Expose;
+import database.datatypes.film.Actor;
 import database.datatypes.film.FilmData;
-import database.datatypes.show.ShowIdTime;
+import database.mappers.FilmMapper;
 
 import java.util.List;
 
@@ -33,9 +34,13 @@ public class Film {
     protected String director;
     @Expose
     protected int vm;
+    @Expose
+    protected List<String> genres;
+    @Expose
+    protected List<Actor> actors;
 
 
-    public void setData(FilmData filmData) {
+    public void setData(FilmData filmData, FilmMapper filmMapper) {
         this.id_film = filmData.getId_film();
         this.film_title = filmData.getFilm_title();
         this.poster = filmData.getPoster();
@@ -47,10 +52,14 @@ public class Film {
         this.plot = filmData.getPlot();
         this.director = filmData.getDirector();
         this.vm = filmData.getVm();
+
+        genres = filmMapper.getFilmGenres(id_film);
+        actors = filmMapper.getFilmActors(id_film);
+
     }
 
-    public Film(FilmData filmData) {
-        setData(filmData);
+    public Film(FilmData filmData, FilmMapper filmMapper) {
+        setData(filmData, filmMapper);
     }
 
     public Film(int id_film) {
@@ -70,5 +79,18 @@ public class Film {
         return id_film;
     }
 
+    @Override
+    public boolean equals(Object o) {
 
+        if (o instanceof Film)
+            return id_film == ((Film) o).getId_film();
+        else
+            return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id_film;
+    }
 }
