@@ -45,7 +45,8 @@ public interface ShowMapper {
      */
     @Select("SELECT show_time, id_show, room_number " +
             "FROM shows " +
-            "WHERE shows.show_date=#{show_date}::DATE AND shows.id_film=#{id_film}")
+            "WHERE shows.show_date=#{show_date}::DATE AND shows.id_film=#{id_film} " +
+            "ORDER BY show_time ")
     List<ShowIdTime> getShowTimeAndId(@Param("show_date") String show_date, @Param("id_film") int id_film);
 
     /**
