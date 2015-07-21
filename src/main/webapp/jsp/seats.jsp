@@ -27,8 +27,8 @@
             <div class="small-6 columns text-center">
                 Blocca visuale
                 <div class="switch">
-                    <input id="exampleCheckboxSwitch" type="checkbox">
-                    <label for="exampleCheckboxSwitch"></label>
+                    <input id="bloccaVisuale" type="checkbox">
+                    <label for="bloccaVisuale"></label>
                 </div>
             </div>
             <div class="small-6 columns text-center">
