@@ -108,4 +108,8 @@ $(function () {
         event.preventDefault();
         Cinema3DView.resetCamera();
     });
+    $("#bloccaVisuale").on("click", function (event) {
+        //event.preventDefault();
+        Cinema3DView.lockView();
+    });
 });

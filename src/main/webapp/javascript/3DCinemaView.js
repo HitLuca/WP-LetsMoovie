@@ -3,23 +3,82 @@
  */
 "use strict";
 
+
+ var Shaders = {
+    vignetteShader:new THREE.ShaderMaterial({
+
+    uniforms: {
+
+        "tDiffuse": { type: "t", value: null },
+        "v":        { type: "f", value: 1.0 / 512.0 }
+
+    },
+
+    vertexShader: [
+
+        "varying vec2 vUv;",
+
+        "void main() {",
+
+        "vUv = uv;",
+        "gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
+
+        "}"
+
+    ].join("\n"),
+
+        fragmentShader: [
+
+    "uniform sampler2D tDiffuse;",
+    "uniform float v;",
+
+    "varying vec2 vUv;",
+
+    "void main() {",
+
+    "vec4 sum = vec4( 0.0 );",
+
+    "sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 4.0 * v ) ) * 0.051;",
+    "sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 3.0 * v ) ) * 0.0918;",
+    "sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 2.0 * v ) ) * 0.12245;",
+    "sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 1.0 * v ) ) * 0.1531;",
+    "sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y ) ) * 0.1633;",
+    "sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 1.0 * v ) ) * 0.1531;",
+    "sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 2.0 * v ) ) * 0.12245;",
+    "sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 3.0 * v ) ) * 0.0918;",
+    "sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 4.0 * v ) ) * 0.051;",
+
+    "gl_FragColor = sum;",
+
+    "}"
+
+].join("\n")
+    })
+
+};
+
 var Materials = {
     freeChair: new THREE.MeshLambertMaterial({
-        color: 0xdd1122,
+        color: 0xffffcc,
         shading: THREE.flatShading
     }),
     selectedChair: new THREE.MeshLambertMaterial({
-        color: 0x00ff00,
+        color: 0x009c06,
         shading: THREE.flatShading
     }),
     hoveringChair: new THREE.MeshLambertMaterial({
-        color: 0xffff00,
+        color: 0x6ff774,
         shading: THREE.flatShading
     }),
     hoveringChairSelected: new THREE.MeshLambertMaterial({
-        color: 0x559900,
+        color: 0xcece6f,
         shading: THREE.flatShading
-    })
+    }),
+    busySeatMaterial: new THREE.MeshLambertMaterial({
+        color:  0xff6655,
+        transparent: true,
+        opacity: 0.8,
+        shading: THREE.flatShading})
 };
 
 var Cinema3DView = {
@@ -33,6 +92,8 @@ var Cinema3DView = {
     leftClick: false,
     seatMap: {},
     previousState: {},
+    locked : false,
+    cameraSpeed : {},
 
     animate: function () {
         requestAnimationFrame(Cinema3DView.animate);
@@ -50,12 +111,12 @@ var Cinema3DView = {
         $(Cinema3DView.container).on('mousedown', Cinema3DView.onMouseDown);
         $(Cinema3DView.container).on('mouseup', Cinema3DView.onMouseUp);
         $(Cinema3DView.container).on('mousemove',Cinema3DView.onMouseMove);
-        Cinema3DView.container.addEventListener('touchstart', Cinema3DView.onTouchStart, false);
+        $(Cinema3DView.container).on('touchstart', Cinema3DView.onTouchStart);
         $(Cinema3DView.container).bind('touchend', Cinema3DView.onTouchEnd);
 
-        Cinema3DView.renderer = new THREE.WebGLRenderer({antialias: false});
+        Cinema3DView.renderer = new THREE.WebGLRenderer({antialias: true});
         Cinema3DView.renderer.setClearColor(0x000000, 1);
-        Cinema3DView.renderer.setPixelRatio($(Cinema3DView.container).width() / $(Cinema3DView.container).height());
+        Cinema3DView.renderer.setPixelRatio($(Cinema3DView.container).width()*1.2 / $(Cinema3DView.container).height()*1.2);
         Cinema3DView.renderer.setSize($(cont).width(), $(cont).height());
 
         Cinema3DView.camera = new THREE.PerspectiveCamera(60,$(Cinema3DView.container).width() / $(Cinema3DView.container).height(), 1, 3000);
@@ -67,6 +128,7 @@ var Cinema3DView = {
         Cinema3DView.controls.maxDistance = 1000;
         Cinema3DView.controls.minDistance = 100;
         Cinema3DView.controls.maxPolarAngle = Math.PI / 2.0;
+        Cinema3DView.cameraSpeed = Cinema3DView.controls.rotateSpeed;
         /*Cinema3DView.controls.autoRotate=true;
          Cinema3DView.controls.autoRotateSpeed=1;*/
 
@@ -105,8 +167,8 @@ var Cinema3DView = {
         light = new THREE.AmbientLight(0x555555);
         Cinema3DView.scene.add(light);
 
-        Cinema3DView.lastLight = new THREE.PointLight(0xffff66,1,1000);
-        Cinema3DView.lastLight.position.set(0,0,0);
+        //Cinema3DView.lastLight = new THREE.PointLight(0xffff66,1,1000);
+        //Cinema3DView.lastLight.position.set(0,0,0);
         //Cinema3DView.lastLight.intensity = 0;
         //Cinema3DView.scene.add(Cinema3DView.lastLight);
 
@@ -158,11 +220,15 @@ var Cinema3DView = {
 
         window.addEventListener('resize', Cinema3DView.onWindowResize, false);
 
+        //Cinema3DView.showEdges(Cinema3DView.scene.children);
+
         Cinema3DView.animate();
         Cinema3DView.render();
 
     },
     computeSeat: function (standMaterial, chairMaterial, broken) {
+
+
         var seat = new THREE.Mesh();
 
         var rotation = 0.5;
@@ -205,23 +271,28 @@ var Cinema3DView = {
 
         var chair = new THREE.Object3D();
         var pillowSize = new THREE.Vector3(22, 33, 10);
-        var backSize = new THREE.Vector3(22, 10, 42);
+        var backSize = new THREE.Vector3(26, 10, 42);
 
         var pillow = new THREE.Mesh(new THREE.CubeGeometry(pillowSize.x, pillowSize.y, pillowSize.z), chairMaterial);
         var back = new THREE.Mesh(new THREE.CubeGeometry(backSize.x, backSize.y, backSize.z), chairMaterial);
+
         pillow.position.z += 20;
         pillow.name = "cloth";
         back.position.z += 20 + backSize.z / 2.0;
         back.name = "cloth";
-        var armSize = new THREE.Vector3(7, 20, 10);
+
+        var armSize = new THREE.Vector3(7, 22, 22);
         var arm = new THREE.Mesh(new THREE.CubeGeometry(armSize.x, armSize.y, armSize.z), chairMaterial);
-        arm.position.z += 35;
-        arm.position.x -= pillowSize.x / 2.0;
+        arm.position.z += 25;
+        arm.position.x -= pillowSize.x / 2.0 +1 ;
+        arm.position.y+=5;
+
         arm.name = "cloth";
 
         var otherArm = new THREE.Mesh(new THREE.CubeGeometry(armSize.x, armSize.y, armSize.z), chairMaterial);
-        otherArm.position.x += 11;
-        otherArm.position.z += 35;
+        otherArm.position.x += 11+1;
+        otherArm.position.z += 25;
+        otherArm.position.y += 5;
 
         if (broken) {
             back.rotateX(Math.random() * rotation);
@@ -270,8 +341,8 @@ var Cinema3DView = {
         var footColor = 0x666666;
         var chairColor = 0xcc1515;
 
-        var standMaterial = new THREE.MeshLambertMaterial({color: footColor, transparent: true, opacity: 0.4});
-        var chairMaterial = new THREE.MeshLambertMaterial({color: chairColor, transparent: true, opacity: 0.4});
+        var standMaterial = new THREE.MeshLambertMaterial({color: footColor, transparent: true, opacity: 0.8});
+        var chairMaterial =  Materials.busySeatMaterial;
 
         Cinema3DView.busySeatMesh = Cinema3DView.computeSeat(standMaterial, chairMaterial, false);
     },
@@ -289,8 +360,8 @@ var Cinema3DView = {
         Cinema3DView.controls.reset();
 
         Cinema3DView.camera.position.x = 0;
-        Cinema3DView.camera.position.y = 82 * min / 2.0;
-        Cinema3DView.camera.position.z = -9 * min / 2.0;
+        Cinema3DView.camera.position.y = 83 * min / 2.0;
+        Cinema3DView.camera.position.z = -0.1 * min / 2.0;
 
     },
     placeSeat: function (seatPos) {
@@ -334,20 +405,20 @@ var Cinema3DView = {
 
         //Cinema3DView.render();
     },
-    onTouchStart: function (event) {
+    onTouchStart: function (e) {
+        var event = e.originalEvent;
         event.preventDefault();
 
         if (event.targetTouches.length > 1) {
             Cinema3DView.touchStatus = -event.targetTouches.length;
         }
         else if (event.targetTouches.length == 1 && Cinema3DView.touchStatus == 0) {
-            Cinema3DView.mouse.x = +( (event.targetTouches[0].pageX - Cinema3DView.container.offsetLeft ) / window.innerWidth) * 2 - 1;
-            Cinema3DView.mouse.y = -( (event.targetTouches[0].pageY - Cinema3DView.container.offsetTop ) / window.innerHeight) * 2 + 1;
+            Cinema3DView.mouse.x = +( event.targetTouches[0].layerX / window.innerWidth) * 2 - 1;
+            Cinema3DView.mouse.y = -( event.targetTouches[0].layerY / window.innerHeight) * 2 + 1;
             Cinema3DView.touchStatus = 1;
         }
     },
     onTouchMove: function (event) {
-        //alert("ciao");
         if (Cinema3DView.touchStatus == 1) {
             Cinema3DView.touchStatus = 2;
         }
@@ -442,9 +513,9 @@ var Cinema3DView = {
             if (Cinema3DView.seatMap[clicked.parent.uuid].status == 0) {
                 Cinema3DView.hoveredSeat=null;
                 console.log(clicked.parent.position);
-                Cinema3DView.lastLight.position.set(clicked.parent.position);
-                Cinema3DView.lastLight.position.y-=10;
-                Cinema3DView.lastLight.intensity = 1;
+                //Cinema3DView.lastLight.position.set(clicked.parent.position);
+                //Cinema3DView.lastLight.position.y-=10;
+                //Cinema3DView.lastLight.intensity = 1;
                 Cinema3DView.seatMap[clicked.parent.uuid].status = 1;
                 $(Cinema3DView.container).trigger("onSeatAdd",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
                 clicked.children.forEach(function (obj) {
@@ -453,11 +524,12 @@ var Cinema3DView = {
             }
             else {
                 Cinema3DView.seatMap[clicked.parent.uuid].status = 0;
-                Cinema3DView.lastLight.intensity = 0;
+                //Cinema3DView.lastLight.intensity = 0;
                 $(Cinema3DView.container).trigger("onRemoveAdd",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
                 clicked.children.forEach(function (obj) {
                     obj.material = Materials.freeChair;
                 });
+
             }
         }
 
@@ -526,6 +598,17 @@ var Cinema3DView = {
                 });
             }
             Cinema3DView.hoveredSeat=null;
+        }
+    },
+
+    lockView : function() {
+        if(Cinema3DView.locked) {
+            Cinema3DView.locked = false;
+            Cinema3DView.controls.rotateSpeed = Cinema3DView.cameraSpeed;
+        }
+        else {
+            Cinema3DView.controls.rotateSpeed = 0;
+            Cinema3DView.locked = true;
         }
     }
 
