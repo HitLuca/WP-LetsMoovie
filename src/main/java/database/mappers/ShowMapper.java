@@ -76,13 +76,16 @@ public interface ShowMapper {
     void insertShow(Show show);
 
     /**
-     * @param show oggetto Show
-     * @return id_show dello show show
+     *
+     * @param show_date data dello show
+     * @param show_time ora dello show
+     * @param room_number stanza in cui viene proiettato lo show
+     * @return id dello show
      */
     @Select("SELECT id_show " +
             "FROM shows " +
-            "WHERE room_number=#{room_number} AND id_film=#{id_film} AND show_date=#{show_date}::DATE AND show_time=#{show_time}::TIME")
-    int getShowId(Show show);
+            "WHERE room_number=#{room_number} AND show_date=#{show_date}::DATE AND show_time=#{show_time}::TIME")
+    int getShowId(@Param("show_date") String show_date, @Param("show_time") String show_time, @Param("room_number") int room_number);
 
     /**
      * @param id_show id dello show

@@ -6,12 +6,19 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
 import database.datatypes.seat.RoomData;
+import database.datatypes.seat.Seat;
 import database.mappers.SeatMapper;
+import database.mappers.ShowMapper;
 import database.mappers.UserMapper;
 import json.OperationResult;
+import json.adminFunctions.request.RankedRoomRequest;
 import json.adminFunctions.request.SeatRequest;
 import json.adminFunctions.request.ShowRequest;
+import json.adminFunctions.response.RoomSeatList;
+import json.showRoom.SeatList;
+import json.showRoom.ShowSeat;
 import org.apache.ibatis.session.SqlSession;
+import types.enums.SeatStatus;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
@@ -25,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by hitluca on 20/07/15.
@@ -39,6 +47,7 @@ public class AdminFunctions extends HttpServlet {
         SqlSession sessionSql = DatabaseConnection.getFactory().openSession(true);
         UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
         SeatMapper seatMapper = sessionSql.getMapper(SeatMapper.class);
+        ShowMapper showMapper = sessionSql.getMapper(ShowMapper.class);
 
         response.setContentType("application/json");
         OperationResult operationResult = null;
@@ -84,6 +93,7 @@ public class AdminFunctions extends HttpServlet {
                     seatMapper.removeSeatReservation(id_show, id_seat);
                     break;
                 }
+                //TODO:Test
                 case "updateShowSeatStatus": {
                     SeatRequest seatRequest = gsonReader.fromJson(request.getReader(), SeatRequest.class);
 
@@ -99,12 +109,55 @@ public class AdminFunctions extends HttpServlet {
                     seatMapper.updateShowSeatStatus(id_show, id_seat, seatRequest.getStatus());
                     break;
                 }
-                //posti venduti cancella prenotazione incassi per film client top
+                //TODO:implementare posti venduti cancella prenotazione incassi per film client top
+                //TODO:Test
                 case "getShowSeats": {
                     ShowRequest showRequest = gsonReader.fromJson(request.getReader(), ShowRequest.class);
-                    RoomData roomData = seatMapper.getRoomData(showRequest.getRoom_number());
-                    //SeatList seatList = new SeatList(seatMapper.get);
 
+                    //Controllo di non avere parametri invalidi
+                    BadReqExeceptionThrower.checkRegex(showRequest);
+
+                    int id_show = showMapper.getShowId(showRequest.getShow_date(), showRequest.getShow_time(), showRequest.getRoom_number());
+                    RoomData roomData = seatMapper.getRoomData(showRequest.getRoom_number());
+                    SeatList seatList = new SeatList(roomData.getLength(), roomData.getWidth());
+
+                    List<Seat> totalSeats = seatMapper.getShowFreeSeat(id_show);
+                    totalSeats.addAll(seatMapper.getShowReservedSeats(id_show));
+                    totalSeats.addAll(seatMapper.getShowBrokenSeats(id_show));
+
+                    for (Seat s : totalSeats) {
+                        switch (s.getStatus()) {
+                            case "reserved": {
+                                seatList.addSeat(new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.RESERVED));
+                                break;
+                            }
+                            case "broken": {
+                                seatList.addSeat(new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.BROKEN));
+
+                                break;
+                            }
+                            default: {
+                                seatList.addSeat(new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.FREE));
+                                break;
+                            }
+                        }
+                    }
+                    outputStream.print(gsonWriter.toJson(seatList));
+                    sessionSql.close();
+                    break;
+                }
+                //TODO:Test
+                case "getRankedReservations": {
+                    RankedRoomRequest rankedRoomRequest = gsonReader.fromJson(request.getReader(), RankedRoomRequest.class);
+
+                    //Controllo di non avere parametri invalidi
+                    BadReqExeceptionThrower.checkRegex(rankedRoomRequest);
+
+                    RoomData roomData = seatMapper.getRoomData(rankedRoomRequest.getRoom_number());
+                    RoomSeatList roomSeatList = new RoomSeatList(roomData.getLength(), roomData.getWidth());
+
+                    outputStream.print(gsonWriter.toJson(roomSeatList));
+                    sessionSql.close();
                     break;
                 }
             }

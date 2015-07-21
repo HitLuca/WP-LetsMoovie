@@ -4,15 +4,24 @@ package database.datatypes.seat;
  * Created by hitluca on 16/07/15.
  */
 public class SeatCount {
-    private int id_seat;
+    private int row;
+    private int column;
     private int count;
 
-    public int getId_seat() {
-        return id_seat;
+    public int getRow() {
+        return row;
     }
 
-    public void setId_seat(int id_seat) {
-        this.id_seat = id_seat;
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
     }
 
     public int getCount() {

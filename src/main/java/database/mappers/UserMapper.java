@@ -187,8 +187,8 @@ public interface UserMapper {
     List<UserPaid> getRankedUserTotalPayments(int top);
 
     /**
-     * @param credit_card_number Numero di carta di credito da inserire
-     * @param username           username dell'utente
+     * @param credit_card_number numero di carta di credito da inserire
+     * @param username username dell'utente
      */
     //TODO:Test
     @Insert("INSERT INTO user_credit_cards (credit_card_number, username) VALUES ()")

@@ -193,12 +193,22 @@ public interface SeatMapper {
      * @param top percentuale da usare per filtrare i risultati
      * @return lista dei (top)% posti piu' prenotati
      */
-    @Select("SELECT sr.id_seat, COUNT(*) " +
+    @Select("SELECT row, \"column\", COUNT(*) " +
             "FROM seat_reservations sr JOIN seats s ON sr.id_seat=s.id_seat " +
             "WHERE room_number=#{room_number} AND sr.status='reserved' " +
-            "GROUP BY sr.id_seat " +
+            "GROUP BY row, \"column\" " +
             "ORDER BY COUNT(*) " +
             "DESC " +
-            "TOP #{top}")
+            "LIMIT #{top}")
     List<SeatCount> getRankedSeatReservations(@Param("room_number") int room_number, @Param("top") int top);
+
+    /**
+     * @param room_number numero della stanza
+     * @return numero totale dei posti prenotati di room_number
+     */
+    @Select("SELECT COUNT(*) FROM (SELECT COUNT(*) " +
+            "FROM seat_reservations sr JOIN seats s ON sr.id_seat=s.id_seat " +
+            "WHERE room_number=1 AND sr.status='reserved' " +
+            "GROUP BY row, \"column\") as t")
+    int getSeatCountForRank(int room_number);
 }
