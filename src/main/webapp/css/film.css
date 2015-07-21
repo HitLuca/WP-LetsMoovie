@@ -6,11 +6,6 @@
     padding-bottom: 1rem;
 }
 
-#proiezioni {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
 .video-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -29,6 +24,6 @@
     height: 100%;
 }
 
-.panel1d-heading {
-    color: #002a80;
+.label {
+    font-size: 1rem;
 }
