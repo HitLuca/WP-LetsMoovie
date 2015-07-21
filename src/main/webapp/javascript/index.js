@@ -66,7 +66,7 @@ var Films = {
                     }
                 }
             };
-            Transparency.render(template[0], data.filmAndShowsList, directives);
+            Transparency.render(template[0], data.filmList, directives);
             $(this).find("img").each(function (index, elem) {
                 $(elem).on('load', function () {
                     var hidden = $(elem).parents(".hide").first();

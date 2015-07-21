@@ -9,6 +9,7 @@ import java.util.List;
  * Created by hitluca on 21/07/15.
  */
 public class CompletePayments implements OperationResult {
+
     @Expose
     private String payment_date;
     @Expose
