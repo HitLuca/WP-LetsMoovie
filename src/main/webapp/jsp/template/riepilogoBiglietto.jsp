@@ -4,7 +4,7 @@
 <div class="row">
 
     <div class="medium-5 columns">
-        <p>Posto: <span data-bind="postoSelezionato"></span></p>
+        <p>Posizione: <span data-bind="postoSelezionato"></span></p>
     </div>
     <div class="medium-5 columns">
         <p>Tipo: <span data-bind="tipoBiglietto"></span></p>
