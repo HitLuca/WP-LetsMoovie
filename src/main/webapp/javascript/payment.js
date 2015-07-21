@@ -6,8 +6,16 @@ var Reservation = {
         var request = $.ajax({
             url: Reservation.url + id
         });
-        request.done(Map.renderMap);
-        request.fail(Seats.error);
+        request.done(Reservation.showTicketsInfo);
+        request.fail(Reservation.showTicketsError);
+    },
+    showTicketsInfo: function (data) {
+        var template = $("#listaPostiScelti");
+
+        Transparency.render(template[0], data.seats, {}, {debug: true});
+    },
+    showTicketsError: function (data) {
+
     }
 
 };
@@ -15,7 +23,7 @@ var Reservation = {
 var Payment = {
     getIdPayment: function () {
         var link = window.location.pathname;
-        var re = /\/payment\/(\d+)/;
+        var re = /\/payment\/(.+)/;
         var m;
 
         if ((m = re.exec(link)) !== null) {
@@ -38,6 +46,12 @@ var Payment = {
     }
 };
 
+var CreditCard = {
+    url: "/api/",
+    getCreditCards: function () {
+
+    }
+};
 
 $(function () {
     Payment.init();
