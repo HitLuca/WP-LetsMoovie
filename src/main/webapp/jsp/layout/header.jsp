@@ -4,7 +4,7 @@
 <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
     <ul class="title-area">
         <li class="name">
-            <h1><a href="<c:url value="/"/>"><img id="logo" src="https://trello-attachments.s3.amazonaws.com/558674e7d76d04640f129c6e/1231x432/1437d53b4e8349f435011c0b97d5643b/logoTotale.png"></a></h1>
+            <h1><a href="<c:url value="/"/>"><img id="logo" src="https://trello-attachments.s3.amazonaws.com/558674e7d76d04640f129c6e/1648x470/b448c55f08eb0d0993cd86b05511ba7b/logoTotale2.png"></a></h1>
         </li>
 
         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
