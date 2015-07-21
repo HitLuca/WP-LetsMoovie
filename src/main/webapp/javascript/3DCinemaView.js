@@ -206,8 +206,8 @@ var Cinema3DView = {
 
 
         var floor = new THREE.Mesh(new THREE.CubeGeometry(Cinema3DView.sizeX * (Cinema3DView.distanceX + 5), Cinema3DView.distanceY, Cinema3DView.sizeX * (Cinema3DView.distanceX + 5)), new THREE.MeshLambertMaterial({color: 0x555555}));
-        floor.position.y = (-Cinema3DView.sizeY * Cinema3DView.distanceY) / 2.0;
-        floor.position.z += 680;
+        floor.position.y = (2 - Cinema3DView.sizeY * Cinema3DView.distanceY) / 2.0;
+        floor.position.z = (Cinema3DView.sizeY * Cinema3DView.distanceY) - Cinema3DView.distanceY / 2;
         Cinema3DView.scene.add(floor);
 
         var screenSize = new THREE.Vector2(Cinema3DView.sizeX * Cinema3DView.distanceX * 0.9, Cinema3DView.sizeX * Cinema3DView.distanceX * 0.5);
