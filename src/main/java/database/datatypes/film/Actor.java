@@ -1,5 +1,7 @@
 package database.datatypes.film;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by HitLuca on 06/07/15.
  *
@@ -7,8 +9,11 @@ package database.datatypes.film;
 
 public class Actor {
     private int id_film;
+    @Expose
     private String actor_name;
+    @Expose
     private String role;
+    @Expose
     private String url_photo;
 
     public String getActor_name() {

@@ -3,6 +3,7 @@ package json.film;
 import com.google.gson.annotations.Expose;
 import database.datatypes.film.FilmData;
 import database.datatypes.show.ShowIdTime;
+import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 
 import java.time.LocalDate;
@@ -24,13 +25,13 @@ public class FilmAndShows extends Film {
     private List<Shows> shows;
 
 
-    public FilmAndShows(FilmData filmData, List<ShowIdTime> hours) {
-        super(filmData);
+    public FilmAndShows(FilmData filmData, List<ShowIdTime> hours, FilmMapper filmMapper) {
+        super(filmData, filmMapper);
         shows = new ArrayList<>();
     }
 
-    public FilmAndShows(FilmData filmData) {
-        super(filmData);
+    public FilmAndShows(FilmData filmData, FilmMapper filmMapper) {
+        super(filmData, filmMapper);
         shows = new ArrayList<>();
     }
 

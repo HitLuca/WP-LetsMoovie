@@ -73,7 +73,7 @@ public class FilmWeek extends HttpServlet {
         for (FilmAndShows f : filmList.getFilmAndShowsList()) {
             FilmData filmData = filmMapper.getFilmData(f.getId_film());
 
-            f.setData(filmData);
+            f.setData(filmData, filmMapper);
         }
 
         getFilmOfWeek = new FilmListSuccess(filmList);

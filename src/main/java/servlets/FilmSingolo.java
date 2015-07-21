@@ -6,7 +6,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
 import database.datatypes.film.FilmData;
-import database.datatypes.show.ShowIdTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
@@ -25,8 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 /**
  * Servlet che se interrogata con sintassi REST restituisce un film singolo
@@ -72,9 +69,9 @@ public class FilmSingolo extends HttpServlet {
                 throw new BadRequestException(ErrorCode.FILM_NOT_FOUND);
             }
 
-            FilmAndShows filmShows = new FilmAndShows(fd);
+            FilmAndShows filmShows = new FilmAndShows(fd, filmMapper);
 
-            filmShows.setData(fd);
+            filmShows.setData(fd, filmMapper);
             LocalDate today = LocalDate.now();
 
             filmShows.queryShowsWeek(today, showMapper);

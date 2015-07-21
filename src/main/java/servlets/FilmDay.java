@@ -83,7 +83,7 @@ public class FilmDay extends HttpServlet {
 
                 //Creo l'oggetto FilmAndShows e lo riempio
                 //TODO, errore? hours nel costruttore non serve
-                FilmAndShows filmAndShows = new FilmAndShows(filmData, hours);
+                FilmAndShows filmAndShows = new FilmAndShows(filmData, hours, filmMapper);
                 filmAndShows.addHours(date.format(dateFormat), hours);
                 //Aggiungo il FilmAndShows alla lista
                 timetable.add(filmAndShows);
