@@ -56,10 +56,10 @@
                 </div>
             </div>
             <div class="row collapse">
-                <div class="small-6 columns text-center">
-                    <h4>Totale: <span id="total"></span></h4>
+                <div class="small-12 columns">
+                    <h4 class="large-text-right medium-text-center">Totale: <span id="total">30.00€</span></h4>
                 </div>
-                <div class="small-6 columns text-center">
+                <div class="small-12 columns text-center">
                     <button class="radius">Procedi al pagamento</button>
                 </div>
             </div>

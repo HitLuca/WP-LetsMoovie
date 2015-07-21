@@ -11,3 +11,15 @@
 .switch {
     margin-bottom: 0rem;
 }
+
+#riepilogoBiglietti > .biglietto {
+    margin-bottom: 1rem;
+}
+
+.biglietto > #posizione {
+    margin-bottom: 1rem;
+}
+
+.price-tag {
+    font-size: large;
+}
