@@ -14,6 +14,10 @@ public class TemporaryReservationRequest {
         this.expireDate = expireDate;
     }
 
+    public ReservationRequest getReservationRequest() {
+        return reservationRequest;
+    }
+
     public long getExpireDate() {
         return expireDate;
     }
