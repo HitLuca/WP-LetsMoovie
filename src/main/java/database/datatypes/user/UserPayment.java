@@ -7,14 +7,15 @@ import json.OperationResult;
  * Created by hitluca on 21/07/15.
  */
 public class UserPayment implements OperationResult {
+
     @Expose
     private String ticket_type;
     @Expose
     private float price;
     @Expose
-    private int row;
+    private int s_row;
     @Expose
-    private int column;
+    private int s_column;
 
     public String getTicket_type() {
         return ticket_type;
@@ -32,19 +33,19 @@ public class UserPayment implements OperationResult {
         this.price = price;
     }
 
-    public int getRow() {
-        return row;
+    public int gets_row() {
+        return s_row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
+    public void sets_row(int s_row) {
+        this.s_row = s_row;
     }
 
-    public int getColumn() {
-        return column;
+    public int gets_column() {
+        return s_column;
     }
 
-    public void setColumn(int column) {
-        this.column = column;
+    public void sets_column(int s_column) {
+        this.s_column = s_column;
     }
 }
