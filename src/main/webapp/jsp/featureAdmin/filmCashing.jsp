@@ -29,7 +29,7 @@
         </div>
         <div id="showCashing" class="row">
             <div class="large-12 columns">
-            <h4>Incasso per il film selezionato:</h4>
+                <h4>Incasso per il film selezionato:</h4>
 
                 <div class="row>">
                     <div class="medium-6 medium-centered panel callout radius columns">
