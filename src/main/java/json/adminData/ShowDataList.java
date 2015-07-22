@@ -46,6 +46,6 @@ class ShowData {
         this.show_date = show.getShow_date();
         this.show_time = show.getShow_time();
 
-        this.film_Name = filmMapper.getFilmName(show.getId_film());
+        this.film_Name = (filmMapper.getFilmTitle(show.getId_film())).getFilm_title();
     }
 }
