@@ -24,20 +24,20 @@
                     </div>
                 </div>
                 <div class="columns small-12">
-                    <div class="row panel">
-                        <div class="columns small-6">
+                    <div class="row panel small-collapse">
+                        <div class="columns small-5">
                             <h3>Totale</h3>
                         </div>
-                        <div class="columns small-6">
+                        <div class="columns small-7">
                             <h3 class="right" data-bind="total"></h3>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="userCredit">
                         <div class="columns small-7">
                             <h4>Credito disponibile: </h4>
                         </div>
                         <div class="columns small-4">
-                            <span id="credito"></span>
+                            <h3 class="right " id="credit"></h3>
                         </div>
                     </div>
                 </div>
@@ -62,14 +62,14 @@
                         <div class="row">
                             <h4>Carte associate al tuo account:</h4>
 
-                            <div class="medium-12 columns">
-                                <a href="#" class="button radius">Carta 1</a>
+                            <div class="medium-12 columns" data-bind="cards">
+                                <a href="#" class="button radius" data-bind="number">Carta 1</a>
                             </div>
                         </div>
 
-                        <a href="#" class="button alert radius">Aggiungi nuova carta</a>
+                        <a href="#" class="button alert radius" id="addCard">Aggiungi nuova carta</a>
 
-                        <form class="panel callout hide radius">
+                        <form class="panel callout hide radius" id="addForm" action="<c:url value="/api/debitCards"/>">
                             <div class="row">
                                 <div class="medium-6 small-centered columns">
                                     <label>Nome titolare
@@ -87,12 +87,12 @@
                             <div class="row">
                                 <div class="medium-6 small-centered columns">
                                     <label>Numero carta
-                                        <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX"/>
+                                        <input type="text" name="number" placeholder="XXXX-XXXX-XXXX-XXXX"/>
                                     </label>
                                 </div>
                             </div>
                             <div class="row">
-                                <a href="#" class="button radius">Conferma</a>
+                                <button class="radius">Conferma</button>
                             </div>
                         </form>
                         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
@@ -100,8 +100,7 @@
                 </div>
 
             </div>
-            <div id="selectedCard" class="row"
-                    >
+            <div id="selectedCard" class="row hide">
                 <h4>Carta selezionata</h4>
 
                 <div class="medium-12 text-center panel callout radius columns">

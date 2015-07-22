@@ -21,13 +21,6 @@ var Tickets = {
     total: 0,
     form: $("#biglietti"),
     posti: $("#riepilogoBiglietti"),
-    successPost: function (data) {
-        Notifications.saveNotification("warning", "Completa il pagamento per prenotare i posti!");
-        //    TODO: REDIRECT A PAGINA DI PAGAMENTO
-    },
-    errorPost: function (data) {
-        //    TODO: GESTIRE ERRORE
-    },
     addSeat: function (event, column, row) {
         event.preventDefault();
 

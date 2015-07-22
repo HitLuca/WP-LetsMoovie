@@ -9,7 +9,7 @@ var Login = {
         Session.setUsername(data.username);
         if (Login.url != null) {
             Session.storage.remove("backUrl");
-            Session.redirectToUrl(url);
+            Session.redirectToUrl(Login.url);
         } else
             Session.redirectToUser();
     },
