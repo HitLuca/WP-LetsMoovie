@@ -5,6 +5,7 @@
 <html>
 <c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Cancella prenotazione"/>
+    <c:param name="css" value="/css/payment.css"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
@@ -47,5 +48,6 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+<script src="<c:url value="/javascript/deleteReservation.js"/>"></script>
 </body>
 </html>
