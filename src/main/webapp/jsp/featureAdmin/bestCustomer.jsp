@@ -43,14 +43,17 @@
 
                 <div class="medium-12 medium-centered columns">
                     <div class="row">
-                        <div class="medium-4 columns">
+                        <div class="medium-3 columns">
                             <strong>Nome</strong>
                         </div>
-                        <div class="medium-4 columns">
+                        <div class="medium-3 columns">
                             <strong>Cognome</strong>
                         </div>
-                        <div class="medium-4 columns">
+                        <div class="medium-3 columns">
                             <strong>Username</strong>
+                        </div>
+                        <div class="medium-3 columns">
+                            <strong>Totale</strong>
                         </div>
                     </div>
                     <p></p>

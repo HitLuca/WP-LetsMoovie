@@ -25,7 +25,7 @@
                                 <a href="/jsp/featureAdmin/showSeats.jsp" class="button expand radius">Posti venduti</a>
                             </div>
                             <div class="medium-8 columns">
-                                <p>Questa funzionalità consente di vedere la lista dei posti più venduti
+                                <p>Questa funzionalità consente di vedere la lista dei posti venduti
                                     per ciascuna programmazione.</p>
                             </div>
                         </div>
