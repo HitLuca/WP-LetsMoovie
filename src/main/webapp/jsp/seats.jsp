@@ -57,9 +57,6 @@
                 </div>
             </div>
             <div class="row collapse">
-                <div class="small-12 columns">
-                    <h4 class="large-text-right medium-text-center">Totale: <span id="total"></span></h4>
-                </div>
                 <div class="small-12 columns text-center">
                     <button class="radius">Procedi al pagamento</button>
                 </div>
@@ -74,6 +71,8 @@
 <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
 <script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
 <script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
+<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
+<script src="<c:url value="/lib/js/it.min.js"/>"></script>
 <script src="<c:url value="/javascript/seats.js"/>"></script>
 
 </body>
