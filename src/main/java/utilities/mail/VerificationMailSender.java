@@ -27,7 +27,7 @@ public class VerificationMailSender {
         String api_key = System.getenv("API_KEY");
         sendgrid = new SendGrid(api_user, api_key);
         try {
-            sendEmail = System.getenv("SEND_EMAIL").equals("TRUE") ? true : false;
+            sendEmail = System.getenv("SEND_EMAIL").equals("TRUE");
         } catch (Exception e) {}
     }
 
