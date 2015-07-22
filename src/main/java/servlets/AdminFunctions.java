@@ -103,6 +103,7 @@ public class AdminFunctions extends HttpServlet {
                     seatMapper.updateShowSeatStatus(id_show, id_seat, seatRequest.getStatus());
                     break;
                 }
+                //TODO:Fix
                 case "removeSeatReservation": {
                     SeatRequest seatRequest = gsonReader.fromJson(request.getReader(), SeatRequest.class);
 
