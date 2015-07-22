@@ -23,7 +23,7 @@
                 </label>
             </div>
         </div>
-        <div id="showCashing" lass="row">
+        <div id="showCashing" class="row">
             <h4>Incasso per il film selezionato:</h4>
 
             <div class="medium-6 medium-centered panel callout radius columns">
