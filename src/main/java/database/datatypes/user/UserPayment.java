@@ -33,7 +33,7 @@ public class UserPayment implements OperationResult {
         this.price = price;
     }
 
-    public int gets_row() {
+    public int getRow() {
         return s_row;
     }
 
@@ -41,7 +41,7 @@ public class UserPayment implements OperationResult {
         this.s_row = s_row;
     }
 
-    public int gets_column() {
+    public int getColumn() {
         return s_column;
     }
 

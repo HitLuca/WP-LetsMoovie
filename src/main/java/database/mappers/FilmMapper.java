@@ -187,8 +187,8 @@ public interface FilmMapper {
      * @return il titolo del film
      */
     //TODO:Test
-    @Select("SELECT film_title, year" +
-            "FROM films" +
-            "WHERE id_film=#{id_sfilm}")
+    @Select("SELECT film_title, year " +
+            "FROM films " +
+            "WHERE id_film=#{id_film}")
     FilmTitle getFilmTitle(int id_film);
 }
