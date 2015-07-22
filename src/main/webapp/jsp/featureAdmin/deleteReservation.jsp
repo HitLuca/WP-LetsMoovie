@@ -40,7 +40,7 @@
         </div>
 
         <div class="row">
-            <div class="large-12 columns">
+            <div class="medium-3 small-centered columns">
                 <a href="#" class="button radius">Conferma cancellazione</a>
             </div>
         </div>
