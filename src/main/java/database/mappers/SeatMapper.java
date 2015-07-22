@@ -53,7 +53,7 @@ public interface SeatMapper {
      * @param id_show id dello show
      * @return lista dei posti prenotati associati a id_show
      */
-    @Select("SELECT * " +
+    @Select("SELECT sr.id_seat, room_number, row, \"column\", sr.status " +
             "FROM seats s JOIN seat_reservations sr ON s.id_seat=sr.id_seat " +
             "WHERE sr.id_show=#{id_show} AND sr.status='reserved'")
     List<Seat> getShowReservedSeats(int id_show);
@@ -63,7 +63,7 @@ public interface SeatMapper {
      * @param id_show id dello show
      * @return lista dei posti rotti associati a id_show
      */
-    @Select("SELECT * " +
+    @Select("SELECT sr.id_seat, room_number, row, \"column\", sr.status " +
             "FROM seats s JOIN seat_reservations sr ON s.id_seat=sr.id_seat " +
             "WHERE sr.id_show=#{id_show} AND sr.status='broken'")
     List<Seat> getShowBrokenSeats(int id_show);
