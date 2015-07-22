@@ -111,10 +111,22 @@
 
             <div class="row">
                 <div class="medium-12 text-center columns">
-                    <a href="#" class="button radius">Conferma pagamento</a>
+                    <a href="#" class="button radius" data-reveal-id="myModal">Conferma pagamento</a>
                 </div>
             </div>
         </div>
+
+        <div id="paymentOk" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+             role="dialog">
+            <h2 id="modalTitle">Pagamento effettuato!</h2>
+
+            <p>Il pagamento è andato a buon fine, ti abbiamo appena inviato via email i biglietti
+                della prenotazione.<br>
+                Ricordati di stamparli per poter accedere alla sala al momento della proiezione.
+            </p>
+            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+
     </div>
 </div>
 <div class="push"></div>
