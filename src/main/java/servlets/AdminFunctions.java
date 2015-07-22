@@ -205,7 +205,6 @@ public class AdminFunctions extends HttpServlet {
                     sessionSql.close();
                     break;
                 }
-                //TODO:Test
                 case "getAllFilmsIncome": {
                     List<FilmIncome> filmIncomes = filmMapper.getAllFilmsIncome();
                     List<FilmIncomeResponse> filmIncomeResponses = new ArrayList<FilmIncomeResponse>();
