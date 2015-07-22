@@ -63,9 +63,11 @@ public class AdminFunctions extends HttpServlet {
 
         try {
             //BadReqExeceptionThrower.checkUserLogged(request);
+            // TODO:togliere commento
 
             //Controllo che abbia i permessi adatti
             //BadReqExeceptionThrower.checkAdminSuperAdmin(request);
+            // TODO:togliere commento
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String function = rs.getParameter();
