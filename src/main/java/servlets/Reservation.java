@@ -29,6 +29,7 @@ public class Reservation extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //riceviamo un oggetto di tipo ReservationRequest da parsare da JSON
+        //chiami la ReserervationRequestManager.add(reservationRequest) che tira eventualmente eccezioni e restituisce il codice della registrazione temporanea
         response.setContentType("application/json");
 
         Gson gsonWriter;
@@ -40,12 +41,14 @@ public class Reservation extends HttpServlet {
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.print(gsonWriter.toJson(result));
 
-        //in caso affermativo rispondo con un oggetto di tipo SuccessfullReservation dove reservationCode è la stringa di ritorno della funzione reserveSeats(reservationRequest,username);
+        //in caso affermativo rispondo con un oggetto di tipo SuccessfullReservation dove reservationCode è la stringa di ritorno della funzione reserveSeats(reservationRequest,session);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
+
+        //chiamo ReservationRequestManager tramite la funzione getReservation(string reservationCode) che ritorna un oggetto RegistrationRequest da spedire direttamente al client e tira un eccezione se il codice non è valido
         Gson gsonWriter;
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
