@@ -7,13 +7,14 @@ import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
 import database.datatypes.show.Show;
 import database.mappers.FilmMapper;
+import database.mappers.NotDecidedMapper;
 import database.mappers.ShowMapper;
-import database.mappers.UserMapper;
 import json.OperationResult;
 import json.adminData.DateRequest;
-import json.adminData.ShowData;
-import json.register.request.RegistrationRequest;
+import json.adminData.RoomList;
+import json.adminData.ShowDataList;
 import org.apache.ibatis.session.SqlSession;
+import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
@@ -25,9 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by etrunon on 22/07/15.
@@ -40,7 +39,7 @@ public class AdminData extends HttpServlet {
     private SqlSession sessionSql;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,15 +61,17 @@ public class AdminData extends HttpServlet {
             BadReqExeceptionThrower.checkEmptyString(modality);
 
             switch (modality) {
-                case ("getShows"):
+                case "getShows":
                     opRes = getShows(request);
                     break;
-                case ("getRooms"):
+                case "getRooms":
                     opRes = getRooms();
                     break;
-                case ("getReservationDetails"):
+                case "getReservationDetails":
                     opRes = getReservationDetails();
                     break;
+                default:
+                    throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
             }
 
         } catch (BadRequestException e) {
@@ -93,7 +94,7 @@ public class AdminData extends HttpServlet {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.create();
-        gsonReader = gsonBuilder.create();
+        gsonReader = new Gson();
     }
 
     private OperationResult getShows(HttpServletRequest request) throws IOException {
@@ -102,18 +103,35 @@ public class AdminData extends HttpServlet {
         ShowMapper showMapper = sessionSql.getMapper(ShowMapper.class);
         DateRequest dateRequest = gsonReader.fromJson(request.getReader(), DateRequest.class);
 
-        List<Show> showList = showMapper.getDayShows(dateRequest.getDateString());
-        List<ShowData> showDataList = showList.stream().map(s -> new ShowData(s, filmMapper)).collect(Collectors.toList());
-        //Todo vedere se sta roba va bene
-        //todo finire servlet adminData. Finire conversione show->showData e implementare altre funzionalità
-        return null;
+        List<Show> showList = showMapper.getDayShows(dateRequest.getDate());
+        ShowDataList showDataList = new ShowDataList(filmMapper);
+
+        for (Show s : showList) {
+            showDataList.addShow(s);
+        }
+
+        return showDataList;
     }
 
     private OperationResult getRooms() {
-        return null;
+
+        NotDecidedMapper notDecidedMapper = sessionSql.getMapper(NotDecidedMapper.class);
+
+        RoomList roomList = new RoomList();
+        roomList.addRooms(notDecidedMapper.getRoomList());
+
+        return roomList;
     }
 
     private OperationResult getReservationDetails() {
+
+        /*
+            Devo ritornare il numero di posti prenotati seguito dalla lista di tutti i sedili.
+            In più aggiungo film data spettacolo e sala.
+
+         */
+
+
         return null;
     }
 }

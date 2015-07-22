@@ -4,12 +4,30 @@ import com.google.gson.annotations.Expose;
 import database.datatypes.show.Show;
 import database.mappers.FilmMapper;
 import json.OperationResult;
-import org.apache.ibatis.session.SqlSession;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by etrunon on 22/07/15.
  */
-public class ShowData implements OperationResult {
+public class ShowDataList implements OperationResult {
+
+    private FilmMapper filmMapper;
+    @Expose
+    List<ShowData> showDataList;
+
+    public ShowDataList(FilmMapper filmMapper) {
+        this.filmMapper = filmMapper;
+        this.showDataList = new ArrayList<>();
+    }
+
+    public void addShow(Show s) {
+        showDataList.add(new ShowData(s, filmMapper));
+    }
+}
+
+class ShowData {
 
     @Expose
     private int id_show;
