@@ -28,7 +28,7 @@
                                 <span class="postfix">%</span>
                             </div>
                             <div class="small-3 columns">
-                                <a href="#" class="button postfix">Go</a>
+                                <button class="button postfix">Vai</button>
                             </div>
                         </div>
                     </div>

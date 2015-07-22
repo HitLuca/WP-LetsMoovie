@@ -66,7 +66,7 @@
             </div>
             <div class="row collapse">
                 <div class="medium-3 small-centered columns">
-                    <a href="#" class="button radius">Conferma cambiamento</a>
+                    <button class="button radius">Conferma cambiamento</button>
                 </div>
             </div>
         </div>

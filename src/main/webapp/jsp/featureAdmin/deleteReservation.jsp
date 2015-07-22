@@ -9,6 +9,7 @@
 </c:url>
 <c:import url="${url}"/>
 <body>
+<link rel="stylesheet" href="<c:url value="/css/deleteReservation.css"/>">
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">
@@ -25,7 +26,7 @@
                                         <input type="text">
                                     </div>
                                     <div class="small-4 columns">
-                                        <a href="#" class="button postfix">Go</a>
+                                        <button class="button postfix">Vai</button>
                                     </div>
                                 </div>
                             </div>
@@ -39,9 +40,9 @@
                     <c:import url="/jsp/template/riepilogoBiglietto.jsp"></c:import>
                 </div>
             </div>
-            <div class="row">
+            <div id="confirm" class="row">
                 <div class="medium-3 small-centered columns">
-                    <a href="#" class="button radius">Conferma cancellazione</a>
+                    <button class="button radius">Conferma cancellazione</button>
                 </div>
             </div>
         </div>
