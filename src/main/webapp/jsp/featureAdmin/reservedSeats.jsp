@@ -17,7 +17,7 @@
                     <h4>Seleziona una sala dalla lista per visualizzarne i posti venduti</h4>
 
                     <div class="row collapse">
-                        <div class="medium-6 medium-centered columns">
+                        <div class="medium-6 small-centered columns">
                             <label>Sale cinema
                                 <select>
                                     <option><span id="roomNumber"></span></option>
@@ -25,6 +25,23 @@
                             </label>
                         </div>
                     </div>
+
+                    <div class="row collapse">
+                        <div class="medium-6 small-centered columns">
+                            <div class="row collapse">
+                                <div class="small-8 columns">
+                                    <input type="number" min="1" max="100">
+                                </div>
+                                <div class="small-1 columns">
+                                    <span class="postfix">%</span>
+                                </div>
+                                <div class="small-3 columns">
+                                    <a href="#" class="button postfix">Go</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <h4>Mappa dei posti più venduti nella sala selezionata</h4>
                 </div>
             </div>

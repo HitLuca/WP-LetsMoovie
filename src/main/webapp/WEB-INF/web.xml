@@ -108,6 +108,10 @@
         <servlet-name>listinoPrezzi</servlet-name>
         <jsp-file>/jsp/listinoPrezzi.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>updateStatus</servlet-name>
+        <jsp-file>/jsp/updateStatus.jsp</jsp-file>
+    </servlet>
 
 
     <!-- MAPPING JPS-->
@@ -194,5 +198,9 @@
     <servlet-mapping>
         <servlet-name>listinoPrezzi</servlet-name>
         <url-pattern>/listinoPrezzi</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateStatus</servlet-name>
+        <url-pattern>/updateStatus</url-pattern>
     </servlet-mapping>
 </web-app>
