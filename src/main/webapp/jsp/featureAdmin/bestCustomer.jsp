@@ -12,13 +12,12 @@
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row collapse">
-        <div class="large-12 columns">
+        <div class="small-12 columns">
 
             <h4>Inserisci una percentuale per visualizzare la lista dei clienti che
                 hanno comprato più biglietti.</h4>
 
             <form action="" method="post">
-
                 <div class="row">
                     <div class="small-10 medium-7 large-5 small-centered columns">
                         <div class="row collapse">
@@ -29,7 +28,7 @@
                                 <span class="postfix">%</span>
                             </div>
                             <div class="small-3 columns">
-                                <a href="#" class="button postfix">Go</a>
+                                <button class="button postfix">Vai</button>
                             </div>
                         </div>
                     </div>
