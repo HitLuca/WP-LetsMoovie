@@ -37,7 +37,6 @@
         <c:import url="/jsp/template/prezzi.jsp"/>
     </div>
 
-
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>

@@ -8,10 +8,28 @@
 </c:url>
 <c:import url="${url}"/>
 <body>
+<link rel="stylesheet" href="<c:url value="/css/filmCashing.css"/>">
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
-    <div id="content" class="row">
-        <%--Insert content here--%>
+    <div id="content" class="row collapse">
+        <div class="row">
+            <h4>Seleziona un film dalla lista per visualizzarne l'incasso</h4>
+
+            <div class="medium-6 medium-centered columns">
+                <label>Lista film
+                    <select>
+                        <option><span id="nomeFilm"></span></option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div id="showCashing" lass="row">
+            <h4>Incasso per il film selezionato:</h4>
+
+            <div class="medium-6 medium-centered panel callout radius columns">
+                <h2 align="center"><span id="incasso">1000000€</span></h2>
+            </div>
+        </div>
     </div>
     <div class="push"></div>
 </div>
