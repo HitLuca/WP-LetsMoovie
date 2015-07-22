@@ -1,5 +1,7 @@
 "use strict";
 
+numeral.language('it');
+
 var Reservation = {
     url: "/api/reservation/",
     getReservationInfo: function (id) {
@@ -11,8 +13,21 @@ var Reservation = {
     },
     showTicketsInfo: function (data) {
         var template = $("#listaPostiScelti");
-
-        Transparency.render(template[0], data.seats, {}, {debug: true});
+        var directives = {
+            seats: {
+                price: {
+                    text: function () {
+                        return numeral(this.price).format('0,0.00 $');
+                    }
+                }
+            },
+            total: {
+                text: function () {
+                    return numeral(this.total).format('0,0.00 $');
+                }
+            }
+        };
+        Transparency.render(template[0], data, directives);
     },
     showTicketsError: function (data) {
 
