@@ -180,4 +180,17 @@ public interface FilmMapper {
             "FROM shows NATURAL JOIN prices NATURAL JOIN payments " +
             "GROUP BY id_film")
     List<FilmIncome> getAllFilmsIncome();
+
+    //TODO:Test
+
+    /**
+     * Dato un id di un film ritorna il suo titolo
+     *
+     * @param id_film
+     * @return
+     */
+    @Select("SELECT film_title " +
+            "FROM films " +
+            "WHERE id_film = #{id_film}")
+    String getFilmName(int id_film);
 }
