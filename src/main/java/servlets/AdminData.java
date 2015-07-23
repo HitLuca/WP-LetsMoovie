@@ -58,7 +58,7 @@ public class AdminData extends HttpServlet {
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String modality = rs.getParameter();
             //Check stringa vuota
-            BadReqExeceptionThrower.checkEmptyString(modality);
+            BadReqExeceptionThrower.checkNullInput(modality);
 
             switch (modality) {
                 case "getShows":

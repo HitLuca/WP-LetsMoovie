@@ -8,7 +8,6 @@ import database.DatabaseConnection;
 import database.mappers.UserMapper;
 import json.OperationResult;
 import json.debitCards.DebitCardResponse;
-import json.register.request.RegistrationRequest;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
@@ -48,6 +47,7 @@ public class DebitCard extends HttpServlet {
         sessionSql = DatabaseConnection.getFactory().openSession(true);
         UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
         response.setContentType("application/json");
+
         OperationResult opRes = null;
 
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -61,7 +61,7 @@ public class DebitCard extends HttpServlet {
             json.debitCards.DebitCard debitCard = gsonReader.fromJson(request.getReader(), json.debitCards.DebitCard.class);
 
             String newCardId = debitCard.getNumber();
-            BadReqExeceptionThrower.checkEmptyString(newCardId);
+            BadReqExeceptionThrower.checkNullInput(newCardId);
 
             HttpSession session = request.getSession();
             List<String> presentCards = userMapper.getCreditCards(session.getAttribute("username").toString());
@@ -102,7 +102,7 @@ public class DebitCard extends HttpServlet {
             String nick = rs.getParameter();
 
             //Controllo che la stringa nell'url non sia vuota
-            BadReqExeceptionThrower.checkEmptyString(nick);
+            BadReqExeceptionThrower.checkNullInput(nick);
             //Check se l'utente è USER e non sta cercando sè stesso. (Prob sicurezza)
             BadReqExeceptionThrower.checkUserAuthorization(request, nick);
 

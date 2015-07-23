@@ -8,14 +8,10 @@ import json.OperationResult;
  */
 public class UserPayment implements OperationResult {
 
-    @Expose
     private String ticket_type;
-    @Expose
     private float price;
-    @Expose
-    private int s_row;
-    @Expose
-    private int s_column;
+    private int row;
+    private int column;
 
     public String getTicket_type() {
         return ticket_type;
@@ -34,18 +30,18 @@ public class UserPayment implements OperationResult {
     }
 
     public int getRow() {
-        return s_row;
+        return row;
     }
 
     public void sets_row(int s_row) {
-        this.s_row = s_row;
+        this.row = s_row;
     }
 
     public int getColumn() {
-        return s_column;
+        return column;
     }
 
     public void sets_column(int s_column) {
-        this.s_column = s_column;
+        this.column = s_column;
     }
 }

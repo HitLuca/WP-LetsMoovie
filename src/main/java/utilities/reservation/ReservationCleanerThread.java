@@ -45,7 +45,7 @@ public class ReservationCleanerThread extends Thread{
 
             int validSeats = 0;
 
-            for(Seat reservedSeat:seatMapper.getShowFreeSeat(reservation.getReservationRequest().getId_show()))
+            for (Seat reservedSeat : seatMapper.getShowFreeSeat(reservation.getReservationRequest().getId_show()))
             {
                 for(SeatReservation requestedSeat:reservation.getReservationRequest().getReservation())
                 {
