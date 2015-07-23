@@ -10,3 +10,7 @@
 #selectedCard {
     margin-bottom: 1rem;
 }
+
+.biglietto.panel.callout {
+    margin-bottom: 0.2rem;
+}

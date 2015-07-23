@@ -18,13 +18,13 @@ import utilities.mail.MailCleanerThreadFactory;
 import utilities.mail.PasswordRecoveryCodeCheck;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -94,7 +94,7 @@ public class SetNewPassword extends HttpServlet {
             setPasswordOperation = new BadRequestException();
             response.setStatus(400);
         }
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
         outputStream.print(gsonWriter.toJson(setPasswordOperation));
         sessionSql.close();
     }
@@ -109,7 +109,7 @@ public class SetNewPassword extends HttpServlet {
         passwordRecoveryCodeCheck = new PasswordRecoveryCodeCheck(mailCleanerThread);
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gsonWriter = gsonBuilder.create();
+        gsonWriter = gsonBuilder.disableHtmlEscaping().create();
         gsonReader = new Gson();
     }
 

@@ -5,10 +5,10 @@
 <html>
 <c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Scheda Film"/>
+    <c:param name="css" value="/css/film.css"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
-<link rel="stylesheet" href="<c:url value="/css/film.css"/>">
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">
@@ -32,6 +32,18 @@
                             </div>
                             <div class="medium-10 columns">
                                 <span data-bind="year"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="genere" class="row">
+                    <div class="medium-12 columns">
+                        <div class="row">
+                            <div class="medium-2 columns">
+                                <strong>Genere</strong>
+                            </div>
+                            <div class="medium-10 columns" data-bind="genres">
+                                <span data-bind="genre"></span>
                             </div>
                         </div>
                     </div>

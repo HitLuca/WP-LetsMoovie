@@ -17,17 +17,12 @@ var Map = {
     }
 };
 
+numeral.language("it");
+
 var Tickets = {
     total: 0,
     form: $("#biglietti"),
     posti: $("#riepilogoBiglietti"),
-    successPost: function (data) {
-        Notifications.saveNotification("warning", "Completa il pagamento per prenotare i posti!");
-        //    TODO: REDIRECT A PAGINA DI PAGAMENTO
-    },
-    errorPost: function (data) {
-        //    TODO: GESTIRE ERRORE
-    },
     addSeat: function (event, column, row) {
         event.preventDefault();
 
@@ -45,7 +40,7 @@ var Tickets = {
         posto.attr("data-position", column + "" + row);
         posto.find("[data-seat='column']").attr("value", column);
         posto.find("[data-seat='row']").attr("value", row);
-
+        TicketsType.showPrice(posto);
         Tickets.posti.append(posto);
     },
     removeSeat: function (event, column, row) {
@@ -123,7 +118,47 @@ var Reservation = {
     }
 };
 
+var TicketsType = {
+    url: "/api/tickets",
+    init: function () {
+        var request = $.ajax({
+            url: TicketsType.url
+        });
+        request.done(TicketsType.successGet);
+    },
+    successGet: function (data) {
+        var lista = $("#ticketsList");
+        var directives = {
+            tickets: {
+                ticket_type: {
+                    html: function () {
+                        return this.ticket_type;
+                    },
+                    value: function () {
+                        return this.ticket_type;
+                    },
+                    price: function () {
+                        return numeral(this.price).format('0,0.00 $');
+                    }
+                }
+            }
+        };
+        Transparency.render(lista[0], data, directives);
+    },
+    showPrice: function (posto) {
+        var select = $(posto).find(".ticketChoice");
+        var price = $(posto).find("#price");
+        price.html(select.find("option:selected").attr("price"));
+        select.change(function (event) {
+            var selected = $(this).find("option:selected");
+            var value = selected.attr("price");
+            price.html(value);
+        })
+    }
+};
+
 $(function () {
+    TicketsType.init();
     Seats.init();
     Forms.PostForm("biglietti", Reservation.successPost, Reservation.errorPost, false);
     $("#resettaVisuale").on("click", function (event) {

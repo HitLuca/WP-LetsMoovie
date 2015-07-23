@@ -4,6 +4,10 @@ h2, .riga {
     font-weight: bold;
 }
 
-.intestazione1 {
+#tableHeader {
     background-color: lightgrey;
+}
+
+#singleTicket {
+    margin-top: 1rem;
 }

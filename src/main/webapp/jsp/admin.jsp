@@ -25,7 +25,7 @@
                                 <a href="/jsp/featureAdmin/showSeats.jsp" class="button expand radius">Posti venduti</a>
                             </div>
                             <div class="medium-8 columns">
-                                <p>Questa funzionalità consente di vedere la lista dei posti più venduti
+                                <p>Questa funzionalità consente di vedere la lista dei posti venduti
                                     per ciascuna programmazione.</p>
                             </div>
                         </div>
@@ -48,6 +48,16 @@
                             <div class="medium-8 columns">
                                 <p>Questa funzionalità consente di cancellare una prenotazione
                                     per una proiezione non ancora iniziata.</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="medium-4 columns">
+                                <a href="/jsp/featureAdmin/updateStatus.jsp" class="button expand radius">
+                                    Modifica posto</a>
+                            </div>
+                            <div class="medium-8 columns">
+                                <p>Questa funzionalità consente di modificare lo stato di un posto.</p>
                             </div>
                         </div>
                     </div>
