@@ -13,7 +13,7 @@ import java.util.List;
 public class ReservationRequest implements OperationResult {
 
     @Expose
-    int id_show;
+    int show;
     @Expose
     List<SeatReservation> reservation;
 
@@ -22,7 +22,7 @@ public class ReservationRequest implements OperationResult {
     }
 
     public int getId_show() {
-        return id_show;
+        return show;
     }
 
     public List<SeatReservation> getReservation() {
@@ -30,7 +30,7 @@ public class ReservationRequest implements OperationResult {
     }
 
     public void setId_show(int id_show) {
-        this.id_show = id_show;
+        this.show = id_show;
     }
 
     public void addSeat(int row, int col, String type) {

@@ -59,7 +59,7 @@ public class Reservation extends HttpServlet {
         */
 
         try {
-            //BadReqExeceptionThrower.checkUserLogged(request);
+            BadReqExeceptionThrower.checkUserLogged(request);
 
             ReservationRequest rr = gsonReader.fromJson(request.getReader(), ReservationRequest.class);
 
@@ -108,7 +108,7 @@ public class Reservation extends HttpServlet {
         */
         try {
 
-            //BadReqExeceptionThrower.checkUserLogged(request);
+            BadReqExeceptionThrower.checkUserLogged(request);
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String code = rs.getParameter();
@@ -138,8 +138,5 @@ public class Reservation extends HttpServlet {
         gsonWriter = gsonBuilder.create();
         gsonReader = new Gson();
         temporaryResManager = new TemporaryReservationManager();
-
     }
-
-    //nella init bisogna chiamare come per le mail Temporary reservation
 }
