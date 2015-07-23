@@ -71,6 +71,6 @@
 <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
 <script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
 <script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
-<script src="/javascript/reservedSeats.js"></script>
+<script src="/javascript/featureAdmin/reservedSeats.js"></script>
 </body>
 </html

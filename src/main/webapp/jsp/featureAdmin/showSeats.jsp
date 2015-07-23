@@ -60,7 +60,7 @@
 <script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
 <script src="/lib/js/pikaday.js"></script>
 <script src="/lib/js/pikaday.jquery.js"></script>
-<script src="/javascript/showSeats.js"></script>
+<script src="/javascript/featureAdmin/showSeats.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.css" rel="stylesheet"/>
 </body>

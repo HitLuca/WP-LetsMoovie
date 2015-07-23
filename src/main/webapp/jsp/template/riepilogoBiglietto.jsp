@@ -1,8 +1,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="panel callout radius row biglietto text-center">
-    <div class="medium-1 columns hide">
-        <input type="checkbox">
+<div class="panel callout radius row biglietto text-center" id="posto">
+    <div class="medium-1 columns hide checkbox-biglietto">
+        <input name="seatList[selected]" type="checkbox" value="true" data-unchecked-value="false">
+        <input type="hidden" name="seatList[s_row]">
+        <input type="hidden" name="seatList[s_column]">
     </div>
     <div class="medium-3 columns" id="posizione">
         <div class="row collapse">
@@ -33,6 +35,5 @@
                 <h4 id="price"></h4>
             </div>
         </div>
-
     </div>
 </div>
