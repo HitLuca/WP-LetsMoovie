@@ -14,9 +14,7 @@ import java.io.IOException;
  */
 public class QrCodeCreator {
 
-
-    public ByteArrayOutputStream doSOmething() {
-
-        return QRCode.from("Hello World").to(ImageType.JPG).stream();
+    public ByteArrayOutputStream doSOmething(String toBeCodified) {
+        return QRCode.from(toBeCodified).to(ImageType.JPG).stream();
     }
 }
