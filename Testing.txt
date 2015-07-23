@@ -18,6 +18,13 @@ Descrizione:Togliere Let's Moovie dala titolo
 URL: http://localhost:8080/team
 Descrizione: Sotto ogni nome mettere il ruolo nel progetto
 
+Luca Bosotti backend developer
+Alessandro Bacchiega frontend developer
+Carlo Mion frontend developer
+Luca Alberigo frontend developer
+Marco Federici backend & frontend developer
+Luca Simonetto database & backend developer
+
 6-Inserire pulsante Home nella navbar (?)
 URL:/
 Descrizione: Cliccare sul nome del sito non è abbastanza immediato
@@ -34,7 +41,7 @@ Descrizione: Se metto dati non validi va in loop
 URL: http://localhost:8080/login
 Descrizione: Se voglio prenotare un posto e non son loggato, vengo mandato alla pagina di login, ma al termine anziché alla prenotazione posti vengo mandato all'area utente
 
-10-Mettere il trailer del film?
+10-Mettere il trailer del film (?)
 URL: http://localhost:8080/seats/1017
 Descrizione: Aggiungere il trailer nella pagina del film sarebbe bellino bellino
 

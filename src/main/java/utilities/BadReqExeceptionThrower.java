@@ -1,5 +1,6 @@
 package utilities;
 
+import json.adminFunctions.request.DeleteReservationRequest;
 import types.enums.ErrorCode;
 import types.enums.Role;
 import types.exceptions.BadRequestException;
@@ -145,6 +146,12 @@ public class BadReqExeceptionThrower {
     public static void checkPaymentAmount(float residualCredit, int totalPaid) throws BadRequestException {
         if (residualCredit < totalPaid) {
             throw new BadRequestException(ErrorCode.NOT_ENOUGH_CREDIT);
+        }
+    }
+
+    public static void checkDeleteReservation(DeleteReservationRequest drr) throws BadRequestException {
+        if (drr.getSeatList() == null && drr.getCode().equals("")) {
+            throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
         }
     }
 }
