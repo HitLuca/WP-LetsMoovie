@@ -9,12 +9,12 @@
     </div>
     <div class="medium-4 columns ticketChoice">
         <label id="ticketsList">Tipologia biglietto
-            <select name="seats[][type]" data-bind="tickets">
+            <select name="seats[][type]" data-bind="tickets" disabled>
                 <option value="" data-bind="ticket_type"></option>
             </select>
         </label>
-        <input name="seats[][column]" type="hidden" data-seat="column"/>
-        <input name="seats[][row]" type="hidden" data-seat="row"/>
+        <input name="seats[][column]" type="hidden" data-seat="column" disabled/>
+        <input name="seats[][row]" type="hidden" data-seat="row" disabled/>
         <span class="info radius label price-tag">Prezzo</span><h4 class="right" id="price"></h4>
     </div>
 </div>

@@ -38,8 +38,9 @@ var Tickets = {
         posto.find("#columnNumber").html(column + 1);
         posto.find("#rowNumber").html(row + 1);
         posto.attr("data-position", column + "" + row);
-        posto.find("[data-seat='column']").attr("value", column);
-        posto.find("[data-seat='row']").attr("value", row);
+        posto.find("select").removeAttr("disabled");
+        posto.find("[data-seat='column']").attr("value", column).removeAttr("disabled");
+        posto.find("[data-seat='row']").attr("value", row).removeAttr("disabled");
         TicketsType.showPrice(posto);
         Tickets.posti.append(posto);
     },

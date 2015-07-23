@@ -63,7 +63,7 @@
                             <h4>Carte associate al tuo account:</h4>
 
                             <div class="medium-12 columns" data-bind="cards">
-                                <a href="#" class="button radius" data-bind="number">Carta 1</a>
+                                <button class="radius" data-bind="number"></button>
                             </div>
                         </div>
 
