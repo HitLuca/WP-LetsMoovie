@@ -24,7 +24,7 @@
                 </div>
             </div>
             <form action="<c:url value="/api/setNewPassword"/>" id="setNewPassoword" data-abide="ajax">
-                <input type="hidden" name="verificationCode" value="${param.verificationCode}">
+                <input type="hidden" name="code" value="${param.verificationCode}">
 
                 <div class="row">
                     <div class="medium-12 columns">
