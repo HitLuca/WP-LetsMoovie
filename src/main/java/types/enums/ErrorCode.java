@@ -16,7 +16,8 @@ public enum ErrorCode {
     INVALID_MAIL(9),
     NOT_LOGGED_IN(10),
     WRONG_CONFIRMATION_CODE(11),
-    WRONG_RESERVATION_CODE(12);
+    WRONG_RESERVATION_CODE(12),
+    NOT_ENOUGH_CREDIT(13);
 
     private int value;
 

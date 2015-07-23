@@ -134,4 +134,17 @@ public class BadReqExeceptionThrower {
         if (o == null)
             throw new BadRequestException(ErrorCode.EMPTY_REQ);
     }
+
+    /**
+     * Funzione che lancia un'eccezione in caso il credito non sia sufficiente a pagare il totale
+     *
+     * @param residualCredit
+     * @param totalPaid
+     * @throws BadRequestException
+     */
+    public static void checkPaymentAmount(float residualCredit, int totalPaid) throws BadRequestException {
+        if (residualCredit < totalPaid) {
+            throw new BadRequestException(ErrorCode.NOT_ENOUGH_CREDIT);
+        }
+    }
 }

@@ -11,6 +11,15 @@ public class Payment {
     private int id_show;
     private String username;
 
+    public Payment(String payment_date, String payment_time, String ticket_type, int id_seat, int id_show, String username) {
+        this.payment_date = payment_date;
+        this.payment_time = payment_time;
+        this.ticket_type = ticket_type;
+        this.id_seat = id_seat;
+        this.id_show = id_show;
+        this.username = username;
+    }
+
     public String getPayment_date() {
         return payment_date;
     }

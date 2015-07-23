@@ -107,7 +107,6 @@ public interface ShowMapper {
      * @param id_show id dello show
      * @return numero della stanza associata a id_show
      */
-    //TODO:Test
     @Select("SELECT room_number FROM shows WHERE id_show=#{id_Show}")
     int getRoomNumber(int id_show);
 
