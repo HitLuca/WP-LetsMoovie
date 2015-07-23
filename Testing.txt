@@ -30,22 +30,34 @@ Descrizione: E' bruttina, la dimensione va bene
 URL: http://localhost:8080/login
 Descrizione: Se metto dati non validi va in loop
 
+9-Sistemare il redirect del login
+URL: http://localhost:8080/login
+Descrizione: Se voglio prenotare un posto e non son loggato, vengo mandato alla pagina di login, ma al termine anziché alla prenotazione posti vengo mandato all'area utente
 
-URL:
-Descrizione:
+10-Mettere il trailer del film?
+URL: http://localhost:8080/seats/1017
+Descrizione: Aggiungere il trailer nella pagina del film sarebbe bellino bellino
 
+11-Legenda posti nella prenotazione della sala
+URL: http://localhost:8080/seats/*
+Descrizione: Aggiungere una legenda per capire a cosa sono associati i vari colori, sarebbe fico fare 3 screenshot e metterli a fianco in piccolino
 
-URL:
-Descrizione:
+12-Aggiungere pulsante tipo Informazioni film
+URL:http://localhost:8080/
+Descrizione: Non è immediato il fatto che cliccando sul poster del film vedo le sue informazioni, meglio aggiungere un pulsante
 
+13-Togliere il bold dai pulsanti in fondo
+URL: http://localhost:8080/film/*
+Descrizione: Sembrano più belli senza il bold
 
-URL:
-Descrizione:
+14-La pagina di pagamento va completata
+URL: http://localhost:8080/payment/*
+Descrizione: Va finita la pagina
 
+15-Refresh quando viene aggiunta una carta di credito
+URL: http://localhost:8080/payment/*
+Descrizione: Quando aggiungo una carta di credito non posso selezionarla subito, ma devo chiudere e riaprire il form
 
-URL:
-Descrizione:
-
-
-URL:
-Descrizione:
+16-Aggiungere una carta una sola volta
+URL: http://localhost:8080/payment/*
+Descrizione: Quando aggiungo una carta e riapro la form, essa è ancora in modalità aggiungi carta di credito, va fixato
