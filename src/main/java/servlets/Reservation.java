@@ -5,9 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
+import database.mappers.NotDecidedMapper;
 import database.mappers.UserMapper;
 import json.OperationResult;
 import json.reservation.request.ReservationRequest;
+import json.reservation.response.ReservationDetail;
 import json.reservation.response.SuccessfullReservation;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
@@ -100,7 +102,7 @@ public class Reservation extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         SqlSession sessionSql = DatabaseConnection.getFactory().openSession();
-        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
+        NotDecidedMapper notDecidedMapper = sessionSql.getMapper(NotDecidedMapper.class);
 
         OperationResult result = null;
 
@@ -117,7 +119,8 @@ public class Reservation extends HttpServlet {
             BadReqExeceptionThrower.checkNullInput(code);
 
             TemporaryReservationManager t = new TemporaryReservationManager();
-            result = t.getReservation(code);
+
+            result = new ReservationDetail(t.getReservation(code), notDecidedMapper);
 
         } catch (BadRequestException e) {
             result = e;
