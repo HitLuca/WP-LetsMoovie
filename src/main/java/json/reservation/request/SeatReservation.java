@@ -9,49 +9,49 @@ import utilities.InputValidator.Regex;
  */
 public class SeatReservation {
     @Expose
-    String row;
+    String s_row;
     @Expose
-    String column;
+    String s_column;
     @Expose
-    String type;
+    String tycket_type;
 
-    public SeatReservation(String row, String col, String type) {
-        this.row = row;
-        this.column = col;
-        this.type = type;
+    public SeatReservation(String s_row, String col, String tycket_type) {
+        this.s_row = s_row;
+        this.s_column = col;
+        this.tycket_type = tycket_type;
     }
 
-    @toSanitize(name = "row", reg = Regex.INTEGER)
+    @toSanitize(name = "s_row", reg = Regex.INTEGER)
     public String getRow() {
-        return row;
+        return s_row;
     }
 
-    @toSanitize(name = "column", reg = Regex.INTEGER)
+    @toSanitize(name = "s_column", reg = Regex.INTEGER)
     public String getColumn() {
-        return column;
+        return s_column;
     }
 
     public int getIntRow() {
-        return Integer.valueOf(row);
+        return Integer.valueOf(s_row);
     }
 
     public int getIntColumn() {
-        return Integer.valueOf(column);
+        return Integer.valueOf(s_column);
     }
 
-    public void setRow(int row) {
-        this.row = String.valueOf(row);
+    public void setRow(int s_row) {
+        this.s_row = String.valueOf(s_row);
     }
 
-    public void setColumn(int column) {
-        this.column = String.valueOf(column);
+    public void setColumn(int s_column) {
+        this.s_column = String.valueOf(s_column);
     }
 
     public String getTicket_type() {
-        return type;
+        return tycket_type;
     }
 
-    public void setTicket_type(String type) {
-        this.type = type;
+    public void setTicket_type(String tycket_type) {
+        this.tycket_type = tycket_type;
     }
 }
