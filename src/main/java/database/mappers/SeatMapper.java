@@ -170,7 +170,6 @@ public interface SeatMapper {
      * @param id_seat id del posto
      * @return stato del posto id_seat
      */
-    //TODO:Test
     @Select("SELECT status " +
             "FROM seats " +
             "WHERE id_seat=#{id_seat}")
