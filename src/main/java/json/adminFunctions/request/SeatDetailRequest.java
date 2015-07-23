@@ -7,19 +7,19 @@ import utilities.InputValidator.Regex;
  * Created by hitluca on 23/07/15.
  */
 public class SeatDetailRequest {
-    private int row;
-    private int column;
+    private int s_row;
+    private int s_column;
     private String ticket_type;
     private float price;
 
     @toSanitize(name = "row", reg = Regex.ID)
-    public int getRow() {
-        return row;
+    public int getS_row() {
+        return s_row;
     }
 
     @toSanitize(name = "row", reg = Regex.ID)
-    public int getColumn() {
-        return column;
+    public int getS_column() {
+        return s_column;
     }
 
     public String getTicket_type() {
@@ -31,12 +31,12 @@ public class SeatDetailRequest {
         return price;
     }
 
-    public void setRow(int row) {
-        this.row = row;
+    public void setS_row(int row) {
+        this.s_row = row;
     }
 
-    public void setColumn(int column) {
-        this.column = column;
+    public void setS_column(int column) {
+        this.s_column = column;
     }
 
     public void setTicket_type(String ticket_type) {

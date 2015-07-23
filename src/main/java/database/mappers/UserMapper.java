@@ -218,7 +218,7 @@ public interface UserMapper {
      * @return lista di posti con relativo prezzo e tipo di biglietto
      */
     //TODO:Test
-    @Select("SELECT row, \"column\", ticket_type, price " +
+    @Select("SELECT row as s_row, \"column\" as s_column, ticket_type, price " +
             "FROM payments NATURAL JOIN prices NATURAL JOIN seats " +
             "WHERE payment_date=#{show_date}::DATE AND payment_time=#{show_time}::TIME AND id_show=#{id_show} AND username=#{username}")
     List<SeatDetailRequest> getReservationBlock(@Param("show_date") String show_date, @Param("show_time") String show_time, @Param("id_show") int id_show, @Param("username") String username);

@@ -227,8 +227,8 @@ public class AdminFunctions extends HttpServlet {
                         for (SeatDetailRequest sdr : seatDetailRequests) {
                             //OggettoConLeCose oggetto = ClasseMagica.dammiLeCose(code); username, data, ora, id_show
                             int room_number = showMapper.getRoomNumber(3);
-                            int row = sdr.getRow();
-                            int column = sdr.getColumn();
+                            int row = sdr.getS_row();
+                            int column = sdr.getS_column();
                             int id_seat = seatMapper.getIdSeat(room_number, row, column);
                             Payment payment = new Payment("show_date", "show_time", sdr.getTicket_type(), id_seat, 1, "username");
                             userMapper.deletePayment(payment);
