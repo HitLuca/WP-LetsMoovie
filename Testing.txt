@@ -1,0 +1,51 @@
+1-Dato da togliere
+URL: http://localhost:8080/info
+Descrizione: Togliere Ecco alcune informazioni su di noi che potrebbero servirti:
+
+2-Modificare descrizione cookies
+URL: http://localhost:8080/privacy
+Descrizione: Questo sito fa uso di cookie per migliorare l’esperienza di navigazione degli utenti e per raccogliere informazioni sull’utilizzo del sito stesso. Utilizziamo sia cookie tecnici sia cookie di parti terze per inviare messaggi promozionali sulla base dei comportamenti degli utenti. Può conoscere i dettagli consultando la nostra privacy policy qui. Proseguendo nella navigazione si accetta l’uso dei cookie; in caso contrario è possibile abbandonare il sito.
+
+3-Orari cinema errati
+URL:http://localhost:8080/info
+Descrizione: Il cinema apre alle 15:00 e chiude al termine del film delle 24:00 (~02:00)
+
+4-Cambiare testo
+URL:http://localhost:8080/info
+Descrizione:Togliere Let's Moovie dala titolo
+
+5-Aggiungere i ruoli del team
+URL: http://localhost:8080/team
+Descrizione: Sotto ogni nome mettere il ruolo nel progetto
+
+6-Inserire pulsante Home nella navbar (?)
+URL:/
+Descrizione: Cliccare sul nome del sito non è abbastanza immediato
+
+7-Rifare la pagina prezzi
+URL: http://localhost:8080/listinoPrezzi
+Descrizione: E' bruttina, la dimensione va bene
+
+8-Sistemare login
+URL: http://localhost:8080/login
+Descrizione: Se metto dati non validi va in loop
+
+
+URL:
+Descrizione:
+
+
+URL:
+Descrizione:
+
+
+URL:
+Descrizione:
+
+
+URL:
+Descrizione:
+
+
+URL:
+Descrizione:
