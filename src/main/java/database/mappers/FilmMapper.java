@@ -3,6 +3,7 @@ package database.mappers;
 import database.datatypes.film.Actor;
 import database.datatypes.film.FilmData;
 import database.datatypes.film.FilmIncome;
+import database.datatypes.film.FilmTitle;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -180,4 +181,13 @@ public interface FilmMapper {
             "FROM shows NATURAL JOIN prices NATURAL JOIN payments " +
             "GROUP BY id_film")
     List<FilmIncome> getAllFilmsIncome();
+
+    /**
+     * @param id_film id del film
+     * @return il titolo del film
+     */
+    @Select("SELECT film_title, year " +
+            "FROM films " +
+            "WHERE id_film=#{id_film}")
+    FilmTitle getFilmTitle(int id_film);
 }

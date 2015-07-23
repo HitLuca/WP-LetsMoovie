@@ -193,4 +193,12 @@ public interface UserMapper {
     //TODO:Test
     @Insert("INSERT INTO user_credit_cards (credit_card_number, username) VALUES (#{credit_card_number}, #{username})")
     void insertCreditCard(@Param("credit_card_number") String credit_card_number, @Param("username") String username);
+
+    /**
+     * @return numero totale di utenti
+     */
+    //TODO:Test
+    @Select("SELECT COUNT(*) " +
+            "FROM users")
+    int getUserCountForRank();
 }

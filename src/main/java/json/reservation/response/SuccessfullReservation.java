@@ -8,7 +8,8 @@ import json.OperationResult;
  */
 public class SuccessfullReservation implements OperationResult {
 
-    @Expose String reservationCode;
+    @Expose
+    private String reservationCode;
 
     public SuccessfullReservation(String reservationCode) {
         this.reservationCode = reservationCode;

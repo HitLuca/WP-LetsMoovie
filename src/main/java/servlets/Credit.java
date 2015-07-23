@@ -5,12 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
-import database.datatypes.other.Ticket;
-import database.datatypes.user.UserPayment;
-import database.mappers.NotDecidedMapper;
 import database.mappers.UserMapper;
 import json.OperationResult;
-import json.tickets.TicketResponse;
 import json.userPersonalData.UserCreditResponse;
 import org.apache.ibatis.session.SqlSession;
 import types.exceptions.BadRequestException;
@@ -24,7 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by etrunon on 21/07/15.
@@ -53,7 +48,7 @@ public class Credit extends HttpServlet {
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             //Check se il parametro inviato era vuoto
             String nick = rs.getParameter();
-            BadReqExeceptionThrower.checkEmptyString(nick);
+            BadReqExeceptionThrower.checkNullInput(nick);
 
             //Check: Se l'utente è un admin E il ricercato non esiste allora lo comunico
             BadReqExeceptionThrower.checkAdminUserNotFound(request, nick);

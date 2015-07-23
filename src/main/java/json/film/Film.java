@@ -5,6 +5,7 @@ import database.datatypes.film.Actor;
 import database.datatypes.film.FilmData;
 import database.mappers.FilmMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class Film {
     @Expose
     protected int vm;
     @Expose
-    protected List<String> genres;
+    protected List<Genre> genres;
     @Expose
     protected List<Actor> actors;
 
@@ -53,7 +54,10 @@ public class Film {
         this.director = filmData.getDirector();
         this.vm = filmData.getVm();
 
-        genres = filmMapper.getFilmGenres(id_film);
+        genres = new ArrayList<>();
+        for (String s : filmMapper.getFilmGenres(id_film))
+            genres.add(new Genre(s));
+
         actors = filmMapper.getFilmActors(id_film);
 
     }

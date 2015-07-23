@@ -2,6 +2,7 @@ package database.mappers;
 
 import database.datatypes.other.ConfigParameter;
 import database.datatypes.other.Ticket;
+import database.datatypes.seat.RoomData;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -43,4 +44,8 @@ public interface NotDecidedMapper {
             "FROM config " +
             "WHERE parameter=#{parameter}")
     ConfigParameter getConfigParameter(String parameter);
+
+    @Select("SELECT * " +
+            "FROM cinema_rooms ")
+    List<RoomData> getRoomList();
 }

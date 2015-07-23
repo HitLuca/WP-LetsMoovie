@@ -9,7 +9,7 @@ import utilities.InputValidator.Regex;
 public class ShowRequest {
     private String show_date;
     private String show_time;
-    private int room_number;
+    private String room_number;
 
 
     public String getShow_date() {
@@ -21,7 +21,7 @@ public class ShowRequest {
     }
 
     @toSanitize(name = "room_number", reg = Regex.ID)
-    public int getRoom_number() {
+    public String getRoom_number() {
         return room_number;
     }
 }

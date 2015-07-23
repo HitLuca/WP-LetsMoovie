@@ -3,7 +3,11 @@ package json.reservation.response;
 import com.google.gson.annotations.Expose;
 import database.datatypes.user.UserPayment;
 import json.OperationResult;
+import json.reservation.ReservedSeat;
+import json.reservation.request.ReservationRequest;
+import json.reservation.request.SeatReservation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,12 +16,24 @@ import java.util.List;
 public class ReservationDetail implements OperationResult {
 
     @Expose
-    List<UserPayment> seats;
+    int id_show;
     @Expose
-    int total;
+    private List<ReservedSeat> seatList;
 
-    public ReservationDetail(List<UserPayment> seats, int total) {
-        this.seats = seats;
-        this.total = total;
+    public ReservationDetail() {
+        this.seatList = new ArrayList<>();
+    }
+
+    public ReservationDetail(ReservationRequest r) {
+        id_show = r.getId_show();
+
+        this.seatList = new ArrayList<>();
+        addSeat(r.getReservation());
+    }
+
+    public void addSeat(List<SeatReservation> uList) {
+        for (SeatReservation u : uList) {
+            seatList.add(new ReservedSeat(u));
+        }
     }
 }
