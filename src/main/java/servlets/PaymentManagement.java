@@ -59,7 +59,7 @@ public class PaymentManagement extends HttpServlet {
             // TODO:togliere commento
 
             PaymentRequest paymentRequest = gsonReader.fromJson(request.getReader(), PaymentRequest.class);
-            boolean usesCard = paymentRequest.getCredit_card_number().equals("") ? false : true;
+            boolean usesCard = paymentRequest.getCredit_card_number().equals("");
 
             ReservationRequest reservationRequest = temporaryReservationManager.confirmReservationRequest(paymentRequest.getCode(), sqlSession);
 

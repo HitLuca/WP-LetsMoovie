@@ -4,7 +4,7 @@ package json.payments;
  * f
  * Created by etrunon on 14/07/15.
  */
-public class Payments {
+public class PastPayment {
 /*
     @Expose
     private String payment_date;
@@ -25,7 +25,7 @@ public class Payments {
     @Expose
     private String username;
 
-    public Payments(UniquePayment p, String filmTitle) {
+    public PastPayment(UniquePayment p, String filmTitle) {
         this.payment_date = p.getPayment_date();
         this.payment_time = p.getPayment_time();
         this.ticket_type = p.getTicket_type();

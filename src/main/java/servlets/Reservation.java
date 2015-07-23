@@ -107,8 +107,6 @@ public class Reservation extends HttpServlet {
         SqlSession sessionSql = DatabaseConnection.getFactory().openSession();
         UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
 
-        response.setContentType("application/json");
-
         OperationResult result = null;
 
         /*
