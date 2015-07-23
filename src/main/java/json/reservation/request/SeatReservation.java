@@ -7,39 +7,39 @@ import com.google.gson.annotations.Expose;
  */
 public class SeatReservation {
     @Expose
-    int row;
+    String type;
     @Expose
     int column;
     @Expose
-    String ticket_type;
+    int row;
 
     public SeatReservation(int row, int col, String type) {
         this.row = row;
         this.column = col;
-        this.ticket_type = type;
+        this.type = type;
     }
 
     public int getRow() {
         return row;
     }
 
-    public int getColumn() {
-        return column;
-    }
-
-    public String getTicket_type() {
-        return ticket_type;
-    }
-
     public void setRow(int row) {
         this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 
     public void setColumn(int column) {
         this.column = column;
     }
 
-    public void setTicket_type(String ticket_type) {
-        this.ticket_type = ticket_type;
+    public String getTicket_type() {
+        return type;
+    }
+
+    public void setTicket_type(String type) {
+        this.type = type;
     }
 }

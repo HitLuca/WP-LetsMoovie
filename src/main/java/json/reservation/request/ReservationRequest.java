@@ -15,25 +15,25 @@ public class ReservationRequest implements OperationResult {
     @Expose
     int show;
     @Expose
-    List<SeatReservation> reservation;
+    List<SeatReservation> seats;
 
     public ReservationRequest() {
-        this.reservation = new ArrayList<>();
+        this.seats = new ArrayList<>();
     }
 
     public int getId_show() {
         return show;
     }
 
-    public List<SeatReservation> getReservation() {
-        return reservation;
-    }
-
     public void setId_show(int id_show) {
         this.show = id_show;
     }
 
+    public List<SeatReservation> getReservation() {
+        return seats;
+    }
+
     public void addSeat(int row, int col, String type) {
-        reservation.add(new SeatReservation(row, col, type));
+        seats.add(new SeatReservation(row, col, type));
     }
 }
