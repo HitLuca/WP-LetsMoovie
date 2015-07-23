@@ -14,12 +14,12 @@ import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by etrunon on 21/07/15.
@@ -67,7 +67,7 @@ public class Credit extends HttpServlet {
         }
 
 
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
         outputStream.print(gsonWriter.toJson(opRes));
         sessionSql.close();
     }
@@ -77,6 +77,6 @@ public class Credit extends HttpServlet {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gsonWriter = gsonBuilder.create();
+        gsonWriter = gsonBuilder.disableHtmlEscaping().create();
     }
 }

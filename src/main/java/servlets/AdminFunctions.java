@@ -30,12 +30,12 @@ import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +59,7 @@ public class AdminFunctions extends HttpServlet {
         response.setContentType("application/json");
         OperationResult operationResult = null;
 
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
 
         try {
             //BadReqExeceptionThrower.checkUserLogged(request);
@@ -105,7 +105,6 @@ public class AdminFunctions extends HttpServlet {
                     seatMapper.updateShowSeatStatus(id_show, id_seat, seatRequest.getStatus());
                     break;
                 }
-                //TODO:Fix
                 case "removeSeatReservation": {
                     SeatRequest seatRequest = gsonReader.fromJson(request.getReader(), SeatRequest.class);
 
@@ -124,8 +123,8 @@ public class AdminFunctions extends HttpServlet {
                     //Controllo di non avere parametri invalidi
                     BadReqExeceptionThrower.checkRegex(showRequest);
 
-                    int room_number = Integer.parseInt(showRequest.getRoom_number());
-                    int id_show = showMapper.getShowId(showRequest.getShow_date(), showRequest.getShow_time(), room_number);
+                    int id_show = Integer.parseInt(showRequest.getId_show());
+                    int room_number = showMapper.getRoomNumber(id_show);
                     RoomData roomData = seatMapper.getRoomData(room_number);
                     SeatList seatList = new SeatList(roomData.getLength(), roomData.getWidth());
 
@@ -192,7 +191,6 @@ public class AdminFunctions extends HttpServlet {
                     sessionSql.close();
                     break;
                 }
-                //TODO:Test
                 case "getFilmIncome": {
                     FilmIncomeRequest filmIncomeRequest = gsonReader.fromJson(request.getReader(), FilmIncomeRequest.class);
 
@@ -233,7 +231,7 @@ public class AdminFunctions extends HttpServlet {
     public void init() throws ServletException {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gsonWriter = gsonBuilder.create();
+        gsonWriter = gsonBuilder.disableHtmlEscaping().create();
         gsonReader = new Gson();
     }
 

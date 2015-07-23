@@ -5,11 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
-import database.datatypes.user.UserPayment;
 import database.mappers.UserMapper;
 import json.OperationResult;
 import json.reservation.request.ReservationRequest;
-import json.reservation.response.ReservationDetail;
 import json.reservation.response.SuccessfullReservation;
 import org.apache.ibatis.session.SqlSession;
 import types.exceptions.BadRequestException;
@@ -18,13 +16,12 @@ import utilities.RestUrlMatcher;
 import utilities.reservation.TemporaryReservationManager;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
 
 /**
  * INVALID_RESERVATION
@@ -59,7 +56,7 @@ public class Reservation extends HttpServlet {
         */
 
         try {
-            //BadReqExeceptionThrower.checkUserLogged(request);
+            BadReqExeceptionThrower.checkUserLogged(request);
 
             ReservationRequest rr = gsonReader.fromJson(request.getReader(), ReservationRequest.class);
 
@@ -77,7 +74,7 @@ public class Reservation extends HttpServlet {
             response.setStatus(400);
         }
 
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
         outputStream.print(gsonWriter.toJson(result));
         sessionSql.close();
 
@@ -106,7 +103,7 @@ public class Reservation extends HttpServlet {
         */
         try {
 
-            //BadReqExeceptionThrower.checkUserLogged(request);
+            BadReqExeceptionThrower.checkUserLogged(request);
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String code = rs.getParameter();
@@ -124,7 +121,7 @@ public class Reservation extends HttpServlet {
             response.setStatus(400);
         }
 
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
         outputStream.print(gsonWriter.toJson(result));
     }
 
@@ -133,11 +130,8 @@ public class Reservation extends HttpServlet {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gsonWriter = gsonBuilder.create();
+        gsonWriter = gsonBuilder.disableHtmlEscaping().create();
         gsonReader = new Gson();
         temporaryResManager = new TemporaryReservationManager();
-
     }
-
-    //nella init bisogna chiamare come per le mail Temporary reservation
 }

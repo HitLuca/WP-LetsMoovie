@@ -49,7 +49,7 @@ public class Logout extends HttpServlet {
             logoutStatus = new BadRequestException();
             response.setStatus(400);
         }
-        response.getOutputStream().print(gson.toJson(logoutStatus));
+        response.getWriter().print(gson.toJson(logoutStatus));
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doAll(request, response);
@@ -63,6 +63,6 @@ public class Logout extends HttpServlet {
     public void init() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gson = gsonBuilder.create();
+        gson = gsonBuilder.disableHtmlEscaping().create();
     }
 }

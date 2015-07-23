@@ -19,13 +19,13 @@ import utilities.mail.MailCleanerThreadFactory;
 import utilities.mail.VerificationMailSender;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,9 +65,9 @@ import java.util.List;
 @WebServlet(name = "Register", urlPatterns = "/api/register")
 public class Register extends HttpServlet {
 
+    private final String url = "/api/register";
     Gson gsonWriter;
     Gson gsonReader;
-    private final String url = "/api/register";
     private VerificationMailSender verificationMailSender;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -128,7 +128,7 @@ public class Register extends HttpServlet {
             registrationStatus = new BadRequestException();
             response.setStatus(400);
         }
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
         outputStream.print(gsonWriter.toJson(registrationStatus));
 
         sessionSql.close();
@@ -147,7 +147,7 @@ public class Register extends HttpServlet {
         verificationMailSender = new VerificationMailSender(mailCleanerThread);
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gsonWriter = gsonBuilder.create();
+        gsonWriter = gsonBuilder.disableHtmlEscaping().create();
         gsonReader = new Gson();
     }
 }

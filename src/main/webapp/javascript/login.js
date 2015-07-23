@@ -3,15 +3,18 @@
  */
 
 var Login = {
+    url: Session.storage.get("backUrl"),
     success: function (data) {
         Notifications.saveNotification("success", "Benvenuto, " + data.username + "!");
         Session.setUsername(data.username);
-        var url;
-        if ((url = Session.storage.get("backUrl")) != null) {
+        if (Login.url != null) {
             Session.storage.remove("backUrl");
-            Session.redirectToUrl(url);
+            Session.redirectToUrl(Login.url);
         } else
             Session.redirectToUser();
+    },
+    init: function () {
+        Session.storage.remove("backUrl");
     },
     error: function (data) {
         var error = data.responseJSON.errorCode;
@@ -76,6 +79,7 @@ var ResetPassword = {
 };
 
 $(document).ready(function () {
+    Login.init();
     Forms.PostForm("loginForm", Login.success, Login.error, true);
     Forms.PostForm("passwordRecovery", ResetPassword.success, ResetPassword.error, true);
     Forms.PostForm("resendEmail", ResetPassword.success, ResetPassword.error, false);

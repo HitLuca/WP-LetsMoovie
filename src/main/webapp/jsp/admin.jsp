@@ -25,7 +25,7 @@
                                 <a href="/jsp/featureAdmin/showSeats.jsp" class="button expand radius">Posti venduti</a>
                             </div>
                             <div class="medium-8 columns">
-                                <p>Questa funzionalità consente di vedere la lista dei posti più venduti
+                                <p>Consente di vedere la lista dei posti venduti
                                     per ciascuna programmazione.</p>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                                     prenotati</a>
                             </div>
                             <div class="medium-8 columns">
-                                <p>Questa funzionalità consente di vedere la mappa dei posti più prenotati.</p>
+                                <p>Consente di vedere la mappa dei posti più prenotati.</p>
                             </div>
                         </div>
 
@@ -46,8 +46,18 @@
                                     Cancella prenotazione</a>
                             </div>
                             <div class="medium-8 columns">
-                                <p>Questa funzionalità consente di cancellare una prenotazione
+                                <p>Consente di cancellare una prenotazione
                                     per una proiezione non ancora iniziata.</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="medium-4 columns">
+                                <a href="/jsp/featureAdmin/updateStatus.jsp" class="button expand radius">
+                                    Modifica posto</a>
+                            </div>
+                            <div class="medium-8 columns">
+                                <p>Consente di modificare lo stato di un posto.</p>
                             </div>
                         </div>
                     </div>
@@ -65,7 +75,7 @@
                                     Incassi per film</a>
                             </div>
                             <div class="medium-8 columns">
-                                <p>Questa funzionalità consente di vedere la lista degli incassi
+                                <p>Consente di vedere la lista degli incassi
                                     dei film.</p>
                             </div>
                         </div>
@@ -76,7 +86,7 @@
                                     Clienti top</a>
                             </div>
                             <div class="medium-8 columns">
-                                <p>Questa funzionalità consente di vedere la lista dei clienti
+                                <p>Consente di vedere la lista dei clienti
                                     che hanno comprato più biglietti.</p>
                             </div>
                         </div>

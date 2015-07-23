@@ -7,15 +7,10 @@
         <span class="radius label">Posizione</span>
         <strong>Fila <span id="rowNumber"></span> Posto <span id="columnNumber"></span></strong>
     </div>
-    <div class="medium-4 columns">
-        <label>Tipologia biglietto
+    <div class="medium-4 columns ticketChoice">
+        <label id="ticketsList">Tipologia biglietto
             <select name="seats[][type]" data-bind="tickets">
-                <option value="ridotto">Ridotto</option>
-                <option value="ridotto3d">Ridotto 3D</option>
-                <option value="ridottoUni">Ridotto universitario</option>
-                <option value="ridottoUni3d">Ridotto universitario 3D</option>
-                <option selected value="intero">Intero</option>
-                <option value="intero3d">Intero 3D</option>
+                <option value="" data-bind="ticket_type"></option>
             </select>
         </label>
         <input name="seats[][column]" type="hidden" data-seat="column"/>

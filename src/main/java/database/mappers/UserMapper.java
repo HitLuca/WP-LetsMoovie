@@ -190,15 +190,22 @@ public interface UserMapper {
      * @param credit_card_number numero di carta di credito da inserire
      * @param username username dell'utente
      */
-    //TODO:Test
     @Insert("INSERT INTO user_credit_cards (credit_card_number, username) VALUES (#{credit_card_number}, #{username})")
     void insertCreditCard(@Param("credit_card_number") String credit_card_number, @Param("username") String username);
 
     /**
      * @return numero totale di utenti
      */
-    //TODO:Test
     @Select("SELECT COUNT(*) " +
             "FROM users")
     int getUserCountForRank();
+
+    /**
+     * @param username username dell'utente
+     * @return credito rimanente
+     */
+    @Select("SELECT residual_credit " +
+            "FROM users " +
+            "WHERE username=#{username}")
+    float getResidualCredit(String username);
 }

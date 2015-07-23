@@ -12,14 +12,14 @@ public class Ticket {
     @Expose
     float price;
     @Expose
-    String descripiton;
+    String description;
 
     public String getDescripiton() {
-        return descripiton;
+        return description;
     }
 
     public void setDescripiton(String descripiton) {
-        this.descripiton = descripiton;
+        this.description = descripiton;
     }
 
     public String getTicket_type() {
