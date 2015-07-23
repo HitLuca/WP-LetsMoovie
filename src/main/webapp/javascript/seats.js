@@ -124,7 +124,7 @@ var TicketsType = {
         var request = $.ajax({
             url: TicketsType.url
         });
-        request.done(TicketsType.successGet);
+        request.done(TicketsType.correctData);
     },
     successGet: function (data) {
         var lista = $("#ticketsList");
