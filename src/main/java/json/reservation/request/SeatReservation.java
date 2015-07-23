@@ -13,12 +13,12 @@ public class SeatReservation {
     @Expose
     String s_column;
     @Expose
-    String tycket_type;
+    String ticket_type;
 
     public SeatReservation(String s_row, String col, String tycket_type) {
         this.s_row = s_row;
         this.s_column = col;
-        this.tycket_type = tycket_type;
+        this.ticket_type = tycket_type;
     }
 
     @toSanitize(name = "s_row", reg = Regex.INTEGER)
@@ -48,10 +48,10 @@ public class SeatReservation {
     }
 
     public String getTicket_type() {
-        return tycket_type;
+        return ticket_type;
     }
 
     public void setTicket_type(String tycket_type) {
-        this.tycket_type = tycket_type;
+        this.ticket_type = tycket_type;
     }
 }

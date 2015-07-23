@@ -66,11 +66,6 @@ public class Reservation extends HttpServlet {
 
             BadReqExeceptionThrower.checkNullInput(rr);
 
-            /*List<String> invalidParameters = ModelValidator.validate(rr);
-            if (!invalidParameters.isEmpty()) {
-                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD, invalidParameters);
-            }*/
-
             BadReqExeceptionThrower.checkRegex(rr);
 
             //Lancia ErrorCode:INVALID_RESERVATION
