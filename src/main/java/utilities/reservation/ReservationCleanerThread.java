@@ -47,7 +47,7 @@ public class ReservationCleanerThread extends Thread{
 
             for (Seat reservedSeat : seatMapper.getShowFreeSeat(reservation.getReservationRequest().getId_show()))
             {
-                for(SeatReservation requestedSeat:reservation.getReservationRequest().getReservation())
+                for (SeatReservation requestedSeat : reservation.getReservationRequest().getReservation())
                 {
                     if(reservedSeat.getColumn()==requestedSeat.getColumn() && reservedSeat.getRow()==requestedSeat.getRow())
                     {
@@ -66,7 +66,7 @@ public class ReservationCleanerThread extends Thread{
             for(TemporaryReservationRequest reservedSeats: pendingReservations.values())
             {
                 if(reservation.getReservationRequest().getId_show()==reservedSeats.getReservationRequest().getId_show()) {
-                    for (SeatReservation reservedSeat : reservedSeats.getReservationRequest().getReservation()){
+                    for (SeatReservation reservedSeat : reservedSeats.getReservationRequest().getReservation()) {
                         for(SeatReservation requestedSeat : reservation.getReservationRequest().getReservation())
                         {
                             if(reservedSeat.getColumn()==requestedSeat.getColumn() && reservedSeat.getRow()==requestedSeat.getRow())
@@ -210,6 +210,7 @@ public class ReservationCleanerThread extends Thread{
             if(temporaryReservationRequest==null){
                 throw new BadRequestException(ErrorCode.WRONG_RESERVATION_CODE);
             }
+            reservationRequest = temporaryReservationRequest.getReservationRequest();
             mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();

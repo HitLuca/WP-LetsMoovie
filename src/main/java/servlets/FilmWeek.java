@@ -8,17 +8,16 @@ import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
 import json.film.Film;
-import json.film.response.FilmAndShowListSuccess;
 import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -86,7 +85,7 @@ public class FilmWeek extends HttpServlet {
 
         getFilmOfWeek = new FilmListSuccess(filmList);
 
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
         outputStream.print(gsonWriter.toJson(getFilmOfWeek));
 
         sessionSql.close();
@@ -97,7 +96,7 @@ public class FilmWeek extends HttpServlet {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gsonWriter = gsonBuilder.create();
+        gsonWriter = gsonBuilder.disableHtmlEscaping().create();
     }
 
 }
