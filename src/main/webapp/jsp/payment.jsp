@@ -110,7 +110,7 @@
 
             <div class="row">
                 <div class="medium-12 text-center columns">
-                    <a href="#" class="button radius" data-reveal-id="myModal">Conferma pagamento</a>
+                    <button id="confermaPagamento" class="radius">Conferma pagamento</button>
                 </div>
             </div>
         </div>

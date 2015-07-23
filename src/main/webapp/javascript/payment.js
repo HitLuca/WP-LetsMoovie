@@ -63,6 +63,8 @@ var UserCredit = {
 };
 
 var Payment = {
+    url: "/api/payment/",
+    id: null,
     getIdPayment: function () {
         var link = window.location.pathname;
         var re = /\/payment\/(.+)/;
@@ -74,6 +76,7 @@ var Payment = {
             }
             // View your result using the m-variable.
             // eg m[0] etc.
+            Payment.id = m[1];
             return m[1];
         } else return null;
     },
@@ -85,6 +88,18 @@ var Payment = {
             return;
         }
         Reservation.getReservationInfo(id);
+    },
+    sendPayment: function () {
+        var data = {
+            code: Payment.id,
+            credit_card_number: CreditCard.selected ? CreditCard.selected : null
+        };
+        var request = $.ajax({
+            url: Payment.url,
+            data: data,
+            type: "json"
+        });
+        //    TODO: FINIRE INVIO PAGAMENTO
     }
 };
 
@@ -104,6 +119,7 @@ var CreditCard = {
             CreditCard.modal.foundation("reveal", "close");
             var button = $(event.target);
             var number = button.html();
+            CreditCard.selected = number;
             $("#selectedCard").removeClass("hide");
             $("#selectedCard").find("#paymentCard").html(number);
         });
