@@ -93,6 +93,15 @@ var Film = {
                     }
 
                 }
+            },
+            genres: {
+                genre: {
+                    text: function (params) {
+                        if (params.index != 0) {
+                            return " - " + this.genre;
+                        }
+                    }
+                }
             }
         };
         $("#copertina").on('load', function (event) {
