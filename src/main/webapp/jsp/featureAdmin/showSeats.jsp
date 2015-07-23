@@ -35,24 +35,8 @@
             </div>
             <%--mostro la mappa 3d con i pulsanti reset, blocca--%>
             <div class="row">
-                <div class="small-12 columns"><h4>Posti prenotati:</h4>
-
-                    <div class="row">
-                        <div class="small-6 columns text-center">
-                            Blocca visuale
-                            <div class="switch">
-                                <input id="bloccaVisuale" type="checkbox">
-                                <label for="bloccaVisuale"></label>
-                            </div>
-                        </div>
-                        <div class="small-6 columns text-center">
-                            <a href="#" class="button small radius" id="resettaVisuale">Resetta visuale</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="small-12 columns text-center">
+                    <h4>Posti prenotati:</h4>
                     <div id="roomMap">
 
                     </div>
