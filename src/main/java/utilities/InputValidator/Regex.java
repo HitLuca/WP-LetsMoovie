@@ -13,7 +13,8 @@ public enum Regex {
     //Formato data yyyy-mm-dd
     DATE("(?:199[0-9]|20[0-9][0-9])-(?:0[1-9]|1[0-2])-(?:[0-2][0-9]|3[0-1])"),
     USERNAME("^([0-9]*[\\w]*){5}+$"),
-    ID("^[1-9][0-9]*$");
+    ID("^[1-9][0-9]*$"),
+    INTEGER("^[1-9]+[0-9]*$");
 
     private String value;
 

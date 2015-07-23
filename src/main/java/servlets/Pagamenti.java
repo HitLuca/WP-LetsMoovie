@@ -73,15 +73,15 @@ public class Pagamenti extends HttpServlet {
                 throw new BadRequestException();
             }
 
-            List<Payments> responses = new ArrayList<>();
+            List<PastPayment> responses = new ArrayList<>();
 
             for (UniquePayment d : payments) {
                 String title = filmMapper.getFilmData(d.getId_show()).getFilm_title();
-                Payments p = new Payments(d, title);
+                PastPayment p = new PastPayment(d, title);
                 responses.add(p);
             }
 
-            getUserStatus = new ListPaymentSuccess(responses);
+            getUserStatus = new ListPastPayment(responses);
 
         } catch (BadRequestException e) {
             getUserStatus = e;

@@ -45,11 +45,11 @@ public class ReservationCleanerThread extends Thread{
 
             int validSeats = 0;
 
-            for (Seat reservedSeat : seatMapper.getShowFreeSeat(reservation.getReservationRequest().getId_show()))
+            for (Seat reservedSeat : seatMapper.getShowFreeSeat(reservation.getReservationRequest().getIntIdShow()))
             {
                 for (SeatReservation requestedSeat : reservation.getReservationRequest().getReservation())
                 {
-                    if(reservedSeat.getColumn()==requestedSeat.getColumn() && reservedSeat.getRow()==requestedSeat.getRow())
+                    if (reservedSeat.getColumn() == requestedSeat.getIntColumn() && reservedSeat.getRow() == requestedSeat.getIntRow())
                     {
                         validSeats++;
                     }
@@ -106,12 +106,12 @@ public class ReservationCleanerThread extends Thread{
             SeatMapper seatMapper = session.getMapper(SeatMapper.class);
             ShowMapper showMapper = session.getMapper(ShowMapper.class);
 
-            int roomNumber = showMapper.getShowData(temporaryReservationRequest.getReservationRequest().getId_show()).getRoom_number();
+            int roomNumber = showMapper.getShowData(temporaryReservationRequest.getReservationRequest().getIntIdShow()).getRoom_number();
 
             for(SeatReservation reservedSeat : temporaryReservationRequest.getReservationRequest().getReservation())
             {
-                int seatId = seatMapper.getIdSeat(roomNumber,reservedSeat.getRow(),reservedSeat.getColumn());
-                seatMapper.insertSeatReservation(temporaryReservationRequest.getReservationRequest().getId_show(),seatId,"reserved");
+                int seatId = seatMapper.getIdSeat(roomNumber, reservedSeat.getIntRow(), reservedSeat.getIntColumn());
+                seatMapper.insertSeatReservation(temporaryReservationRequest.getReservationRequest().getIntIdShow(), seatId, "reserved");
             }
 
             reservationRequest = temporaryReservationRequest.getReservationRequest();
