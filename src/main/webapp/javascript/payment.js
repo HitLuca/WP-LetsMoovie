@@ -90,6 +90,7 @@ var Payment = {
 
 var CreditCard = {
     url: "/api/debitCards/",
+    cardsList: $("#cardsList"),
     getCreditCards: function () {
         var request = $.ajax({
             url: CreditCard.url + Session.getUsername()
@@ -97,18 +98,30 @@ var CreditCard = {
         request.done(CreditCard.showCreditCards);
         request.fail(CreditCard.errorCreditCards)
     },
+    bindCreditCards: function () {
+        CreditCard.cardsList.find(".creditCard").on("click", function (event) {
+            event.preventDefault();
+            CreditCard.modal.foundation("reveal", "close");
+            var button = $(event.target);
+            var number = button.html();
+            $("#selectedCard").removeClass("hide");
+            $("#selectedCard").find("#paymentCard").html(number);
+        });
+    },
     showCreditCards: function (data) {
         var template = CreditCard.modal[0];
+
         Transparency.render(template, data);
+        CreditCard.bindCreditCards();
     },
     errorCreditCards: function (data) {
         Notifications.saveNotification("error", "Errore nel recuperare informazioni sulla carta di credito");
         CreditCard.modal.foundation('reveal', 'close');
+        Session.redirectToLogin();
     },
     addCreditCardSuccess: function (data) {
-        //TODO FINIRE
         alertify.success("Carta di credito aggiunta con successo!");
-        //CreditCard.modal.foundation("reveal", "open");
+        CreditCard.getCreditCards();
     },
     addCreditCardError: function (data) {
         alertify.error("Errore nell'aggiungere la carta indicata");
@@ -118,7 +131,10 @@ var CreditCard = {
         var modal = $("#cardsList");
         modal.on('opened.fndtn.reveal', function () {
             CreditCard.modal = $(this);
-            CreditCard.getCreditCards();
+            if (!CreditCard.bind) {
+                CreditCard.getCreditCards();
+                CreditCard.bind = true;
+            }
         });
         $("#addCard").on('click', function (event) {
             event.preventDefault();

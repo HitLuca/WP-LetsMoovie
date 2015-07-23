@@ -63,7 +63,7 @@
                             <h4>Carte associate al tuo account:</h4>
 
                             <div class="medium-12 columns" data-bind="cards">
-                                <button class="radius" data-bind="number"></button>
+                                <button class="radius creditCard" data-bind="number"></button>
                             </div>
                         </div>
 
