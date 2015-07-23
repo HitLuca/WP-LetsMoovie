@@ -17,12 +17,12 @@ import types.exceptions.BadRequestException;
 import utilities.RestUrlMatcher;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -50,8 +50,8 @@ import java.util.List;
 @WebServlet(name = "FilmDay", urlPatterns = "/api/filmDay/*")
 public class FilmDay extends HttpServlet {
 
-    private Gson gsonWriter;
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private Gson gsonWriter;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -59,7 +59,7 @@ public class FilmDay extends HttpServlet {
         ShowMapper showMapper = sessionSql.getMapper(ShowMapper.class);
         FilmMapper filmMapper = sessionSql.getMapper(FilmMapper.class);
 
-        response.setContentType("application/json");
+        //response.setContentType("application/json");
         OperationResult getFilmOfDay = null;
 
         try {
@@ -100,7 +100,7 @@ public class FilmDay extends HttpServlet {
             response.setStatus(400);
         }
 
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
         outputStream.print(gsonWriter.toJson(getFilmOfDay));
 
         sessionSql.close();
@@ -116,7 +116,7 @@ public class FilmDay extends HttpServlet {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gsonWriter = gsonBuilder.create();
+        gsonWriter = gsonBuilder.disableHtmlEscaping().create();
     }
 
 }

@@ -19,13 +19,13 @@ import utilities.mail.MailCleanerThreadFactory;
 import utilities.mail.PasswordRecoveryMailSender;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -47,10 +47,10 @@ import java.util.List;
  */
 @WebServlet(name = "PasswordRecovery",  urlPatterns = "/api/passwordRecovery")
 public class PasswordRecovery extends HttpServlet {
+    private final String url = "/api/passwordRecovery";
     Gson gsonWriter;
     Gson gsonReader;
     PasswordRecoveryMailSender passwordRecoveryMailSender;
-    private final String url = "/api/passwordRecovery";
 
     //TODO Lanciare errore 7 se già presente la sessione
 
@@ -100,7 +100,7 @@ public class PasswordRecovery extends HttpServlet {
             recoveryStatus = new BadRequestException();
             response.setStatus(400);
         }
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
         outputStream.print(gsonWriter.toJson(recoveryStatus));
 
         sessionSql.close();
@@ -116,7 +116,7 @@ public class PasswordRecovery extends HttpServlet {
         passwordRecoveryMailSender = new PasswordRecoveryMailSender(mailCleanerThread);
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gsonWriter = gsonBuilder.create();
+        gsonWriter = gsonBuilder.disableHtmlEscaping().create();
         gsonReader = new Gson();
     }
 }
