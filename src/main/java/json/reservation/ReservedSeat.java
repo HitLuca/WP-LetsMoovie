@@ -24,7 +24,7 @@ public class ReservedSeat {
 
     public ReservedSeat(SeatReservation u) {
         this.ticket_type = u.getTicket_type();
-        this.s_row = u.getRow();
-        this.s_column = u.getColumn();
+        this.s_row = Integer.valueOf(u.getRow());
+        this.s_column = Integer.valueOf(u.getColumn());
     }
 }

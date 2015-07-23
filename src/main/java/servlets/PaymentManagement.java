@@ -64,14 +64,14 @@ public class PaymentManagement extends HttpServlet {
             ReservationRequest reservationRequest = temporaryReservationManager.confirmReservationRequest(paymentRequest.getCode(), sqlSession);
 
             int totalPaid = 0;
-            int room_number = showMapper.getRoomNumber(reservationRequest.getId_show());
+            int room_number = showMapper.getRoomNumber(reservationRequest.getIntIdShow());
             String payment_date = LocalDate.now().format(dateFormatter);
             String payment_time = LocalTime.now().format(timeFormatter);
             String username = request.getSession().getAttribute("username").toString();
-            int id_show = reservationRequest.getId_show();
+            int id_show = reservationRequest.getIntIdShow();
 
             for (SeatReservation sr : reservationRequest.getReservation()) {
-                int id_seat = seatMapper.getIdSeat(room_number, sr.getRow(), sr.getColumn());
+                int id_seat = seatMapper.getIdSeat(room_number, sr.getIntRow(), sr.getIntColumn());
                 Payment payment = new Payment(payment_date, payment_time, sr.getTicket_type(), id_seat, id_show, username);
                 userMapper.insertPayment(payment);
                 float price = notDecidedMapper.getTicketPrice(sr.getTicket_type());

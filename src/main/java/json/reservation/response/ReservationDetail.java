@@ -25,7 +25,7 @@ public class ReservationDetail implements OperationResult {
     }
 
     public ReservationDetail(ReservationRequest r) {
-        id_show = r.getId_show();
+        id_show = r.getIntIdShow();
 
         this.seatList = new ArrayList<>();
         addSeat(r.getReservation());

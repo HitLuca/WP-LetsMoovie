@@ -2,6 +2,8 @@ package json.reservation.request;
 
 import com.google.gson.annotations.Expose;
 import json.OperationResult;
+import types.annotations.toSanitize;
+import utilities.InputValidator.Regex;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
 public class ReservationRequest implements OperationResult {
 
     @Expose
-    int show;
+    String show;
     @Expose
     List<SeatReservation> seats;
 
@@ -21,19 +23,24 @@ public class ReservationRequest implements OperationResult {
         this.seats = new ArrayList<>();
     }
 
-    public int getId_show() {
+    @toSanitize(name = "show", reg = Regex.INTEGER)
+    public String getId_show() {
         return show;
     }
 
-    public void setId_show(int id_show) {
-        this.show = id_show;
+    public int getIntIdShow() {
+        return Integer.valueOf(getId_show());
     }
 
     public List<SeatReservation> getReservation() {
         return seats;
     }
 
-    public void addSeat(int row, int col, String type) {
+    public void setId_show(int id_show) {
+        this.show = String.valueOf(id_show);
+    }
+
+    public void addSeat(String row, String col, String type) {
         seats.add(new SeatReservation(row, col, type));
     }
 }

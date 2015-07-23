@@ -1,38 +1,50 @@
 package json.reservation.request;
 
 import com.google.gson.annotations.Expose;
+import types.annotations.toSanitize;
+import utilities.InputValidator.Regex;
 
 /**
  * Created by marco on 17/07/15.
  */
 public class SeatReservation {
     @Expose
+    String row;
+    @Expose
+    String column;
+    @Expose
     String type;
-    @Expose
-    int column;
-    @Expose
-    int row;
 
-    public SeatReservation(int row, int col, String type) {
+    public SeatReservation(String row, String col, String type) {
         this.row = row;
         this.column = col;
         this.type = type;
     }
 
-    public int getRow() {
+    @toSanitize(name = "row", reg = Regex.INTEGER)
+    public String getRow() {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int getColumn() {
+    @toSanitize(name = "column", reg = Regex.INTEGER)
+    public String getColumn() {
         return column;
     }
 
+    public int getIntRow() {
+        return Integer.valueOf(row);
+    }
+
+    public int getIntColumn() {
+        return Integer.valueOf(column);
+    }
+
+    public void setRow(int row) {
+        this.row = String.valueOf(row);
+    }
+
     public void setColumn(int column) {
-        this.column = column;
+        this.column = String.valueOf(column);
     }
 
     public String getTicket_type() {
