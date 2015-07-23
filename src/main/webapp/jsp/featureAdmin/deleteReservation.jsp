@@ -26,7 +26,11 @@
                                         <input type="text">
                                     </div>
                                     <div class="small-4 columns">
-                                        <button class="button postfix">Vai</button>
+                                        <button class="button ladda-button postfix" data-style="zoom-out">
+                                            <span class="ladda-label">
+                                                Vai
+                                            </span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +46,9 @@
             </div>
             <div id="confirm" class="row">
                 <div class="medium-3 small-centered columns">
-                    <button class="button radius">Conferma cancellazione</button>
+                    <button class="button ladda-button radius" data-style="zoom-out">
+                        <span class="ladda-label">Cancella prenotazione</span>
+                    </button>
                 </div>
             </div>
         </div>

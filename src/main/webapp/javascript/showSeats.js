@@ -23,13 +23,13 @@ var getShowList = {
         $("#Film").select2();
     },
     wrongData: function (data) {
-        console.log(data);
+        alertify.error("Data non valida");
     },
     correctShow: function (data) {
         Cinema3DView.init(document.getElementById("roomMap"), data.showSeatList, data.column, data.row, true);
     },
     wrongShow: function (data) {
-
+        alertify.error("Errore nel recupero delle proiezioni");
     }
 };
 
