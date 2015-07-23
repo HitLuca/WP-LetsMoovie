@@ -36,6 +36,18 @@
                         </div>
                     </div>
                 </div>
+                <div id="genere" class="row">
+                    <div class="medium-12 columns">
+                        <div class="row">
+                            <div class="medium-2 columns">
+                                <strong>Genere</strong>
+                            </div>
+                            <div class="medium-10 columns">
+                                <span data-bind="genre"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="regista" class="row">
                     <div class="medium-12 columns">
                         <div class="row">
