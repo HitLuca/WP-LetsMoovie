@@ -1,5 +1,7 @@
 package utilities;
 
+import json.adminFunctions.request.DeleteReservationRequest;
+import database.datatypes.film.FilmData;
 import types.enums.ErrorCode;
 import types.enums.Role;
 import types.exceptions.BadRequestException;
@@ -145,6 +147,29 @@ public class BadReqExeceptionThrower {
     public static void checkPaymentAmount(float residualCredit, int totalPaid) throws BadRequestException {
         if (residualCredit < totalPaid) {
             throw new BadRequestException(ErrorCode.NOT_ENOUGH_CREDIT);
+        }
+    }
+
+    public static void checkDeleteReservation(DeleteReservationRequest drr) throws BadRequestException {
+        if (drr.getSeatList() == null && drr.getCode().equals("")) {
+            throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
+        }
+    }
+
+    public static void checkUserAlreadyLogged(HttpServletRequest request) throws BadRequestException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("username") != null)
+            throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
+    }
+
+    public static void checkDuplicateFields(List<String> sl, String s) throws BadRequestException {
+        if (sl.contains(s))
+            throw new BadRequestException(ErrorCode.DUPLICATE_FIELD);
+    }
+
+    public static void checkFilmNotFound(FilmData o) throws BadRequestException {
+        if (o == null) {
+            throw new BadRequestException(ErrorCode.FILM_NOT_FOUND);
         }
     }
 }

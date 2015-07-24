@@ -94,7 +94,6 @@ public class PaymentManagement extends HttpServlet {
             response.setStatus(400);
             outputStream.print(gsonWriter.toJson(operationResult));
         } catch (BadRequestException e) {
-            operationResult = new BadRequestException();
             operationResult = e;
             response.setStatus(400);
             outputStream.print(gsonWriter.toJson(operationResult));

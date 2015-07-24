@@ -13,6 +13,7 @@ import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
+import utilities.BadReqExeceptionThrower;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
 import utilities.mail.VerificationMailCodeChecker;
@@ -55,24 +56,17 @@ public class ConfirmRegistration extends HttpServlet {
         response.setContentType("application/json");
         OperationResult registrationConfirmStatus;
         try {
-
             //Check sulla sessione già presente e l'utente è già loggato con un username e lo si spara fuori
-            HttpSession session = request.getSession();
-            if (session.getAttribute("username") != null)
-                throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
+            BadReqExeceptionThrower.checkUserAlreadyLogged(request);
 
             //Provo a parsare il Json nell'oggetto RegistrationRequest. Se exception esce dalla sevlet
             ConfirmRegistrationRequest confirmRegistrationRequest = gsonReader.fromJson(request.getReader(), ConfirmRegistrationRequest.class);
 
             RegistrationRequest registrationRequest = verificationMailCodeChecker.verify(confirmRegistrationRequest.getVerificationCode());
-
-            if(registrationRequest == null)
-            {
-                throw new BadRequestException(ErrorCode.WRONG_CONFIRMATION_CODE);
-            }
+            BadReqExeceptionThrower.checkNullInput(registrationRequest);
 
             userMapper.insertUser(registrationRequest);
-            session = request.getSession(true);
+            HttpSession session = request.getSession(true);
             session.setAttribute("username",registrationRequest.getUsername());
             session.setAttribute("role",0);
 

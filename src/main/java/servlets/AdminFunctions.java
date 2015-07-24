@@ -11,6 +11,7 @@ import database.datatypes.film.FilmTitle;
 import database.datatypes.seat.RoomData;
 import database.datatypes.seat.Seat;
 import database.datatypes.seat.SeatCount;
+import database.datatypes.user.Payment;
 import database.datatypes.user.UserPaid;
 import database.mappers.FilmMapper;
 import database.mappers.SeatMapper;
@@ -18,10 +19,7 @@ import database.mappers.ShowMapper;
 import database.mappers.UserMapper;
 import json.OperationResult;
 import json.adminFunctions.request.*;
-import json.adminFunctions.response.FilmIncomeResponse;
-import json.adminFunctions.response.RoomSeatCount;
-import json.adminFunctions.response.RoomSeatList;
-import json.adminFunctions.response.UserRank;
+import json.adminFunctions.response.*;
 import json.showRoom.SeatList;
 import json.showRoom.ShowSeat;
 import org.apache.ibatis.session.SqlSession;
@@ -63,12 +61,10 @@ public class AdminFunctions extends HttpServlet {
         PrintWriter outputStream = response.getWriter();
 
         try {
-            //BadReqExeceptionThrower.checkUserLogged(request);
-            // TODO:togliere commento
+            BadReqExeceptionThrower.checkUserLogged(request);
 
-            //Controllo che abbia i permessi adatti
-            //BadReqExeceptionThrower.checkAdminSuperAdmin(request);
-            // TODO:togliere commento
+//            Controllo che abbia i permessi adatti
+            BadReqExeceptionThrower.checkAdminSuperAdmin(request);
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String function = rs.getParameter();
@@ -217,6 +213,39 @@ public class AdminFunctions extends HttpServlet {
                     }
                     outputStream.print(gsonWriter.toJson(filmIncomeResponses));
                     sessionSql.close();
+                    break;
+                }
+                case "deleteReservation": {
+                    DeleteReservationRequest deleteReservationRequest = gsonReader.fromJson(request.getReader(), DeleteReservationRequest.class);
+                    String code = deleteReservationRequest.getCode();
+                    List<SeatDetailRequest> seatDetailRequests = deleteReservationRequest.getSeatList();
+
+                    BadReqExeceptionThrower.checkDeleteReservation(deleteReservationRequest);
+
+                    for (SeatDetailRequest sdr : seatDetailRequests) {
+                        BadReqExeceptionThrower.checkRegex(sdr);
+                    }
+
+                    if (seatDetailRequests != null && !code.equals("")) {
+                        for (SeatDetailRequest sdr : seatDetailRequests) {
+                            //OggettoConLeCose oggetto = ClasseMagica.dammiLeCose(code); username, data, ora, id_show
+                            int room_number = showMapper.getRoomNumber(3);
+                            int row = sdr.getS_row();
+                            int column = sdr.getS_column();
+                            int id_seat = seatMapper.getIdSeat(room_number, row, column);
+                            Payment payment = new Payment("show_date", "show_time", sdr.getTicket_type(), id_seat, 1, "username");
+                            userMapper.deletePayment(payment);
+                        }
+                    } else if (seatDetailRequests == null && !code.equals("")) {
+                        //OggettoConLeCose oggetto = ClasseMagica.dammiLeCose(code); username, data, ora, id_show
+                        seatDetailRequests = userMapper.getReservationBlock("show_date", "show_time", 1, "username");
+                        List<SeatDetailResponse> seatDetailResponses = new ArrayList<SeatDetailResponse>();
+                        for (SeatDetailRequest sdr : seatDetailRequests) {
+                            seatDetailResponses.add(new SeatDetailResponse(sdr));
+                        }
+                        outputStream.print(gsonWriter.toJson(seatDetailResponses));
+                        sessionSql.close();
+                    }
                     break;
                 }
             }

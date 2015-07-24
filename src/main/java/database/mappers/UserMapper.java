@@ -1,6 +1,7 @@
 package database.mappers;
 
 import database.datatypes.user.*;
+import json.adminFunctions.request.SeatDetailRequest;
 import json.register.request.RegistrationRequest;
 import org.apache.ibatis.annotations.*;
 
@@ -208,4 +209,17 @@ public interface UserMapper {
             "FROM users " +
             "WHERE username=#{username}")
     float getResidualCredit(String username);
+
+    /**
+     * @param show_date data di proiezione
+     * @param show_time ora di proiezione
+     * @param id_show   id dello show
+     * @param username  username dell'utente
+     * @return lista di posti con relativo prezzo e tipo di biglietto
+     */
+    //TODO:Test
+    @Select("SELECT row as s_row, \"column\" as s_column, ticket_type, price " +
+            "FROM payments NATURAL JOIN prices NATURAL JOIN seats " +
+            "WHERE payment_date=#{show_date}::DATE AND payment_time=#{show_time}::TIME AND id_show=#{id_show} AND username=#{username}")
+    List<SeatDetailRequest> getReservationBlock(@Param("show_date") String show_date, @Param("show_time") String show_time, @Param("id_show") int id_show, @Param("username") String username);
 }

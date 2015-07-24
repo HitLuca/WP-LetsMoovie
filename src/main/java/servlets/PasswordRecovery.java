@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import types.exceptions.BadRequestExceptionWithParameters;
+import utilities.BadReqExeceptionThrower;
 import utilities.InputValidator.ModelValidator;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
@@ -65,25 +66,15 @@ public class PasswordRecovery extends HttpServlet {
         try
         {
             //Check sulla sessione già presente e l'utente è già loggato con un username
-            HttpSession session = request.getSession();
-            if (session.getAttribute("username") != null) {
-
-                throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
-            }
+            BadReqExeceptionThrower.checkUserLogged(request);
 
             PasswordRecoveryRequest passwordRecoveryRequest = gsonReader.fromJson(request.getReader(), PasswordRecoveryRequest.class);
-            List<String> invalidParameters = ModelValidator.validate(passwordRecoveryRequest);
-            if(!invalidParameters.isEmpty())
-            {
-                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,"email");
-            }
+            BadReqExeceptionThrower.checkRegex(passwordRecoveryRequest);
 
             String username = userMapper.getUsernameByEmail(passwordRecoveryRequest.getEmail());
 
-            if(username==null)
-            {
-                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,"email");
-            }
+            BadReqExeceptionThrower.checkNullInput(username);
+
             String recoveryMailUrl = request.getRequestURL().toString().replace(url,"");
             recoveryMailUrl+="/passwordRecovery?verificationCode=";
             if(!passwordRecoveryMailSender.sendEmail(passwordRecoveryRequest.getEmail(),username,recoveryMailUrl))
@@ -96,7 +87,7 @@ public class PasswordRecovery extends HttpServlet {
             recoveryStatus = e;
             response.setStatus(400);
 
-        } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
+        } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
             recoveryStatus = new BadRequestException();
             response.setStatus(400);
         }

@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by marco on 09/07/15.
  */
 public class PasswordRecoveryMailSender {
-    private final int MAIL_TIME = 120;
+    private final int MAIL_TIME = 600;
     private final int SECURE_CODE_SIZE = 30;
     private MailCleanerThread mailCleanerThread;
     private SendGrid sendgrid;
@@ -25,7 +25,9 @@ public class PasswordRecoveryMailSender {
         sendgrid = new SendGrid(api_user, api_key);
         try {
             sendEmail = System.getenv("SEND_EMAIL").equals("TRUE");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

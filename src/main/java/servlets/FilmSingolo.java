@@ -14,6 +14,7 @@ import json.film.response.FilmSuccess;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
+import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
 
 import javax.servlet.ServletException;
@@ -64,10 +65,7 @@ public class FilmSingolo extends HttpServlet {
             String id = rs.getParameter();
 
             FilmData fd = filmMapper.getFilmData(Integer.parseInt(id));
-
-            if (fd == null) {
-                throw new BadRequestException(ErrorCode.FILM_NOT_FOUND);
-            }
+            BadReqExeceptionThrower.checkFilmNotFound(fd);
 
             FilmAndShows filmShows = new FilmAndShows(fd, filmMapper);
 
