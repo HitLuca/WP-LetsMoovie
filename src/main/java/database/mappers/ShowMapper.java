@@ -2,6 +2,7 @@ package database.mappers;
 
 import database.datatypes.show.Show;
 import database.datatypes.show.ShowIdTime;
+import database.datatypes.show.ShowTime;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -109,6 +110,13 @@ public interface ShowMapper {
      */
     @Select("SELECT room_number FROM shows WHERE id_show=#{id_Show}")
     int getRoomNumber(int id_show);
+
+
+    //TODO:Test
+    @Select("SELECT show_date, show_time " +
+            "FROM shows " +
+            "WHERE id_show=#{id_show} ")
+    ShowTime getShowTime(int id_show);
 
 }
 
