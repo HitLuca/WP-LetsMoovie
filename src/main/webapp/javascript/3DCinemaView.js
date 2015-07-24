@@ -67,17 +67,17 @@ var Materials = {
         shading: THREE.flatShading
     }),
     hoveringChair: new THREE.MeshLambertMaterial({
-        color: 0x6ff774,
+        color: 0xaaff88,
         shading: THREE.flatShading
     }),
     hoveringChairSelected: new THREE.MeshLambertMaterial({
-        color: 0xcece6f,
+        color: 0xffaa88,
         shading: THREE.flatShading
     }),
     busySeatMaterial: new THREE.MeshLambertMaterial({
-        color:  0xff6655,
+        color:  0xffffcc,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.4,
         shading: THREE.flatShading})
 };
 
@@ -286,15 +286,7 @@ var Cinema3DView = {
 
         leg.position.z += 12;
         leg.name = "metal";
-        if (broken) {
-            foot.rotateX(Math.random() * rotation);
-            foot.rotateY(Math.random() * rotation);
-            foot.rotateZ(Math.random() * rotation);
 
-            leg.rotateX(Math.random() * rotation);
-            leg.rotateY(Math.random() * rotation);
-            leg.rotateZ(Math.random() * rotation);
-        }
 
 
         singleStand.add(foot);
@@ -333,21 +325,13 @@ var Cinema3DView = {
         otherArm.position.y += 5;
 
         if (broken) {
-            back.rotateX(Math.random() * rotation);
-            back.rotateY(Math.random() * rotation);
-            back.rotateZ(Math.random() * rotation);
 
-            pillow.rotateX(Math.random() * rotation);
-            pillow.rotateY(Math.random() * rotation);
-            pillow.rotateZ(Math.random() * rotation);
+            back.rotateX(0.3);
+            back.position.y-=2;
 
-            arm.rotateX(Math.random() * rotation);
-            arm.rotateY(Math.random() * rotation);
-            arm.rotateZ(Math.random() * rotation);
 
-            otherArm.rotateX(Math.random() * rotation);
-            otherArm.rotateY(Math.random() * rotation);
-            otherArm.rotateZ(Math.random() * rotation);
+            pillow.rotateX(2.1);
+
         }
 
         back.position.y += (pillowSize.y - backSize.y) / 2.0;
@@ -386,7 +370,7 @@ var Cinema3DView = {
     },
     computeBrokenSeatMesh: function () {
         var footColor = 0x666666;
-        var chairColor = 0xcc9900;
+        var chairColor = 0xcc9955;
 
         var standMaterial = new THREE.MeshLambertMaterial({color: footColor, transparent: true, opacity: 0.9,  shading: THREE.flatShading});
         var chairMaterial = new THREE.MeshLambertMaterial({color: chairColor, transparent: true, opacity: 0.9,  shading: THREE.flatShading});
@@ -540,6 +524,8 @@ var Cinema3DView = {
     onMouseDown: function (event) {
         //console.log(Cinema3DView.camera.position);
         //console.log(Cinema3DView.camera.rotation);
+        Cinema3DView.removeHover();
+
         event.preventDefault();
         if (Cinema3DView.leftClick == false) {
             if (event.button == 0) {
@@ -594,7 +580,6 @@ var Cinema3DView = {
 
             }
         }
-
         Cinema3DView.leftClick = false;
     },
     selectChair: function (clicked) {
