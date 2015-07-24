@@ -17,9 +17,10 @@ var Forms = {
         return $.ajax({
             type: "POST",
             url: url,
-            data: jsonData,
+            data: JSON.stringify(jsonData),
             dataType: "json",
-            context: form
+            context: form,
+            processData: false
         });
     },
     PostForm: function (formID, doneCallback, failCallback, Abide) {
@@ -33,15 +34,14 @@ var Forms = {
             Forms.loadingButton(button);
 
             //Serializza la form in JSON
-            var JSON = form.serializeJSON();
-
+            var Json = form.serializeJSON();
             // Stop form from submitting normally
 
             // Get some values from elements on the page:
             var url = form.attr("action");
 
             // Send the data using post
-            var posting = Forms.ajax(JSON, url, form);
+            var posting = Forms.ajax(Json, url, form);
 
             posting.done(doneCallback);
             posting.fail(failCallback);

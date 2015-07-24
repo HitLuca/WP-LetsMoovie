@@ -88,6 +88,7 @@ var Payment = {
             return;
         }
         Reservation.getReservationInfo(id);
+        $("#confermaPagamento").on("click", Payment.sendPayment);
     },
     sendPayment: function () {
         var data = {
@@ -96,10 +97,18 @@ var Payment = {
         };
         var request = $.ajax({
             url: Payment.url,
-            data: data,
+            method: "POST",
+            data: JSON.stringify(data),
             type: "json"
         });
-        //    TODO: FINIRE INVIO PAGAMENTO
+        request.done(Payment.successPayment);
+        request.fail(Payment.errorPayment);
+    },
+    successPayment: function (data) {
+        alertify.success("Il pagamento è andato a buon fine!");
+    },
+    errorPayment: function(data) {
+        alertify.error("Errore nel processare il pagamento!");
     }
 };
 
@@ -120,8 +129,12 @@ var CreditCard = {
             var button = $(event.target);
             var number = button.html();
             CreditCard.selected = number;
-            $("#selectedCard").removeClass("hide");
-            $("#selectedCard").find("#paymentCard").html(number);
+            var selectedCard = $("#selectedCard");
+            selectedCard.removeClass("hide");
+            selectedCard.addClass("animated zoomIn");
+
+            var card = selectedCard.find("#paymentCard");
+            card.html(number);
         });
     },
     showCreditCards: function (data) {
@@ -159,6 +172,12 @@ var CreditCard = {
             addForm.removeClass("hide");
             addForm.addClass("animated fadeIn");
             Forms.PostForm("addForm", CreditCard.addCreditCardSuccess, CreditCard.addCreditCardError, false);
+        });
+        $("#rimuoviCarta").on("click", function(event) {
+            event.preventDefault();
+            var selectedCard = $("#selectedCard");
+            selectedCard.addClass("hide");
+            CreditCard.selected = null;
         });
     }
 };

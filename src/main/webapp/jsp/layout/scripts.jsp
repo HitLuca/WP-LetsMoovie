@@ -10,7 +10,7 @@
 <script src="<c:url value="/lib/js/foundation.min.js"/>"></script>
 
 <%--JQUERY PLUGINS--%>
-<script src="<c:url value="/lib/js/jquery.serialize-object.min.js"/>"></script>
+<script src="<c:url value="/lib/js/jquery.serializejson.min.js"/>"></script>
 <script src="<c:url value="/lib/js/jquery.storageapi.min.js"/>"></script>
 
 <%--NOTIFICHE JS--%>

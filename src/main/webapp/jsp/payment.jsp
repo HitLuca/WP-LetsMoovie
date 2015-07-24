@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="medium-12 text-center columns">
-                    <a href="#" class="button radius" data-reveal-id="cardsList">Scegli una carta</a>
+                    <a href="#" class="button radius info" data-reveal-id="cardsList">Scegli una carta</a>
 
                     <div id="cardsList" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
                          role="dialog">
@@ -63,13 +63,13 @@
                             <h4>Carte associate al tuo account:</h4>
 
                             <div class="medium-12 columns" data-bind="cards">
-                                <button class="radius creditCard" data-bind="number"></button>
+                                <button class="creditCard secondary" data-bind="number"></button>
                             </div>
                         </div>
 
                         <a href="#" class="button alert radius" id="addCard">Aggiungi nuova carta</a>
 
-                        <form class="panel callout hide radius" id="addForm" action="<c:url value="/api/debitCards"/>">
+                        <form class="panel callout hide radius" id="addForm" action="<c:url value="/api/debitCards/"/>">
                             <div class="row">
                                 <div class="medium-6 small-centered columns">
                                     <label>Nome titolare
@@ -100,17 +100,21 @@
                 </div>
 
             </div>
-            <div id="selectedCard" class="row hide">
+            <div id="selectedCard" class="row hide panel callout radius">
                 <h4>Carta selezionata</h4>
 
-                <div class="medium-12 text-center panel callout radius columns">
+                <div class="small-6 text-center columns">
                     <span id="paymentCard"></span>
+                </div>
+                <div class="small-6 columns">
+                    <button class="round tiny secondary" id="rimuoviCarta">Non usare questa carta</button>
                 </div>
             </div>
 
             <div class="row">
                 <div class="medium-12 text-center columns">
-                    <button id="confermaPagamento" class="radius">Conferma pagamento</button>
+                    <%--TODO: LADDA BUTTON--%>
+                    <button id="confermaPagamento" class="radius success">Conferma pagamento</button>
                 </div>
             </div>
         </div>
