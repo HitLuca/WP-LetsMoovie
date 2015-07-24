@@ -29,29 +29,20 @@
             </div>
             <div class="row">
                 <div class="large-12 columns">
-                    <h4>Seleziona un posto della sala</h4>
+                    <h4>Seleziona uno o più posti</h4>
 
                     <div class="row collapse">
-                        <div class="medium-6 small-centered columns">
-                            <label>Fila
-                                <select>
-                                    <option><span id="fila"></span></option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="medium-6 small-centered columns">
-                            <label>Sedile
-                                <select>
-                                    <option><span id="sedile"></span></option>
-                                </select>
-                            </label>
+                        <div class="small-12 columns text-center">
+                            <div id="roomMap">
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="large-12 columns">
-                    <h4>Seleziona il nuovo stato del posto</h4>
+                    <h4>Seleziona il nuovo stato</h4>
 
                     <div class="row collapse">
                         <div class="medium-6 small-centered columns">
