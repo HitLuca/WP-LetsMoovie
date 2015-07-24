@@ -2,27 +2,16 @@ package servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.imageio.plugins.jpeg.JPEG;
-import database.DatabaseConnection;
-import database.datatypes.other.Ticket;
-import database.mappers.NotDecidedMapper;
-import json.OperationResult;
 import json.payments.PdfTicketCreator;
-import json.payments.QrCodeCreator;
-import json.reservation.request.ReservationRequest;
-import json.tickets.TicketResponse;
-import org.apache.ibatis.session.SqlSession;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Created by etrunon on 22/07/15.

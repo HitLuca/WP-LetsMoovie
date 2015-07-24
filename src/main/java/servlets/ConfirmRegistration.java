@@ -11,7 +11,6 @@ import json.confirm_registration.ConfirmRegistrationRequest;
 import json.register.request.RegistrationRequest;
 import json.register.response.SuccessfullRegistration;
 import org.apache.ibatis.session.SqlSession;
-import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.mail.MailCleanerThread;

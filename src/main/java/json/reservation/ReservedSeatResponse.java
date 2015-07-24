@@ -1,7 +1,6 @@
 package json.reservation;
 
 import com.google.gson.annotations.Expose;
-import database.datatypes.user.UserPayment;
 import database.mappers.NotDecidedMapper;
 import json.reservation.request.SeatReservation;
 
@@ -19,10 +18,6 @@ public class ReservedSeatResponse {
     @Expose
     private float price;
 
-    public float getPrice() {
-        return price;
-    }
-
     public ReservedSeatResponse(SeatReservation u, NotDecidedMapper notDecidedMapper) {
         this.ticket_type = u.getTicket_type();
         this.s_row = Integer.valueOf(u.getRow());
@@ -30,5 +25,9 @@ public class ReservedSeatResponse {
 
         this.price = notDecidedMapper.getPrice(ticket_type);
 
+    }
+
+    public float getPrice() {
+        return price;
     }
 }

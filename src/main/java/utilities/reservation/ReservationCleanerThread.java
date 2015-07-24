@@ -11,7 +11,6 @@ import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.reservation.request.TemporaryReservationRequest;
 
-import java.sql.SQLSyntaxErrorException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +20,12 @@ import java.util.concurrent.Semaphore;
  * Created by marco on 17/07/15.
  */
 public class ReservationCleanerThread extends Thread{
+    private final long CLEANROUTINETIME = 60 * 10;
+    private final int RESERVATION_CODE_SIZE = 20;
+    int reservationIndex;
     private Map<String,TemporaryReservationRequest> pendingReservations;
     private Semaphore mutex;
     private Semaphore noRequest;
-    private final long CLEANROUTINETIME = 60*10;
-    int reservationIndex;
-    private final int RESERVATION_CODE_SIZE = 20;
 
     @Override
     public void start()

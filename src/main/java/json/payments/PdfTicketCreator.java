@@ -1,14 +1,5 @@
 package json.payments;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-
-import com.sun.javafx.iio.ImageStorage;
 import json.tickets.TicketData;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -17,19 +8,23 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
-import org.apache.pdfbox.pdmodel.graphics.xobject.PDPixelMap;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by etrunon on 23/07/15.
  */
 public class PdfTicketCreator {
 
-    private PDFont fontPlain;
     PDRectangle rect;
     int line = 0;
-
     String pathResource;
+    private PDFont fontPlain;
 
     public ByteArrayOutputStream createPdf(List<TicketData> ticketData, String pathResource) throws Exception {
 

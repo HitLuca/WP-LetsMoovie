@@ -210,7 +210,7 @@ var Cinema3DView = {
             }
             else
             {
-                return;
+
             }
         });
 

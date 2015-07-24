@@ -45,11 +45,11 @@
 
     $("#test").on("onSeatAdd",function(e,x,y){
         alert("hai aggiunto il posto in fila "+y+" e colonna "+x);
-    })
+    });
 
     $("#test").on("onRemoveAdd",function(e,x,y){
         alert("hai rimosso il posto in fila "+y+" e colonna "+x);
-    })
+    });
 
     Cinema3DView.init(document.getElementById('test'), sl, 17, 17);
 

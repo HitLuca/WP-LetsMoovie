@@ -1,6 +1,5 @@
 package database.datatypes.user;
 
-import com.google.gson.annotations.Expose;
 import json.OperationResult;
 
 /**

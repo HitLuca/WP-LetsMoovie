@@ -1,10 +1,8 @@
 package utilities;
 
-import database.datatypes.show.ShowTime;
-import database.mappers.ShowMapper;
-import json.adminFunctions.request.DeleteReservationRequest;
 import database.datatypes.film.FilmData;
-import json.reservation.request.ReservationRequest;
+import database.datatypes.show.ShowTime;
+import json.adminFunctions.request.DeleteReservationRequest;
 import types.enums.ErrorCode;
 import types.enums.Role;
 import types.exceptions.BadRequestException;
@@ -78,7 +76,7 @@ public class BadReqExeceptionThrower {
             if (((List) mapped).size() == 0 && (int) session.getAttribute("role") != Role.USER.getValue())
                 throw new BadRequestException(ErrorCode.USER_NOT_FOUND);
         } else if (mapped instanceof String) {
-            if (((String) mapped).equals("") && (int) session.getAttribute("role") != Role.USER.getValue())
+            if (mapped.equals("") && (int) session.getAttribute("role") != Role.USER.getValue())
                 throw new BadRequestException(ErrorCode.USER_NOT_FOUND);
         }
     }
