@@ -39,13 +39,23 @@ public interface ShowMapper {
     Show getShowData(int id_show);
 
     /**
+     * @param code
+     * @return il room_number associato al codice
+     */
+    //TODO:Test
+    @Select("SELECT id_show " +
+            "FROM payments " +
+            "WHERE code=#{code}")
+    int getRoomNumberFromCode(String code);
+
+    /**
      * @param show_date data di proiezione
      * @param id_film   id del film
      * @return lista degli orari e id_show di tutti gli show che proiettano id_sfilm in data show_date
      */
     @Select("SELECT show_time, id_show, room_number " +
             "FROM shows " +
-            "WHERE shows.show_date=#{show_date}::DATE AND shows.id_film=#{id_film} " +
+            "WHERE shows.show_date=#{show_date} AND shows.id_film=#{id_film} " +
             "ORDER BY show_time ")
     List<ShowIdTime> getShowTimeAndId(@Param("show_date") String show_date, @Param("id_film") int id_film);
 
@@ -55,7 +65,7 @@ public interface ShowMapper {
      */
     @Select("SELECT DISTINCT id_film " +
             "FROM shows " +
-            "WHERE shows.show_date=#{show_date}::DATE")
+            "WHERE shows.show_date=#{show_date}")
     List<Integer> getDayFilms(String show_date);
 
     /**
@@ -64,7 +74,7 @@ public interface ShowMapper {
      */
     @Select("SELECT * " +
             "FROM shows " +
-            "WHERE show_date=#{show_date}::DATE " +
+            "WHERE show_date=#{show_date} " +
             "ORDER BY show_time")
     List<Show> getDayShows(String show_date);
 
@@ -72,7 +82,7 @@ public interface ShowMapper {
      * @param show oggetto Show
      */
     @Insert("INSERT INTO shows (room_number, id_film, show_date, show_time) " +
-            "VALUES (#{room_number}, #{id_film}, #{show_date}::DATE, #{show_time}::TIME)")
+            "VALUES (#{room_number}, #{id_film}, #{show_date}, #{show_time})")
     void insertShow(Show show);
 
     /**
@@ -84,7 +94,7 @@ public interface ShowMapper {
      */
     @Select("SELECT id_show " +
             "FROM shows " +
-            "WHERE room_number=#{room_number} AND show_date=#{show_date}::DATE AND show_time=#{show_time}::TIME")
+            "WHERE room_number=#{room_number} AND show_date=#{show_date} AND show_time=#{show_time}")
     int getShowId(@Param("show_date") String show_date, @Param("show_time") String show_time, @Param("room_number") int room_number);
 
     /**
@@ -99,7 +109,7 @@ public interface ShowMapper {
      * @param show_time ora di proiezione
      */
     @Update("UPDATE shows " +
-            "SET show_time=#{show_time}::TIME " +
+            "SET show_time=#{show_time} " +
             "WHERE id_show=#{id_show}")
     void updateShowDuration(@Param("id_show") int id_show, @Param("show_time") String show_time);
 

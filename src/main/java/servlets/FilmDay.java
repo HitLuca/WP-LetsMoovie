@@ -81,8 +81,6 @@ public class FilmDay extends HttpServlet {
                 //Prendo i differenti
                 List<ShowIdTime> hours = showMapper.getShowTimeAndId(date.format(dateFormat), i);
 
-                hours.forEach(database.datatypes.show.ShowIdTime::convertTime);
-
                 //Creo l'oggetto FilmAndShows e lo riempio
                 //TODO, errore? hours nel costruttore non serve
                 FilmAndShows filmAndShows = new FilmAndShows(filmData, hours, filmMapper);

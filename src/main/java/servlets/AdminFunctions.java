@@ -11,7 +11,6 @@ import database.datatypes.film.FilmTitle;
 import database.datatypes.seat.RoomData;
 import database.datatypes.seat.Seat;
 import database.datatypes.seat.SeatCount;
-import database.datatypes.user.Payment;
 import database.datatypes.user.UserPaid;
 import database.mappers.FilmMapper;
 import database.mappers.SeatMapper;
@@ -61,16 +60,17 @@ public class AdminFunctions extends HttpServlet {
         PrintWriter outputStream = response.getWriter();
 
         try {
-            BadReqExeceptionThrower.checkUserLogged(request);
+            //BadReqExeceptionThrower.checkUserLogged(request); TODO:Togliere commento
 
-//            Controllo che abbia i permessi adatti
-            BadReqExeceptionThrower.checkAdminSuperAdmin(request);
+            //Controllo che abbia i permessi adatti
+            //BadReqExeceptionThrower.checkAdminSuperAdmin(request); TODO:Togliere commento
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String function = rs.getParameter();
 
             switch (function) {
                 case "updateSeatStatus": {
+                    //TODO:Mettere apposto
                     SeatRequest seatRequest = gsonReader.fromJson(request.getReader(), SeatRequest.class);
                     //Setto il campo che non uso a 1 così passa la regex
                     seatRequest.setId_show("1");
@@ -161,8 +161,8 @@ public class AdminFunctions extends HttpServlet {
                     int seat_count = seatMapper.getSeatCountForRank(room_number);
                     RoomData roomData = seatMapper.getRoomData(room_number);
                     RoomSeatList roomSeatList = new RoomSeatList(roomData.getLength(), roomData.getWidth());
-
-                    List<SeatCount> seatCounts = seatMapper.getRankedSeatReservations(room_number, seat_count * top / 100);
+                    int percentage = Math.round(seat_count * top / 100f);
+                    List<SeatCount> seatCounts = seatMapper.getRankedSeatReservations(room_number, percentage);
                     for (SeatCount sc : seatCounts) {
                         roomSeatList.addSeat(new RoomSeatCount(sc.getRow(), sc.getColumn(), sc.getCount()));
                     }
@@ -178,7 +178,8 @@ public class AdminFunctions extends HttpServlet {
 
                     int top = Integer.parseInt(userRankRequest.getTop());
                     int user_count = userMapper.getUserCountForRank();
-                    List<UserPaid> userPaids = userMapper.getRankedUserTotalPayments(user_count * top / 100);
+                    int percentage = Math.round(1.0f * user_count * top / 100);
+                    List<UserPaid> userPaids = userMapper.getRankedUserTotalPayments(percentage);
                     List<UserRank> userRankRequests = new ArrayList<UserRank>();
                     for (UserPaid u : userPaids) {
                         userRankRequests.add(new UserRank(u));
@@ -190,7 +191,6 @@ public class AdminFunctions extends HttpServlet {
                 }
                 case "getFilmIncome": {
                     FilmIncomeRequest filmIncomeRequest = gsonReader.fromJson(request.getReader(), FilmIncomeRequest.class);
-
                     //Controllo di non avere parametri invalidi
                     BadReqExeceptionThrower.checkRegex(filmIncomeRequest);
 
@@ -227,15 +227,17 @@ public class AdminFunctions extends HttpServlet {
                     }
 
                     if (seatDetailRequests != null && !code.equals("")) {
+                        float totalRefund = 0f;
+                        float refoundPercentage = 0.8f;
                         for (SeatDetailRequest sdr : seatDetailRequests) {
-                            //OggettoConLeCose oggetto = ClasseMagica.dammiLeCose(code); username, data, ora, id_show
-                            int room_number = showMapper.getRoomNumber(3);
-                            int row = sdr.getS_row();
-                            int column = sdr.getS_column();
-                            int id_seat = seatMapper.getIdSeat(room_number, row, column);
-                            Payment payment = new Payment("show_date", "show_time", sdr.getTicket_type(), id_seat, 1, "username");
-                            userMapper.deletePayment(payment);
+                            float ticket_price = sdr.getPrice();
+                            int room_number = showMapper.getRoomNumberFromCode(code);
+                            int id_seat = seatMapper.getIdSeat(room_number, sdr.getS_row(), sdr.getS_column());
+                            userMapper.deletePaymentFromCode(code, id_seat);
+                            totalRefund += ticket_price;
                         }
+                        float computedRefound = totalRefund * refoundPercentage;
+                        userMapper.addCredit("username", computedRefound);
                     } else if (seatDetailRequests == null && !code.equals("")) {
                         //OggettoConLeCose oggetto = ClasseMagica.dammiLeCose(code); username, data, ora, id_show
                         seatDetailRequests = userMapper.getReservationBlock("show_date", "show_time", 1, "username");

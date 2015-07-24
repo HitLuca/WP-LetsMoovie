@@ -65,7 +65,7 @@ public interface UserMapper {
      * @param registrationRequest oggetto RegistrationRequest
      */
     @Insert("INSERT INTO users (email, name, surname, username, password, phone_number, birthday, residual_credit, role) " +
-            "SELECT  #{email}, #{name}, #{surname}, #{username}, #{password}, #{phone}, #{birthday}::DATE, 0, 0")
+            "SELECT  #{email}, #{name}, #{surname}, #{username}, #{password}, #{phone}, #{birthday}, 0, 0")
     void insertUser(RegistrationRequest registrationRequest);
 
     /**
@@ -125,7 +125,7 @@ public interface UserMapper {
 
     @Select("SELECT ticket_type, price, row, \"column\" " +
             "FROM payments NATURAL JOIN seats NATURAL JOIN prices " +
-            "WHERE payment_date=#{payment_date}::DATE AND payment_time=#{payment_time}::TIME AND username=#{username}")
+            "WHERE payment_date=#{payment_date} AND payment_time=#{payment_time} AND username=#{username}")
     List<UserPayment> getUserPayments(@Param("payment_date") String payment_date, @Param("payment_time") String payment_time, @Param("username") String username);
     /**
      *
@@ -152,7 +152,7 @@ public interface UserMapper {
      * @param payment oggetto Payment
      */
     @Insert("INSERT INTO payments (payment_date, payment_time, ticket_type, id_seat, id_show, username) " +
-            "SELECT #{payment_date}::DATE, #{payment_time}::TIME, #{ticket_type}, #{id_seat}, #{id_show}, #{username}")
+            "SELECT #{payment_date}, #{payment_time}, #{ticket_type}, #{id_seat}, #{id_show}, #{username}")
     void insertPayment(Payment payment);
 
     /**
@@ -160,8 +160,35 @@ public interface UserMapper {
      * @param payment oggetto Payment
      */
     @Delete("DELETE FROM payments " +
-            "WHERE payment_date=#{payment_date}::DATE AND payment_time=#{payment_time}::TIME AND ticket_type=#{ticket_type} AND id_seat=#{id_seat} AND id_show=#{id_show} AND username=#{username}")
+            "WHERE payment_date=#{payment_date} AND payment_time=#{payment_time} AND ticket_type=#{ticket_type} AND id_seat=#{id_seat} AND id_show=#{id_show} AND username=#{username}")
     void deletePayment(Payment payment);
+
+    /**
+     * @param code codice associato alla prenotazione
+     */
+    @Delete("DELETE FROM payments " +
+            "WHERE code=#{code} AND id_seat=#{id_seat}")
+    void deletePaymentFromCode(@Param("code") String code, @Param("id_seat") int id_seat);
+
+    /**
+     * @param id id l'id temporaneo del pagamento
+     * @return dati del pagamento con id id
+     */
+    @Select("SELECT * " +
+            "FROM payments " +
+            "WHERE id=#{id}")
+    PaymentWithIdCode getPaymentDataFromId(int id);
+
+    /**
+     * @param payment_date
+     * @param payment_time
+     * @param username
+     * @return
+     */
+    @Select("SELECT id " +
+            "FROM payments " +
+            "WHERE payment_date=#{payment_date} AND payment_time=#{payment_time} AND username=#{username}")
+    List<Integer> getIdList(@Param("payment_date") String payment_date, @Param("payment_time") String payment_time, @Param("username") String username);
 
     /**
      *
@@ -179,9 +206,9 @@ public interface UserMapper {
      * @param top percentuale da usare per filtrare i risultati
      * @return lista dei (top)% utenti e totali che hanno pagato di piu'
      */
-    @Select("SELECT username, SUM(price) as paid " +
-            "FROM payments NATURAL JOIN prices " +
-            "GROUP BY username " +
+    @Select("SELECT name, surname, username, SUM(price) as paid " +
+            "FROM payments NATURAL JOIN prices NATURAL JOIN users " +
+            "GROUP BY name, surname, username " +
             "ORDER BY SUM(price) " +
             "DESC " +
             "LIMIT #{top}")
@@ -191,7 +218,8 @@ public interface UserMapper {
      * @param credit_card_number numero di carta di credito da inserire
      * @param username username dell'utente
      */
-    @Insert("INSERT INTO user_credit_cards (credit_card_number, username) VALUES (#{credit_card_number}, #{username})")
+    @Insert("INSERT INTO user_credit_cards (credit_card_number, username) " +
+            "VALUES (#{credit_card_number}, #{username})")
     void insertCreditCard(@Param("credit_card_number") String credit_card_number, @Param("username") String username);
 
     /**
@@ -211,15 +239,39 @@ public interface UserMapper {
     float getResidualCredit(String username);
 
     /**
+     *
+     * @return numero di entry nella tabella payments
+     */
+    @Select("SELECT COUNT(*) " +
+            "FROM payments")
+    int getPaymentCount();
+
+    /**
+     * @return tutti i pagamenti
+     */
+    @Select("SELECT * " +
+            "FROM payments " +
+            "ORDER BY payment_date, payment_time, username, id_seat, id_show, ticket_type, username")
+    List<PaymentWithIdCode> getAllPayments();
+
+    /**
+     * @param code codice associato alla prenotazione
+     * @param id   id temporaneo creato per questa query
+     */
+    @Update("UPDATE payments " +
+            "SET code=#{code} " +
+            "WHERE id=#{id}")
+    void insertCode(@Param("code") String code, @Param("id") int id);
+
+    /**
      * @param show_date data di proiezione
      * @param show_time ora di proiezione
      * @param id_show   id dello show
      * @param username  username dell'utente
      * @return lista di posti con relativo prezzo e tipo di biglietto
      */
-    //TODO:Test
     @Select("SELECT row as s_row, \"column\" as s_column, ticket_type, price " +
             "FROM payments NATURAL JOIN prices NATURAL JOIN seats " +
-            "WHERE payment_date=#{show_date}::DATE AND payment_time=#{show_time}::TIME AND id_show=#{id_show} AND username=#{username}")
+            "WHERE payment_date=#{show_date} AND payment_time=#{show_time} AND id_show=#{id_show} AND username=#{username}")
     List<SeatDetailRequest> getReservationBlock(@Param("show_date") String show_date, @Param("show_time") String show_time, @Param("id_show") int id_show, @Param("username") String username);
 }

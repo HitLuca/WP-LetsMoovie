@@ -8,13 +8,19 @@ import database.datatypes.user.UserPaid;
  */
 public class UserRank {
     @Expose
+    private String name;
+    @Expose
+    private String surname;
+    @Expose
     private String username;
     @Expose
     private float totalPayments;
 
-    public UserRank(UserPaid u) {
-        this.username = u.getUsername();
-        this.totalPayments = u.getPaid();
+    public UserRank(UserPaid userPaid) {
+        this.name = userPaid.getName();
+        this.surname = userPaid.getSurname();
+        this.username = userPaid.getUsername();
+        this.totalPayments = userPaid.getPaid();
     }
 
     public String getUsername() {
@@ -31,5 +37,13 @@ public class UserRank {
 
     public void setTotalPayments(float totalPayments) {
         this.totalPayments = totalPayments;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
     }
 }
