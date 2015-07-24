@@ -5,6 +5,7 @@
 <html>
 <c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Modifica stato posto"/>
+    <c:param name="css" value="/css/updateStatus.css"></c:param>
 </c:url>
 <c:import url="${url}"/>
 <body>
@@ -16,22 +17,20 @@
                 <div class="large-12 columns">
                     <h4>Seleziona una sala dalla lista</h4>
 
-                    <form id="selezioneSale" action="/api/admin/updateSeatStatus">
-                        <div class="row collapse">
-                            <div class="medium-6 small-centered columns">
-                                <label>Sale cinema
-                                    <select id="listaSale" name="room_number" data-bind="roomList">
-                                        <option id="room_number"></option>
-                                    </select>
-                                </label>
-                            </div>
+                    <div class="row collapse">
+                        <div class="medium-6 small-centered columns">
+                            <label>Sale cinema
+                                <select id="listaSale" name="room_number" data-bind="roomList">
+                                    <option data-bind="room_number"></option>
+                                </select>
+                            </label>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="large-12 columns">
-                    <h4>Seleziona uno o più posti</h4>
+                    <h4>Seleziona uno o più posti dalla mappa</h4>
 
                     <div class="row collapse">
                         <div class="small-12 columns text-center">
@@ -42,23 +41,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="large-12 columns">
-                    <h4>Seleziona il nuovo stato</h4>
-
-                    <div class="row collapse">
-                        <div class="medium-6 small-centered columns">
-                            <label>Stato
-                                <select>
-                                    <option>Agibile</option>
-                                    <option>Inagibile</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row collapse">
+            <div id="conferma" class="row collapse">
+                <h4>Clicca su un posto per modificarne lo stato</h4>
                 <div class="medium-3 small-centered columns">
                     <button class="button radius ladda-button" data-style="zoom-out">Conferma cambiamento</button>
                 </div>
@@ -68,6 +52,10 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
+<script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
+<script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
 <script src="/javascript/featureAdmin/updateStatus.js"></script>
 </body>
 </html>

@@ -185,7 +185,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>filmCashing</servlet-name>
-        <url-pattern>/admin/filmCaching/*</url-pattern>
+        <url-pattern>/admin/filmCashing/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>bestCustomer</servlet-name>

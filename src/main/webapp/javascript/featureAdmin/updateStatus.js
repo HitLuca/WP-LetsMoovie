@@ -26,18 +26,30 @@ var RoomsList = {
     }
 };
 
-var SeatsList = {
-    correctData: function (data) {
-
-        Cinema3DView.init(document.getElementById("roomMap"), data.showSeatList, data.column, data.row, true);
+var GetRoomMap = {
+    url: "/api/viewRoom/",
+    getRoomMap: function (id) {
+        var request = $.ajax({
+            url: GetRoomMap.url + id
+        });
+        request.done(GetRoomMap.roomsSuccess);
+        request.fail(GetRoomMap.roomError);
     },
-    wrongData: function (data) {
-        alertify.error("Dati non validi");
+    roomsSuccess: function (data) {
+        Cinema3DView.init(document.getElementById("roomMap"), data.showSeatList, data.column, data.row, true)
+    },
+    roomError: function () {
+        alertify.error("Errore nel visualizzare la mappa");
     }
+
+
 };
 
 
 $(function () {
     RoomsList.getRoomsInfo();
-    Forms.PostForm("selezioneSale", SeatsList.correctData, SeatsList.wrongData, false);
+    $("#listaSale").on("change", function () {
+        var id = $(this).find(":selected").attr("value");
+        GetRoomMap.getRoomMap(id);
+    })
 });
