@@ -27,7 +27,6 @@ public interface NotDecidedMapper {
     @Select("SELECT * " +
             "FROM prices")
     List<Ticket> getAllTickets();
-
     /**
      *
      * @return lista dei dati di tutte le configurazioni

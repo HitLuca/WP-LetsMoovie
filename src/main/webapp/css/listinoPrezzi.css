@@ -1,11 +1,8 @@
 h2, .riga {
-    background-color: lightblue;
+    background-color: #2ba6cb;
     text-align: center;
+    color: #fff;
     font-weight: bold;
-}
-
-#tableHeader {
-    background-color: lightgrey;
 }
 
 #singleTicket {
