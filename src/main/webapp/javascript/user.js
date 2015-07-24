@@ -1,3 +1,5 @@
+numeral.language('it');
+
 var User = {
     username: Session.getUsername(),
     displayUserData: function () {
@@ -37,6 +39,42 @@ var User = {
     }
 };
 
+var Cards = {
+    url: "/api/debitCards/",
+    displayUserCards: function () {
+        var request = $.ajax({
+            url: Cards.url + User.username
+        });
+        request.done(Cards.showCardsInfo);
+        request.fail(Cards.showCardError);
+    },
+    showCardsInfo: function (data) {
+        var item = $("#contenitoreCarte");
+        Transparency.render(item[0], data.cards);
+    },
+    showCardError: function () {
+        alertify.error("Errore nel recuperare la lista delle carte associate all'account");
+    }
+};
+
+var Credit = {
+    url: "/api/credit/",
+    displayCredit: function () {
+        var request = $.ajax({
+            url: Credit.url + User.username
+        });
+        request.done(Credit.showCreditInfo);
+        request.fail(Credit.showCreditError);
+    },
+    showCreditInfo: function (data) {
+        var credit = $("#credit");
+        credit.html(numeral(data.credit).format('0,0.00 $'));
+    },
+    showCreditError: function () {
+        alertify.error("Errore nel recuperare il credito associato all'account");
+    }
+}
+
 
 $(function () {
     var name = Session.getUsername();
@@ -45,6 +83,6 @@ $(function () {
     } else {
         User.displayUserData();
     }
-
-
+    Cards.displayUserCards();
+    Credit.displayCredit();
 });
