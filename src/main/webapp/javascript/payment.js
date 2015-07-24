@@ -14,16 +14,16 @@ var Reservation = {
     showTicketsInfo: function (data) {
         var template = $("#listaPostiScelti");
         var directives = {
-            seats: {
+            seatList: {
                 price: {
                     text: function () {
                         return numeral(this.price).format('0,0.00 $');
                     }
                 }
             },
-            total: {
+            totalPrice: {
                 text: function () {
-                    return numeral(this.total).format('0,0.00 $');
+                    return numeral(this.totalPrice).format('0,0.00 $');
                 }
             }
         };

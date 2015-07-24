@@ -19,7 +19,7 @@
 
             <div class="row collapse" id="listaPostiScelti">
                 <div class="columns small-12">
-                    <div class="" data-bind="seats">
+                    <div class="" data-bind="seatList">
                         <c:import url="/jsp/template/riepilogoBiglietto.jsp"/>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                             <h3>Totale</h3>
                         </div>
                         <div class="columns small-7">
-                            <h3 class="right" data-bind="total"></h3>
+                            <h3 class="right" data-bind="totalPrice"></h3>
                         </div>
                     </div>
                     <div class="row" id="userCredit">
