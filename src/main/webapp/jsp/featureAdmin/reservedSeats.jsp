@@ -17,7 +17,7 @@
         <div class="small-12 columns">
             <div class="row">
                 <div class="large-12 columns">
-                    <h4>Seleziona una sala dalla lista per visualizzarne i posti venduti</h4>
+                    <h4>Seleziona una sala dalla lista per visualizzarne i posti più venduti</h4>
 
                     <form id="selezionePercentuale" action="/api/admin/getRankedReservations">
                         <div class="row collapse">

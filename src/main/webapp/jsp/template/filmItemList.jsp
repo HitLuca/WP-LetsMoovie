@@ -10,13 +10,13 @@
         <p></p>
     </div>
     <div class="medium-9 columns">
-        <a href="#" class="filmLink">
+        <a href="#" class="filmLink small-only-text-center">
             <h3 id="film_title"></h3>
         </a>
 
         <p></p>
 
-        <p align="justify" id="plot">
+        <p align="justify" id="plot" class="hidden-for-small">
         </p>
 
         <c:if test="${requestScope.orario == true}">
