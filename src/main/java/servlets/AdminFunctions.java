@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
+import database.datatypes.film.FilmData;
 import database.datatypes.film.FilmIncome;
 import database.datatypes.film.FilmTitle;
 import database.datatypes.seat.RoomData;
@@ -197,9 +198,13 @@ public class AdminFunctions extends HttpServlet {
                     //Controllo di non avere parametri invalidi
                     BadReqExeceptionThrower.checkRegex(filmIncomeRequest);
 
-                    int x = Integer.valueOf(filmIncomeRequest.getId_film());
+                    int id_film = Integer.valueOf(filmIncomeRequest.getId_film());
 
-                    outputStream.print(gsonWriter.toJson(filmMapper.getFilmIncome(x)));
+                    FilmData fd = filmMapper.getFilmData(id_film);
+                    float income = filmMapper.getFilmIncome(id_film);
+                    FilmIncomeResponse res = new FilmIncomeResponse(fd, income);
+
+                    outputStream.print(gsonWriter.toJson(res));
                     sessionSql.close();
                     break;
                 }
