@@ -16,6 +16,7 @@ public class ListPastPayment implements OperationResult {
     @Expose
     private List<PastPayment> pastPaymentList;
 
+
     public ListPastPayment(List<CompletePayments> cp, UserMapper u, String username) {
 
         pastPaymentList = new ArrayList<>();
