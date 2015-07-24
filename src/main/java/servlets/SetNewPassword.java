@@ -33,10 +33,8 @@ import java.util.List;
  * @api {post} /api/setNewPassword
  * @apiName SetNewPassword
  * @apiGroup PasswordRecovery
- *
  * @apiParam {String} password password.
  * @apiParam {String} verificationCode il codice di verifica relativo
- *
  * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
  * @apiError (2) {String[]} errorCode EMPTY_WRONG_FIELD: parameters parametri di input che non passano la validazione
  * @apiError (7) {int} errorCode ALREADY_LOGGED: L'utente è già loggato e fino all'implementazione del cambio password non può fare niente
@@ -59,27 +57,26 @@ public class SetNewPassword extends HttpServlet {
 
         OperationResult setPasswordOperation;
         response.setContentType("application/json");
-        try
-        {
+        try {
+
             BadReqExeceptionThrower.checkUserAlreadyLogged(request);
-            else {
-                SetNewPasswordRequest setNewPasswordRequest = gsonReader.fromJson(request.getReader(), SetNewPasswordRequest.class);
+
+            SetNewPasswordRequest setNewPasswordRequest = gsonReader.fromJson(request.getReader(), SetNewPasswordRequest.class);
             BadReqExeceptionThrower.checkRegex(setNewPasswordRequest);
 
-                String username = passwordRecoveryCodeCheck.verify(setNewPasswordRequest.getCode());
-                if(username == null)
-                {
-                    throw new BadRequestException(ErrorCode.WRONG_CONFIRMATION_CODE);
-                }
-
-                userMapper.updatePassword(username,setNewPasswordRequest.getPassword());
+            String username = passwordRecoveryCodeCheck.verify(setNewPasswordRequest.getCode());
+            if (username == null) {
+                throw new BadRequestException(ErrorCode.WRONG_CONFIRMATION_CODE);
             }
+
+            userMapper.updatePassword(username, setNewPasswordRequest.getPassword());
+
             setPasswordOperation = null;
 
         } catch (BadRequestException e) {
             setPasswordOperation = e;
             response.setStatus(400);
-        }catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
+        } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
             setPasswordOperation = new BadRequestException();
             response.setStatus(400);
         }
