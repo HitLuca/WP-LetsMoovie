@@ -11,12 +11,8 @@ import java.util.List;
 /**
  * Created by etrunon on 17/07/15.
  */
-public class Film {
+public class Film extends AbsFilm {
 
-    @Expose
-    protected int id_film;
-    @Expose
-    protected String film_title;
     @Expose
     protected String poster;
     @Expose
@@ -27,8 +23,6 @@ public class Film {
     protected int metascore;
     @Expose
     protected float rating;
-    @Expose
-    protected int year;
     @Expose
     protected String plot;
     @Expose
@@ -63,6 +57,10 @@ public class Film {
     }
 
     public Film(FilmData filmData, FilmMapper filmMapper) {
+        super();
+        this.id_film = filmData.getId_film();
+        this.film_title = filmData.getFilm_title();
+        this.year = filmData.getYear();
         setData(filmData, filmMapper);
     }
 

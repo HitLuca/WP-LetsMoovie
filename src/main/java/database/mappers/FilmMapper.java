@@ -134,7 +134,8 @@ public interface FilmMapper {
      * @return lista dei dati di tutti i film
      */
     @Select("SELECT * " +
-            "FROM films")
+            "FROM films " +
+            "ORDER BY film_title, year")
     List<FilmData> getAllFilms();
 
     /**

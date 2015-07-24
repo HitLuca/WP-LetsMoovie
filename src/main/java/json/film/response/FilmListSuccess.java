@@ -2,7 +2,9 @@ package json.film.response;
 
 import com.google.gson.annotations.Expose;
 import json.OperationResult;
+import json.film.AbsFilm;
 import json.film.Film;
+import json.film.MicroFilm;
 
 import java.util.List;
 
@@ -12,9 +14,10 @@ import java.util.List;
 public class FilmListSuccess implements OperationResult {
 
     @Expose
-    List<Film> filmList;
+    List<AbsFilm> filmList;
 
-    public FilmListSuccess(List<Film> filmList) {
+    public FilmListSuccess(List<AbsFilm> filmList) {
         this.filmList = filmList;
     }
+
 }

@@ -7,6 +7,7 @@ import database.datatypes.film.FilmData;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
+import json.film.AbsFilm;
 import json.film.Film;
 import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
@@ -50,11 +51,11 @@ public class FilmWeek extends HttpServlet {
         ShowMapper showMapper = sessionSql.getMapper(ShowMapper.class);
         FilmMapper filmMapper = sessionSql.getMapper(FilmMapper.class);
 
-        OperationResult getFilmOfWeek = null;
+        OperationResult opRes = null;
         response.setContentType("application/json");
 
         LocalDate today = LocalDate.now();
-        List<Film> filmList = new ArrayList<>();
+        List<AbsFilm> filmList = new ArrayList<>();
 
         List<Integer> idList;
 
@@ -77,16 +78,17 @@ public class FilmWeek extends HttpServlet {
             today = today.plusDays(1);
         }
 
-        for (Film f : filmList) {
-            FilmData filmData = filmMapper.getFilmData(f.getId_film());
+        for (AbsFilm f : filmList) {
+            Film ff = (Film) f;
+            FilmData filmData = filmMapper.getFilmData(ff.getId_film());
 
-            f.setData(filmData, filmMapper);
+            ff.setData(filmData, filmMapper);
         }
 
-        getFilmOfWeek = new FilmListSuccess(filmList);
+        opRes = new FilmListSuccess(filmList);
 
         PrintWriter outputStream = response.getWriter();
-        outputStream.print(gsonWriter.toJson(getFilmOfWeek));
+        outputStream.print(gsonWriter.toJson(opRes));
 
         sessionSql.close();
     }

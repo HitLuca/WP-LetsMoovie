@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
+import database.datatypes.film.FilmData;
 import database.datatypes.show.Show;
 import database.mappers.FilmMapper;
 import database.mappers.NotDecidedMapper;
@@ -13,6 +14,9 @@ import json.OperationResult;
 import json.adminData.DateRequest;
 import json.adminData.RoomList;
 import json.adminData.ShowDataList;
+import json.film.AbsFilm;
+import json.film.MicroFilm;
+import json.film.response.FilmListSuccess;
 import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
@@ -26,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,6 +74,9 @@ public class AdminData extends HttpServlet {
                     break;
                 case "getReservationDetails":
                     opRes = getReservationDetails();
+                    break;
+                case "getFilmList":
+                    opRes = getFilmList();
                     break;
                 default:
                     throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
@@ -134,4 +142,21 @@ public class AdminData extends HttpServlet {
 
         return null;
     }
+
+    private OperationResult getFilmList() {
+
+        FilmMapper filmMapper = sessionSql.getMapper(FilmMapper.class);
+
+        List<FilmData> fd = filmMapper.getAllFilms();
+        List<AbsFilm> mf = new ArrayList<>();
+
+        for (FilmData f : fd) {
+            mf.add(new MicroFilm(f));
+        }
+
+        FilmListSuccess fls = new FilmListSuccess(mf);
+
+        return fls;
+    }
+
 }
