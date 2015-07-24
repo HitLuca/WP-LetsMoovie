@@ -17,15 +17,17 @@
                 <div class="large-12 columns">
                     <h4>Seleziona un film dalla lista per visualizzarne l'incasso</h4>
 
-                    <div class="row">
-                        <div class="medium-6 medium-centered columns">
-                            <label>Lista film
-                                <select id="listaFilm">
-                                    <option id="titolo_film" data-bind="film_title"></option>
-                                </select>
-                            </label>
+                    <form id="sceltaFilm" action="/api/admin/getFilmIncome">
+                        <div class="row">
+                            <div class="medium-6 medium-centered columns">
+                                <label>Lista film
+                                    <select name="id_film" id="listaFilm">
+                                        <option data-bind="film_title"></option>
+                                    </select>
+                                </label>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div id="showCashing" class="row">
@@ -44,6 +46,10 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.css" rel="stylesheet"/>
+<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
+<script src="<c:url value="/lib/js/it.min.js"/>"></script>
 <script src="<c:url value="/javascript/featureAdmin/filmCaching.js"/>"></script>
 </body>
 </html>

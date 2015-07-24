@@ -109,29 +109,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="medium-12 columns">
-                                <div class="row">
-                                    <div class="medium-12 columns">
-                                        Film 2
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="medium-12 columns">
-                                <div class="row">
-                                    <div class="medium-12 columns">
-                                        Film 3
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="medium-12 columns">
-                                <div class="row">
-                                    <div class="medium-12 columns">
-                                        Film 4
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -141,38 +118,23 @@
 
                 <div id="panel3a" class="content">
                     <div class="panel radius">
-                        <h3>Carte registrate e credito disponibile</h3>
-
-                        <p></p>
 
                         <div class="row">
                             <div class="medium-12 columns">
+                                <h3>Carte registrate</h3>
                                 <div class="row">
                                     <div class="medium-12 columns">
-                                        Carta 1
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="medium-12 columns">
-                                <div class="row">
-                                    <div class="medium-12 columns">
-                                        Carta 2
+                                        <strong>Carta:</strong><span data-bind="numeroCarta"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="medium-12 columns">
+                                <h3>Credito</h3>
                                 <div class="row">
                                     <div class="medium-12 columns">
-                                        Carta 3
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="medium-12 columns">
-                                <div class="row">
-                                    <div class="medium-12 columns">
-                                        Carta 4
+                                        <strong>Residuo:</strong><span data-bind="credito"></span>
                                     </div>
                                 </div>
                             </div>
