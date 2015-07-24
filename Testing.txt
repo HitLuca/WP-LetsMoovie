@@ -1,4 +1,4 @@
-1-Dato da togliere
+1-Dato da togliere FATTO!
 URL: http://localhost:8080/info
 Descrizione: Togliere Ecco alcune informazioni su di noi che potrebbero servirti:
 
@@ -10,7 +10,7 @@ Descrizione: Questo sito fa uso di cookie per migliorare l’esperienza di navig
 URL:http://localhost:8080/info
 Descrizione: Il cinema apre alle 15:00 e chiude al termine del film delle 24:00 (~02:00)
 
-4-Cambiare testo
+4-Cambiare testo  FATTO!
 URL:http://localhost:8080/info
 Descrizione:Togliere Let's Moovie dala titolo
 
@@ -25,7 +25,7 @@ Luca Alberigo frontend developer
 Marco Federici backend & frontend developer
 Luca Simonetto database & backend developer
 
-6-Inserire pulsante Home nella navbar (?)
+6-Inserire pulsante Home nella navbar (?) FATTO!
 URL:/
 Descrizione: Cliccare sul nome del sito non è abbastanza immediato
 
@@ -33,7 +33,7 @@ Descrizione: Cliccare sul nome del sito non è abbastanza immediato
 URL: http://localhost:8080/listinoPrezzi
 Descrizione: E' bruttina, la dimensione va bene
 
-8-Sistemare login
+8-Sistemare login NO
 URL: http://localhost:8080/login
 Descrizione: Se metto dati non validi va in loop
 
