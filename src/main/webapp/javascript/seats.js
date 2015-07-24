@@ -129,6 +129,12 @@ var Reservation = {
                 Session.redirectToLogin();
             }
                 break;
+            case 14:
+            {
+                Notifications.saveNotification("warning", "Lo spettacolo selezionato è già iniziato!");
+                window.location.reload();
+            }
+                break;
             default:
             {
                 Notifications.saveNotification("error", "Errore nel processare la richiesta!");

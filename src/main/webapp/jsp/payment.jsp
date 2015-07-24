@@ -107,7 +107,7 @@
                     <span id="paymentCard"></span>
                 </div>
                 <div class="small-6 columns">
-                    <button class="round tiny secondary" id="rimuoviCarta">Non usare questa carta</button>
+                    <button class="tiny secondary" id="rimuoviCarta">Non usare questa carta</button>
                 </div>
             </div>
 
