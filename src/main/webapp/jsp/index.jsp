@@ -13,14 +13,14 @@
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">
         <div class="small-12 columns">
-            <ul class="tabs show-for-medium-up" data-tab>
-                <li class="tab-title active"><a href="#panel1">Questa settimana</a></li>
-                <li class="tab-title" id=""><a href="#panel2">Lista completa</a></li>
-            </ul>
+            <div class="row">
+                <ul class="tabs" data-tab>
+                    <li class="tab-title active small-6 column"><a href="#panel1">Settimana</a></li>
+                    <li class="tab-title small-6 column"><a href="#panel2">Lista completa</a></li>
+                </ul>
+            </div>
             <dl id="home" class="accordion" data-accordion>
                 <dd class="accordion-navigation">
-                    <a href="#panel1" class="show-for-small-only">Questa settimana</a>
-
                     <div id="panel1" class="content active">
                         <ul class="tabs" data-tab id="daysLabel">
                             <li class="tab-title"><a href="#panelLunedì">Lunedì</a></li>
@@ -62,16 +62,17 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#panel2" class="show-for-small-only">Lista completa</a>
+
 
                     <div id="panel2" class="content">
                         <div class="content-box section-box">
                             <c:set scope="request" value="false" var="orario"/>
-                            <c:import url="template/filmItemList.jsp"/>
+                                <c:import url="template/filmItemList.jsp"/>
+                            </div>
                         </div>
-                    </div>
                 </dd>
             </dl>
+
         </div>
     </div>
     <div class="push"></div>
