@@ -18,18 +18,6 @@
                 LISTINO PREZZI
             </h2>
         </div>
-
-        <%--<div id="tableHeader" class="row collapse">
-            <div class="medium-3 columns">
-                <h5>TIPO BIGLIETTO</h5>
-            </div>
-            <div class="medium-2 columns">
-                <h5 class="label radius">PREZZO</h5>
-            </div>
-            <div class="medium-7 columns">
-                <h5>DESCRIZIONE</h5>
-            </div>
-        </div>--%>
         <div class="row collapse" id="allTickets" data-bind="tickets">
             <div id="singleTicket" class="row panel callout radius wow zoomIn">
 
@@ -62,6 +50,6 @@
 
 <script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
 <script src="<c:url value="/lib/js/it.min.js"/>"></script>
-<script src="/javascript/listinoPrezzi.js"></script>
+<script src="<c:url value="/javascript/listinoPrezzi.js"/>"></script>
 </body>
 </html>
