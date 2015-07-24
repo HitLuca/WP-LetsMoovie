@@ -115,7 +115,26 @@ var Reservation = {
         window.location.assign(Reservation.redirectUrl + data.reservationCode);
     },
     errorPost: function (data) {
-        //    TODO: GESTIRE ERRORE
+        var Json = data.responseJSON;
+        var error = Json.errorCode;
+        switch (error) {
+            case 5:
+            {
+                Notifications.saveNotification("warning", "I posti selezionati non sono disponibili!");
+                window.location.reload();
+            }
+                break;
+            case 10:
+            {
+                Session.redirectToLogin();
+            }
+                break;
+            default:
+            {
+                Notifications.saveNotification("error", "Errore nel processare la richiesta!");
+                window.location.reload();
+            }
+        }
     }
 };
 

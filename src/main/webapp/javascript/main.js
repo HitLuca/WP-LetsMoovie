@@ -20,7 +20,8 @@ var Forms = {
             data: JSON.stringify(jsonData),
             dataType: "json",
             context: form,
-            processData: false
+            processData: false,
+            contentType: "application/json; charset=UTF-8"
         });
     },
     PostForm: function (formID, doneCallback, failCallback, Abide) {
