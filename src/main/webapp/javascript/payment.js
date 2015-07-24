@@ -100,7 +100,8 @@ var Payment = {
             url: Payment.url,
             method: "POST",
             data: JSON.stringify(data),
-            type: "json"
+            type: "json",
+            contentType: "application/json; charset=UTF-8"
         });
         button.attr("disabled", '');
         if (button.hasClass("ladda-button")) {

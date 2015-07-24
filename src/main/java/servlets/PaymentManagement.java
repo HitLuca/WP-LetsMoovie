@@ -23,16 +23,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Created by hitluca on 22/07/15.
+ * @api {post} /api/payment/*
+ * @apiName PaymentManagement
+ * @apiGroup PaymentManagement
+ *
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (2) {String[]} errorCode EMPTY_WRONG_FIELD: parameters parametri di input che non passano la validazione
+ * @apiError (10) {int} errorCode NOT_LOGGED_IN: l'utente non è loggato
  */
-
 @WebServlet(name = "PaymentManagement", urlPatterns = "/api/payment/*")
-
+//TODO: mapping Servlet con asterisco in più
 public class PaymentManagement extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
@@ -52,15 +58,17 @@ public class PaymentManagement extends HttpServlet {
         response.setContentType("application/json");
         OperationResult operationResult = null;
 
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter outputStream = response.getWriter();
 
         try {
-            //BadReqExeceptionThrower.checkUserLogged(request);
-            // TODO:togliere commento
+            BadReqExeceptionThrower.checkUserLogged(request);
 
             PaymentRequest paymentRequest = gsonReader.fromJson(request.getReader(), PaymentRequest.class);
-            boolean usesCard = paymentRequest.getCredit_card_number().equals("");
+            BadReqExeceptionThrower.checkNullInput(paymentRequest);
+            boolean usesCard = paymentRequest.getCredit_card_number() != null;
 
+            //Todo: gestire caso in cui la prenotazione scada
+            //Todo: Controllare thread che si imballa nel momento in cui arrivano più richieste
             ReservationRequest reservationRequest = temporaryReservationManager.confirmReservationRequest(paymentRequest.getCode(), sqlSession);
 
             int totalPaid = 0;
@@ -70,6 +78,7 @@ public class PaymentManagement extends HttpServlet {
             String username = request.getSession().getAttribute("username").toString();
             int id_show = reservationRequest.getIntIdShow();
 
+            //TODO:inserire pagamenti dopo aver controllato se il credio basta nel caso non abbia inserito una carta di credito
             for (SeatReservation sr : reservationRequest.getReservation()) {
                 int id_seat = seatMapper.getIdSeat(room_number, sr.getIntRow(), sr.getIntColumn());
                 Payment payment = new Payment(payment_date, payment_time, sr.getTicket_type(), id_seat, id_show, username);
