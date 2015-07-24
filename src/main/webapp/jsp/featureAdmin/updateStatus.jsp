@@ -16,15 +16,17 @@
                 <div class="large-12 columns">
                     <h4>Seleziona una sala dalla lista</h4>
 
-                    <div class="row collapse">
-                        <div class="medium-6 small-centered columns">
-                            <label>Sale cinema
-                                <select>
-                                    <option><span id="roomNumber"></span></option>
-                                </select>
-                            </label>
+                    <form id="selezioneSale" action="/api/admin/updateSeatStatus">
+                        <div class="row collapse">
+                            <div class="medium-6 small-centered columns">
+                                <label>Sale cinema
+                                    <select id="listaSale" name="room_number" data-bind="roomList">
+                                        <option id="room_number"></option>
+                                    </select>
+                                </label>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="row">
@@ -48,7 +50,8 @@
                         <div class="medium-6 small-centered columns">
                             <label>Stato
                                 <select>
-                                    <option><span id="status"></span></option>
+                                    <option>Agibile</option>
+                                    <option>Inagibile</option>
                                 </select>
                             </label>
                         </div>
@@ -57,7 +60,7 @@
             </div>
             <div class="row collapse">
                 <div class="medium-3 small-centered columns">
-                    <button class="button radius">Conferma cambiamento</button>
+                    <button class="button radius ladda-button" data-style="zoom-out">Conferma cambiamento</button>
                 </div>
             </div>
         </div>
@@ -65,5 +68,6 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+<script src="/javascript/featureAdmin/updateStatus.js"></script>
 </body>
 </html>

@@ -22,7 +22,7 @@
 
                         <div class="row">
                             <div class="medium-4 columns">
-                                <a href="/jsp/featureAdmin/showSeats.jsp" class="button expand radius">Posti venduti</a>
+                                <a href="/admin/showSeats" class="button expand radius">Posti venduti</a>
                             </div>
                             <div class="medium-8 columns">
                                 <p>Consente di vedere la lista dei posti venduti
@@ -32,7 +32,7 @@
 
                         <div class="row">
                             <div class="medium-4 columns">
-                                <a href="/jsp/featureAdmin/reservedSeats.jsp" class="button expand radius">Posti più
+                                <a href="/admin/reservedSeats" class="button expand radius">Posti più
                                     prenotati</a>
                             </div>
                             <div class="medium-8 columns">
@@ -42,7 +42,7 @@
 
                         <div class="row">
                             <div class="medium-4 columns">
-                                <a href="/jsp/featureAdmin/deleteReservation.jsp" class="button expand radius">
+                                <a href="/admin/deleteReservation" class="button expand radius">
                                     Cancella prenotazione</a>
                             </div>
                             <div class="medium-8 columns">
@@ -53,7 +53,7 @@
 
                         <div class="row">
                             <div class="medium-4 columns">
-                                <a href="/jsp/featureAdmin/updateStatus.jsp" class="button expand radius">
+                                <a href="/admin/updateStatus" class="button expand radius">
                                     Modifica posto</a>
                             </div>
                             <div class="medium-8 columns">
@@ -71,7 +71,7 @@
 
                         <div class="row">
                             <div class="medium-4 columns">
-                                <a href="/jsp/featureAdmin/filmCashing.jsp" class="button expand radius">
+                                <a href="/admin/filmCashing" class="button expand radius">
                                     Incassi per film</a>
                             </div>
                             <div class="medium-8 columns">
@@ -82,7 +82,7 @@
 
                         <div class="row">
                             <div class="medium-4 columns">
-                                <a href="/jsp/featureAdmin/bestCustomer.jsp" class="button expand radius">
+                                <a href="/admin/bestCustomer" class="button expand radius">
                                     Clienti top</a>
                             </div>
                             <div class="medium-8 columns">
