@@ -110,7 +110,7 @@
     </servlet>
     <servlet>
         <servlet-name>updateStatus</servlet-name>
-        <jsp-file>/jsp/updateStatus.jsp</jsp-file>
+        <jsp-file>/jsp/featureAdmin/updateStatus.jsp</jsp-file>
     </servlet>
 
 
@@ -201,6 +201,6 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>updateStatus</servlet-name>
-        <url-pattern>/updateStatus</url-pattern>
+        <url-pattern>/admin/updateStatus</url-pattern>
     </servlet-mapping>
 </web-app>
