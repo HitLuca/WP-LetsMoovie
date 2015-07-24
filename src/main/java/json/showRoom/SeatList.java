@@ -16,9 +16,9 @@ public class SeatList implements OperationResult {
     @Expose
     int column;
     @Expose
-    List<ShowSeat> showSeatList;
+    List<ParentSeat> showSeatList;
 
-    public SeatList(int row, int column, List<ShowSeat> showSeatList) {
+    public SeatList(int row, int column, List<ParentSeat> showSeatList) {
         this.row = row;
         this.column = column;
         this.showSeatList = showSeatList;
@@ -30,7 +30,7 @@ public class SeatList implements OperationResult {
         showSeatList = new ArrayList<>();
     }
 
-    public void addSeat(ShowSeat s) {
+    public void addSeat(ParentSeat s) {
         showSeatList.add(s);
     }
 }

@@ -9,6 +9,7 @@ import database.datatypes.seat.RoomData;
 import database.datatypes.seat.Seat;
 import database.mappers.SeatMapper;
 import json.OperationResult;
+import json.showRoom.RoomSeat;
 import json.showRoom.SeatList;
 import json.showRoom.ShowSeat;
 import org.apache.ibatis.session.SqlSession;
@@ -42,8 +43,8 @@ import java.util.List;
  * @apiError (2) {String[]} errorCode EMPTY_WRONG_FIELD: parameters parametri di input che non passano la validazione
  * @apiError (10) {int} errorCode NOT_LOGGED_IN: L'utente è già loggato e fino all'implementazione del cambio password non può fare niente
  */
-@WebServlet(name = "ViewShowRoom", urlPatterns = "/api/viewShowRoom/*")
-public class ViewShowRoom extends HttpServlet {
+@WebServlet(name = "ViewRoom", urlPatterns = "/api/viewRoom/*")
+public class ViewRoom extends HttpServlet {
 
     private Gson gsonWriter;
 
@@ -55,33 +56,22 @@ public class ViewShowRoom extends HttpServlet {
         sessionSql = DatabaseConnection.getFactory().openSession();
         SeatMapper seatMapper = sessionSql.getMapper(SeatMapper.class);
 
-        try{
+        try {
             //Check se l'utente NON è loggato (da sloggato non vedi dati di nessuno
-            BadReqExeceptionThrower.checkUserLogged(request);
+            //BadReqExeceptionThrower.checkUserLogged(request);
 
-            //String matcher che preleva lo showId da cercare dall'url e lancia Err.2 in caso sia nullo o mal formattato
+            //String matcher che preleva lo roomId da cercare dall'url e lancia Err.2 in caso sia nullo o mal formattato
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
-            int showId = Integer.valueOf(rs.getParameter());
+            int roomId = Integer.valueOf(rs.getParameter());
 
-            RoomData roomData = seatMapper.getShowRoomData(showId);
+            RoomData roomData = seatMapper.getShowRoomData(roomId);
             SeatList showSeats = new SeatList(roomData.getLength(), roomData.getWidth());
 
-            List<Seat> showBrokenSeats = seatMapper.getShowBrokenSeats(showId);
+            List<Seat> showBrokenSeats = seatMapper.getRoomSeats(roomId);
             for (Seat s : showBrokenSeats) {
-                ShowSeat showSeat = new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.BROKEN);
-                showSeats.addSeat(showSeat);
-            }
 
-            List<Seat> showReservedSeat = seatMapper.getShowReservedSeats(showId);
-            for (Seat s : showReservedSeat) {
-                ShowSeat showSeat = new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.RESERVED);
-                showSeats.addSeat(showSeat);
-            }
-
-            List<Seat> showFreeSeat = seatMapper.getShowFreeSeat(showId);
-            for (Seat s : showFreeSeat) {
-                ShowSeat showSeat = new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.FREE);
-                showSeats.addSeat(showSeat);
+                RoomSeat roomSeat = new RoomSeat(s.getRow(), s.getColumn(), s.getStatus());
+                showSeats.addSeat(roomSeat);
             }
 
             viewResult = showSeats;
