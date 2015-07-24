@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import types.exceptions.BadRequestExceptionWithParameters;
+import utilities.BadReqExeceptionThrower;
 import utilities.InputValidator.ModelValidator;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
@@ -60,18 +61,10 @@ public class SetNewPassword extends HttpServlet {
         response.setContentType("application/json");
         try
         {
-            HttpSession session = request.getSession();
-            if(session.getAttribute("username") != null)
-            {
-                throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
-                //TODO aggiungere cambio password e modificare conseguentemente documentazione
-            }
+            BadReqExeceptionThrower.checkUserAlreadyLogged(request);
             else {
                 SetNewPasswordRequest setNewPasswordRequest = gsonReader.fromJson(request.getReader(), SetNewPasswordRequest.class);
-                List<String> invalidParameters = ModelValidator.validate(setNewPasswordRequest);
-                if (!invalidParameters.isEmpty()) {
-                    throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD, "password");
-                }
+            BadReqExeceptionThrower.checkRegex(setNewPasswordRequest);
 
                 String username = passwordRecoveryCodeCheck.verify(setNewPasswordRequest.getCode());
                 if(username == null)
@@ -82,10 +75,6 @@ public class SetNewPassword extends HttpServlet {
                 userMapper.updatePassword(username,setNewPasswordRequest.getPassword());
             }
             setPasswordOperation = null;
-
-        }catch (BadRequestExceptionWithParameters e) {
-            setPasswordOperation = e;
-            response.setStatus(400);
 
         } catch (BadRequestException e) {
             setPasswordOperation = e;
