@@ -77,6 +77,14 @@ var Payments = {
                 }
                 return data;
             }
+            },
+            {
+                data: "total", render: function (data, type) {
+                if (type === 'display') {
+                    return numeral(data).format('0,0.00 $');
+                }
+                return data;
+            }
             }
         ]
     }),

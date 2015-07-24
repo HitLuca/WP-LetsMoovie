@@ -106,6 +106,7 @@
                                     <th>Film</th>
                                     <th>Data</th>
                                     <th>Ora</th>
+                                    <th>Prezzo</th>
                                     <%--TODO MANCA TOTALE PAGATO--%>
                                 </tr>
 
