@@ -21,7 +21,7 @@
                         <div class="medium-6 medium-centered columns">
                             <label>Lista film
                                 <select>
-                                    <option><span id="nomeFilm"></span></option>
+                                    <option data-bind="nomeFilm"></option>
                                 </select>
                             </label>
                         </div>
@@ -44,6 +44,7 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+<script src="<c:url value="/javascript/featureAdmin/filmCaching.js"/>"></script>
 </body>
 </html>
 

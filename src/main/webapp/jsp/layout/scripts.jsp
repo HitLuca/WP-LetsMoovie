@@ -13,6 +13,9 @@
 <script src="<c:url value="/lib/js/jquery.serializejson.min.js"/>"></script>
 <script src="<c:url value="/lib/js/jquery.storageapi.min.js"/>"></script>
 
+<%--DATATABLES--%>
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+
 <%--NOTIFICHE JS--%>
 <script src="<c:url value="/lib/js/alertify.min.js"/>"></script>
 
