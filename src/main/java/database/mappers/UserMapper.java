@@ -263,6 +263,12 @@ public interface UserMapper {
             "WHERE id=#{id}")
     void insertCode(@Param("code") String code, @Param("id") int id);
 
+    //TODO:Test
+    @Select("SELECT * " +
+            "FROM payments " +
+            "WHERE code=#{code}")
+    Payment getPaymentFromCode(String code);
+
     /**
      * @param show_date data di proiezione
      * @param show_time ora di proiezione
