@@ -20,8 +20,8 @@
                     <div class="row">
                         <div class="medium-6 medium-centered columns">
                             <label>Lista film
-                                <select>
-                                    <option data-bind="nomeFilm"></option>
+                                <select id="listaFilm">
+                                    <option id="titolo_film" data-bind="film_title"></option>
                                 </select>
                             </label>
                         </div>
@@ -34,7 +34,7 @@
 
                     <div class="row>">
                         <div class="medium-6 medium-centered panel callout radius columns">
-                            <h2 align="center"><span id="incasso">1000000€</span></h2>
+                            <h2 align="center"><span id="incasso"></span></h2>
                         </div>
                     </div>
                 </div>
