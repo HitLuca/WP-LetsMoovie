@@ -48,6 +48,7 @@
 
         <form id="biglietti" class="hide" action="/api/reservation" method="post">
             <input type="hidden" name="show" id="show">
+
             <div id="centralContent" class="row collapse">
                 <h5>Seleziona per ciascun posto la tipologia del biglietto:</h5>
 
@@ -58,7 +59,11 @@
             </div>
             <div class="row collapse">
                 <div class="small-12 columns text-center">
-                    <button class="radius">Procedi al pagamento</button>
+                    <button class="radius ladda-button" data-style="zoom-out">
+                        <span class="ladda-label">
+                            Procedi al pagamento
+                            </span>
+                    </button>
                 </div>
             </div>
         </form>

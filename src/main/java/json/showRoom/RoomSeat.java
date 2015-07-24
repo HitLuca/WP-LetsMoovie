@@ -6,12 +6,12 @@ import types.enums.SeatStatus;
 /**
  * Created by etrunon on 14/07/15.
  */
-public class ShowSeat extends ParentSeat {
+public class RoomSeat extends ParentSeat {
 
     @Expose
-    private SeatStatus status;
+    private String status;
 
-    public ShowSeat(int row, int column, SeatStatus status) {
+    public RoomSeat(int row, int column, String status) {
         super(row, column);
         this.status = status;
     }

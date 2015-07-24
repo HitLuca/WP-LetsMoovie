@@ -63,7 +63,7 @@
                             <h4>Carte associate al tuo account:</h4>
 
                             <div class="medium-12 columns" data-bind="cards">
-                                <a href="#" class="button radius" data-bind="number">Carta 1</a>
+                                <button class="radius creditCard" data-bind="number"></button>
                             </div>
                         </div>
 
@@ -110,7 +110,7 @@
 
             <div class="row">
                 <div class="medium-12 text-center columns">
-                    <a href="#" class="button radius" data-reveal-id="myModal">Conferma pagamento</a>
+                    <button id="confermaPagamento" class="radius">Conferma pagamento</button>
                 </div>
             </div>
         </div>

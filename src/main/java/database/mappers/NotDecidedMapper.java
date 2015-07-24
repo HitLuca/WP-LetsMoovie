@@ -27,7 +27,6 @@ public interface NotDecidedMapper {
     @Select("SELECT * " +
             "FROM prices")
     List<Ticket> getAllTickets();
-
     /**
      *
      * @return lista dei dati di tutte le configurazioni
@@ -48,4 +47,8 @@ public interface NotDecidedMapper {
     @Select("SELECT * " +
             "FROM cinema_rooms ")
     List<RoomData> getRoomList();
+
+    //TODO:Test
+    @Select("SELECT price FROM prices WHERE ticket_type=#{ticket_type}")
+    float getPrice(String ticket_type);
 }

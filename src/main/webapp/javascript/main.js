@@ -13,11 +13,11 @@ var Forms = {
         if (Forms.l != null)
             Forms.l.stop();
     },
-    ajax: function (JSON, url, form) {
+    ajax: function (jsonData, url, form) {
         return $.ajax({
             type: "POST",
             url: url,
-            data: JSON,
+            data: jsonData,
             dataType: "json",
             context: form
         });

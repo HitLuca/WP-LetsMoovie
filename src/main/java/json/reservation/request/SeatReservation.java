@@ -1,45 +1,57 @@
 package json.reservation.request;
 
 import com.google.gson.annotations.Expose;
+import types.annotations.toSanitize;
+import utilities.InputValidator.Regex;
 
 /**
  * Created by marco on 17/07/15.
  */
 public class SeatReservation {
     @Expose
-    int row;
+    String s_row;
     @Expose
-    int column;
+    String s_column;
     @Expose
     String ticket_type;
 
-    public SeatReservation(int row, int col, String type) {
-        this.row = row;
-        this.column = col;
-        this.ticket_type = type;
+    public SeatReservation(String s_row, String col, String tycket_type) {
+        this.s_row = s_row;
+        this.s_column = col;
+        this.ticket_type = tycket_type;
     }
 
-    public int getRow() {
-        return row;
+    @toSanitize(name = "s_row", reg = Regex.INTEGER)
+    public String getRow() {
+        return s_row;
     }
 
-    public int getColumn() {
-        return column;
+    @toSanitize(name = "s_column", reg = Regex.INTEGER)
+    public String getColumn() {
+        return s_column;
+    }
+
+    public int getIntRow() {
+        return Integer.valueOf(s_row);
+    }
+
+    public int getIntColumn() {
+        return Integer.valueOf(s_column);
+    }
+
+    public void setRow(int s_row) {
+        this.s_row = String.valueOf(s_row);
+    }
+
+    public void setColumn(int s_column) {
+        this.s_column = String.valueOf(s_column);
     }
 
     public String getTicket_type() {
         return ticket_type;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
-    public void setTicket_type(String ticket_type) {
-        this.ticket_type = ticket_type;
+    public void setTicket_type(String tycket_type) {
+        this.ticket_type = tycket_type;
     }
 }

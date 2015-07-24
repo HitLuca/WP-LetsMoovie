@@ -14,6 +14,7 @@ import json.film.FilmAndShows;
 import json.film.response.FilmAndShowListSuccess;
 import org.apache.ibatis.session.SqlSession;
 import types.exceptions.BadRequestException;
+import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
 
 import javax.servlet.ServletException;
@@ -65,6 +66,7 @@ public class FilmDay extends HttpServlet {
         try {
             // Creo un UrlMatcher con la mia url. Se non matcha la url lancia l'eccezione 2
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
+            BadReqExeceptionThrower.checkNullInput(rs.getParameter());
 
             //Converto la data a SqlDate per il Db e cerco tutti gli spettacoli della giornata
             LocalDate date = LocalDate.parse(rs.getParameter());

@@ -5,13 +5,18 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
+import database.mappers.NotDecidedMapper;
 import database.mappers.UserMapper;
 import json.OperationResult;
 import json.reservation.request.ReservationRequest;
+import json.reservation.response.ReservationDetail;
 import json.reservation.response.SuccessfullReservation;
 import org.apache.ibatis.session.SqlSession;
+import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
+import types.exceptions.BadRequestExceptionWithParameters;
 import utilities.BadReqExeceptionThrower;
+import utilities.InputValidator.ModelValidator;
 import utilities.RestUrlMatcher;
 import utilities.reservation.TemporaryReservationManager;
 
@@ -22,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * INVALID_RESERVATION
@@ -57,10 +64,11 @@ public class Reservation extends HttpServlet {
 
         try {
             BadReqExeceptionThrower.checkUserLogged(request);
-
             ReservationRequest rr = gsonReader.fromJson(request.getReader(), ReservationRequest.class);
 
             BadReqExeceptionThrower.checkNullInput(rr);
+
+            BadReqExeceptionThrower.checkRegex(rr);
 
             //Lancia ErrorCode:INVALID_RESERVATION
             result = new SuccessfullReservation(temporaryResManager.addReservationRequest(rr, sessionSql));
@@ -77,10 +85,10 @@ public class Reservation extends HttpServlet {
         PrintWriter outputStream = response.getWriter();
         outputStream.print(gsonWriter.toJson(result));
         sessionSql.close();
+    }
 
         //in caso affermativo rispondo con un oggetto di tipo SuccessfullReservation dove reservationCode è la stringa di
         // ritorno della funzione reserveSeats(reservationRequest,session);
-    }
 
     /**
      * Ritorniamo la lista dei posti prenotati dato un codice di prenotazione
@@ -90,12 +98,11 @@ public class Reservation extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         SqlSession sessionSql = DatabaseConnection.getFactory().openSession();
-        UserMapper userMapper = sessionSql.getMapper(UserMapper.class);
-
-        response.setContentType("application/json");
+        NotDecidedMapper notDecidedMapper = sessionSql.getMapper(NotDecidedMapper.class);
 
         OperationResult result = null;
 
@@ -112,7 +119,8 @@ public class Reservation extends HttpServlet {
             BadReqExeceptionThrower.checkNullInput(code);
 
             TemporaryReservationManager t = new TemporaryReservationManager();
-            result = t.getReservation(code);
+
+            result = new ReservationDetail(t.getReservation(code), notDecidedMapper);
 
         } catch (BadRequestException e) {
             result = e;

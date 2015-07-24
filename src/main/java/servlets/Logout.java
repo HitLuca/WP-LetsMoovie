@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import json.OperationResult;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
+import utilities.BadReqExeceptionThrower;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,12 +34,8 @@ public class Logout extends HttpServlet {
         OperationResult logoutStatus = null;
         try {
             //Prendo la sessione dell'utente
-            HttpSession session = request.getSession(false);
-            //Se è nulla allora vuol dire che è già sloggato o non autenticato
-            if (session == null) {
-                throw new BadRequestException(ErrorCode.NOT_LOGGED_IN);
-            }
-
+            BadReqExeceptionThrower.checkUserLogged(request);
+            HttpSession session = request.getSession();
             session.invalidate();
 
         } catch (BadRequestException e) {

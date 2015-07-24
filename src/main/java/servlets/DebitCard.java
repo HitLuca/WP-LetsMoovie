@@ -64,9 +64,9 @@ public class DebitCard extends HttpServlet {
             BadReqExeceptionThrower.checkNullInput(newCardId);
 
             HttpSession session = request.getSession();
+            //Controllo che la carta non sia già presente nel database
             List<String> presentCards = userMapper.getCreditCards(session.getAttribute("username").toString());
-            if (presentCards.contains(newCardId))
-                throw new BadRequestException(ErrorCode.DUPLICATE_FIELD);
+            BadReqExeceptionThrower.checkDuplicateFields(presentCards, newCardId);
 
             userMapper.insertCreditCard(newCardId, session.getAttribute("username").toString());
 

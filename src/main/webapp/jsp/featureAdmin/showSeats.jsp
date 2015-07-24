@@ -11,6 +11,8 @@
     <c:param name="css" value="/lib/css/pikaday.css"></c:param>
 </c:url>
 <c:import url="${url}"/>
+<body>
+<link rel="stylesheet" href="<c:url value="/css/showSeats.css"/>">
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row">
@@ -20,7 +22,9 @@
                     <h4>Selezionare il giorno</h4>
                 </div>
                 <div class="medium-4 columns end">
-                    <input type="text" id="datepicker">
+                    <form id="sceltaData" action="/api/adminData/getShows">
+                        <input name="date" type="text" id="datepicker">
+                    </form>
                 </div>
             </div>
             <div class="row">
@@ -28,15 +32,18 @@
                     <h4>Selezionare lo spettacolo</h4>
                 </div>
                 <div class="medium-4 columns end">
-                    <select>
-                        <option><span id="Film"></span></option>
-                    </select>
+                    <form id="sceltaSpettacolo" action="/api/admin/getShowSeats">
+                        <select id="Film" name="id_show" data-bind="showDataList">
+                            <option value="" data-bind="film_Name"></option>
+                        </select>
+                    </form>
                 </div>
             </div>
             <%--mostro la mappa 3d con i pulsanti reset, blocca--%>
             <div class="row">
                 <div class="small-12 columns text-center">
                     <h4>Posti prenotati:</h4>
+
                     <div id="roomMap">
 
                     </div>
@@ -53,6 +60,8 @@
 <script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
 <script src="/lib/js/pikaday.js"></script>
 <script src="/lib/js/pikaday.jquery.js"></script>
-<script src="/javascript/showSeats.js"></script>
+<script src="/javascript/featureAdmin/showSeats.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.css" rel="stylesheet"/>
 </body>
 </html>

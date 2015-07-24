@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import types.exceptions.BadRequestExceptionWithParameters;
+import utilities.BadReqExeceptionThrower;
 import utilities.InputValidator.ModelValidator;
 import utilities.mail.MailCleanerThread;
 import utilities.mail.MailCleanerThreadFactory;
@@ -81,19 +82,13 @@ public class Register extends HttpServlet {
         try {
 
             //Check sulla sessione già presente e l'utente è già loggato con un username e lo si spara fuori
-            HttpSession session = request.getSession();
-            if (session.getAttribute("username") != null) {
-                throw new BadRequestExceptionWithParameters(ErrorCode.ALREADY_LOGGED, (String)session.getAttribute("username"));
-            }
+            BadReqExeceptionThrower.checkUserAlreadyLogged(request);
 
             //Provo a parsare il Json nell'oggetto RegistrationRequest. Se exception esce dalla sevlet
             RegistrationRequest registrationRequest = gsonReader.fromJson(request.getReader(), RegistrationRequest.class);
             //Il validatore valida tutte le stringhe di RegistrationRequest e nel caso non siano sanitizzate allora
             //le aggiunge alla lista di stringhe invalide
-            List<String> invalidParameters = ModelValidator.validate(registrationRequest);
-            //Se ho stringhe invalide lancio l'eccezione di registrazione
-            if (!invalidParameters.isEmpty())
-                throw new BadRequestExceptionWithParameters(ErrorCode.EMPTY_WRONG_FIELD,invalidParameters);
+            BadReqExeceptionThrower.checkRegex(registrationRequest);
 
             //Controllo se l'username e la password da registrare non sono già presenti nel db
             String username = userMapper.checkUsername(registrationRequest.getUsername());
@@ -124,7 +119,7 @@ public class Register extends HttpServlet {
             registrationStatus = e;
             response.setStatus(400);
 
-        } catch (IllegalAccessException | InvocationTargetException | JsonIOException | JsonSyntaxException | NullPointerException e) {
+        } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
             registrationStatus = new BadRequestException();
             response.setStatus(400);
         }

@@ -18,15 +18,19 @@
                 <div class="large-12 columns">
                     <h4>Inserisci il codice di una prenotazione per procedere alla sua cancellazione.</h4>
 
-                    <form action="" method="post">
+                    <form action="/api/admin/deleteReservation" id="codicePrenotazione">
                         <div class="row">
                             <div class="small-10 medium-7 large-5 small-centered columns">
                                 <div class="row collapse">
                                     <div class="small-8 columns">
-                                        <input type="text">
+                                        <input type="text" name="code">
                                     </div>
                                     <div class="small-4 columns">
-                                        <button class="button postfix">Vai</button>
+                                        <button class="button ladda-button postfix" data-style="zoom-out">
+                                            <span class="ladda-label">
+                                                Vai
+                                            </span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -34,22 +38,31 @@
                     </form>
                 </div>
             </div>
-            <div class="row">
-                <div id="listaTickets" class="large-12 columns">
-                    <h4>Posti relativi alla prenotazione selezionata</h4>
-                    <c:import url="/jsp/template/riepilogoBiglietto.jsp"></c:import>
+            <form action="/api/admin/deleteReservation" id="cancellaPrenotazione">
+                <div class="row">
+                    <div id="listaTickets" class="large-12 columns">
+                        <h4>Posti relativi alla prenotazione selezionata</h4>
+
+                        <div class="row collapse" id="postiPrenotazione" data-bind="seatList">
+                            <c:import url="/jsp/template/riepilogoBiglietto.jsp"></c:import>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div id="confirm" class="row">
-                <div class="medium-3 small-centered columns">
-                    <button class="button radius">Conferma cancellazione</button>
+                <div id="confirm" class="row">
+                    <div class="medium-3 small-centered columns">
+                        <button class="button ladda-button radius" data-style="zoom-out">
+                            <span class="ladda-label">Cancella prenotazione</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
-<script src="<c:url value="/javascript/deleteReservation.js"/>"></script>
+<script src="/lib/js/numeral.min.js"></script>
+<script src="/lib/js/it.min.js"></script>
+<script src="/javascript/featureAdmin/deleteReservation.js"></script>
 </body>
 </html>

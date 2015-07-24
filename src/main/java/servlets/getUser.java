@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.enums.Role;
 import types.exceptions.BadRequestException;
+import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
 
 import javax.servlet.ServletException;
@@ -73,16 +74,13 @@ public class getUser extends HttpServlet {
         try {
 
             //Check se l'utente NON è loggato (da sloggato non vedi dati di nessuno
-            HttpSession session = request.getSession();
+            BadReqExeceptionThrower.checkUserLogged(request);
 
-            if (session.getAttribute("username") == null) {
-                throw new BadRequestException(ErrorCode.NOT_LOGGED_IN);
-            }
+            HttpSession session = request.getSession();
             String usernameSession = session.getAttribute("username").toString();
 
             //String matcher che preleva il nome utente da cercare dall'url e lancia Err.2 in caso sia nullo o mal formattato
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
-
 
             String usernameSearched = rs.getParameter();
 
@@ -90,14 +88,10 @@ public class getUser extends HttpServlet {
             UserData user = userMapper.getUserData(usernameSearched);
 
             //Se sei un admin e stai cercando un utente che non esiste te lo dico
-            if (user == null && (int) session.getAttribute("role") != Role.USER.getValue()) {
-                throw new BadRequestException(ErrorCode.USER_NOT_FOUND);
-            }
+            BadReqExeceptionThrower.checkAdminUserNotFound(request, user);
 
             //Se sei un utente e stai cercando un utente diverso da te ti blocco
-            if ((int) session.getAttribute("role") == Role.USER.getValue() && !user.getUsername().equals(usernameSession)) {
-                throw new BadRequestException(ErrorCode.NOT_AUTHORIZED);
-            }
+            BadReqExeceptionThrower.checkUserAuthorization(request, usernameSearched);
 
             //Se sei un utente che cerca sè stesso (devi andare in un tempio buddhista) e se non esisti allora ci sono
             // problemi gravi nel db del server

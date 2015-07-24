@@ -19,26 +19,49 @@
             </h2>
         </div>
 
-        <div id="tableHeader" class="row collapse">
+        <%--<div id="tableHeader" class="row collapse">
             <div class="medium-3 columns">
                 <h5>TIPO BIGLIETTO</h5>
             </div>
             <div class="medium-2 columns">
-                <h5>PREZZO</h5>
+                <h5 class="label radius">PREZZO</h5>
             </div>
             <div class="medium-7 columns">
                 <h5>DESCRIZIONE</h5>
             </div>
-        </div>
+        </div>--%>
+        <div class="row collapse" id="allTickets" data-bind="tickets">
+            <div id="singleTicket" class="row panel callout radius wow zoomIn">
 
-        <c:import url="/jsp/template/prezzi.jsp"/>
-        <c:import url="/jsp/template/prezzi.jsp"/>
-        <c:import url="/jsp/template/prezzi.jsp"/>
-        <c:import url="/jsp/template/prezzi.jsp"/>
+                <div class="medium-4 columns">
+                    <p>
+
+                    <div class="label radius">tipo biglietto</div>
+                    <span data-bind="ticket_type"></span></p>
+                </div>
+                <div class="medium-2 columns">
+                    <p>
+
+                    <div class="label radius">prezzo</div>
+                    <span data-bind="price"></span></p>
+                </div>
+                <div class="medium-6 columns">
+                    <p>
+
+                    <div class="label radius">dettagli</div>
+                    <span data-bind="description"></span></p>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+
+<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
+<script src="<c:url value="/lib/js/it.min.js"/>"></script>
+<script src="/javascript/listinoPrezzi.js"></script>
 </body>
 </html>
