@@ -9,7 +9,7 @@
     <c:import url="/jsp/layout/header.jsp"/>
 
     <div class="content">
-        <div id="test" style="height:70% ; width:90%"></div>
+        <div id="test" style="height:70vh ; width:90%"></div>
     </div>
     <div class="push"></div>
 
