@@ -35,7 +35,10 @@ var Forms = {
             Forms.loadingButton(button);
 
             //Serializza la form in JSON
-            var Json = form.serializeJSON();
+            var Json = form.serializeJSON({
+                parseBooleans: true,
+                checkboxUncheckedValue: false
+            });
             // Stop form from submitting normally
 
             // Get some values from elements on the page:

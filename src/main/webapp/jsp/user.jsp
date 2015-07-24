@@ -94,22 +94,27 @@
                 </div>
             </li>
             <li class="accordion-navigation">
-                <a href="#panel2a">Acquisti</a>
+                <a href="#panel2a">Storico acquisti</a>
 
                 <div id="panel2a" class="content">
-                    <div class="panel radius">
-                        <h3>Storico acquisti</h3>
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <table id="storico" class="display" role="grid" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>ID Prenotazione</th>
+                                    <th>Film</th>
+                                    <th>Data</th>
+                                    <th>Totale pagamento</th>
+                                    <%--<tr>--%>
+                                    <%--<th>1</th>--%>
+                                    <%--<th>2</th>--%>
+                                    <%--</tr>--%>
+                                </tr>
 
-                        <p></p>
+                                </thead>
 
-                        <div class="row">
-                            <div class="medium-12 columns">
-                                <div class="row">
-                                    <div class="medium-12 columns">
-                                        Film 1
-                                    </div>
-                                </div>
-                            </div>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -166,6 +171,9 @@
 <c:import url="/jsp/layout/footer.jsp"/>
 <script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
 <script src="<c:url value="/lib/js/it.min.js"/>"></script>
+<%--DATATABLES--%>
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.js"></script>
 <script src="<c:url value="/javascript/user.js"/>"></script>
 
 </body>

@@ -56,6 +56,19 @@ var Cards = {
         alertify.error("Errore nel recuperare la lista delle carte associate all'account");
     }
 };
+var Payments = {
+    table: $("#storico").DataTable({
+        columns: [
+            {data: "name"},
+            {data: "surname"},
+            {data: "username"},
+            {data: "totalPayments"}
+        ]
+    }),
+    createTable: function () {
+        Payments.table.rows.add().draw();
+    }
+};
 
 var Credit = {
     url: "/api/credit/",
@@ -73,7 +86,7 @@ var Credit = {
     showCreditError: function () {
         alertify.error("Errore nel recuperare il credito associato all'account");
     }
-}
+};
 
 
 $(function () {
@@ -85,4 +98,6 @@ $(function () {
     }
     Cards.displayUserCards();
     Credit.displayCredit();
+    Payments.createTable();
+
 });
