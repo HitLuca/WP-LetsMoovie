@@ -195,6 +195,8 @@ public class AdminFunctions extends HttpServlet {
                     FilmIncomeRequest filmIncomeRequest = gsonReader.fromJson(request.getReader(), FilmIncomeRequest.class);
 
                     //Controllo di non avere parametri invalidi
+                    BadReqExeceptionThrower.checkRegex(filmIncomeRequest);
+
                     int x = Integer.valueOf(filmIncomeRequest.getId_film());
 
                     outputStream.print(gsonWriter.toJson(filmMapper.getFilmIncome(x)));
