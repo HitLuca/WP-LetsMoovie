@@ -114,7 +114,11 @@
             <div class="row">
                 <div class="medium-12 text-center columns">
                     <%--TODO: LADDA BUTTON--%>
-                    <button id="confermaPagamento" class="radius success">Conferma pagamento</button>
+                        <button id="confermaPagamento" class="radius success ladda-button" data-style="zoom-out">
+                        <span class="ladda-label">
+                        Conferma pagamento
+                        </span>
+                        </button>
                 </div>
             </div>
         </div>

@@ -57,16 +57,38 @@ var Cards = {
     }
 };
 var Payments = {
+    url: "/api/historyPayments/",
     table: $("#storico").DataTable({
         columns: [
-            {data: "name"},
-            {data: "surname"},
-            {data: "username"},
-            {data: "totalPayments"}
+            {data: "payment_date"},
+            {data: "film_title"},
+            {
+                data: "payment_date", render: function (data, type) {
+                if (type === 'display') {
+                    return moment(data, 'AAAA-MM-DD').format("ll");
+                }
+                return data;
+            }
+            },
+            {
+                data: "payment_time", render: function (data, type) {
+                if (type === 'display') {
+                    return moment(data, 'HH:mm:ss').format("HH:mm");
+                }
+                return data;
+            }
+            }
         ]
     }),
-    createTable: function () {
-        Payments.table.rows.add().draw();
+    getPayaments: function () {
+        var request = $.ajax({
+            url: Payments.url + User.username
+        });
+        request.done(Payments.addData);
+
+    },
+    addData: function (data) {
+        Payments.table.rows.add(data.pastPaymentList).draw();
     }
 };
 
@@ -98,6 +120,5 @@ $(function () {
     }
     Cards.displayUserCards();
     Credit.displayCredit();
-    Payments.createTable();
-
+    Payments.getPayaments();
 });

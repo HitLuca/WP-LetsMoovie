@@ -105,11 +105,8 @@
                                     <th>ID Prenotazione</th>
                                     <th>Film</th>
                                     <th>Data</th>
-                                    <th>Totale pagamento</th>
-                                    <%--<tr>--%>
-                                    <%--<th>1</th>--%>
-                                    <%--<th>2</th>--%>
-                                    <%--</tr>--%>
+                                    <th>Ora</th>
+                                    <%--TODO MANCA TOTALE PAGATO--%>
                                 </tr>
 
                                 </thead>
@@ -172,6 +169,7 @@
 <script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
 <script src="<c:url value="/lib/js/it.min.js"/>"></script>
 <%--DATATABLES--%>
+<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.css"/>
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.js"></script>
 <script src="<c:url value="/javascript/user.js"/>"></script>
