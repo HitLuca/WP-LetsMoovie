@@ -444,7 +444,7 @@ var Cinema3DView = {
             else if(seatPos.status == Cinema3DView.brokenSeatStatus)
             {
                 singleChair = Cinema3DView.brokenSeatMesh.clone();
-                Cinema3DView.seatMap[singleChair.uuid] = {status: 4, x: seatPos.column, y: seatPos.row};
+                Cinema3DView.seatMap[singleChair.uuid] = {status: 4, x: seatPos.column, y: seatPos.row, changed:false};
                 singleChair.position.set(position.x, position.y, position.z);
                 singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
                 singleChair.children.forEach(function (i) {
@@ -637,8 +637,16 @@ var Cinema3DView = {
             }
             else if(Cinema3DView.seatMap[clicked.parent.uuid].status == 3){
                 Cinema3DView.seatMap[clicked.parent.uuid].status = 4;
+                if(Cinema3DView.seatMap[clicked.parent.uuid].changed==false)
+                {
+                    $(Cinema3DView.container).trigger("onSeatChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+                }
+                else
+                {
+                    $(Cinema3DView.container).trigger("onResetChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+                }
                 //Cinema3DView.lastLight.intensity = 0;
-                $(Cinema3DView.container).trigger("onSeatChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+
                 Cinema3DView.scene.remove(clicked.parent);
                 var uuid = clicked.parent.uuid;
                 var position = clicked.parent.position;
@@ -654,7 +662,14 @@ var Cinema3DView = {
             else if(Cinema3DView.seatMap[clicked.parent.uuid].status == 4){
                 Cinema3DView.seatMap[clicked.parent.uuid].status = 3;
                 //Cinema3DView.lastLight.intensity = 0;
-                $(Cinema3DView.container).trigger("onSeatReset",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+                if(Cinema3DView.seatMap[clicked.parent.uuid].changed==false)
+                {
+                    $(Cinema3DView.container).trigger("onSeatChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+                }
+                else
+                {
+                    $(Cinema3DView.container).trigger("onResetChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+                }
                 Cinema3DView.scene.remove(clicked.parent);
                 var uuid = clicked.parent.uuid;
                 var position = clicked.parent.position;
