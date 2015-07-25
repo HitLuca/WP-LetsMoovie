@@ -134,7 +134,7 @@ var Session = {
         Session.storage.remove("username");
     },
     redirectToUser: function () {
-        Session.storage.set("backUrl", window.location.pathname);
+        //Session.storage.set("backUrl", window.location.pathname);
         window.location.assign("/user/" + Session.getUsername());
     },
     redirectToLogin: function () {
