@@ -11,7 +11,7 @@ var getCode = {
                 }
             }
         };
-        Transparency.render($("#postiPrenotazione")[0], data.seatList, directives);
+        Transparency.render($("#postiPrenotazione")[0], data, directives);
     },
     wrongCode: function (data) {
         alertify.error("Codice inserito non valido");
