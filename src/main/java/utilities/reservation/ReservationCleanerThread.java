@@ -11,9 +11,7 @@ import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.reservation.request.TemporaryReservationRequest;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -219,5 +217,28 @@ public class ReservationCleanerThread extends Thread{
             e.printStackTrace();
         }
         return reservationRequest;
+    }
+
+    public List<SeatReservation> getTemporaryReservedSeats(int showId) {
+        List<SeatReservation> temporaryReservedSeats = new ArrayList<>();
+        try{
+            mutex.acquire();
+
+            for(TemporaryReservationRequest temporaryReservationRequest : pendingReservations.values())
+            {
+                if(temporaryReservationRequest.getReservationRequest().getId_show().equals(""+showId))
+                {
+                    for(SeatReservation seatReservation:temporaryReservationRequest.getReservationRequest().getReservation())
+                    {
+                        temporaryReservedSeats.add(seatReservation);
+                    }
+                }
+            }
+
+            mutex.release();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return temporaryReservedSeats;
     }
 }

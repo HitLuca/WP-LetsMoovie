@@ -14,6 +14,7 @@ import json.showRoom.SeatList;
 import org.apache.ibatis.session.SqlSession;
 import types.exceptions.BadRequestException;
 import utilities.RestUrlMatcher;
+import utilities.reservation.TemporaryReservationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -91,6 +92,7 @@ public class ViewRoom extends HttpServlet {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.disableHtmlEscaping().create();
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

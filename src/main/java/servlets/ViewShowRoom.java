@@ -9,6 +9,7 @@ import database.datatypes.seat.RoomData;
 import database.datatypes.seat.Seat;
 import database.mappers.SeatMapper;
 import json.OperationResult;
+import json.reservation.request.SeatReservation;
 import json.showRoom.SeatList;
 import json.showRoom.ShowSeat;
 import org.apache.ibatis.session.SqlSession;
@@ -16,6 +17,7 @@ import types.enums.SeatStatus;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
+import utilities.reservation.TemporaryReservationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +46,7 @@ import java.util.List;
 public class ViewShowRoom extends HttpServlet {
 
     private Gson gsonWriter;
+    private TemporaryReservationManager temporaryReservationManager;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -77,9 +80,28 @@ public class ViewShowRoom extends HttpServlet {
             }
 
             List<Seat> showFreeSeat = seatMapper.getShowFreeSeat(showId);
+            List<SeatReservation> temporaryReservedSeats = temporaryReservationManager.getTemporaryReservedSeats(showId);
+            boolean reserved;
+
             for (Seat s : showFreeSeat) {
-                ShowSeat showSeat = new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.FREE);
-                showSeats.addSeat(showSeat);
+                reserved = false;
+                for(SeatReservation r : temporaryReservedSeats)
+                {
+                    if(s.getRow()==r.getIntRow() && s.getColumn()==r.getIntColumn())
+                    {
+                        reserved = true;
+                        break;
+                    }
+                }
+                if(!reserved) {
+                    ShowSeat showSeat = new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.FREE);
+                    showSeats.addSeat(showSeat);
+                }
+                else
+                {
+                    ShowSeat showSeat = new ShowSeat(s.getRow(), s.getColumn(), SeatStatus.RESERVED);
+                    showSeats.addSeat(showSeat);
+                }
             }
 
             viewResult = showSeats;
@@ -104,6 +126,7 @@ public class ViewShowRoom extends HttpServlet {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.disableHtmlEscaping().create();
+        temporaryReservationManager = new TemporaryReservationManager();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
