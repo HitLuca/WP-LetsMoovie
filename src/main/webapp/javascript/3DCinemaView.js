@@ -89,6 +89,8 @@ var Cinema3DView = {
     reservedStatus: "RESERVED",
     freeStatus: "FREE",
     brokenStatus: "BROKEN",
+    okStatus: "ok",
+    brokenSeatStatus: "broken",
     leftClick: false,
     seatMap: {},
     previousState: {},
@@ -96,6 +98,7 @@ var Cinema3DView = {
     cameraSpeed : {},
     touchStatus : 0,
     maxCount : 0,
+    alreadyBinded: false,
 
     empty : function (elem) {
         while (elem.lastChild) elem.removeChild(elem.lastChild);
@@ -111,23 +114,22 @@ var Cinema3DView = {
     },
     init: function (cont, seatsList, sx, sy, readOnly) {
 
+        Cinema3DView.container = cont;
         if(Cinema3DView.scene!=null)
         {
             Cinema3DView.container.innerHTML = "";
             cancelAnimationFrame(this.id);// Stop the animation
-            this.empty(this.scene);
-            this.scene = null;
-            this.projector = null;
-            this.camera = null;
-            this.controls = null;
-
+            Cinema3DView.empty(Cinema3DView.scene);
+            Cinema3DView.scene = null;
+            Cinema3DView.camera = null;
+            Cinema3DView.controls = null;
         }
 
 
-        Cinema3DView.container = cont;
         Cinema3DView.sizeX = sx;
         Cinema3DView.sizeY = sy;
-        if (!readOnly) {
+        if (!readOnly && !Cinema3DView.alreadyBinded) {
+            Cinema3DView.alreadyBinded = true;
             $(Cinema3DView.container).on('touchmove', Cinema3DView.onTouchMove);
             $(Cinema3DView.container).on('mousedown', Cinema3DView.onMouseDown);
             $(Cinema3DView.container).on('mouseup', Cinema3DView.onMouseUp);
@@ -135,6 +137,8 @@ var Cinema3DView = {
             $(Cinema3DView.container).on('touchstart', Cinema3DView.onTouchStart);
             $(Cinema3DView.container).on('touchend', Cinema3DView.onTouchEnd);
         }
+
+        Cinema3DView.seats = [];
 
         Cinema3DView.renderer = new THREE.WebGLRenderer({antialias: true});
         Cinema3DView.renderer.setClearColor(0x000000, 1);
@@ -424,8 +428,32 @@ var Cinema3DView = {
                 singleChair.position.set(position.x, position.y, position.z);
                 singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
             }
-            else {
-                return;
+            else if (seatPos.status == Cinema3DView.okStatus){
+                singleChair = Cinema3DView.freeSeatMesh.clone();
+                Cinema3DView.seatMap[singleChair.uuid] = {status: 3, x: seatPos.column, y: seatPos.row};
+                singleChair.position.set(position.x, position.y, position.z);
+                singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
+                singleChair.children.forEach(function (i) {
+                    if (i.name == "chair") {
+                        i.children.forEach(function (j) {
+                            Cinema3DView.seats.push(j);
+                        });
+                    }
+                });
+            }
+            else if(seatPos.status == Cinema3DView.brokenSeatStatus)
+            {
+                singleChair = Cinema3DView.brokenSeatMesh.clone();
+                Cinema3DView.seatMap[singleChair.uuid] = {status: 4, x: seatPos.column, y: seatPos.row, changed:false};
+                singleChair.position.set(position.x, position.y, position.z);
+                singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
+                singleChair.children.forEach(function (i) {
+                    if (i.name == "chair") {
+                        i.children.forEach(function (j) {
+                            Cinema3DView.seats.push(j);
+                        });
+                    }
+                });
             }
         }
         else if(seatPos.count!=null)
@@ -598,7 +626,7 @@ var Cinema3DView = {
                     obj.material = Materials.selectedChair;
                 });
             }
-            else {
+            else if(Cinema3DView.seatMap[clicked.parent.uuid].status == 1){
                 Cinema3DView.seatMap[clicked.parent.uuid].status = 0;
                 //Cinema3DView.lastLight.intensity = 0;
                 $(Cinema3DView.container).trigger("onRemoveAdd",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
@@ -607,49 +635,99 @@ var Cinema3DView = {
                 });
 
             }
+            else if(Cinema3DView.seatMap[clicked.parent.uuid].status == 3){
+                Cinema3DView.seatMap[clicked.parent.uuid].status = 4;
+                if(Cinema3DView.seatMap[clicked.parent.uuid].changed==false)
+                {
+                    $(Cinema3DView.container).trigger("onSeatChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+                }
+                else
+                {
+                    $(Cinema3DView.container).trigger("onResetChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+                }
+                //Cinema3DView.lastLight.intensity = 0;
+
+                Cinema3DView.scene.remove(clicked.parent);
+                var uuid = clicked.parent.uuid;
+                var position = clicked.parent.position;
+                var rotation = clicked.parent.rotation.x;
+                clicked.parent= Cinema3DView.brokenSeatMesh.clone();
+                clicked.parent.position.x = position.x;
+                clicked.parent.position.y = position.y;
+                clicked.parent.position.z = position.z;
+                clicked.parent.rotation.x = rotation;
+                clicked.parent.uuid = uuid;
+                Cinema3DView.scene.add(clicked.parent);
+            }
+            else if(Cinema3DView.seatMap[clicked.parent.uuid].status == 4){
+                Cinema3DView.seatMap[clicked.parent.uuid].status = 3;
+                //Cinema3DView.lastLight.intensity = 0;
+                if(Cinema3DView.seatMap[clicked.parent.uuid].changed==false)
+                {
+                    $(Cinema3DView.container).trigger("onSeatChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+                }
+                else
+                {
+                    $(Cinema3DView.container).trigger("onResetChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
+                }
+                Cinema3DView.scene.remove(clicked.parent);
+                var uuid = clicked.parent.uuid;
+                var position = clicked.parent.position;
+                var rotation = clicked.parent.rotation.x;
+                clicked.parent= Cinema3DView.freeSeatMesh.clone();
+                clicked.parent.position.x = position.x;
+                clicked.parent.position.y = position.y;
+                clicked.parent.position.z = position.z;
+                clicked.parent.rotation.x = rotation;
+                clicked.parent.uuid = uuid;
+                Cinema3DView.scene.add(clicked.parent);
+
+            }
         }
 
     },
     hoverChair: function (hover) {
-        if (Cinema3DView.seatMap[hover.parent.uuid].status == 0) {
-            if (Cinema3DView.hoveredSeat == null) {
-                Cinema3DView.hoveredSeat = hover;
-                if (hover.name == "chair") {
-                    hover.children.forEach(function (obj) {
-                        Cinema3DView.previousState = obj.material;
-                        obj.material = Materials.hoveringChair;
-                    });
+        if(Cinema3DView.seatMap[hover.parent.uuid].status == 0 || Cinema3DView.seatMap[hover.parent.uuid].status == 1) {
+            if (Cinema3DView.seatMap[hover.parent.uuid].status == 0) {
+                if (Cinema3DView.hoveredSeat == null) {
+                    Cinema3DView.hoveredSeat = hover;
+                    if (hover.name == "chair") {
+                        hover.children.forEach(function (obj) {
+                            Cinema3DView.previousState = obj.material;
+                            obj.material = Materials.hoveringChair;
+                        });
 
+                    }
                 }
-            }
-            else if (Cinema3DView.hoveredSeat.uuid != hover.uuid) {
-                Cinema3DView.removeHover();
-                Cinema3DView.hoveredSeat = hover;
-                if (hover.name == "chair") {
-                    hover.children.forEach(function (obj) {
-                        obj.material = Materials.hoveringChair;
-                    });
+                else if (Cinema3DView.hoveredSeat.uuid != hover.uuid) {
+                    Cinema3DView.removeHover();
+                    Cinema3DView.hoveredSeat = hover;
+                    if (hover.name == "chair") {
+                        hover.children.forEach(function (obj) {
+                            obj.material = Materials.hoveringChair;
+                        });
 
+                    }
                 }
-            }
-        } else {
-            if (Cinema3DView.hoveredSeat == null) {
-                Cinema3DView.hoveredSeat = hover;
-                if (hover.name == "chair") {
-                    hover.children.forEach(function (obj) {
-                        obj.material = Materials.hoveringChairSelected;
-                    });
+            } else {
+                if (Cinema3DView.hoveredSeat == null) {
+                    Cinema3DView.hoveredSeat = hover;
+                    if (hover.name == "chair") {
+                        hover.children.forEach(function (obj) {
+                            obj.material = Materials.hoveringChairSelected;
+                        });
 
+                    }
                 }
-            }
-            else if (Cinema3DView.hoveredSeat.uuid != hover.uuid) {
-                Cinema3DView.removeHover();
-                Cinema3DView.hoveredSeat = hover;
-                if (hover.name == "chair") {
-                    hover.children.forEach(function (obj) {
-                        obj.material = Materials.hoveringChairSelected;
-                    });
+                else if (Cinema3DView.hoveredSeat.uuid != hover.uuid) {
+                    Cinema3DView.removeHover();
+                    Cinema3DView.hoveredSeat = hover;
+                    if (hover.name == "chair") {
+                        hover.children.forEach(function (obj) {
+                            obj.material = Materials.hoveringChairSelected;
+                        });
 
+                    }
                 }
             }
         }
