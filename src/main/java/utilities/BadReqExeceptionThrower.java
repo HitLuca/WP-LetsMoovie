@@ -147,7 +147,7 @@ public class BadReqExeceptionThrower {
      * @param totalPaid
      * @throws BadRequestException
      */
-    public static void checkPaymentAmount(float residualCredit, int totalPaid) throws BadRequestException {
+    public static void checkPaymentAmount(float residualCredit, float totalPaid) throws BadRequestException {
         if (residualCredit < totalPaid) {
             throw new BadRequestException(ErrorCode.NOT_ENOUGH_CREDIT);
         }

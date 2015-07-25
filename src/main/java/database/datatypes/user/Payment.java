@@ -10,14 +10,16 @@ public class Payment {
     private int id_seat;
     private int id_show;
     private String username;
+    private String code;
 
-    public Payment(String payment_date, String payment_time, String ticket_type, int id_seat, int id_show, String username) {
+    public void populate(String payment_date, String payment_time, String ticket_type, int id_seat, int id_show, String username, String code) {
         this.payment_date = payment_date;
         this.payment_time = payment_time;
         this.ticket_type = ticket_type;
         this.id_seat = id_seat;
         this.id_show = id_show;
         this.username = username;
+        this.code = code;
     }
 
     public String getPayment_date() {
@@ -66,5 +68,13 @@ public class Payment {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

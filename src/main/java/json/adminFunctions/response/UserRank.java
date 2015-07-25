@@ -15,12 +15,15 @@ public class UserRank {
     private String username;
     @Expose
     private float totalPayments;
+    @Expose
+    private int rank;
 
-    public UserRank(UserPaid userPaid) {
+    public UserRank(UserPaid userPaid, int rank) {
         this.name = userPaid.getName();
         this.surname = userPaid.getSurname();
         this.username = userPaid.getUsername();
         this.totalPayments = userPaid.getPaid();
+        this.rank = rank;
     }
 
     public String getUsername() {
@@ -45,5 +48,21 @@ public class UserRank {
 
     public String getSurname() {
         return surname;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 }

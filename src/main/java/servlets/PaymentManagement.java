@@ -70,7 +70,6 @@ public class PaymentManagement extends HttpServlet {
             //Todo: Controllare thread che si imballa nel momento in cui arrivano più richieste
             ReservationRequest reservationRequest = temporaryReservationManager.confirmReservationRequest(paymentRequest.getCode(), sqlSession);
 
-            int totalPaid = 0;
             int room_number = showMapper.getRoomNumber(reservationRequest.getIntIdShow());
             String payment_date = LocalDate.now().format(dateFormatter);
             String payment_time = LocalTime.now().format(timeFormatter);
@@ -80,23 +79,25 @@ public class PaymentManagement extends HttpServlet {
             //TODO:inserire pagamenti dopo aver controllato se il credio basta nel caso non abbia inserito una carta di credito
             for (SeatReservation sr : reservationRequest.getReservation()) {
                 int id_seat = seatMapper.getIdSeat(room_number, sr.getIntRow(), sr.getIntColumn());
-                Payment payment = new Payment(payment_date, payment_time, sr.getTicket_type(), id_seat, id_show, username);
-                userMapper.insertPayment(payment);
+                Payment payment = new Payment();
+                payment.populate(payment_date, payment_time, sr.getTicket_type(), id_seat, id_show, username, ""); //TODO:SETTARE IL CODICE
                 float price = notDecidedMapper.getTicketPrice(sr.getTicket_type());
-                totalPaid += price;
-            }
-            float residualCredit = userMapper.getResidualCredit(username);
 
-            if (!usesCard) {
-                BadReqExeceptionThrower.checkPaymentAmount(residualCredit, totalPaid);
-                userMapper.removeCredit(username, totalPaid);
-            } else {
-                if (residualCredit < totalPaid) {
-                    userMapper.removeCredit(username, totalPaid);
+                float residualCredit = userMapper.getResidualCredit(username);
+
+                if (!usesCard) {
+                    BadReqExeceptionThrower.checkPaymentAmount(residualCredit, price);
+                    userMapper.removeCredit(username, price);
                 } else {
-                    userMapper.removeCredit(username, userMapper.getResidualCredit(username));
+                    if (residualCredit < price) {
+                        userMapper.removeCredit(username, price);
+                    } else {
+                        userMapper.removeCredit(username, userMapper.getResidualCredit(username));
+                    }
                 }
+                userMapper.insertPayment(payment);
             }
+
         } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
             operationResult = new BadRequestException();
             response.setStatus(400);

@@ -46,7 +46,7 @@ public class V21__CodicePrenotazioniERimozioneDateTime implements JdbcMigration 
         sql = "ALTER TABLE payments ALTER payment_time TYPE TEXT";
         preparedStatement = conn.prepareStatement(sql);
         preparedStatement.executeUpdate();
-        sql = "ALTER TABLE shows ALTER show_time TYPE TEXT";
+        sql = "ALTER TABLE shows ALTER show_date TYPE TEXT";
         preparedStatement = conn.prepareStatement(sql);
         preparedStatement.executeUpdate();
         sql = "ALTER TABLE shows ALTER show_time TYPE TEXT";

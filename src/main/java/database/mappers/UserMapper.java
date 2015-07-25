@@ -267,7 +267,7 @@ public interface UserMapper {
     @Select("SELECT * " +
             "FROM payments " +
             "WHERE code=#{code}")
-    Payment getPaymentFromCode(String code);
+    List<Payment> getPaymentFromCode(String code);
 
     /**
      * @param show_date data di proiezione

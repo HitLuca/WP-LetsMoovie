@@ -11,6 +11,7 @@ public class SeatDetailRequest {
     private int s_column;
     private String ticket_type;
     private float price;
+    private boolean checked;
 
     @toSanitize(name = "row", reg = Regex.ID)
     public int getS_row() {
@@ -44,6 +45,21 @@ public class SeatDetailRequest {
     }
 
     public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public SeatDetailRequest(int s_row, int s_column, String ticket_type, float price) {
+        this.s_row = s_row;
+        this.s_column = s_column;
+        this.ticket_type = ticket_type;
         this.price = price;
     }
 }

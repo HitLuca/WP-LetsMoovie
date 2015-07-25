@@ -13,10 +13,7 @@ import database.datatypes.seat.Seat;
 import database.datatypes.seat.SeatCount;
 import database.datatypes.user.Payment;
 import database.datatypes.user.UserPaid;
-import database.mappers.FilmMapper;
-import database.mappers.SeatMapper;
-import database.mappers.ShowMapper;
-import database.mappers.UserMapper;
+import database.mappers.*;
 import json.OperationResult;
 import json.adminFunctions.request.*;
 import json.adminFunctions.response.*;
@@ -54,6 +51,7 @@ public class AdminFunctions extends HttpServlet {
         SeatMapper seatMapper = sessionSql.getMapper(SeatMapper.class);
         ShowMapper showMapper = sessionSql.getMapper(ShowMapper.class);
         FilmMapper filmMapper = sessionSql.getMapper(FilmMapper.class);
+        NotDecidedMapper notDecidedMapper = sessionSql.getMapper(NotDecidedMapper.class);
 
         response.setContentType("application/json");
         OperationResult operationResult = null;
@@ -61,15 +59,18 @@ public class AdminFunctions extends HttpServlet {
         PrintWriter outputStream = response.getWriter();
 
         try {
-            //BadReqExeceptionThrower.checkUserLogged(request); TODO:Togliere commento
+            //BadReqExeceptionThrower.checkUserLogged(request);
+            // TODO:Togliere commento
 
             //Controllo che abbia i permessi adatti
-            //BadReqExeceptionThrower.checkAdminSuperAdmin(request); TODO:Togliere commento
+            //BadReqExeceptionThrower.checkAdminSuperAdmin(request);
+            // TODO:Togliere commento
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String function = rs.getParameter();
 
             switch (function) {
+                //FATTO
                 case "updateRoomSeatStatus": {
                     RoomSeatRequest roomSeatRequest = gsonReader.fromJson(request.getReader(), RoomSeatRequest.class);
 
@@ -90,9 +91,12 @@ public class AdminFunctions extends HttpServlet {
 
                         id_seat = seatMapper.getIdSeat(room_number, row, column);
                         seatMapper.updateSeatStatus(seatRequest.getStatus(), id_seat);
+
+                        removeBrokenPrenotations(id_seat);
                     }
                     break;
                 }
+                //NON UTILIZZATO
                 case "updateShowSeatStatus": {
                     SeatRequest seatRequest = gsonReader.fromJson(request.getReader(), SeatRequest.class);
 
@@ -111,9 +115,10 @@ public class AdminFunctions extends HttpServlet {
                 }
                 case "removeSeatReservation": {
                     SeatRequest seatRequest = gsonReader.fromJson(request.getReader(), SeatRequest.class);
-
+                    seatRequest.setStatus("");
                     //Controllo di non avere parametri invalidi
                     BadReqExeceptionThrower.checkRegex(seatRequest);
+
                     int room_number = showMapper.getRoomNumber(Integer.parseInt(seatRequest.getId_show()));
                     int id_seat = seatMapper.getIdSeat(room_number, Integer.parseInt(seatRequest.getRow()), Integer.parseInt(seatRequest.getColumn()));
                     int id_show = Integer.parseInt(seatRequest.getId_show());
@@ -121,6 +126,7 @@ public class AdminFunctions extends HttpServlet {
                     seatMapper.removeSeatReservation(id_show, id_seat);
                     break;
                 }
+                //FATTO
                 case "getShowSeats": {
                     ShowRequest showRequest = gsonReader.fromJson(request.getReader(), ShowRequest.class);
 
@@ -157,6 +163,7 @@ public class AdminFunctions extends HttpServlet {
                     sessionSql.close();
                     break;
                 }
+                //FATTO
                 case "getRoomSeats": {
                     RoomRequest roomRequest = gsonReader.fromJson(request.getReader(), RoomRequest.class);
 
@@ -187,6 +194,7 @@ public class AdminFunctions extends HttpServlet {
                     sessionSql.close();
                     break;
                 }
+                //FATTO
                 case "getRankedReservations": {
                     RankedRoomRequest rankedRoomRequest = gsonReader.fromJson(request.getReader(), RankedRoomRequest.class);
 
@@ -207,6 +215,7 @@ public class AdminFunctions extends HttpServlet {
                     sessionSql.close();
                     break;
                 }
+                //FATTO
                 case "getRankedUsers": {
                     UserRankRequest userRankRequest = gsonReader.fromJson(request.getReader(), UserRankRequest.class);
 
@@ -218,14 +227,17 @@ public class AdminFunctions extends HttpServlet {
                     int percentage = Math.round(1.0f * user_count * top / 100);
                     List<UserPaid> userPaids = userMapper.getRankedUserTotalPayments(percentage);
                     List<UserRank> userRankRequests = new ArrayList<>();
+                    int i = 1;
                     for (UserPaid u : userPaids) {
-                        userRankRequests.add(new UserRank(u));
+                        userRankRequests.add(new UserRank(u, i));
+                        i++;
                     }
 
                     outputStream.print(gsonWriter.toJson(userRankRequests));
                     sessionSql.close();
                     break;
                 }
+                //FATTO
                 case "getFilmIncome": {
                     FilmIncomeRequest filmIncomeRequest = gsonReader.fromJson(request.getReader(), FilmIncomeRequest.class);
                     //Controllo di non avere parametri invalidi
@@ -241,6 +253,7 @@ public class AdminFunctions extends HttpServlet {
                     sessionSql.close();
                     break;
                 }
+                //NON UTILIZZATO
                 case "getAllFilmsIncome": {
                     List<FilmIncome> filmIncomes = filmMapper.getAllFilmsIncome();
                     List<FilmIncomeResponse> filmIncomeResponses = new ArrayList<>();
@@ -259,8 +272,10 @@ public class AdminFunctions extends HttpServlet {
 
                     BadReqExeceptionThrower.checkDeleteReservation(deleteReservationRequest);
 
-                    for (SeatDetailRequest sdr : seatDetailRequests) {
-                        BadReqExeceptionThrower.checkRegex(sdr);
+                    if (seatDetailRequests != null) {
+                        for (SeatDetailRequest sdr : seatDetailRequests) {
+                            BadReqExeceptionThrower.checkRegex(sdr);
+                        }
                     }
 
                     if (seatDetailRequests != null && !code.equals("")) {
@@ -274,18 +289,22 @@ public class AdminFunctions extends HttpServlet {
                             totalRefund += ticket_price;
                         }
                         float computedRefound = totalRefund * refoundPercentage;
-                        String username = userMapper.getPaymentFromCode(code).getUsername();
-                        userMapper.addCredit("username", computedRefound);
+                        String username = userMapper.getPaymentFromCode(code).get(0).getUsername();
+                        userMapper.addCredit(username, computedRefound);
                     } else if (seatDetailRequests == null && !code.equals("")) {
-                        Payment payment = userMapper.getPaymentFromCode(code);
-                        String payment_date = payment.getPayment_date();
-                        String payment_time = payment.getPayment_time();
-                        String username = payment.getUsername();
-                        int id_show = payment.getId_show();
-                        seatDetailRequests = userMapper.getReservationBlock(payment_date, payment_time, id_show, username);
+                        List<Payment> paymentList = userMapper.getPaymentFromCode(code);
+
+                        String payment_date = paymentList.get(0).getPayment_date();
+                        String payment_time = paymentList.get(0).getPayment_time();
+                        String username = paymentList.get(0).getUsername();
+                        int id_show = paymentList.get(0).getId_show();
+
                         List<SeatDetailResponse> seatDetailResponses = new ArrayList<>();
-                        for (SeatDetailRequest sdr : seatDetailRequests) {
-                            seatDetailResponses.add(new SeatDetailResponse(sdr));
+                        Seat seat;
+
+                        for (Payment p : paymentList) {
+                            seat = seatMapper.getSeatFromId(p.getId_seat());
+                            seatDetailResponses.add(new SeatDetailResponse(seat.getRow(), seat.getColumn(), p.getTicket_type(), notDecidedMapper.getTicketPrice(p.getTicket_type())));
                         }
                         outputStream.print(gsonWriter.toJson(seatDetailResponses));
                         sessionSql.close();
@@ -303,6 +322,10 @@ public class AdminFunctions extends HttpServlet {
             outputStream.print(gsonWriter.toJson(operationResult));
         }
         sessionSql.close();
+    }
+
+    private void removeBrokenPrenotations(int id_seat) {
+
     }
 
     @Override
