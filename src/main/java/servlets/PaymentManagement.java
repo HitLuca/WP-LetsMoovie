@@ -97,7 +97,13 @@ public class PaymentManagement extends HttpServlet {
 
             for (SeatReservation sr : reservationRequest.getReservation()) {
                 int id_seat = seatMapper.getIdSeat(room_number, sr.getIntRow(), sr.getIntColumn());
-                Payment payment = new Payment(payment_date, payment_time, sr.getTicket_type(), id_seat, id_show, username);
+                Payment payment = new Payment();
+                payment.setPayment_date(payment_date);
+                payment.setPayment_time(payment_time);
+                payment.setTicket_type(sr.getTicket_type());
+                payment.setId_seat(id_seat);
+                payment.setId_show(id_show);
+                payment.setUsername(username);
                 userMapper.insertPayment(payment);
             }
             temporaryReservationManager.confirmReservationRequest(paymentRequest.getCode(),sqlSession);
@@ -108,6 +114,7 @@ public class PaymentManagement extends HttpServlet {
         } catch (BadRequestException e) {
             operationResult = e;
             response.setStatus(400);
+            outputStream.print(gsonWriter.toJson(operationResult));
         }
         sqlSession.commit();
         sqlSession.close();

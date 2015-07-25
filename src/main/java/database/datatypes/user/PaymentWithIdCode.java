@@ -1,26 +1,17 @@
 package database.datatypes.user;
 
 /**
- * Created by hitluca on 14/07/15.
+ * Created by hitluca on 24/07/15.
  */
-public class Payment {
+public class PaymentWithIdCode {
     private String payment_date;
     private String payment_time;
     private String ticket_type;
     private int id_seat;
     private int id_show;
     private String username;
-    private String code;
-
-    public void populate(String payment_date, String payment_time, String ticket_type, int id_seat, int id_show, String username, String code) {
-        this.payment_date = payment_date;
-        this.payment_time = payment_time;
-        this.ticket_type = ticket_type;
-        this.id_seat = id_seat;
-        this.id_show = id_show;
-        this.username = username;
-        this.code = code;
-    }
+    private int id;
+    private int code;
 
     public String getPayment_date() {
         return payment_date;
@@ -70,11 +61,19 @@ public class Payment {
         this.username = username;
     }
 
-    public String getCode() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 }

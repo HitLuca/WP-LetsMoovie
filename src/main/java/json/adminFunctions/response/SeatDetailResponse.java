@@ -17,9 +17,16 @@ public class SeatDetailResponse {
     private float price;
 
     public SeatDetailResponse(SeatDetailRequest sdr) {
-        this.s_row = sdr.getS_row();
-        this.s_column = sdr.getS_column();
+        this.s_row = Integer.parseInt(sdr.getS_row());
+        this.s_column = Integer.parseInt(sdr.getS_column());
         this.ticket_type = sdr.getTicket_type();
-        this.price = sdr.getPrice();
+        this.price = Float.parseFloat(sdr.getPrice());
+    }
+
+    public SeatDetailResponse(int s_row, int s_column, String ticket_type, float price) {
+        this.s_row = s_row;
+        this.s_column = s_column;
+        this.ticket_type = ticket_type;
+        this.price = price;
     }
 }

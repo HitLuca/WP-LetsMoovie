@@ -40,6 +40,17 @@ public interface SeatMapper {
 
     /**
      *
+     * @param id_seat id del posto
+     * @return informazioni associate a id_seat
+     */
+    //TODO:Test
+    @Select("SELECT * " +
+            "FROM seats " +
+            "WHERE id_seat=#{id_seat}")
+    Seat getSeatFromId(int id_seat);
+
+    /**
+     *
      * @param room_number numero della stanza
      * @return lista dei posti rotti in room_number
      */

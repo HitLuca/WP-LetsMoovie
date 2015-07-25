@@ -7,13 +7,19 @@ import utilities.InputValidator.Regex;
  * Created by hitluca on 20/07/15.
  */
 public class SeatRequest {
-    private String id_seat;
+    private String row;
+    private String column;
     private String id_show;
     private String status;
 
-    @toSanitize(name = "id_seat", reg = Regex.ID)
-    public String getId_seat() {
-        return id_seat;
+    @toSanitize(name = "row", reg = Regex.ID)
+    public String getRow() {
+        return row;
+    }
+
+    @toSanitize(name = "column", reg = Regex.ID)
+    public String getColumn() {
+        return column;
     }
 
     @toSanitize(name = "id_show", reg = Regex.ID)
@@ -27,10 +33,6 @@ public class SeatRequest {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public void setId_seat(String id_seat) {
-        this.id_seat = id_seat;
     }
 
     public void setId_show(String id_show) {
