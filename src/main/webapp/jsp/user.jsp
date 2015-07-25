@@ -169,9 +169,11 @@
 <c:import url="/jsp/layout/footer.jsp"/>
 
 <%--DATATABLES--%>
-<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.css"/>
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.js"></script>
+<link rel="stylesheet" href="<c:url value="/lib/css/dataTables.foundation.min.css"/>"/>
+<script src="<c:url value="/lib/js/jquery.dataTables.min.js"/>"></script>
+<script src="<c:url value="/lib/js/dataTables.foundation.min.js"/>"></script>
+
+<%--JS PERSONALE--%>
 <script src="<c:url value="/javascript/user.js"/>"></script>
 
 </body>

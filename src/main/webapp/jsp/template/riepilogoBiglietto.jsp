@@ -3,7 +3,7 @@
 <div class="panel callout radius row biglietto text-center" id="posto">
     <div class="medium-1 columns hide checkbox-biglietto">
         <input name="seatList[][selected]" type="checkbox" value="true">
-        <input type="hidden" name="seatList[][s_row]">
+        <input type="hidden" name="seatList[][s_row]" value="s_row">
         <input type="hidden" name="seatList[][s_colum]">
     </div>
     <div class="medium-3 columns" id="posizione">

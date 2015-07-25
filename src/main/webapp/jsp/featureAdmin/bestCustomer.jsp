@@ -5,11 +5,10 @@
 <html>
 <c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Clienti migliori"/>
-    <c:param name="css" value="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.css"/>
+    <c:param name="css" value="/css/bestCustomer.css"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
-<link rel="stylesheet" href="<c:url value="/css/bestCustomer.css"/>">
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row collapse">
@@ -61,9 +60,12 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+
 <%--DATATABLES--%>
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.js"></script>
+<link rel="stylesheet" href="<c:url value="/lib/css/dataTables.foundation.min.css"/>"/>
+<script src="<c:url value="/lib/js/jquery.dataTables.min.js"/>"></script>
+<script src="<c:url value="/lib/js/dataTables.foundation.min.js"/>"></script>
+
 <%--JS della pagina--%>
 <script src="<c:url value="/javascript/featureAdmin/bestCustomer.js"/>"></script>
 </body>
