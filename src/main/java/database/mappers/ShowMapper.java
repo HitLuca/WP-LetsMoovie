@@ -44,8 +44,8 @@ public interface ShowMapper {
      * @return il room_number associato al codice
      */
     //TODO:Test
-    @Select("SELECT id_show " +
-            "FROM payments " +
+    @Select("SELECT DISTINCT room_number " +
+            "FROM payments NATURAL JOIN shows " +
             "WHERE code=#{code}")
     int getRoomNumberFromCode(String code);
 

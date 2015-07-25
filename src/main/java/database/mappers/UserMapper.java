@@ -251,7 +251,7 @@ public interface UserMapper {
      */
     @Select("SELECT * " +
             "FROM payments " +
-            "ORDER BY payment_date, payment_time, username, id_seat, id_show, ticket_type, username")
+            "ORDER BY payment_date, payment_time, username, id_seat, id_show, ticket_type")
     List<PaymentWithIdCode> getAllPayments();
 
     /**

@@ -7,19 +7,19 @@ import utilities.InputValidator.Regex;
  * Created by hitluca on 23/07/15.
  */
 public class SeatDetailRequest {
-    private int s_row;
-    private int s_column;
+    private String s_row;
+    private String s_column;
     private String ticket_type;
-    private float price;
+    private String price;
     private boolean checked;
 
     @toSanitize(name = "row", reg = Regex.ID)
-    public int getS_row() {
+    public String getS_row() {
         return s_row;
     }
 
-    @toSanitize(name = "row", reg = Regex.ID)
-    public int getS_column() {
+    @toSanitize(name = "column", reg = Regex.ID)
+    public String getS_column() {
         return s_column;
     }
 
@@ -27,16 +27,15 @@ public class SeatDetailRequest {
         return ticket_type;
     }
 
-    @toSanitize(name = "row", reg = Regex.ID)
-    public float getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setS_row(int row) {
+    public void setS_row(String row) {
         this.s_row = row;
     }
 
-    public void setS_column(int column) {
+    public void setS_column(String column) {
         this.s_column = column;
     }
 
@@ -44,7 +43,7 @@ public class SeatDetailRequest {
         this.ticket_type = ticket_type;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -56,10 +55,12 @@ public class SeatDetailRequest {
         this.checked = checked;
     }
 
-    public SeatDetailRequest(int s_row, int s_column, String ticket_type, float price) {
+    public SeatDetailRequest(String s_row, String s_column, String ticket_type, String price) {
         this.s_row = s_row;
         this.s_column = s_column;
         this.ticket_type = ticket_type;
         this.price = price;
     }
+
+
 }
