@@ -117,6 +117,7 @@ var Payment = {
     },
     successPayment: function (data) {
         alertify.success("Il pagamento è andato a buon fine!");
+        $("#paymentOk").foundation("reveal", "open");
     },
     errorPayment: function(data) {
         alertify.error("Errore nel processare il pagamento!");
