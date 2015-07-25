@@ -66,11 +66,13 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
-<
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
-<script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
-<script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
+
+<%--THREE JS--%>
+<script src="<c:url value="/lib/js/threejs/three.r71.min.js"/>"></script>
+<script src="<c:url value="/lib/js/threejs/OrbitControls.min.js"/>"></script>
+<script src="<c:url value="/lib/js/threejs/OBJLoader.min.js"/>"></script>
 <script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
+
 <script src="/javascript/featureAdmin/reservedSeats.js"></script>
 </body>
 </html
