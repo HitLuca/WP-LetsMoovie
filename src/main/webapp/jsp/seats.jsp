@@ -76,8 +76,7 @@
 <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
 <script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
 <script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
-<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
-<script src="<c:url value="/lib/js/it.min.js"/>"></script>
+
 <script src="<c:url value="/javascript/seats.js"/>"></script>
 
 </body>

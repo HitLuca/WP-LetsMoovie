@@ -61,8 +61,7 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
-<script src="/lib/js/numeral.min.js"></script>
-<script src="/lib/js/it.min.js"></script>
+
 <script src="/javascript/featureAdmin/deleteReservation.js"></script>
 </body>
 </html>

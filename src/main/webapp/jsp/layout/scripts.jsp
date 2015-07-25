@@ -32,6 +32,10 @@
 <%--WOW.JS--%>
 <script src="<c:url value="/lib/js/wow.min.js"/>"></script>
 
+<%--NUMERAL JS--%>
+<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
+<script src="<c:url value="/lib/js/it.min.js"/>"></script>
+
 <%--JAVASCRIPT PERSONALE--%>
 <script src="<c:url value="/javascript/main.js"/>"></script>
 <script src="<c:url value="/javascript/header.js"/>"></script>

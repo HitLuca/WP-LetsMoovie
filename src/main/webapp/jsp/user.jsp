@@ -167,8 +167,7 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
-<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
-<script src="<c:url value="/lib/js/it.min.js"/>"></script>
+
 <%--DATATABLES--%>
 <link rel="stylesheet" href="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.css"/>
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>

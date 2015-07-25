@@ -16,7 +16,7 @@
         <div class="small-12 columns">
 
             <h4>Inserisci una percentuale per visualizzare la lista dei clienti che
-                hanno comprato più biglietti.</h4>
+                hanno comprato più biglietti</h4>
 
             <form action="/api/admin/getRankedUsers/" method="post" id="percentageSelect">
                 <div class="row">
@@ -35,16 +35,17 @@
                     </div>
                 </div>
             </form>
-            <div id="customerList" class="row">
+            <div id="customerList" class="row hide">
 
                 <h4>
-                    I clienti che hanno comprato più biglietti
+                    Ecco i clienti che hanno comprato più biglietti:
                 </h4>
 
                 <div class="medium-12 medium-centered text-center columns">
                     <table id="customers" class="display" role="grid" width="100%">
                         <thead>
                         <tr>
+                            <th>Posizione</th>
                             <th>Nome</th>
                             <th>Cognome</th>
                             <th>Username</th>

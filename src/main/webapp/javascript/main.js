@@ -154,5 +154,6 @@ var Session = {
 };
 
 moment.locale('it');
+numeral.language('it');
 
 Notifications.showNotifications();

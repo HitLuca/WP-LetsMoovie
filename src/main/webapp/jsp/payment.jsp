@@ -138,8 +138,6 @@
 </div>
 <div class="push"></div>
 <c:import url="/jsp/layout/footer.jsp"/>
-<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
-<script src="<c:url value="/lib/js/it.min.js"/>"></script>
 <script src="<c:url value="/javascript/payment.js"/>"></script>
 </body>
 </html>
