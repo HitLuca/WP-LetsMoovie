@@ -203,8 +203,6 @@ public class PdfTicketCreator {
         cos.drawLine(relX - 30, relY + 25, relX - 30, relY - 65);
         cos.drawLine(relX + 470, relY + 25, relX + 470, relY - 65);
 
-        System.out.println(rect.getWidth());
-
         cos.beginText();
         cos.setFont(fontPlain, 15);
         cos.moveTextPositionByAmount(relX, relY);
