@@ -15,6 +15,7 @@ import org.apache.ibatis.session.SqlSession;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.reservation.TemporaryReservationManager;
+import utilities.reservation.request.TemporaryReservationRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,6 +42,7 @@ import java.time.format.DateTimeFormatter;
 public class PaymentManagement extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
+    TemporaryReservationManager temporaryReservationManager;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -66,9 +68,7 @@ public class PaymentManagement extends HttpServlet {
             BadReqExeceptionThrower.checkNullInput(paymentRequest);
             boolean usesCard = paymentRequest.getCredit_card_number() != null;
 
-            //Todo: gestire caso in cui la prenotazione scada
-            //Todo: Controllare thread che si imballa nel momento in cui arrivano più richieste
-            ReservationRequest reservationRequest = temporaryReservationManager.confirmReservationRequest(paymentRequest.getCode(), sqlSession);
+            ReservationRequest reservationRequest = temporaryReservationManager.getReservation(paymentRequest.getCode());
 
             int totalPaid = 0;
             int room_number = showMapper.getRoomNumber(reservationRequest.getIntIdShow());
@@ -77,37 +77,41 @@ public class PaymentManagement extends HttpServlet {
             String username = request.getSession().getAttribute("username").toString();
             int id_show = reservationRequest.getIntIdShow();
 
-            //TODO:inserire pagamenti dopo aver controllato se il credio basta nel caso non abbia inserito una carta di credito
             for (SeatReservation sr : reservationRequest.getReservation()) {
-                int id_seat = seatMapper.getIdSeat(room_number, sr.getIntRow(), sr.getIntColumn());
-                Payment payment = new Payment(payment_date, payment_time, sr.getTicket_type(), id_seat, id_show, username);
-                userMapper.insertPayment(payment);
                 float price = notDecidedMapper.getTicketPrice(sr.getTicket_type());
                 totalPaid += price;
             }
+
             float residualCredit = userMapper.getResidualCredit(username);
 
             if (!usesCard) {
                 BadReqExeceptionThrower.checkPaymentAmount(residualCredit, totalPaid);
                 userMapper.removeCredit(username, totalPaid);
             } else {
-                if (residualCredit < totalPaid) {
+                if (residualCredit > totalPaid) {
                     userMapper.removeCredit(username, totalPaid);
                 } else {
                     userMapper.removeCredit(username, userMapper.getResidualCredit(username));
                 }
             }
+
+            for (SeatReservation sr : reservationRequest.getReservation()) {
+                int id_seat = seatMapper.getIdSeat(room_number, sr.getIntRow(), sr.getIntColumn());
+                Payment payment = new Payment(payment_date, payment_time, sr.getTicket_type(), id_seat, id_show, username);
+                userMapper.insertPayment(payment);
+            }
+            temporaryReservationManager.confirmReservationRequest(paymentRequest.getCode(),sqlSession);
+
         } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
             operationResult = new BadRequestException();
             response.setStatus(400);
-            outputStream.print(gsonWriter.toJson(operationResult));
         } catch (BadRequestException e) {
             operationResult = e;
             response.setStatus(400);
-            outputStream.print(gsonWriter.toJson(operationResult));
         }
         sqlSession.commit();
         sqlSession.close();
+        outputStream.print(gsonWriter.toJson(operationResult));
     }
 
     @Override
@@ -116,6 +120,7 @@ public class PaymentManagement extends HttpServlet {
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.create();
         gsonReader = new Gson();
+        temporaryReservationManager = new TemporaryReservationManager();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
