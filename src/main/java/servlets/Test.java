@@ -28,14 +28,12 @@ public class Test extends HttpServlet {
 
         OutputStream out = response.getOutputStream();
 
-
 /*
         QrCodeCreator codeCreator = new QrCodeCreator();
         response.setContentType("image/png");
 
         out.write(codeCreator.doSOmething("Un sacco di stronzate").toByteArray());
 */
-
         response.setContentType("application/pdf");
         response.addHeader("Content-Type", "application/force-download");
         response.addHeader("Content-Disposition", "attachment; filename=\"yourFile.pdf\"");
@@ -45,7 +43,7 @@ public class Test extends HttpServlet {
         PdfTicketCreator pd = new PdfTicketCreator();
 
         try {
-            response.getOutputStream().write(pd.createPdf(null, pathToWeb).toByteArray());
+            response.getOutputStream().write(pd.createPdf(null, pathToWeb, getServletContext()).toByteArray());
         } catch (Exception e) {
             e.printStackTrace();
         }

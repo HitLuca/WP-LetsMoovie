@@ -11,6 +11,7 @@ import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
@@ -26,9 +27,10 @@ public class PdfTicketCreator {
     String pathResource;
     private PDFont fontPlain;
 
-    public ByteArrayOutputStream createPdf(List<TicketData> ticketData, String pathResource) throws Exception {
+    public ByteArrayOutputStream createPdf(List<TicketData> ticketData, String pathResource, ServletContext context) throws Exception {
 
         this.pathResource = pathResource;
+        ImageIO.setUseCache(false);
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -89,7 +91,7 @@ public class PdfTicketCreator {
 
         float margin = 50f, intraTicket = 100;
         float posX = rect.getLowerLeftX() + margin, posY = rect.getUpperRightY() - margin - 25;
-        printHeader(posX, posY, document, cos);
+        printHeader(posX, posY, document, cos, context);
         posY -= 35;
 
         cos.beginText();
@@ -142,12 +144,10 @@ public class PdfTicketCreator {
         }
     }
 
-    private void addImage(float posX, float posY, String imagePath, PDDocument document, PDPageContentStream cos, float scale) {
+    private void addImage(float posX, float posY, String imagePath, PDDocument document, PDPageContentStream cos, float scale, ServletContext context) {
         try {
 
-//            File image = new File(imagePath);
-            InputStream image = new FileInputStream(imagePath);
-
+            InputStream image = context.getResourceAsStream(imagePath);
             BufferedImage bi = ImageIO.read(image);
             PDXObjectImage ximage = new PDJpeg(document, bi);
 
@@ -160,13 +160,13 @@ public class PdfTicketCreator {
         }
     }
 
-    private void printHeader(float posX, float posY, PDDocument document, PDPageContentStream cos) throws IOException {
+    private void printHeader(float posX, float posY, PDDocument document, PDPageContentStream cos, ServletContext context) throws IOException {
 
         float relX = posX, relY = posY;
         float lineHeight = 12;
 
-        String logoPath = pathResource.concat("/img/logoTotale2.png");
-        addImage(relX, relY, logoPath, document, cos, 0.1f);
+        String logoPath = "/img/logoTotale2.png";
+        addImage(relX, relY, logoPath, document, cos, 0.1f, context);
 
         relX += 200;
         relY += 30;
