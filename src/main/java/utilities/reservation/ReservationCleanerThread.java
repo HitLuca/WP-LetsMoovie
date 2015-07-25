@@ -57,6 +57,7 @@ public class ReservationCleanerThread extends Thread{
 
             if(validSeats!=reservation.getReservationRequest().getReservation().size())
             {
+                mutex.release();
                 throw new BadRequestException(ErrorCode.INVALID_RESERVATION);
             }
 
@@ -70,6 +71,7 @@ public class ReservationCleanerThread extends Thread{
                         {
                             if(reservedSeat.getColumn()==requestedSeat.getColumn() && reservedSeat.getRow()==requestedSeat.getRow())
                             {
+                                mutex.release();
                                 throw new BadRequestException(ErrorCode.INVALID_RESERVATION);
                             }
                         }
@@ -99,6 +101,7 @@ public class ReservationCleanerThread extends Thread{
 
             if(temporaryReservationRequest==null)
             {
+                mutex.release();
                 throw new BadRequestException(ErrorCode.WRONG_RESERVATION_CODE);
             }
 
@@ -207,6 +210,7 @@ public class ReservationCleanerThread extends Thread{
             removeExpired();
             TemporaryReservationRequest temporaryReservationRequest =  pendingReservations.get(reservationCode);
             if(temporaryReservationRequest==null){
+                mutex.release();
                 throw new BadRequestException(ErrorCode.WRONG_RESERVATION_CODE);
             }
             reservationRequest = temporaryReservationRequest.getReservationRequest();
