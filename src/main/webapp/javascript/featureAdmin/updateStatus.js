@@ -36,7 +36,7 @@ var GetRoomMap = {
         request.fail(GetRoomMap.roomError);
     },
     roomsSuccess: function (data) {
-        Cinema3DView.init(document.getElementById("roomMap"), data.showSeatList, data.column, data.row, true)
+        Cinema3DView.init(document.getElementById("roomMap"), data.showSeatList, data.column, data.row, false)
     },
     roomError: function () {
         alertify.error("Errore nel visualizzare la mappa");

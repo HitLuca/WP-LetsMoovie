@@ -5,18 +5,17 @@
 <html>
 <c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Clienti migliori"/>
-    <c:param name="css" value="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.css"/>
+    <c:param name="css" value="/css/bestCustomer.css"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
-<link rel="stylesheet" href="<c:url value="/css/bestCustomer.css"/>">
 <div class="wrapper">
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="row collapse">
         <div class="small-12 columns">
 
             <h4>Inserisci una percentuale per visualizzare la lista dei clienti che
-                hanno comprato più biglietti.</h4>
+                hanno comprato più biglietti</h4>
 
             <form action="/api/admin/getRankedUsers/" method="post" id="percentageSelect">
                 <div class="row">
@@ -35,16 +34,17 @@
                     </div>
                 </div>
             </form>
-            <div id="customerList" class="row">
+            <div id="customerList" class="row hide">
 
                 <h4>
-                    I clienti che hanno comprato più biglietti
+                    Ecco i clienti che hanno comprato più biglietti:
                 </h4>
 
                 <div class="medium-12 medium-centered text-center columns">
                     <table id="customers" class="display" role="grid" width="100%">
                         <thead>
                         <tr>
+                            <th>Posizione</th>
                             <th>Nome</th>
                             <th>Cognome</th>
                             <th>Username</th>
@@ -60,9 +60,12 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+
 <%--DATATABLES--%>
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.js"></script>
+<link rel="stylesheet" href="<c:url value="/lib/css/dataTables.foundation.min.css"/>"/>
+<script src="<c:url value="/lib/js/jquery.dataTables.min.js"/>"></script>
+<script src="<c:url value="/lib/js/dataTables.foundation.min.js"/>"></script>
+
 <%--JS della pagina--%>
 <script src="<c:url value="/javascript/featureAdmin/bestCustomer.js"/>"></script>
 </body>

@@ -113,24 +113,29 @@
 
             <div class="row">
                 <div class="medium-12 text-center columns">
-                    <%--TODO: LADDA BUTTON--%>
-                        <button id="confermaPagamento" class="radius success ladda-button" data-style="zoom-out">
+                    <button id="confermaPagamento" class="radius success ladda-button" data-style="zoom-out">
                         <span class="ladda-label">
                         Conferma pagamento
                         </span>
-                        </button>
+                    </button>
                 </div>
             </div>
         </div>
 
         <div id="paymentOk" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
-             role="dialog">
-            <h2 id="modalTitle">Pagamento effettuato!</h2>
+             role="dialog" data-options="close_on_background_click:false">
+            <div class="row">
+                <div class="medium-12 small-centered columns">
+                    <h2 id="modalTitle">Pagamento effettuato!</h2>
 
-            <p>Il pagamento è andato a buon fine, ti abbiamo appena inviato via email i biglietti
-                della prenotazione.<br>
-                Ricordati di stamparli per poter accedere alla sala al momento della proiezione.
-            </p>
+                    <p>Il pagamento è andato a buon fine, ti abbiamo appena inviato via email i biglietti
+                        della prenotazione.<br>
+                        Ricordati di stamparli per poter accedere alla sala al momento della proiezione.
+                    </p>
+                    <a href="/jsp/index.jsp">Torna alla home page</a>
+
+                </div>
+            </div>
             <a class="close-reveal-modal" aria-label="Close">&#215;</a>
         </div>
 
@@ -138,8 +143,6 @@
 </div>
 <div class="push"></div>
 <c:import url="/jsp/layout/footer.jsp"/>
-<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
-<script src="<c:url value="/lib/js/it.min.js"/>"></script>
 <script src="<c:url value="/javascript/payment.js"/>"></script>
 </body>
 </html>

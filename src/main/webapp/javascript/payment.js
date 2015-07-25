@@ -117,6 +117,7 @@ var Payment = {
     },
     successPayment: function (data) {
         alertify.success("Il pagamento è andato a buon fine!");
+        $("#paymentOk").foundation("reveal", "open");
     },
     errorPayment: function(data) {
         alertify.error("Errore nel processare il pagamento!");
@@ -126,6 +127,10 @@ var Payment = {
 var CreditCard = {
     url: "/api/debitCards/",
     cardsList: $("#cardsList"),
+    addCard: $("#addCard"),
+    removeCard: $("#rimuoviCarta"),
+    modal: null,
+    selected: null,
     getCreditCards: function () {
         var request = $.ajax({
             url: CreditCard.url + Session.getUsername()
@@ -161,30 +166,31 @@ var CreditCard = {
     },
     addCreditCardSuccess: function (data) {
         alertify.success("Carta di credito aggiunta con successo!");
+        $("#addForm").addClass("hide");
+        CreditCard.addCard.show();
+        CreditCard.addCard.addClass("animated fadeIn");
         CreditCard.getCreditCards();
     },
     addCreditCardError: function (data) {
         alertify.error("Errore nell'aggiungere la carta indicata");
     },
     init: function () {
-        //TODO QUANDO SI CLICCA SU UNA CARTA
-        var modal = $("#cardsList");
-        modal.on('opened.fndtn.reveal', function () {
+        CreditCard.cardsList.on('opened.fndtn.reveal', function () {
             CreditCard.modal = $(this);
             if (!CreditCard.bind) {
                 CreditCard.getCreditCards();
                 CreditCard.bind = true;
             }
         });
-        $("#addCard").on('click', function (event) {
+        CreditCard.addCard.on('click', function (event) {
             event.preventDefault();
-            $("#addCard").hide();
+            CreditCard.addCard.hide();
             var addForm = $("#addForm");
             addForm.removeClass("hide");
             addForm.addClass("animated fadeIn");
             Forms.PostForm("addForm", CreditCard.addCreditCardSuccess, CreditCard.addCreditCardError, false);
         });
-        $("#rimuoviCarta").on("click", function(event) {
+        CreditCard.removeCard.on("click", function (event) {
             event.preventDefault();
             var selectedCard = $("#selectedCard");
             selectedCard.addClass("hide");

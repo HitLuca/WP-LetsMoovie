@@ -13,9 +13,6 @@
 <script src="<c:url value="/lib/js/jquery.serializejson.min.js"/>"></script>
 <script src="<c:url value="/lib/js/jquery.storageapi.min.js"/>"></script>
 
-<%--DATATABLES--%>
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-
 <%--NOTIFICHE JS--%>
 <script src="<c:url value="/lib/js/alertify.min.js"/>"></script>
 
@@ -31,6 +28,10 @@
 
 <%--WOW.JS--%>
 <script src="<c:url value="/lib/js/wow.min.js"/>"></script>
+
+<%--NUMERAL JS--%>
+<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
+<script src="<c:url value="/lib/js/it.min.js"/>"></script>
 
 <%--JAVASCRIPT PERSONALE--%>
 <script src="<c:url value="/javascript/main.js"/>"></script>

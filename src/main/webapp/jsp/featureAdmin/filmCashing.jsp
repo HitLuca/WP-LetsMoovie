@@ -48,8 +48,7 @@
 <c:import url="/jsp/layout/footer.jsp"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.css" rel="stylesheet"/>
-<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
-<script src="<c:url value="/lib/js/it.min.js"/>"></script>
+
 <script src="<c:url value="/javascript/featureAdmin/filmCaching.js"/>"></script>
 </body>
 </html>
