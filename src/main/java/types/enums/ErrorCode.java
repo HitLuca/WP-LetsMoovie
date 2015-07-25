@@ -17,7 +17,8 @@ public enum ErrorCode {
     NOT_LOGGED_IN(10),
     WRONG_CONFIRMATION_CODE(11),
     WRONG_RESERVATION_CODE(12),
-    NOT_ENOUGH_CREDIT(13);
+    NOT_ENOUGH_CREDIT(13),
+    END_OF_TIME(14);
 
     private int value;
 

@@ -432,7 +432,7 @@ require([
         });
 
         initDynamic();
-        return;
+
     });
 
     // compare all article with their predecessor
@@ -637,7 +637,7 @@ require([
         $('#sidenav li[data-group=\'' + group + '\'][data-name=\'' + name + '\'][data-version=\'' + version + '\']').removeClass('has-modifications');
 
         $root.remove();
-        return;
+
     }
 
     /**

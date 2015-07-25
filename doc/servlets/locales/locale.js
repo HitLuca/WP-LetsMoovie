@@ -28,8 +28,7 @@ define([
         if (index === undefined)
             return text;
         return index;
-    };
-
+    }
     function setLanguage(language) {
         locale = locales[language];
     }

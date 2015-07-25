@@ -29,7 +29,7 @@ public class ReservationRequest implements OperationResult {
     }
 
     public int getIntIdShow() {
-        return Integer.valueOf(getId_show());
+        return Integer.parseInt(getId_show());
     }
 
     public List<SeatReservation> getReservation() {

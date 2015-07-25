@@ -22,7 +22,7 @@ var Ticket = {
         };
         Transparency.render($("#allTickets")[0], data.tickets, directives);
     }
-}
+};
 
 
 $(function () {

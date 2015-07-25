@@ -1,10 +1,7 @@
 package json.payments;
 
-import net.glxn.qrgen.image.ImageType;
 import net.glxn.qrgen.QRCode;
-
-import java.awt.image.BufferedImage;
-import java.io.*;
+import net.glxn.qrgen.image.ImageType;
 
 /**
  * Created by etrunon on 23/07/15.

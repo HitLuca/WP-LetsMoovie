@@ -12,7 +12,6 @@ import json.OperationResult;
 import json.film.FilmAndShows;
 import json.film.response.FilmSuccess;
 import org.apache.ibatis.session.SqlSession;
-import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;

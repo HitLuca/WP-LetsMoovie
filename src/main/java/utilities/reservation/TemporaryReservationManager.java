@@ -2,19 +2,17 @@ package utilities.reservation;
 
 import json.reservation.request.ReservationRequest;
 import org.apache.ibatis.session.SqlSession;
-import servlets.Reservation;
 import types.exceptions.BadRequestException;
 import utilities.reservation.request.TemporaryReservationRequest;
 
-import java.time.LocalTime;
 import java.util.Date;
 
 /**
  * Created by marco on 21/07/15.
  */
 public class TemporaryReservationManager {
-    ReservationCleanerThread reservationCleanerThread;
     private final long TEMPORARY_RESERVATION_DURATION = 1000*60*10;
+    ReservationCleanerThread reservationCleanerThread;
 
     public TemporaryReservationManager()
     {

@@ -5,6 +5,7 @@
 <html>
 <c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Area Utente"/>
+    <c:param name="css" value="/css/user.css"></c:param>
 </c:url>
 <c:import url="${url}"/>
 <body>
@@ -93,48 +94,67 @@
                 </div>
             </li>
             <li class="accordion-navigation">
-                <a href="#panel2a">Acquisti</a>
+                <a href="#panel2a">Storico acquisti</a>
 
                 <div id="panel2a" class="content">
-                    <div class="panel radius">
-                        <h3>Storico acquisti</h3>
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <table id="storico" class="display" role="grid" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>ID Prenotazione</th>
+                                    <th>Film</th>
+                                    <th>Data</th>
+                                    <th>Ora</th>
+                                    <th>Prezzo</th>
+                                    <%--TODO MANCA TOTALE PAGATO--%>
+                                </tr>
 
-                        <p></p>
+                                </thead>
 
-                        <div class="row">
-                            <div class="medium-12 columns">
-                                <div class="row">
-                                    <div class="medium-12 columns">
-                                        Film 1
-                                    </div>
-                                </div>
-                            </div>
+                            </table>
                         </div>
                     </div>
                 </div>
             </li>
-            <li class="accordion-navigation">
+            <li class="accordion-navigation" id="carte">
                 <a href="#panel3a">Portafoglio</a>
 
                 <div id="panel3a" class="content">
                     <div class="panel radius">
 
-                        <div class="row">
+                        <div class="row" id="carteRegistrate">
                             <div class="medium-12 columns">
                                 <h3>Carte registrate</h3>
-                                <div class="row">
+
+                                <div class="row" id="contenitoreCarte">
                                     <div class="medium-12 columns">
-                                        <strong>Carta:</strong><span data-bind="numeroCarta"></span>
+                                        <div class="row">
+                                            <div class="medium-4 columns">
+                                                <strong>Carta:</strong>
+                                            </div>
+                                            <div class="medium-8 small-only-text-center columns">
+                                                <span data-bind="number"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" id="creditoResiduo">
                             <div class="medium-12 columns">
                                 <h3>Credito</h3>
-                                <div class="row">
+
+                                <div class="row" id="contenitoreCredito">
                                     <div class="medium-12 columns">
-                                        <strong>Residuo:</strong><span data-bind="credito"></span>
+                                        <div class="row">
+                                            <div class="medium-4 columns">
+                                                <strong>Residuo:</strong>
+                                            </div>
+                                            <div class="medium-8 small-only-text-center columns">
+                                                <span id="credit" data-bind="number"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +167,12 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
-
+<script src="<c:url value="/lib/js/numeral.min.js"/>"></script>
+<script src="<c:url value="/lib/js/it.min.js"/>"></script>
+<%--DATATABLES--%>
+<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.css"/>
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.js"></script>
 <script src="<c:url value="/javascript/user.js"/>"></script>
 
 </body>

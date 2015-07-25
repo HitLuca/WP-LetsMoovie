@@ -90,8 +90,7 @@ define([
           $root.find(".sample-request-response").fadeTo(250, 1);
           $root.find(".sample-request-response-json").html(jsonResponse);
           refreshScrollSpy();
-      };
-
+      }
       function displayError(jqXHR, textStatus, error) {
           var message = "Error " + jqXHR.status + ": " + error;
           var jsonResponse;
@@ -112,7 +111,7 @@ define([
           $root.find(".sample-request-response").fadeTo(250, 1);
           $root.find(".sample-request-response-json").html(message);
           refreshScrollSpy();
-      };
+      }
   }
 
   function clearSampleRequest(group, name, version)

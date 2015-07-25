@@ -1,10 +1,8 @@
 package json.reservation.response;
 
 import com.google.gson.annotations.Expose;
-import database.datatypes.user.UserPayment;
 import database.mappers.NotDecidedMapper;
 import json.OperationResult;
-import json.reservation.ReservedSeat;
 import json.reservation.ReservedSeatResponse;
 import json.reservation.request.ReservationRequest;
 import json.reservation.request.SeatReservation;

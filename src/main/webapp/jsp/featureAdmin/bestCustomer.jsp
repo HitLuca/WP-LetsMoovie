@@ -60,6 +60,10 @@
     <div class="push"></div>
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
+<%--DATATABLES--%>
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.7/integration/foundation/dataTables.foundation.js"></script>
+<%--JS della pagina--%>
 <script src="<c:url value="/javascript/featureAdmin/bestCustomer.js"/>"></script>
 </body>
 </html>

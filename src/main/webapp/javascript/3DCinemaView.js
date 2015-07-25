@@ -67,17 +67,17 @@ var Materials = {
         shading: THREE.flatShading
     }),
     hoveringChair: new THREE.MeshLambertMaterial({
-        color: 0x6ff774,
+        color: 0xaaff88,
         shading: THREE.flatShading
     }),
     hoveringChairSelected: new THREE.MeshLambertMaterial({
-        color: 0xcece6f,
+        color: 0xffaa88,
         shading: THREE.flatShading
     }),
     busySeatMaterial: new THREE.MeshLambertMaterial({
-        color:  0xff6655,
+        color:  0xffffcc,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.4,
         shading: THREE.flatShading})
 };
 
@@ -95,6 +95,11 @@ var Cinema3DView = {
     locked : false,
     cameraSpeed : {},
     touchStatus : 0,
+    maxCount : 0,
+
+    empty : function (elem) {
+        while (elem.lastChild) elem.removeChild(elem.lastChild);
+    },
 
     animate: function () {
         requestAnimationFrame(Cinema3DView.animate);
@@ -105,6 +110,20 @@ var Cinema3DView = {
         Cinema3DView.renderer.render(Cinema3DView.scene, Cinema3DView.camera);
     },
     init: function (cont, seatsList, sx, sy, readOnly) {
+
+        if(Cinema3DView.scene!=null)
+        {
+            Cinema3DView.container.innerHTML = "";
+            cancelAnimationFrame(this.id);// Stop the animation
+            this.empty(this.scene);
+            this.scene = null;
+            this.projector = null;
+            this.camera = null;
+            this.controls = null;
+
+        }
+
+
         Cinema3DView.container = cont;
         Cinema3DView.sizeX = sx;
         Cinema3DView.sizeY = sy;
@@ -144,9 +163,6 @@ var Cinema3DView = {
         // world
 
 
-        var material = new THREE.MeshLambertMaterial({color: 0xffffff, shading: THREE.flatShading});
-
-
         Cinema3DView.raycaster = new THREE.Raycaster();
         Cinema3DView.mouse = new THREE.Vector2();
 
@@ -182,6 +198,23 @@ var Cinema3DView = {
 
         Cinema3DView.controls.center = new THREE.Vector3(0, 0, Cinema3DView.sizeY * Cinema3DView.offsetZ);
 
+
+        this.maxCount = 0;
+        seatsList.forEach(function (seatPos) {
+            if(seatPos.count!=null)
+            {
+                if(Cinema3DView.maxCount<seatPos.count)
+                {
+                    Cinema3DView.maxCount=seatPos.count;
+                }
+            }
+            else
+            {
+
+            }
+        });
+
+
         seatsList.forEach(function (seatPos) {
             Cinema3DView.placeSeat(seatPos);
         });
@@ -194,7 +227,7 @@ var Cinema3DView = {
          }*/
 
 
-        var step = new THREE.Mesh(new THREE.CubeGeometry(Cinema3DView.sizeX * (Cinema3DView.distanceX + 5), Cinema3DView.distanceY, Cinema3DView.distanceY), new THREE.MeshLambertMaterial({color: 0x555555}));
+        var step = new THREE.Mesh(new THREE.BoxGeometry(Cinema3DView.sizeX * (Cinema3DView.distanceX + 5), Cinema3DView.distanceY, Cinema3DView.distanceY), new THREE.MeshLambertMaterial({color: 0x555555}));
         var stepOffsetZ = -22;
         var stepOffsetY = 5;
         for (var j = 0; j <= Cinema3DView.sizeY; j++) {
@@ -205,13 +238,13 @@ var Cinema3DView = {
         }
 
 
-        var floor = new THREE.Mesh(new THREE.CubeGeometry(Cinema3DView.sizeX * (Cinema3DView.distanceX + 5), Cinema3DView.distanceY, Cinema3DView.sizeX * (Cinema3DView.distanceX + 5)), new THREE.MeshLambertMaterial({color: 0x555555}));
+        var floor = new THREE.Mesh(new THREE.BoxGeometry(Cinema3DView.sizeX * (Cinema3DView.distanceX + 5), Cinema3DView.distanceY, Cinema3DView.sizeX * (Cinema3DView.distanceX + 5)), new THREE.MeshLambertMaterial({color: 0x555555}));
         floor.position.y = (2 - Cinema3DView.sizeY * Cinema3DView.distanceY) / 2.0;
         floor.position.z = (Cinema3DView.sizeY * Cinema3DView.distanceY) - Cinema3DView.distanceY / 2;
         Cinema3DView.scene.add(floor);
 
         var screenSize = new THREE.Vector2(Cinema3DView.sizeX * Cinema3DView.distanceX * 0.9, Cinema3DView.sizeX * Cinema3DView.distanceX * 0.5);
-        var screen = new THREE.Mesh(new THREE.CubeGeometry(screenSize.x, screenSize.y, 0.001), new THREE.MeshLambertMaterial({color: 0xeeeeee}));
+        var screen = new THREE.Mesh(new THREE.BoxGeometry(screenSize.x, screenSize.y, 0.001), new THREE.MeshLambertMaterial({color: 0xeeeeee}));
         screen.position.y = 0;
         screen.position.z = (Cinema3DView.sizeY + 1) * Cinema3DView.distanceY;
         Cinema3DView.scene.add(screen);
@@ -245,23 +278,15 @@ var Cinema3DView = {
 
         var singleStand = new THREE.Object3D();
         var stand = new THREE.Object3D();
-        var foot = new THREE.Mesh(new THREE.CubeGeometry(footSize.x, footSize.y, footSize.z), standMaterial);
+        var foot = new THREE.Mesh(new THREE.BoxGeometry(footSize.x, footSize.y, footSize.z), standMaterial);
         foot.position.z += footSize.x / 2.0;
         foot.name = "metal";
 
-        var leg = new THREE.Mesh(new THREE.CubeGeometry(legSize.x, legSize.y, legSize.z), standMaterial);
+        var leg = new THREE.Mesh(new THREE.BoxGeometry(legSize.x, legSize.y, legSize.z), standMaterial);
 
         leg.position.z += 12;
         leg.name = "metal";
-        if (broken) {
-            foot.rotateX(Math.random() * rotation);
-            foot.rotateY(Math.random() * rotation);
-            foot.rotateZ(Math.random() * rotation);
 
-            leg.rotateX(Math.random() * rotation);
-            leg.rotateY(Math.random() * rotation);
-            leg.rotateZ(Math.random() * rotation);
-        }
 
 
         singleStand.add(foot);
@@ -278,8 +303,8 @@ var Cinema3DView = {
         var pillowSize = new THREE.Vector3(22, 33, 10);
         var backSize = new THREE.Vector3(26, 10, 42);
 
-        var pillow = new THREE.Mesh(new THREE.CubeGeometry(pillowSize.x, pillowSize.y, pillowSize.z), chairMaterial);
-        var back = new THREE.Mesh(new THREE.CubeGeometry(backSize.x, backSize.y, backSize.z), chairMaterial);
+        var pillow = new THREE.Mesh(new THREE.BoxGeometry(pillowSize.x, pillowSize.y, pillowSize.z), chairMaterial);
+        var back = new THREE.Mesh(new THREE.BoxGeometry(backSize.x, backSize.y, backSize.z), chairMaterial);
 
         pillow.position.z += 20;
         pillow.name = "cloth";
@@ -287,34 +312,26 @@ var Cinema3DView = {
         back.name = "cloth";
 
         var armSize = new THREE.Vector3(7, 22, 22);
-        var arm = new THREE.Mesh(new THREE.CubeGeometry(armSize.x, armSize.y, armSize.z), chairMaterial);
+        var arm = new THREE.Mesh(new THREE.BoxGeometry(armSize.x, armSize.y, armSize.z), chairMaterial);
         arm.position.z += 25;
         arm.position.x -= pillowSize.x / 2.0 +1 ;
         arm.position.y+=5;
 
         arm.name = "cloth";
 
-        var otherArm = new THREE.Mesh(new THREE.CubeGeometry(armSize.x, armSize.y, armSize.z), chairMaterial);
+        var otherArm = new THREE.Mesh(new THREE.BoxGeometry(armSize.x, armSize.y, armSize.z), chairMaterial);
         otherArm.position.x += 11+1;
         otherArm.position.z += 25;
         otherArm.position.y += 5;
 
         if (broken) {
-            back.rotateX(Math.random() * rotation);
-            back.rotateY(Math.random() * rotation);
-            back.rotateZ(Math.random() * rotation);
 
-            pillow.rotateX(Math.random() * rotation);
-            pillow.rotateY(Math.random() * rotation);
-            pillow.rotateZ(Math.random() * rotation);
+            back.rotateX(0.3);
+            back.position.y-=2;
 
-            arm.rotateX(Math.random() * rotation);
-            arm.rotateY(Math.random() * rotation);
-            arm.rotateZ(Math.random() * rotation);
 
-            otherArm.rotateX(Math.random() * rotation);
-            otherArm.rotateY(Math.random() * rotation);
-            otherArm.rotateZ(Math.random() * rotation);
+            pillow.rotateX(2.1);
+
         }
 
         back.position.y += (pillowSize.y - backSize.y) / 2.0;
@@ -346,17 +363,17 @@ var Cinema3DView = {
         var footColor = 0x666666;
         var chairColor = 0xcc1515;
 
-        var standMaterial = new THREE.MeshLambertMaterial({color: footColor, transparent: true, opacity: 0.8});
+        var standMaterial = new THREE.MeshLambertMaterial({color: footColor, transparent: true, opacity: 0.8,  shading: THREE.flatShading});
         var chairMaterial =  Materials.busySeatMaterial;
 
         Cinema3DView.busySeatMesh = Cinema3DView.computeSeat(standMaterial, chairMaterial, false);
     },
     computeBrokenSeatMesh: function () {
         var footColor = 0x666666;
-        var chairColor = 0xcc9900;
+        var chairColor = 0xcc9955;
 
-        var standMaterial = new THREE.MeshLambertMaterial({color: footColor, transparent: true, opacity: 0.9});
-        var chairMaterial = new THREE.MeshLambertMaterial({color: chairColor, transparent: true, opacity: 0.9});
+        var standMaterial = new THREE.MeshLambertMaterial({color: footColor, transparent: true, opacity: 0.9,  shading: THREE.flatShading});
+        var chairMaterial = new THREE.MeshLambertMaterial({color: chairColor, transparent: true, opacity: 0.9,  shading: THREE.flatShading});
 
         Cinema3DView.brokenSeatMesh = Cinema3DView.computeSeat(standMaterial, chairMaterial, true);
     },
@@ -371,33 +388,63 @@ var Cinema3DView = {
     },
     placeSeat: function (seatPos) {
         var singleChair;
-        var position = new THREE.Vector3(-10 + (Cinema3DView.sizeX * Cinema3DView.distanceX) / 2.0 - Cinema3DView.distanceX * seatPos.column, -Cinema3DView.offsetZ * seatPos.row + Cinema3DView.offsetZ * Cinema3DView.sizeY, (Cinema3DView.sizeY * Cinema3DView.distanceY) / 2.0 - Cinema3DView.distanceY * seatPos.row);
+        var position;
+        if(seatPos.column!=null) {
+            position = new THREE.Vector3(-10 + (Cinema3DView.sizeX * Cinema3DView.distanceX) / 2.0 - Cinema3DView.distanceX * seatPos.column, -Cinema3DView.offsetZ * seatPos.row + Cinema3DView.offsetZ * Cinema3DView.sizeY, (Cinema3DView.sizeY * Cinema3DView.distanceY) / 2.0 - Cinema3DView.distanceY * seatPos.row);
+        }
+        else if(seatPos.seat_column!=null)
+        {
+            position = new THREE.Vector3(-10 + (Cinema3DView.sizeX * Cinema3DView.distanceX) / 2.0 - Cinema3DView.distanceX * seatPos.seat_column, -Cinema3DView.offsetZ * seatPos.seat_row + Cinema3DView.offsetZ * Cinema3DView.sizeY, (Cinema3DView.sizeY * Cinema3DView.distanceY) / 2.0 - Cinema3DView.distanceY * seatPos.seat_row);
+        }
+        else
+        {
+            console.log(seatPos);
+        }
+        if(seatPos.status!=null) {
+            if (seatPos.status == Cinema3DView.freeStatus) {
+                singleChair = Cinema3DView.freeSeatMesh.clone();
+                Cinema3DView.seatMap[singleChair.uuid] = {status: 0, x: seatPos.column, y: seatPos.row};
+                singleChair.position.set(position.x, position.y, position.z);
+                singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
+                singleChair.children.forEach(function (i) {
+                    if (i.name == "chair") {
+                        i.children.forEach(function (j) {
+                            Cinema3DView.seats.push(j);
+                        });
+                    }
+                });
+            }
+            else if (seatPos.status == Cinema3DView.reservedStatus) {
+                singleChair = Cinema3DView.busySeatMesh.clone();
+                singleChair.position.set(position.x, position.y, position.z);
+                singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
+            }
+            else if (seatPos.status == Cinema3DView.brokenStatus) {
+                singleChair = Cinema3DView.brokenSeatMesh.clone();
+                singleChair.position.set(position.x, position.y, position.z);
+                singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
+            }
+            else {
+                return;
+            }
+        }
+        else if(seatPos.count!=null)
+        {
 
-        if (seatPos.status == Cinema3DView.freeStatus) {
             singleChair = Cinema3DView.freeSeatMesh.clone();
-            Cinema3DView.seatMap[singleChair.uuid] = {status: 0, x: seatPos.column, y: seatPos.row};
             singleChair.position.set(position.x, position.y, position.z);
             singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
             singleChair.children.forEach(function (i) {
                 if (i.name == "chair") {
                     i.children.forEach(function (j) {
-                        Cinema3DView.seats.push(j);
+                        var material = Materials.freeChair.clone();
+                        material.color.r=0;
+                        material.color.g=(seatPos.count/Cinema3DView.maxCount)*2-1;
+                        material.color.b=0x00;
+                        j.material = material;
                     });
                 }
             });
-        }
-        else if (seatPos.status == Cinema3DView.reservedStatus) {
-            singleChair = Cinema3DView.busySeatMesh.clone();
-            singleChair.position.set(position.x, position.y, position.z);
-            singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
-        }
-        else if (seatPos.status == Cinema3DView.brokenStatus) {
-            singleChair = Cinema3DView.brokenSeatMesh.clone();
-            singleChair.position.set(position.x, position.y, position.z);
-            singleChair.rotation.set(-Math.PI / 2.0, 0, 0);
-        }
-        else {
-            return;
         }
 
         Cinema3DView.scene.add(singleChair);
@@ -477,6 +524,8 @@ var Cinema3DView = {
     onMouseDown: function (event) {
         //console.log(Cinema3DView.camera.position);
         //console.log(Cinema3DView.camera.rotation);
+        Cinema3DView.removeHover();
+
         event.preventDefault();
         if (Cinema3DView.leftClick == false) {
             if (event.button == 0) {
@@ -531,7 +580,6 @@ var Cinema3DView = {
 
             }
         }
-
         Cinema3DView.leftClick = false;
     },
     selectChair: function (clicked) {

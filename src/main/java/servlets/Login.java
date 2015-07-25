@@ -14,7 +14,6 @@ import org.apache.ibatis.session.SqlSession;
 import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
-import utilities.InputValidator.ModelValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 /**
  * Servlet che gestisce il login degli utenti. Risponde a richieste POST in cui viene inviato un Json contenente l'username e

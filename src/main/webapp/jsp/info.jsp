@@ -13,13 +13,7 @@
     <c:import url="/jsp/layout/header.jsp"/>
     <div id="content" class="text-center row">
         <div class="row">
-            <h3>Let's Moovie - Informazioni generali</h3>
-
-            <div class="medium-6 columns">
-                <p>
-                    Ecco alcune informazioni su di noi che potrebbero servirti:
-                </p>
-            </div>
+            <h3>Informazioni generali</h3>
         </div>
         <div class="medium-4 columns">
             <div class="panel callout radious">

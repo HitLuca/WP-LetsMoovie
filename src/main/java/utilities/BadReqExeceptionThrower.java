@@ -1,7 +1,8 @@
 package utilities;
 
-import json.adminFunctions.request.DeleteReservationRequest;
 import database.datatypes.film.FilmData;
+import database.datatypes.show.ShowTime;
+import json.adminFunctions.request.DeleteReservationRequest;
 import types.enums.ErrorCode;
 import types.enums.Role;
 import types.exceptions.BadRequestException;
@@ -11,6 +12,8 @@ import utilities.InputValidator.ModelValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -73,7 +76,7 @@ public class BadReqExeceptionThrower {
             if (((List) mapped).size() == 0 && (int) session.getAttribute("role") != Role.USER.getValue())
                 throw new BadRequestException(ErrorCode.USER_NOT_FOUND);
         } else if (mapped instanceof String) {
-            if (((String) mapped).equals("") && (int) session.getAttribute("role") != Role.USER.getValue())
+            if (mapped.equals("") && (int) session.getAttribute("role") != Role.USER.getValue())
                 throw new BadRequestException(ErrorCode.USER_NOT_FOUND);
         }
     }
@@ -171,5 +174,19 @@ public class BadReqExeceptionThrower {
         if (o == null) {
             throw new BadRequestException(ErrorCode.FILM_NOT_FOUND);
         }
+    }
+
+    public static void checkShowIsPassed(ShowTime time) throws BadRequestException {
+
+        //Se lo spettacolo era ieri
+        if (time.getLocalDate().isBefore(LocalDate.now()))
+            throw new BadRequestException(ErrorCode.END_OF_TIME);
+
+        //Se lo spettacolo era un ora fa
+        if (time.getLocalDate().isEqual(LocalDate.now()))
+            if (time.getLocalTime().isBefore(LocalTime.now()))
+                throw new BadRequestException(ErrorCode.END_OF_TIME);
+
+
     }
 }

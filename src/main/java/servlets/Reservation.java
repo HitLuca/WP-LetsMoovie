@@ -5,18 +5,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
+import database.datatypes.show.ShowTime;
 import database.mappers.NotDecidedMapper;
-import database.mappers.UserMapper;
+import database.mappers.ShowMapper;
 import json.OperationResult;
 import json.reservation.request.ReservationRequest;
 import json.reservation.response.ReservationDetail;
 import json.reservation.response.SuccessfullReservation;
 import org.apache.ibatis.session.SqlSession;
-import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
-import types.exceptions.BadRequestExceptionWithParameters;
 import utilities.BadReqExeceptionThrower;
-import utilities.InputValidator.ModelValidator;
 import utilities.RestUrlMatcher;
 import utilities.reservation.TemporaryReservationManager;
 
@@ -27,8 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 /**
  * INVALID_RESERVATION
@@ -51,8 +47,7 @@ public class Reservation extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        SqlSession sessionSql;
-        sessionSql = DatabaseConnection.getFactory().openSession();
+        SqlSession sessionSql = DatabaseConnection.getFactory().openSession();
         response.setContentType("application/json");
 
         OperationResult result;
@@ -63,12 +58,22 @@ public class Reservation extends HttpServlet {
         */
 
         try {
-            BadReqExeceptionThrower.checkUserLogged(request);
+            //BadReqExeceptionThrower.checkUserLogged(request);
+
+            /*BufferedReader reader = request.getReader();
+            String read;
+            while ((read = reader.readLine())!= null )
+                System.out.println(read);*/
+
             ReservationRequest rr = gsonReader.fromJson(request.getReader(), ReservationRequest.class);
 
             BadReqExeceptionThrower.checkNullInput(rr);
 
             BadReqExeceptionThrower.checkRegex(rr);
+
+            ShowMapper showMapper = sessionSql.getMapper(ShowMapper.class);
+            ShowTime st = showMapper.getShowTime(rr.getIntIdShow());
+            BadReqExeceptionThrower.checkShowIsPassed(st);
 
             //Lancia ErrorCode:INVALID_RESERVATION
             result = new SuccessfullReservation(temporaryResManager.addReservationRequest(rr, sessionSql));
@@ -141,7 +146,7 @@ public class Reservation extends HttpServlet {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.disableHtmlEscaping().create();
-        gsonReader = new Gson();
+        gsonReader = new GsonBuilder().disableHtmlEscaping().create();
         temporaryResManager = new TemporaryReservationManager();
     }
 }

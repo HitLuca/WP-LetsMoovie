@@ -9,7 +9,7 @@
     <c:import url="/jsp/layout/header.jsp"/>
 
     <div class="content">
-        <div id="test" style="height:70% ; width:90%"></div>
+        <div id="test" style="height:70vh ; width:90%"></div>
     </div>
     <div class="push"></div>
 
@@ -45,11 +45,11 @@
 
     $("#test").on("onSeatAdd",function(e,x,y){
         alert("hai aggiunto il posto in fila "+y+" e colonna "+x);
-    })
+    });
 
     $("#test").on("onRemoveAdd",function(e,x,y){
         alert("hai rimosso il posto in fila "+y+" e colonna "+x);
-    })
+    });
 
     Cinema3DView.init(document.getElementById('test'), sl, 17, 17);
 

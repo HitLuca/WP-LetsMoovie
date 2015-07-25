@@ -1,7 +1,6 @@
 package json.showRoom;
 
 import com.google.gson.annotations.Expose;
-import types.enums.SeatStatus;
 
 /**
  * Created by etrunon on 14/07/15.

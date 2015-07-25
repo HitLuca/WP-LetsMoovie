@@ -107,14 +107,18 @@
                     <span id="paymentCard"></span>
                 </div>
                 <div class="small-6 columns">
-                    <button class="round tiny secondary" id="rimuoviCarta">Non usare questa carta</button>
+                    <button class="tiny secondary" id="rimuoviCarta">Non usare questa carta</button>
                 </div>
             </div>
 
             <div class="row">
                 <div class="medium-12 text-center columns">
                     <%--TODO: LADDA BUTTON--%>
-                    <button id="confermaPagamento" class="radius success">Conferma pagamento</button>
+                        <button id="confermaPagamento" class="radius success ladda-button" data-style="zoom-out">
+                        <span class="ladda-label">
+                        Conferma pagamento
+                        </span>
+                        </button>
                 </div>
             </div>
         </div>

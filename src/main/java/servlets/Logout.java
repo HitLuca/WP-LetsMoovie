@@ -3,7 +3,6 @@ package servlets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import json.OperationResult;
-import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 

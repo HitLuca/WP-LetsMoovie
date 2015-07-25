@@ -1,6 +1,5 @@
 package json.film;
 
-import com.google.gson.annotations.Expose;
 import database.datatypes.film.FilmData;
 
 /**

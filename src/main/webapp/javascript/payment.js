@@ -91,6 +91,7 @@ var Payment = {
         $("#confermaPagamento").on("click", Payment.sendPayment);
     },
     sendPayment: function () {
+        var button = $("#confermaPagamento");
         var data = {
             code: Payment.id,
             credit_card_number: CreditCard.selected ? CreditCard.selected : null
@@ -99,10 +100,20 @@ var Payment = {
             url: Payment.url,
             method: "POST",
             data: JSON.stringify(data),
-            type: "json"
+            type: "json",
+            contentType: "application/json; charset=UTF-8"
         });
+        button.attr("disabled", '');
+        if (button.hasClass("ladda-button")) {
+            Payment.l = Ladda.create(button[0]);
+            Payment.l.start();
+        }
         request.done(Payment.successPayment);
         request.fail(Payment.errorPayment);
+        request.always(function () {
+            button.removeAttr("disabled");
+            Payment.l.stop();
+        });
     },
     successPayment: function (data) {
         alertify.success("Il pagamento è andato a buon fine!");

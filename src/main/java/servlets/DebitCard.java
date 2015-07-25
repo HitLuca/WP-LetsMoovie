@@ -9,7 +9,6 @@ import database.mappers.UserMapper;
 import json.OperationResult;
 import json.debitCards.DebitCardResponse;
 import org.apache.ibatis.session.SqlSession;
-import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;

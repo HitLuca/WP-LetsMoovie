@@ -24,6 +24,8 @@ public class PastPayment {
     private String film_title;
     @Expose
     private List<SingleSeatPaid> seatsPaid;
+    @Expose
+    private float total;
 
     public PastPayment(CompletePayments c, UserMapper userMapper, String username) {
 
@@ -35,9 +37,14 @@ public class PastPayment {
 
         List<UserPayment> up = userMapper.getUserPayments(payment_date, payment_time, username);
 
+        float x = 0;
+
         for (UserPayment u : up) {
             seatsPaid.add(new SingleSeatPaid(u));
+            x += u.getPrice();
         }
+
+        total = x;
 
     }
 }
