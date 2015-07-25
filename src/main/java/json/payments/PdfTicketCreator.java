@@ -145,7 +145,8 @@ public class PdfTicketCreator {
     private void addImage(float posX, float posY, String imagePath, PDDocument document, PDPageContentStream cos, float scale) {
         try {
 
-            File image = new File(imagePath);
+//            File image = new File(imagePath);
+            InputStream image = new FileInputStream(imagePath);
 
             BufferedImage bi = ImageIO.read(image);
             PDXObjectImage ximage = new PDJpeg(document, bi);
