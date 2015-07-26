@@ -14,16 +14,14 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** Classe che permette di generare i pdf contenenti i biglietti
  * Created by etrunon on 23/07/15.
  */
 public class PdfTicketCreator {
 
-    PDRectangle rect;
-    int line = 0;
+    private PDRectangle rect;
     private PDFont fontPlain;
 
     public ByteArrayOutputStream createPdf(List<TicketData> ticketData, ServletContext context) throws Exception {
@@ -42,8 +40,6 @@ public class PdfTicketCreator {
 
         // Create a new font object selecting one of the PDF base fonts
         fontPlain = PDType1Font.HELVETICA;
-        PDFont fontBold = PDType1Font.HELVETICA_BOLD;
-        PDFont fontItalic = PDType1Font.HELVETICA_OBLIQUE;
 
         // Start a new content stream which will "hold" the to be created content
         PDPageContentStream cos = new PDPageContentStream(document, page1);
@@ -63,7 +59,8 @@ public class PdfTicketCreator {
 
         for (int j = 0; j < ticketData.size(); j++) {
             if (j % 7 == 6) {
-                // Make sure that the content stream is closed:
+                cos.drawLine(posX - 30, posY + 30, posX + 470, posY + 30);
+
                 cos.close();
                 PDPage page2 = new PDPage(PDPage.PAGE_SIZE_A4);
                 document.addPage(page2);
@@ -74,6 +71,8 @@ public class PdfTicketCreator {
             printTicket(posX, posY, document, cos, ticketData.get(j));
             posY -= intraTicket;
         }
+        //Ultima linea orizzontale
+        cos.drawLine(posX - 30, posY + 30, posX + 470, posY + 30);
 
         // close the content stream for page 2
         cos.close();
@@ -113,7 +112,7 @@ public class PdfTicketCreator {
             cos.drawXObject(ximage, posX, posY, ximage.getWidth() * scale, ximage.getHeight() * scale);
 
         } catch (FileNotFoundException fnfex) {
-            System.out.println("No QRCode for you");
+            System.out.println("No Image for you");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -149,7 +148,7 @@ public class PdfTicketCreator {
         cos.beginText();
         cos.setFont(fontPlain, 10);
         cos.moveTextPositionByAmount(relX, relY);
-        cos.drawString("Email: info@lets-moovie.tk");
+        cos.drawString("Indirizzo: Via Prato Bovino 2, Castelnovo di Sotto RE");
         cos.endText();
 
     }
@@ -159,7 +158,9 @@ public class PdfTicketCreator {
         float relX = posX, relY = posY;
         float lineHeight = 18;
 
+        //orizzontale
         cos.drawLine(relX - 30, relY + 30, relX + 470, relY + 30);
+        //verticali
         cos.drawLine(relX - 30, relY + 25, relX - 30, relY - 65);
         cos.drawLine(relX + 470, relY + 25, relX + 470, relY - 65);
 
@@ -175,7 +176,7 @@ public class PdfTicketCreator {
         cos.beginText();
         cos.setFont(fontPlain, 10);
         cos.moveTextPositionByAmount(relX, relY);
-        cos.drawString("Proiezione: " + td.getDate() + "   Ora: " + td.getTime());
+        cos.drawString("Proiezione: " + td.getShowDate() + "   Ora: " + td.getShowTime());
         cos.endText();
 
         relY -= lineHeight;
@@ -186,8 +187,17 @@ public class PdfTicketCreator {
         cos.drawString("Fila: " + td.getS_row() + "   Colonna: " + td.getS_column());
         cos.endText();
 
-        String newCode = td.getUsername() + " Riga: " + td.getS_row() + " Colonna: " + td.getS_column() + " Code: " + td.getCode();
-        addQrCode(posX + 350, relY - 30, newCode, document, cos, 0.8f);
+        relY -= lineHeight;
+
+        cos.beginText();
+        cos.setFont(fontPlain, 10);
+        cos.moveTextPositionByAmount(relX, relY);
+        cos.drawString("Biglietto: " + td.getTicketType() + "   Prezzo: " + td.getPrice());
+        cos.endText();
+
+        //codice:  sala,prezzo,tipo biglietto,film,data e ora
+        String newCode = td.getShowRoom() + " " + td.getTicketType() + " " + td.getPrice() + " " + td.getFilm_title() + " " + td.getShowDate() + " " + td.getShowTime();
+        addQrCode(posX + 350, relY, newCode, document, cos, 0.6f);
 
     }
 }

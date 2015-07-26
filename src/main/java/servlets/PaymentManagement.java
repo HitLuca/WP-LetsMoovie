@@ -134,7 +134,7 @@ public class PaymentManagement extends HttpServlet {
                 payment.setCode(paymentRequest.getCode());
                 userMapper.insertPayment(payment);
 
-                TicketData td = new TicketData(payment, sr, film_name.getFilm_title());
+                TicketData td = new TicketData(payment, sr, film_name.getFilm_title(), notDecidedMapper, showMapper);
                 ticketDatas.add(td);
 
             }
