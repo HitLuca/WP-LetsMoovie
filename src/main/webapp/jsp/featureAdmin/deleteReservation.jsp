@@ -23,7 +23,7 @@
                             <div class="small-10 medium-7 large-5 small-centered columns">
                                 <div class="row collapse">
                                     <div class="small-8 columns">
-                                        <input type="text" name="code">
+                                        <input type="text" name="code" id="sentCode">
                                     </div>
                                     <div class="small-4 columns">
                                         <button class="button ladda-button postfix" data-style="zoom-out">
@@ -39,6 +39,7 @@
                 </div>
             </div>
             <form action="/api/admin/deleteReservation" id="cancellaPrenotazione">
+                <input id="reservationCode" type="hidden" name="code">
                 <div class="row">
                     <div id="listaTickets" class="large-12 columns">
                         <h4>Posti relativi alla prenotazione selezionata</h4>

@@ -282,7 +282,7 @@ public class AdminFunctions extends HttpServlet {
                         float totalRefund = 0f;
                         float refoundPercentage = 0.8f;
                         for (SeatDetailRequest sdr : seatDetailRequests) {
-                            if (sdr.isChecked()) {
+                            if (sdr.isChecked().equals("true")) {
                                 float ticket_price = Float.parseFloat(sdr.getPrice());
                                 int room_number = showMapper.getRoomNumberFromCode(code);
                                 int id_seat = seatMapper.getIdSeat(room_number, Integer.parseInt(sdr.getS_row()), Integer.parseInt(sdr.getS_column()));
