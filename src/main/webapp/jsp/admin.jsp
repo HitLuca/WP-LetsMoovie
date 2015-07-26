@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <c:url var="url" value="/jsp/layout/head.jsp">
-    <c:param name="title" value="Area Utente"/>
+    <c:param name="title" value="Area Amministratore"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
