@@ -13,6 +13,7 @@ import json.reservation.request.ReservationRequest;
 import json.reservation.response.ReservationDetail;
 import json.reservation.response.SuccessfullReservation;
 import org.apache.ibatis.session.SqlSession;
+import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
@@ -27,8 +28,38 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * INVALID_RESERVATION
- * Created by marco on 17/07/15.
+ * @api {post} /api/reservation/*
+ * @apiName Reservation
+ * @apiGroup Reservation
+ *
+ * @apiParam {String} show l'id dello show in questione
+ * @apiParam {SeatReservation[]} seats la lista di posti selezionati ognuno associato al tipo di biglietto relativo
+ *
+ * @apiSuccess {String} reservationCode il codice relativo alla prenotazione
+ *
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (1) {int} errorCode EMPTY_REQ: richiesta vuota
+ * @apiError (2) {String[]} errorCode EMPTY_WRONG_FIELD: invalidParameters parametri invalidi
+ * @apiError (8) {String[]} errorCode NOT_AUTHORIZED: L'utente non è autorizzato a visualizzare i dati
+ * @apiError (14) {int} errorCode END_OF_TIME: lo show è già iniziato
+ *
+ */
+
+/**
+ * @api {get} /api/reservation/:reservationCode Ottiene informazioni sulla prenotazione associata al codice
+ * @apiName Reservation
+ * @apiGroup Reservation
+ *
+ *
+ * @apiSuccess {int} id_show l'id dello show
+ * @apiSuccess {float} totalPrice il totale da pagare
+ * @apiSuccess {ReservedSeatResponse[]} seatList la lista dei posti associata
+ *
+ *
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (8) {String[]} errorCode NOT_AUTHORIZED: L'utente non è autorizzato a visualizzare i dati
+ * @apiError (14) {int} errorCode END_OF_TIME: lo show è già iniziato
+ *
  */
 @WebServlet(name = "Reservation", urlPatterns = "/api/reservation/*")
 public class Reservation extends HttpServlet {
@@ -51,7 +82,6 @@ public class Reservation extends HttpServlet {
         response.setContentType("application/json");
 
         OperationResult result;
-
         /*riceviamo un oggetto di tipo ReservationRequest da parsare da JSON
         chiami la TemporaryReservationManager.add(reservationRequest) che tira eventualmente eccezioni e restituisce il codice della
          registrazione temporanea
