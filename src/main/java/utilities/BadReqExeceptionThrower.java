@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -196,15 +197,19 @@ public class BadReqExeceptionThrower {
                 throw new BadRequestException(ErrorCode.END_OF_TIME);
     }
 
-    public static void checkTime(String payment_date, String payment_time, String todayDate, String todayTime) throws BadRequestException {
-        if (Date.valueOf(payment_date).before(Date.valueOf(todayDate))) {
+    public static void checkTime(String showDate, String showTime) throws BadRequestException {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        String todayDate = LocalDate.now().format(dateFormatter);
+        String todayTime = LocalTime.now().format(timeFormatter);
+
+        if (Date.valueOf(showDate).before(Date.valueOf(todayDate))) {
             throw new BadRequestException(ErrorCode.BACK_IN_TIME);
-        } else if (Date.valueOf(payment_date).equals(Date.valueOf(todayDate))) {
-            if (Time.valueOf(payment_time).before(Time.valueOf(todayTime))) {
+        } else if (Date.valueOf(showDate).equals(Date.valueOf(todayDate))) {
+            if (Time.valueOf(todayTime).before(Time.valueOf(todayTime))) {
                 throw new BadRequestException(ErrorCode.BACK_IN_TIME);
             }
-        } else {
-
         }
     }
 }

@@ -157,6 +157,8 @@ public class AdminFunctions extends HttpServlet {
                             }
                         }
                     }
+                    outputStream.print("{}");
+                    sessionSql.close();
                     break;
                 }
                 //NON UTILIZZATO
@@ -335,17 +337,14 @@ public class AdminFunctions extends HttpServlet {
 
                     BadReqExeceptionThrower.checkDeleteReservation(deleteReservationRequest);
 
-                    LocalDateTime localDateTime = LocalDateTime.now();
+                    Show show = showMapper.getShowData(userMapper.getPaymentFromCode(code).get(0).getId_show());
 
-                    String todayDate = localDateTime.format(dateFormatter);
-                    String todayTime = localDateTime.format(timeFormatter);
+                    String showDate = show.getShow_date();
+                    String showTime = show.getShow_time();
 
                     List<Payment> payments = userMapper.getPaymentFromCode(code);
 
-                    String payment_date = payments.get(0).getPayment_date();
-                    String payment_time = payments.get(0).getPayment_time();
-
-                    BadReqExeceptionThrower.checkTime(payment_date, payment_time, todayDate, todayTime);
+                    BadReqExeceptionThrower.checkTime(showDate, showTime);
 
                     if (seatDetailRequests != null) {
                         for (SeatDetailRequest sdr : seatDetailRequests) {
@@ -381,7 +380,7 @@ public class AdminFunctions extends HttpServlet {
                         String name = userData.getName();
                         String surname = userData.getSurname();
                         String email = userData.getEmail();
-                        sendEmail(email, name, surname, payments.get(0), seatDetailRequests, userMapper, film_title, refoundPercentage);
+                        sendEmail(email, name, surname, payments.get(0), seatDetailRequests, userMapper, film_title, 80f);
                     } else if (seatDetailRequests == null && !code.equals("")) {
                         String username = payments.get(0).getUsername();
                         int id_show = payments.get(0).getId_show();
@@ -437,7 +436,7 @@ public class AdminFunctions extends HttpServlet {
         for (SeatDetailRequest sdr : seats) {
             if (sdr.getChecked() != null) {
                 if (sdr.getChecked().equals("true")) {
-                    message += "Fila: " + (sdr.getS_row() + 1) + "<br>Posto: " + (sdr.getS_column() + 1) + "<br>Tipo biglietto: " + sdr.getTicket_type() + "<br>Prezzo: Euro " + sdr.getPrice() + "<br><br>";
+                    message += "Fila: " + (Integer.parseInt(sdr.getS_row()) + 1) + "<br>Posto: " + (Integer.parseInt(sdr.getS_column()) + 1) + "<br>Tipo biglietto: " + sdr.getTicket_type() + "<br>Prezzo: Euro " + sdr.getPrice() + "<br><br>";
                 }
             }
         }
