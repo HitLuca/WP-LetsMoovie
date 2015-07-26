@@ -1,6 +1,7 @@
 package utilities.reservation;
 
 import database.datatypes.seat.Seat;
+import database.mappers.NotDecidedMapper;
 import database.mappers.SeatMapper;
 import database.mappers.ShowMapper;
 import json.reservation.request.ReservationRequest;
@@ -19,7 +20,7 @@ import java.util.concurrent.Semaphore;
  */
 public class ReservationCleanerThread extends Thread{
     private final long CLEANROUTINETIME = 60 * 10;
-    private final int RESERVATION_CODE_SIZE = 20;
+    private final int RESERVATION_CODE_SIZE = 17;
     int reservationIndex;
     private Map<String,TemporaryReservationRequest> pendingReservations;
     private Semaphore mutex;
@@ -77,9 +78,15 @@ public class ReservationCleanerThread extends Thread{
                 }
             }
 
-            reservationCode = reservationIndex + RandomStringUtils.randomAlphanumeric(RESERVATION_CODE_SIZE);
+            NotDecidedMapper notDecidedMapper = session.getMapper(NotDecidedMapper.class);
+            reservationCode = RandomStringUtils.randomAlphanumeric(RESERVATION_CODE_SIZE);
+
+            while(notDecidedMapper.checkDoubleCode(reservationCode)!=null)
+            {
+                reservationCode = RandomStringUtils.randomAlphanumeric(RESERVATION_CODE_SIZE);
+            }
+
             pendingReservations.put(reservationCode,reservation);
-            reservationIndex++;
             mutex.release();
             noRequest.release();
         } catch (InterruptedException e) {
