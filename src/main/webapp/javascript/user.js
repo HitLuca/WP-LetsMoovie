@@ -57,10 +57,37 @@ var Cards = {
     }
 };
 var Payments = {
+    format: function (d) {
+        var string = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;width:100%">';
+        string += '<tr>' +
+            '<th>' + 'Tipologia' + '</th>' +
+            '<th>' + 'Prezzo' + '</th>' +
+            '<th>' + 'Fila' + '</th>' +
+            '<th>' + 'Posto' + '</th>' +
+            '</tr>';
+        // `d` is the original data object for the row
+        d.seatsPaid.forEach(function (paid) {
+            string += '<tr>' +
+                '<td>' + paid.ticket_type + '</td>' +
+                '<td>' + numeral(paid.price).format('0,0.00 $') + '</td>' +
+                '<td>' + paid.s_row + '</td>' +
+                '<td>' + paid.s_column + '</td>' +
+                '</tr>';
+        });
+
+        string += '</table>';
+        return string;
+    },
     url: "/api/historyPayments/",
     table: $("#storico").DataTable({
         columns: [
-            {data: "payment_date"},
+            {
+                "className": 'details-control',
+                "orderable": false,
+                "data": null,
+                "defaultContent": ''
+            },
+            {data: "code"},
             {data: "film_title"},
             {
                 data: "payment_date", render: function (data, type) {
@@ -86,7 +113,8 @@ var Payments = {
                 return data;
             }
             }
-        ]
+        ],
+        order: [[1, 'asc']]
     }),
     getPayaments: function () {
         var request = $.ajax({
@@ -97,6 +125,21 @@ var Payments = {
     },
     addData: function (data) {
         Payments.table.rows.add(data.pastPaymentList).draw();
+        $('#storico tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = Payments.table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child(Payments.format(row.data())).show();
+                tr.addClass('shown');
+            }
+        });
     }
 };
 

@@ -102,12 +102,12 @@
                             <table id="storico" class="display" role="grid" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>ID Prenotazione</th>
+                                    <th></th>
+                                    <th>Codice Prenotazione</th>
                                     <th>Film</th>
                                     <th>Data</th>
                                     <th>Ora</th>
                                     <th>Prezzo</th>
-                                    <%--TODO MANCA TOTALE PAGATO--%>
                                 </tr>
 
                                 </thead>
