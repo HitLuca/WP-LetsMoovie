@@ -68,7 +68,7 @@ var ChangedSeats = {
         posto.attr("data-coordinate", "" + x + "" + y);
         posto.find("#s_row").removeAttr("disabled").val(x);
         posto.find("#s_column").removeAttr("disabled").val(y);
-        alertify.success("Selezionato posto alla colonna " + (1 + x) + " fila " + (1 + y));
+        alertify.success("Selezionato posto alla fila " + (1 + x) + " colonna " + (1 + y));
         ChangedSeats.posto.after(posto);
 
     },
