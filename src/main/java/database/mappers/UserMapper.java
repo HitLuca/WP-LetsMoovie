@@ -117,7 +117,7 @@ public interface UserMapper {
      * @param username username dell'utente
      * @return lista di dettagli dei pagamenti di username
      */
-    @Select("SELECT DISTINCT payment_date, payment_time, room_number, film_title " +
+    @Select("SELECT DISTINCT payment_date, payment_time, room_number, film_title, code " +
             "FROM payments NATURAL JOIN seats NATURAL JOIN films NATURAL JOIN shows " +
             "WHERE username=#{username} " +
             "ORDER BY payment_date, payment_time")

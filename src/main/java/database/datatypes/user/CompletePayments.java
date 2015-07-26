@@ -11,6 +11,9 @@ import java.util.List;
 public class CompletePayments implements OperationResult {
 
     @Expose
+    private String code;
+
+    @Expose
     private String payment_date;
     @Expose
     private String payment_time;
@@ -20,6 +23,15 @@ public class CompletePayments implements OperationResult {
     private String film_title;
     @Expose
     private List<UserPayment> payments;
+
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getPayment_date() {
         return payment_date;

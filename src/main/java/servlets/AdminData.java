@@ -34,7 +34,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by etrunon on 22/07/15.
+ * @api {get} /api/adminData
+ * @apiName AdminData
+ * @apiGroup AdminData
+ *
+ *  @apiParam getShows
+ *  @apiParam getRooms
+ *  @apiParam getReservationDetails
+ *  @apiParam getFilmList
+ *
+ * @apiSuccess {Result} result il risultato della richiesta specifica
+ *
+ * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
+ * @apiError (1) {int} errorCode EMPTY_REQ: richiesta vuota
+ * @apiError (2) {String[]} errorCode EMPTY_WRONG_FIELD: invalidParameters parametri invalidi
+ * @apiError (8) {String[]} errorCode NOT_AUTHORIZED: L'utente non è autorizzato a visualizzare i dati
+ *
  */
 @WebServlet(name = "AdminData", urlPatterns = "/api/adminData/*")
 public class AdminData extends HttpServlet {

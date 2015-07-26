@@ -13,7 +13,6 @@ import json.reservation.request.ReservationRequest;
 import json.reservation.response.ReservationDetail;
 import json.reservation.response.SuccessfullReservation;
 import org.apache.ibatis.session.SqlSession;
-import types.enums.ErrorCode;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.RestUrlMatcher;
@@ -82,6 +81,7 @@ public class Reservation extends HttpServlet {
         response.setContentType("application/json");
 
         OperationResult result;
+
         /*riceviamo un oggetto di tipo ReservationRequest da parsare da JSON
         chiami la TemporaryReservationManager.add(reservationRequest) che tira eventualmente eccezioni e restituisce il codice della
          registrazione temporanea

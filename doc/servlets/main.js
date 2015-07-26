@@ -1,15 +1,15 @@
 require.config({
     paths: {
-        bootstrap: 'vendor/bootstrap.min',
-        diffMatchPatch: 'vendor/diff_match_patch.min',
-        handlebars: 'vendor/handlebars.min',
-        handlebarsExtended: 'utils/handlebars_helper',
-        jquery: 'vendor/jquery.min',
-        locales: 'locales/locale',
-        lodash: 'vendor/lodash.min',
-        pathToRegexp: 'vendor/path-to-regexp/index',
-        prettify: 'vendor/prettify/prettify',
-        utilsSampleRequest: 'utils/send_sample_request',
+        bootstrap: './vendor/bootstrap.min',
+        diffMatchPatch: './vendor/diff_match_patch.min',
+        handlebars: './vendor/handlebars.min',
+        handlebarsExtended: './utils/handlebars_helper',
+        jquery: './vendor/jquery.min',
+        locales: './locales/locale',
+        lodash: './vendor/lodash.min',
+        pathToRegexp: './vendor/path-to-regexp/index',
+        prettify: './vendor/prettify/prettify',
+        utilsSampleRequest: './utils/send_sample_request',
     },
     shim: {
         bootstrap: {
@@ -432,7 +432,7 @@ require([
         });
 
         initDynamic();
-
+        return;
     });
 
     // compare all article with their predecessor
@@ -637,7 +637,7 @@ require([
         $('#sidenav li[data-group=\'' + group + '\'][data-name=\'' + name + '\'][data-version=\'' + version + '\']').removeClass('has-modifications');
 
         $root.remove();
-
+        return;
     }
 
     /**

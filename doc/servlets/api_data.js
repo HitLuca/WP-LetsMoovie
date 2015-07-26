@@ -1,10 +1,103 @@
 define({ "api": [
   {
     "type": "get",
+    "url": "/api/adminData",
+    "title": "",
+    "name": "AdminData",
+    "group": "AdminData",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "getShows",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "getRooms",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "getReservationDetails",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "getFilmList",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "<p>Result</p> ",
+            "optional": false,
+            "field": "result",
+            "description": "<p>il risultato della richiesta specifica</p> "
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "0": [
+          {
+            "group": "0",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet</p> "
+          }
+        ],
+        "1": [
+          {
+            "group": "1",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>EMPTY_REQ: richiesta vuota</p> "
+          }
+        ],
+        "2": [
+          {
+            "group": "2",
+            "type": "<p>String[]</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>EMPTY_WRONG_FIELD: invalidParameters parametri invalidi</p> "
+          }
+        ],
+        "8": [
+          {
+            "group": "8",
+            "type": "<p>String[]</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>NOT_AUTHORIZED: L'utente non è autorizzato a visualizzare i dati</p> "
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/servlets/AdminData.java",
+    "groupTitle": "AdminData"
+  },
+  {
+    "type": "get",
     "url": "/api/filmDay/*",
     "title": "",
     "name": "FilmDay",
-    "group": "Film",
+    "group": "FilmAndShows",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -55,14 +148,14 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "src/main/java/servlets/FilmDay.java",
-    "groupTitle": "Film"
+    "groupTitle": "FilmAndShows"
   },
   {
     "type": "get",
     "url": "/api/film/*",
     "title": "",
     "name": "FilmSingolo",
-    "group": "Film",
+    "group": "FilmAndShows",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -81,7 +174,7 @@ define({ "api": [
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "<p>Film</p> ",
+            "type": "<p>FilmAndShows</p> ",
             "optional": false,
             "field": "Oggetto",
             "description": "<p>contenente tutti i dati del film degli spettacoli relativi a quel film in quella giornata con data, orario e codice spettacolo.</p> "
@@ -122,14 +215,14 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "src/main/java/servlets/FilmSingolo.java",
-    "groupTitle": "Film"
+    "groupTitle": "FilmAndShows"
   },
   {
     "type": "get",
     "url": "/api/filmWeek",
     "title": "",
     "name": "FilmWeek",
-    "group": "Film",
+    "group": "FilmAndShows",
     "success": {
       "fields": {
         "Success 200": [
@@ -167,7 +260,79 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "src/main/java/servlets/FilmWeek.java",
-    "groupTitle": "Film"
+    "groupTitle": "FilmAndShows"
+  },
+  {
+    "type": "get",
+    "url": "/api/user/*",
+    "title": "",
+    "name": "GetUser",
+    "group": "GetUser",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "<p>String[]</p> ",
+            "optional": false,
+            "field": "Array",
+            "description": "<p>delle stringhe delle carte di credito associate all'utente</p> "
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "0": [
+          {
+            "group": "0",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet</p> "
+          }
+        ],
+        "2": [
+          {
+            "group": "2",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>EMPTY_WRONG_FIELD: Nella url in get non è specificato un utente da cercare</p> "
+          }
+        ],
+        "6": [
+          {
+            "group": "6",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>USER_NOT_FOUND: L'utente è un admin o più e ha cercato dati di un utente non esistente.</p> "
+          }
+        ],
+        "8": [
+          {
+            "group": "8",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>NOT_AUTHORIZED: l'utente non dispone di un livello di autentificazione sufficente a vedere i dati.</p> "
+          }
+        ],
+        "10": [
+          {
+            "group": "10",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>NOT_LOGGED_IN: l'utente non è loggato</p> "
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/servlets/DebitCard.java",
+    "groupTitle": "GetUser"
   },
   {
     "type": "get",
@@ -553,6 +718,47 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/api/payment/*",
+    "title": "",
+    "name": "PaymentManagement",
+    "group": "PaymentManagement",
+    "error": {
+      "fields": {
+        "0": [
+          {
+            "group": "0",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet</p> "
+          }
+        ],
+        "2": [
+          {
+            "group": "2",
+            "type": "<p>String[]</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>EMPTY_WRONG_FIELD: parameters parametri di input che non passano la validazione</p> "
+          }
+        ],
+        "10": [
+          {
+            "group": "10",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>NOT_LOGGED_IN: l'utente non è loggato</p> "
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/servlets/PaymentManagement.java",
+    "groupTitle": "PaymentManagement"
+  },
+  {
+    "type": "post",
     "url": "/api/confirmRegistration",
     "title": "",
     "name": "ConfirmRegistration",
@@ -746,6 +952,220 @@ define({ "api": [
     "groupTitle": "Registration"
   },
   {
+    "type": "post",
+    "url": "/api/reservation/*",
+    "title": "",
+    "name": "Reservation",
+    "group": "Reservation",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "show",
+            "description": "<p>l'id dello show in questione</p> "
+          },
+          {
+            "group": "Parameter",
+            "type": "<p>SeatReservation[]</p> ",
+            "optional": false,
+            "field": "seats",
+            "description": "<p>la lista di posti selezionati ognuno associato al tipo di biglietto relativo</p> "
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "reservationCode",
+            "description": "<p>il codice relativo alla prenotazione</p> "
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "0": [
+          {
+            "group": "0",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet</p> "
+          }
+        ],
+        "1": [
+          {
+            "group": "1",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>EMPTY_REQ: richiesta vuota</p> "
+          }
+        ],
+        "2": [
+          {
+            "group": "2",
+            "type": "<p>String[]</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>EMPTY_WRONG_FIELD: invalidParameters parametri invalidi</p> "
+          }
+        ],
+        "8": [
+          {
+            "group": "8",
+            "type": "<p>String[]</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>NOT_AUTHORIZED: L'utente non è autorizzato a visualizzare i dati</p> "
+          }
+        ],
+        "14": [
+          {
+            "group": "14",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>END_OF_TIME: lo show è già iniziato</p> "
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/servlets/Reservation.java",
+    "groupTitle": "Reservation"
+  },
+  {
+    "type": "get",
+    "url": "/api/reservation/:reservationCode",
+    "title": "",
+    "name": "Reservation",
+    "group": "Reservation",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "id_show",
+            "description": "<p>l'id dello show</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>float</p> ",
+            "optional": false,
+            "field": "totalPrice",
+            "description": "<p>il totale da pagare</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>ReservedSeatResponse[]</p> ",
+            "optional": false,
+            "field": "seatList",
+            "description": "<p>la lista dei posti associata</p> "
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "0": [
+          {
+            "group": "0",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet</p> "
+          }
+        ],
+        "8": [
+          {
+            "group": "8",
+            "type": "<p>String[]</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>NOT_AUTHORIZED: L'utente non è autorizzato a visualizzare i dati</p> "
+          }
+        ],
+        "14": [
+          {
+            "group": "14",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>END_OF_TIME: lo show è già iniziato</p> "
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/servlets/Reservation.java",
+    "groupTitle": "Reservation"
+  },
+  {
+    "type": "get",
+    "url": "/api/viewShowRoom/*",
+    "title": "",
+    "name": "ViewShowRoom",
+    "group": "ViewShowRoom",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "show",
+            "description": "<p>id_code.</p> "
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "0": [
+          {
+            "group": "0",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet</p> "
+          }
+        ],
+        "2": [
+          {
+            "group": "2",
+            "type": "<p>String[]</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>EMPTY_WRONG_FIELD: parameters parametri di input che non passano la validazione</p> "
+          }
+        ],
+        "10": [
+          {
+            "group": "10",
+            "type": "<p>int</p> ",
+            "optional": false,
+            "field": "errorCode",
+            "description": "<p>NOT_LOGGED_IN: L'utente è già loggato e fino all'implementazione del cambio password non può fare niente</p> "
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/servlets/ViewRoom.java",
+    "groupTitle": "ViewShowRoom"
+  },
+  {
     "type": "get",
     "url": "/api/viewShowRoom/*",
     "title": "",
@@ -801,7 +1221,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/api/pagamenti/*",
+    "url": "/api/pagamenti",
     "title": "",
     "name": "pagamenti",
     "group": "pagamenti",
@@ -917,7 +1337,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "src/main/java/servlets/Pagamenti.java",
+    "filename": "src/main/java/servlets/historyPayments.java",
     "groupTitle": "pagamenti"
   }
 ] });
