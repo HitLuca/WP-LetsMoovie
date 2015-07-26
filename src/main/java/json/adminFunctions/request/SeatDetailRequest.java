@@ -13,12 +13,12 @@ public class SeatDetailRequest {
     private String price;
     private boolean checked;
 
-    @toSanitize(name = "row", reg = Regex.ID)
+    @toSanitize(name = "s_row", reg = Regex.ID)
     public String getS_row() {
         return s_row;
     }
 
-    @toSanitize(name = "column", reg = Regex.ID)
+    @toSanitize(name = "s_column", reg = Regex.ID)
     public String getS_column() {
         return s_column;
     }

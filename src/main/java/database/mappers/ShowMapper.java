@@ -130,5 +130,16 @@ public interface ShowMapper {
             "WHERE id_show=#{id_show} ")
     ShowTime getShowTime(int id_show);
 
+    //TODO:Test
+    @Select("SELECT * " +
+            "FROM shows " +
+            "WHERE show_date::DATE>#{show_date}::DATE")
+    List<Show> getShowsAfterDate(String show_date);
+
+    //TODO:Test
+    @Select("SELECT * " +
+            "FROM shows " +
+            "WHERE show_date=#{show_date} AND show_time::TIME>#{show_time}::TIME")
+    List<Show> getDayShowsAfterTime(@Param("show_date") String show_date, @Param("show_time") String show_time);
 }
 
