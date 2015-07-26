@@ -43,7 +43,7 @@ public class Test extends HttpServlet {
         PdfTicketCreator pd = new PdfTicketCreator();
 
         try {
-            response.getOutputStream().write(pd.createPdf(null, pathToWeb, getServletContext()).toByteArray());
+            response.getOutputStream().write(pd.createPdf(null, getServletContext()).toByteArray());
         } catch (Exception e) {
             e.printStackTrace();
         }

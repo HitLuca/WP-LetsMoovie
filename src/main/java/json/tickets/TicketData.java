@@ -1,5 +1,8 @@
 package json.tickets;
 
+import database.datatypes.user.Payment;
+import json.reservation.request.SeatReservation;
+
 /**
  * Created by etrunon on 23/07/15.
  */
@@ -31,6 +34,18 @@ public class TicketData {
         this.s_column = s_column;
         this.username = username;
         this.code = code;
+
+    }
+
+    public TicketData(Payment p, SeatReservation sr, String filmtitle) {
+        this.username = p.getUsername();
+        this.film_title = filmtitle;
+        this.date = p.getPayment_date();
+        this.time = p.getPayment_time();
+        this.s_row = sr.getRow();
+        this.s_column = sr.getColumn();
+        this.username = p.getUsername();
+        this.code = p.getCode();
 
     }
 

@@ -24,12 +24,10 @@ public class PdfTicketCreator {
 
     PDRectangle rect;
     int line = 0;
-    String pathResource;
     private PDFont fontPlain;
 
-    public ByteArrayOutputStream createPdf(List<TicketData> ticketData, String pathResource, ServletContext context) throws Exception {
+    public ByteArrayOutputStream createPdf(List<TicketData> ticketData, ServletContext context) throws Exception {
 
-        this.pathResource = pathResource;
         ImageIO.setUseCache(false);
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -50,45 +48,6 @@ public class PdfTicketCreator {
         // Start a new content stream which will "hold" the to be created content
         PDPageContentStream cos = new PDPageContentStream(document, page1);
 
-        TicketData td = new TicketData("The final Project", "2015-07-24", "19:48", "8", "9", "LaPaladinaDellaGiustizia99", "s5f3d7j9H5gdD3uhT5");
-        TicketData td1 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "10", "Etrunon", "s5f3d7j9H5gdD3uhT5");
-        TicketData td2 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "11", "HitLuca", "s5f3d7j9H5gdD3uhT5");
-        TicketData td3 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "12", "M4RC0SX", "s5f3d7j9H5gdD3uhT5");
-        TicketData td4 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "13", "Mion00", "s5f3d7j9H5gdD3uhT5");
-        TicketData td5 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "14", "Fuffaknight", "s5f3d7j9H5gdD3uhT5");
-        TicketData td6 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "9", "LaPaladinaDellaGiustizia99", "s5f3d7j9H5gdD3uhT5");
-        TicketData td7 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "10", "Etrunon", "s5f3d7j9H5gdD3uhT5");
-        TicketData td8 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "11", "HitLuca", "s5f3d7j9H5gdD3uhT5");
-        TicketData td9 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "12", "M4RC0SX", "s5f3d7j9H5gdD3uhT5");
-        TicketData td10 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "13", "Mion00", "s5f3d7j9H5gdD3uhT5");
-        TicketData td11 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "14", "Fuffaknight", "s5f3d7j9H5gdD3uhT5");
-        TicketData td12 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "9", "LaPaladinaDellaGiustizia99", "s5f3d7j9H5gdD3uhT5");
-        TicketData td13 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "10", "Etrunon", "s5f3d7j9H5gdD3uhT5");
-        TicketData td14 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "11", "HitLuca", "s5f3d7j9H5gdD3uhT5");
-        TicketData td15 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "12", "M4RC0SX", "s5f3d7j9H5gdD3uhT5");
-        TicketData td16 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "13", "Mion00", "s5f3d7j9H5gdD3uhT5");
-        TicketData td17 = new TicketData("The final Project", "2015-07-24", "19:48", "8", "14", "Fuffaknight", "s5f3d7j9H5gdD3uhT5");
-
-        List<TicketData> tdl = new ArrayList<>();
-        tdl.add(td);
-        tdl.add(td1);
-        tdl.add(td2);
-        tdl.add(td3);
-        tdl.add(td4);
-        tdl.add(td5);
-        tdl.add(td6);
-        tdl.add(td7);
-        tdl.add(td8);
-        tdl.add(td9);
-        tdl.add(td10);
-        tdl.add(td11);
-        tdl.add(td12);
-        tdl.add(td13);
-        tdl.add(td14);
-        tdl.add(td15);
-        tdl.add(td16);
-        tdl.add(td17);
-
         float margin = 50f, intraTicket = 100;
         float posX = rect.getLowerLeftX() + margin, posY = rect.getUpperRightY() - margin - 25;
         printHeader(posX, posY, document, cos, context);
@@ -97,12 +56,12 @@ public class PdfTicketCreator {
         cos.beginText();
         cos.setFont(fontPlain, 15);
         cos.moveTextPositionByAmount(posX, posY);
-        cos.drawString("Codice Prenotazione:  " + td.getCode());
+        cos.drawString("Codice Prenotazione:  " + ticketData.get(0).getCode());
         cos.endText();
 
         posY -= 50;
 
-        for (int j = 0; j < tdl.size(); j++) {
+        for (int j = 0; j < ticketData.size(); j++) {
             if (j % 7 == 6) {
                 // Make sure that the content stream is closed:
                 cos.close();
@@ -112,7 +71,7 @@ public class PdfTicketCreator {
                 posX = rect.getLowerLeftX() + margin;
                 posY = rect.getUpperRightY() - margin - 25;
             }
-            printTicket(posX, posY, document, cos, tdl.get(j));
+            printTicket(posX, posY, document, cos, ticketData.get(j));
             posY -= intraTicket;
         }
 
