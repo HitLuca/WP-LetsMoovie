@@ -51,3 +51,11 @@
 #anno {
     margin-top: 1rem;
 }
+
+.accordion .accordion-navigation > a:hover {
+    background-color: #2299dd;
+}
+
+li.active > a#dayLabel {
+    background-color: #2299dd;
+}

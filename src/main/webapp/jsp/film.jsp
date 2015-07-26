@@ -104,7 +104,7 @@
                     <div class="medium-6 columns">
                         <div class="row collapse">
                             <div class="medium-6 label info radius columns">
-                                <strong>Rating</strong>
+                                <strong class="label info radius">Rating</strong>
                             </div>
                             <div class="medium-6 text-center columns">
                                 <span data-bind="rating"></span>
@@ -114,7 +114,7 @@
                     <div class="medium-6 columns">
                         <div class="row collapse">
                             <div class="medium-6 label info radius columns">
-                                <strong>Metascore</strong>
+                                <strong class="label info radius">Metascore</strong>
                             </div>
                             <div class="medium-6 text-center columns">
                                 <span data-bind="metascore"></span>
@@ -126,7 +126,7 @@
                     <div class="medium-6 columns">
                         <div class="row collapse">
                             <div class="medium-6 label info radius columns">
-                                <strong>Durata</strong>
+                                <strong class="label info radius">Durata</strong>
                             </div>
                             <div class="medium-6 text-center columns">
                                 <span data-bind="duration"> minuti</span>
@@ -136,7 +136,7 @@
                     <div class="medium-6 columns">
                         <div class="row collapse">
                             <div class="medium-6 label info radius columns">
-                                <strong>VM</strong>
+                                <strong class="label info radius">VM</strong>
                             </div>
                             <div class="medium-6 text-center columns">
                                 <span data-bind="vm"></span>

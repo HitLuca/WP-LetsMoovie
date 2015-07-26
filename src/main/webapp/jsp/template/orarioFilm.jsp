@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <div data-bind="shows" class="text-center">
     <a href="#" class="button radius" data-reveal-id="modal" id="openModal">Orari proiezioni</a>
 

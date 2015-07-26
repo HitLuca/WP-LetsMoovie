@@ -10,11 +10,17 @@
         <p></p>
     </div>
     <div class="medium-9 columns">
-        <a href="#" class="filmLink small-only-text-center">
-            <h3 id="film_title"></h3>
-        </a>
 
-        <p></p>
+        <div class="row">
+            <div class="medium-8 columns">
+                <a href="#" class="filmLink small-only-text-center">
+                    <h3 id="film_title"></h3>
+                </a>
+            </div>
+            <div class="medium-4 small-only-text-center medium-text-right columns">
+                <a href="#" class="filmLink radius small button">Info film</a>
+            </div>
+        </div>
 
         <p align="justify" id="plot" class="hidden-for-small">
         </p>
