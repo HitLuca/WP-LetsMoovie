@@ -62,7 +62,7 @@ public class PasswordRecovery extends HttpServlet {
         try
         {
             //Check sulla sessione già presente e l'utente è già loggato con un username
-            BadReqExeceptionThrower.checkUserLogged(request);
+            BadReqExeceptionThrower.checkNotUserLogged(request);
 
             PasswordRecoveryRequest passwordRecoveryRequest = gsonReader.fromJson(request.getReader(), PasswordRecoveryRequest.class);
             BadReqExeceptionThrower.checkRegex(passwordRecoveryRequest);

@@ -24,7 +24,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +57,7 @@ public class FilmDay extends HttpServlet {
 
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private Gson gsonWriter;
+    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -81,12 +86,24 @@ public class FilmDay extends HttpServlet {
                 //Prendo i differenti
                 List<ShowIdTime> hours = showMapper.getShowTimeAndId(date.format(dateFormat), i);
 
+               /* LocalTime now = LocalTime.now();
+
+                for (ShowIdTime projection : hours) {
+                    LocalTime filmStart = LocalTime.parse(projection.getShow_time());
+                    if (filmStart.isBefore(now)) {
+                        System.out.println("FILM GIA' INIZIATO");
+                        hours.remove(projection);
+                    }
+                }*/
+
                 //Creo l'oggetto FilmAndShows e lo riempio
                 //TODO, errore? hours nel costruttore non serve
-                FilmAndShows filmAndShows = new FilmAndShows(filmData, hours, filmMapper);
-                filmAndShows.addHours(date.format(dateFormat), hours);
-                //Aggiungo il FilmAndShows alla lista
-                timetable.add(filmAndShows);
+                if(hours.size()>0) {
+                    FilmAndShows filmAndShows = new FilmAndShows(filmData, hours, filmMapper);
+                    filmAndShows.addHours(date.format(dateFormat), hours);
+                    //Aggiungo il FilmAndShows alla lista
+                    timetable.add(filmAndShows);
+                }
             }
 
             //Creo l'oggetto da trascrivere come Json di risposta
