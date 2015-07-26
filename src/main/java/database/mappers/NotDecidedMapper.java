@@ -44,11 +44,30 @@ public interface NotDecidedMapper {
             "WHERE parameter=#{parameter}")
     ConfigParameter getConfigParameter(String parameter);
 
+    /**
+     * @return
+     */
     @Select("SELECT * " +
             "FROM cinema_rooms ")
     List<RoomData> getRoomList();
 
+    /**
+     *
+     * @param ticket_type
+     * @return
+     */
     //TODO:Test
     @Select("SELECT price FROM prices WHERE ticket_type=#{ticket_type}")
     float getPrice(String ticket_type);
+
+    /**
+     *
+     * @param code
+     * @return
+     */
+    //TODO:Test
+    @Select("SELECT DISTINCT code " +
+            "FROM payments " +
+            "WHERE code=#{code}")
+    String checkDoubleCode(String code);
 }
