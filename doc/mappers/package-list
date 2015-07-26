@@ -1,1 +1,6 @@
+database.datatypes.film
+database.datatypes.other
+database.datatypes.seat
+database.datatypes.show
+database.datatypes.user
 database.mappers

@@ -59,11 +59,17 @@ public interface ShowMapper {
             "ORDER BY show_time ")
     List<ShowIdTime> getShowTimeAndId(@Param("show_date") String show_date, @Param("id_film") int id_film);
 
+    /**
+     * @param show_date data dello show
+     * @param id_film   id del film
+     * @param show_time ora dello show
+     * @return lista di showTime e id che proiettano oggi dopo show_time
+     */
     @Select("SELECT show_time, id_show, room_number " +
             "FROM shows " +
-            "WHERE shows.show_date=#{show_date} AND shows.id_film=#{id_film} AND shows.show_time::TIME > #{time}::TIME " +
+            "WHERE shows.show_date=#{show_date} AND shows.id_film=#{id_film} AND shows.show_time::TIME > #{show_time}::TIME " +
             "ORDER BY show_time ")
-    List<ShowIdTime> getShowTimeAndIdOfToday(@Param("show_date") String show_date, @Param("id_film") int id_film, @Param("time") String time);
+    List<ShowIdTime> getShowTimeAndIdOfToday(@Param("show_date") String show_date, @Param("id_film") int id_film, @Param("show_time") String show_time);
 
     /**
      * @param show_date data di proiezione
@@ -74,10 +80,16 @@ public interface ShowMapper {
             "WHERE shows.show_date=#{show_date}")
     List<Integer> getDayFilms(String show_date);
 
+    /**
+     *
+     * @param show_date data dello show
+     * @param show_time ora dello show
+     * @return film di oggi che proiettano dopo show_time
+     */
     @Select("SELECT DISTINCT id_film " +
             "FROM shows " +
-            "WHERE shows.show_date=#{show_date} AND shows.show_time::TIME > #{time}::TIME")
-    List<Integer> getTodayFilms(@Param("show_date") String show_date, @Param("time") String time);
+            "WHERE shows.show_date=#{show_date} AND shows.show_time::TIME > #{show_time}::TIME")
+    List<Integer> getTodayFilms(@Param("show_date") String show_date, @Param("show_time") String show_time);
 
     /**
      * @param show_date data di proiezione
@@ -89,11 +101,17 @@ public interface ShowMapper {
             "ORDER BY show_time")
     List<Show> getDayShows(String show_date);
 
+    /**
+     *
+     * @param show_date data dello show
+     * @param show_time ora dello show
+     * @return show di oggi che proiettano dopo show_time ordinati per ora
+     */
     @Select("SELECT * " +
             "FROM shows " +
-            "WHERE show_date=#{show_date} AND show_time::TIME > #{time}::TIME" +
+            "WHERE show_date=#{show_date} AND show_time::TIME > #{show_time}::TIME" +
             "ORDER BY show_time")
-    List<Show> getTodayDayShows(String show_date, String time);
+    List<Show> getTodayDayShows(String show_date, String show_time);
 
     /**
      * @param show oggetto Show
@@ -147,13 +165,22 @@ public interface ShowMapper {
             "WHERE id_show=#{id_show} ")
     ShowTime getShowTime(int id_show);
 
-    //TODO:Test
+    /**
+     *
+     * @param show_date data dello show
+     * @return tutti gli show che proiettano dopo show_date
+     */
     @Select("SELECT * " +
             "FROM shows " +
             "WHERE show_date::DATE>#{show_date}::DATE")
     List<Show> getShowsAfterDate(String show_date);
 
-    //TODO:Test
+    /**
+     *
+     * @param show_date data dello show
+     * @param show_time ora dello show
+     * @return tutti gli show con data show_date che proiettano dopo show_time
+     */
     @Select("SELECT * " +
             "FROM shows " +
             "WHERE show_date=#{show_date} AND show_time::TIME>#{show_time}::TIME")

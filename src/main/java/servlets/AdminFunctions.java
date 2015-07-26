@@ -71,10 +71,10 @@ public class AdminFunctions extends HttpServlet {
 
         try {
             //Controllo che l'utente sia loggato
-            //BadReqExeceptionThrower.checkUserLogged(request); //TODO:mettere apposto
+            BadReqExeceptionThrower.checkUserLogged(request);
 
             //Controllo che abbia i permessi adatti
-            //BadReqExeceptionThrower.checkAdminSuperAdmin(request);//TODO:mettere apposto
+            BadReqExeceptionThrower.checkAdminSuperAdmin(request);
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String function = rs.getParameter();

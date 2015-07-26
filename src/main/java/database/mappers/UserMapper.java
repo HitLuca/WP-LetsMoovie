@@ -123,10 +123,17 @@ public interface UserMapper {
             "ORDER BY payment_date, payment_time")
     List<CompletePayments> getUserUniquePayments(String username);
 
+    /**
+     * @param payment_date data del pagamento
+     * @param payment_time ora del pagamento
+     * @param username     username dell'utente
+     * @return lista dei pagamenti fatti in data payment_date e ora payment_time dall'utente username
+     */
     @Select("SELECT ticket_type, price, row, \"column\" " +
             "FROM payments NATURAL JOIN seats NATURAL JOIN prices " +
             "WHERE payment_date=#{payment_date} AND payment_time=#{payment_time} AND username=#{username}")
     List<UserPayment> getUserPayments(@Param("payment_date") String payment_date, @Param("payment_time") String payment_time, @Param("username") String username);
+
     /**
      *
      * @param username username dell'utente
@@ -272,13 +279,21 @@ public interface UserMapper {
             "WHERE code=#{code}")
     List<Payment> getPaymentFromCode(String code);
 
-    //TODO:Test
+    /**
+     * @param payment_date data del pagamento
+     * @param payment_time ora del pagamento
+     * @return lista dei pagamenti fatti oggi dopo payment_time
+     */
     @Select("SELECT * " +
             "FROM payments " +
             "WHERE payment_date::DATE=#{payment_date}::DATE AND payment_time::TIME>#{payment_time}::TIME")
     List<Payment> getDayPaymentsAfterTime(@Param("payment_date") String payment_date, @Param("payment_time") String payment_time);
 
-    //TODO:Test
+    /**
+     *
+     * @param payment_date data del pagamento
+     * @return lista di pagamenti fatti dopo payment_date
+     */
     @Select("SELECT * " +
             "FROM payments " +
             "WHERE payment_date::DATE>#{payment_date}::DATE")
