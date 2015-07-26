@@ -41,12 +41,22 @@
                     </div>
                 </div>
             </div>
-            <div id="conferma" class="row collapse">
-                <h4>Clicca su un posto per modificarne lo stato</h4>
-                <div class="medium-3 small-centered columns">
-                    <button class="button radius ladda-button" data-style="zoom-out">Conferma cambiamento</button>
+            <form id="conferma" action="/api/admin/updateRoomSeatStatus">
+                <input type="hidden" id="roomId">
+
+                <div id="posto">
+                    blablabla
+                    <input type="hidden" id="s_row">
+                    <input type="hidden" id="s_column">
                 </div>
-            </div>
+                <div class="row collapse">
+                    <h4>Clicca su un posto per modificarne lo stato</h4>
+
+                    <div class="medium-3 small-centered columns">
+                        <button class="button radius ladda-button" data-style="zoom-out">Conferma cambiamento</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="push"></div>

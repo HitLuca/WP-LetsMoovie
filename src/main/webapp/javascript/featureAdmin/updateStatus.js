@@ -1,4 +1,5 @@
 var RoomsList = {
+    bind: false,
     url: "/api/adminData/getRooms",
     getRoomsInfo: function () {
         var request = $.ajax({
@@ -20,36 +21,66 @@ var RoomsList = {
             }
         };
         Transparency.render(selectItem[0], data.roomList, directives);
+        if (!RoomsList.bind) {
+            RoomsList.bind = true;
+            selectItem.on("change", function () {
+                RoomMap.id = $(this).find(":selected").attr("value");
+                RoomMap.getRoomMap(RoomMap.id);
+            });
+        }
     },
     showRoomsError: function (data) {
         alertify.error("Errore nel recuperare la lista delle sale");
     }
 };
 
-var GetRoomMap = {
+var RoomMap = {
+    id: null,
+    map: document.getElementById("roomMap"),
     url: "/api/viewRoom/",
     getRoomMap: function (id) {
         var request = $.ajax({
-            url: GetRoomMap.url + id
+            url: RoomMap.url + id
         });
-        request.done(GetRoomMap.roomsSuccess);
-        request.fail(GetRoomMap.roomError);
+        request.done(RoomMap.roomsSuccess);
+        request.fail(RoomMap.roomError);
     },
     roomsSuccess: function (data) {
-        Cinema3DView.init(document.getElementById("roomMap"), data.showSeatList, data.column, data.row, false)
+        Cinema3DView.init(RoomMap.map, data.showSeatList, data.column, data.row, false);
+        RoomMap.bindEvents();
     },
     roomError: function () {
         alertify.error("Errore nel visualizzare la mappa");
+    },
+    bindEvents: function () {
+        $(RoomMap.map).on("onSeatChange", ChangedSeats.addSeat);
+        $(RoomMap.map).on("onResetChange", ChangedSeats.removeSeat);
     }
-
 
 };
 
+var ChangedSeats = {
+    form: $("#conferma"),
+    posto: $("#posto"),
+    addSeat: function (event, x, y) {
+        var posto = ChangedSeats.posto.clone();
+        posto.attr("id", "");
+        alertify.success("Aggiunto posto " + x + " " + y);
+        ChangedSeats.posto.append(posto);
+
+    },
+    removeSeat: function (event, x, y) {
+        alertify.success("Rimosso posto " + x + " " + y);
+    },
+    successPost: function (data) {
+        alertify.succes("I posti selezionati sono stati correttamente modificati");
+    },
+    errorPost: function (data) {
+        alertify.error("Errore nel modificare i posti selezionati");
+    }
+};
 
 $(function () {
     RoomsList.getRoomsInfo();
-    $("#listaSale").on("change", function () {
-        var id = $(this).find(":selected").attr("value");
-        GetRoomMap.getRoomMap(id);
-    })
+    Forms.PostForm("conferma", ChangedSeats.successPost, ChangedSeats.errorPost, false);
 });

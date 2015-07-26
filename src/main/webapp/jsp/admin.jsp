@@ -101,7 +101,5 @@
 </div>
 <c:import url="/jsp/layout/footer.jsp"/>
 
-<script src="<c:url value="/javascript/user.js"/>"></script>
-
 </body>
 </html>
