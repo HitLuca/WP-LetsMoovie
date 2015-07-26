@@ -19,6 +19,16 @@ var Reservation = {
                     text: function () {
                         return numeral(this.price).format('0,0.00 $');
                     }
+                },
+                s_row: {
+                    text: function () {
+                        return this.s_row + 1;
+                    }
+                },
+                s_column: {
+                    text: function () {
+                        return this.s_column + 1;
+                    }
                 }
             },
             totalPrice: {

@@ -36,8 +36,7 @@ var Forms = {
 
             //Serializza la form in JSON
             var Json = form.serializeJSON({
-                parseBooleans: true,
-                checkboxUncheckedValue: false
+                parseBooleans: true
             });
             // Stop form from submitting normally
 
