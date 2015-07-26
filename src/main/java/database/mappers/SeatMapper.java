@@ -112,7 +112,11 @@ public interface SeatMapper {
             "WHERE room_number=#{room_number}")
     List<Seat> getRoomSeats(int room_number);
 
-    //TODO:Test
+    /**
+     * @param id_seat id del posto
+     * @param id_show id dello show
+     * @return prezzo del posto con id id_seat e show id_show
+     */
     @Select("SELECT price " +
             "FROM payments NATURAL JOIN prices " +
             "WHERE id_seat=#{id_seat} AND id_show=#{id_show}")

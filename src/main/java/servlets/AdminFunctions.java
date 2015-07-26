@@ -71,10 +71,10 @@ public class AdminFunctions extends HttpServlet {
 
         try {
             //Controllo che l'utente sia loggato
-            //BadReqExeceptionThrower.checkUserLogged(request); //TODO:mettere apposto
+            BadReqExeceptionThrower.checkUserLogged(request);
 
             //Controllo che abbia i permessi adatti
-            //BadReqExeceptionThrower.checkAdminSuperAdmin(request);//TODO:mettere apposto
+            BadReqExeceptionThrower.checkAdminSuperAdmin(request);
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String function = rs.getParameter();
@@ -457,8 +457,6 @@ public class AdminFunctions extends HttpServlet {
             }
         }
         message += "La informiamo inoltre che il " + refoundPercentage + "% dell'intero importo pagato è stato accreditato nel suo account.";
-
-        System.out.println(message);
 
         SendGrid.Email email = new SendGrid.Email();
         email.addTo(userEmail);

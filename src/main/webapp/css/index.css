@@ -9,3 +9,7 @@ ul#daysLabel a {
 #panel2 {
     margin-top: 1rem;
 }
+
+body {
+    background-image: url("/img/background.png");
+}
