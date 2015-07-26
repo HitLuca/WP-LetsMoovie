@@ -2,6 +2,7 @@ package utilities;
 
 import database.datatypes.film.FilmData;
 import database.datatypes.show.ShowTime;
+import database.datatypes.user.Payment;
 import json.adminFunctions.request.DeleteReservationRequest;
 import types.enums.ErrorCode;
 import types.enums.Role;
@@ -210,6 +211,14 @@ public class BadReqExeceptionThrower {
             if (Time.valueOf(todayTime).before(Time.valueOf(todayTime))) {
                 throw new BadRequestException(ErrorCode.BACK_IN_TIME);
             }
+        }
+    }
+
+    public static void checkPayments(List<Payment> payments) throws BadRequestException {
+        if (payments == null) {
+            throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
+        } else if (payments.size() == 0) {
+            throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
         }
     }
 }

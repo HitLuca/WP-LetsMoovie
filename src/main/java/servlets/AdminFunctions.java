@@ -355,58 +355,58 @@ public class AdminFunctions extends HttpServlet {
                     String showTime = show.getShow_time();
 
                     List<Payment> payments = userMapper.getPaymentFromCode(code);
-                    if (payments != null) {
-                        BadReqExeceptionThrower.checkTime(showDate, showTime);
 
-                        if (seatDetailRequests != null) {
-                            for (SeatDetailRequest sdr : seatDetailRequests) {
-                                BadReqExeceptionThrower.checkRegex(sdr);
-                            }
+                    BadReqExeceptionThrower.checkPayments(payments);
+                    BadReqExeceptionThrower.checkTime(showDate, showTime);
+
+                    if (seatDetailRequests != null) {
+                        for (SeatDetailRequest sdr : seatDetailRequests) {
+                            BadReqExeceptionThrower.checkRegex(sdr);
                         }
+                    }
 
-                        if (seatDetailRequests != null && !code.equals("")) {
-                            float totalRefund = 0f;
-                            float refoundPercentage = 0.8f;
-                            int room_number = showMapper.getRoomNumberFromCode(code);
-                            int id_show = payments.get(0).getId_show();
-                            String username = userMapper.getPaymentFromCode(code).get(0).getUsername();
-                            for (SeatDetailRequest sdr : seatDetailRequests) {
-                                if (sdr.getChecked() != null) {
-                                    if (sdr.getChecked().equals("true")) {
-                                        int id_seat = seatMapper.getIdSeat(room_number, Integer.parseInt(sdr.getS_row()), Integer.parseInt(sdr.getS_column()));
-                                        float ticket_price = seatMapper.getSeatTicketPrice(id_seat, id_show);
-                                        String ticket_type = userMapper.getPaymentData(id_show, id_seat).getTicket_type();
+                    if (seatDetailRequests != null && !code.equals("")) {
+                        float totalRefund = 0f;
+                        float refoundPercentage = 0.8f;
+                        int room_number = showMapper.getRoomNumberFromCode(code);
+                        int id_show = payments.get(0).getId_show();
+                        String username = userMapper.getPaymentFromCode(code).get(0).getUsername();
+                        for (SeatDetailRequest sdr : seatDetailRequests) {
+                            if (sdr.getChecked() != null) {
+                                if (sdr.getChecked().equals("true")) {
+                                    int id_seat = seatMapper.getIdSeat(room_number, Integer.parseInt(sdr.getS_row()), Integer.parseInt(sdr.getS_column()));
+                                    float ticket_price = seatMapper.getSeatTicketPrice(id_seat, id_show);
+                                    String ticket_type = userMapper.getPaymentData(id_show, id_seat).getTicket_type();
 
-                                        sdr.setTicket_type(ticket_type);
-                                        sdr.setPrice(ticket_price);
+                                    sdr.setTicket_type(ticket_type);
+                                    sdr.setPrice(ticket_price);
 
-                                        userMapper.deletePaymentFromCode(code, id_seat);
-                                        totalRefund += ticket_price;
-                                    }
+                                    userMapper.deletePaymentFromCode(code, id_seat);
+                                    totalRefund += ticket_price;
                                 }
                             }
-                            float computedRefound = totalRefund * refoundPercentage;
-                            userMapper.addCredit(username, computedRefound);
-                            String film_title = filmMapper.getFilmTitle((showMapper.getShowData(payments.get(0).getId_show())).getId_film()).getFilm_title();
-                            UserData userData = userMapper.getUserData(username);
-                            String name = userData.getName();
-                            String surname = userData.getSurname();
-                            String email = userData.getEmail();
-                            sendEmail(email, name, surname, payments.get(0), seatDetailRequests, userMapper, film_title, 80f);
-                        } else if (seatDetailRequests == null && !code.equals("")) {
-                            String username = payments.get(0).getUsername();
-                            int id_show = payments.get(0).getId_show();
-
-                            List<SeatDetailResponse> seatDetailResponses = new ArrayList<>();
-                            Seat seat;
-
-                            for (Payment p : payments) {
-                                seat = seatMapper.getSeatFromId(p.getId_seat());
-                                seatDetailResponses.add(new SeatDetailResponse(seat.getRow(), seat.getColumn(), p.getTicket_type(), notDecidedMapper.getTicketPrice(p.getTicket_type())));
-                            }
-                            outputStream.print(gsonWriter.toJson(seatDetailResponses));
-                            sessionSql.close();
                         }
+                        float computedRefound = totalRefund * refoundPercentage;
+                        userMapper.addCredit(username, computedRefound);
+                        String film_title = filmMapper.getFilmTitle((showMapper.getShowData(payments.get(0).getId_show())).getId_film()).getFilm_title();
+                        UserData userData = userMapper.getUserData(username);
+                        String name = userData.getName();
+                        String surname = userData.getSurname();
+                        String email = userData.getEmail();
+                        sendEmail(email, name, surname, payments.get(0), seatDetailRequests, userMapper, film_title, 80f);
+                    } else if (seatDetailRequests == null && !code.equals("")) {
+                        String username = payments.get(0).getUsername();
+                        int id_show = payments.get(0).getId_show();
+
+                        List<SeatDetailResponse> seatDetailResponses = new ArrayList<>();
+                        Seat seat;
+
+                        for (Payment p : payments) {
+                            seat = seatMapper.getSeatFromId(p.getId_seat());
+                            seatDetailResponses.add(new SeatDetailResponse(seat.getRow(), seat.getColumn(), p.getTicket_type(), notDecidedMapper.getTicketPrice(p.getTicket_type())));
+                        }
+                        outputStream.print(gsonWriter.toJson(seatDetailResponses));
+                        sessionSql.close();
                     }
                     break;
                 }
