@@ -11,6 +11,7 @@ import database.datatypes.film.FilmTitle;
 import database.datatypes.seat.RoomData;
 import database.datatypes.seat.Seat;
 import database.datatypes.seat.SeatCount;
+import database.datatypes.show.Show;
 import database.datatypes.user.Payment;
 import database.datatypes.user.UserPaid;
 import database.mappers.*;
@@ -32,6 +33,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,18 +56,20 @@ public class AdminFunctions extends HttpServlet {
         FilmMapper filmMapper = sessionSql.getMapper(FilmMapper.class);
         NotDecidedMapper notDecidedMapper = sessionSql.getMapper(NotDecidedMapper.class);
 
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
         response.setContentType("application/json");
         OperationResult operationResult = null;
 
         PrintWriter outputStream = response.getWriter();
 
         try {
+            //Controllo che l'utente sia loggato
             //BadReqExeceptionThrower.checkUserLogged(request);
-            // TODO:Togliere commento
 
             //Controllo che abbia i permessi adatti
             //BadReqExeceptionThrower.checkAdminSuperAdmin(request);
-            // TODO:Togliere commento
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String function = rs.getParameter();
@@ -79,6 +84,7 @@ public class AdminFunctions extends HttpServlet {
                     int id_seat;
                     for (SeatRequest seatRequest : roomSeatRequest.getSeats()) {
                         seatRequest.setId_show("1");
+                        seatRequest.setStatus("ok");
 
                         //Controllo di non avere parametri invalidi
                         BadReqExeceptionThrower.checkRegex(roomSeatRequest);
@@ -90,9 +96,54 @@ public class AdminFunctions extends HttpServlet {
                         int column = Integer.parseInt(seatRequest.getColumn());
 
                         id_seat = seatMapper.getIdSeat(room_number, row, column);
-                        seatMapper.updateSeatStatus(seatRequest.getStatus(), id_seat);
 
-                        removeBrokenPrenotations(id_seat);
+                        String pastStatus = seatMapper.getSeatStatus(id_seat);
+
+                        LocalDateTime localDate = LocalDateTime.now();
+
+
+                        String todayDate = localDate.format(dateFormatter);
+                        String todayTime = localDate.format(timeFormatter);
+
+                        switch (pastStatus) {
+                            case "ok": //Il posto deve essere rotto
+                            {
+                                String newStatus = "broken";
+                                seatMapper.updateSeatStatus(newStatus, id_seat);
+                                List<Payment> payments = userMapper.getDayPaymentsAfterTime(localDate.format(dateFormatter), localDate.format(timeFormatter));
+                                payments.addAll(userMapper.getPaymentsAfterDate(localDate.format(dateFormatter)));
+
+                                for (Payment p : payments) {
+                                    if (p.getId_seat() == id_seat) {
+                                        String ticket_type = p.getTicket_type();
+                                        float price = notDecidedMapper.getTicketPrice(ticket_type);
+                                        String username = p.getUsername();
+
+                                        userMapper.addCredit(username, price);
+                                        userMapper.deletePayment(p);
+
+                                        seatMapper.insertSeatReservation(p.getId_show(), p.getId_seat(), newStatus);
+                                    }
+                                }
+                                break;
+                            }
+                            case "broken": //Il posto va inserito negli spettacoli
+                            {
+                                String newStatus = "ok";
+
+                                List<Show> shows = showMapper.getDayShowsAfterTime(localDate.format(dateFormatter), localDate.format(timeFormatter));
+                                shows.addAll(showMapper.getShowsAfterDate(localDate.format(dateFormatter)));
+
+                                for (Show s : shows) {
+                                    if (s.getRoom_number() == room_number) {
+                                        int id_show = s.getId_show();
+                                        seatMapper.removeSeatReservation(id_show, id_seat);
+                                    }
+                                }
+                                seatMapper.updateSeatStatus(newStatus, id_seat);
+                                break;
+                            }
+                        }
                     }
                     break;
                 }
@@ -324,10 +375,6 @@ public class AdminFunctions extends HttpServlet {
             outputStream.print(gsonWriter.toJson(operationResult));
         }
         sessionSql.close();
-    }
-
-    private void removeBrokenPrenotations(int id_seat) {
-
     }
 
     @Override

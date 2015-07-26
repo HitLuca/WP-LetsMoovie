@@ -7,6 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
 import database.datatypes.film.FilmData;
 import database.datatypes.show.ShowIdTime;
+import database.datatypes.show.ShowTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
@@ -44,11 +45,9 @@ import java.util.List;
  * @api {get} /api/filmDay/*
  * @apiName FilmDay
  * @apiGroup FilmAndShows
- *
  * @apiParam {String} Stringa con la data su cui interrogare (in formato "yyyy-mm-dd")
  * @apiSuccess {String} Lista dei film proiettati in quella giornata. Contenente tutti i dati del film e la lista
- *                          degli spettacoli relativi a quel film in quella giornata con data, orario e codice spettacolo.
- *
+ * degli spettacoli relativi a quel film in quella giornata con data, orario e codice spettacolo.
  * @apiError (0) {int} errorCode BAD_REQUEST: lanciato quando succedono errori gravi all'interno della servlet
  * @apiError (2) {int} errorCode EMPTY_WRONG_FIELD: Lanciato quanto i parametri passati tramite la url non matchano
  */
@@ -56,6 +55,7 @@ import java.util.List;
 public class FilmDay extends HttpServlet {
 
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
     private Gson gsonWriter;
     private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -75,7 +75,13 @@ public class FilmDay extends HttpServlet {
 
             //Converto la data a SqlDate per il Db e cerco tutti gli spettacoli della giornata
             LocalDate date = LocalDate.parse(rs.getParameter());
-            List<Integer> idList = showMapper.getDayFilms(date.format(dateFormat));
+            List<Integer> idList;
+            if (date.isEqual(LocalDate.now())) {
+                idList = showMapper.getTodayFilms(date.format(dateFormat), LocalTime.now().format(timeFormat));
+            } else {
+                idList = showMapper.getDayFilms(date.format(dateFormat));
+            }
+
             //Inizializzo la lista della risposta vuota
             List<FilmAndShows> timetable = new ArrayList<>();
 
@@ -83,8 +89,15 @@ public class FilmDay extends HttpServlet {
 
                 //Prendo le info del filmAndShows con id I proiettato in quella data
                 FilmData filmData = filmMapper.getFilmData(i);
-                //Prendo i differenti
-                List<ShowIdTime> hours = showMapper.getShowTimeAndId(date.format(dateFormat), i);
+                //Prendo i differenti spettacoli ma se sto chiedendo la data corrente chiedo solo quelli non ancora iniziati
+
+                List<ShowIdTime> hours;
+                if (date.isEqual(LocalDate.now())) {
+                    hours = showMapper.getShowTimeAndIdOfToday(date.format(dateFormat), i, LocalTime.now().format(timeFormat));
+                } else {
+                    hours = showMapper.getShowTimeAndId(date.format(dateFormat), i);
+                }
+
 
                /* LocalTime now = LocalTime.now();
 

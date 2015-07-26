@@ -180,10 +180,10 @@ public interface UserMapper {
     PaymentWithIdCode getPaymentDataFromId(int id);
 
     /**
-     * @param payment_date
-     * @param payment_time
-     * @param username
-     * @return
+     * @param payment_date data del pagamento
+     * @param payment_time ora del pagamento
+     * @param username username dell'utente
+     * @return lista di id associati ai dati forniti
      */
     @Select("SELECT id " +
             "FROM payments " +
@@ -263,11 +263,26 @@ public interface UserMapper {
             "WHERE id=#{id}")
     void insertCode(@Param("code") String code, @Param("id") int id);
 
-    //TODO:Test
+    /**
+     * @param code codice del pagamento
+     * @return i dati dei pagamenti associati al codice
+     */
     @Select("SELECT * " +
             "FROM payments " +
             "WHERE code=#{code}")
     List<Payment> getPaymentFromCode(String code);
+
+    //TODO:Test
+    @Select("SELECT * " +
+            "FROM payments " +
+            "WHERE payment_date=#{payment_date}")
+    List<Payment> getDayPaymentsAfterTime(@Param("payment_date") String payment_date, @Param("payment_time") String payment_time);
+
+    //TODO:Test
+    @Select("SELECT * " +
+            "FROM payments " +
+            "WHERE payment_date::DATE>#{payment_date}::DATE")
+    List<Payment> getPaymentsAfterDate(@Param("payment_date") String payment_date);
 
     /**
      * @param show_date data di proiezione

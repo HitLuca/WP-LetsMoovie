@@ -59,6 +59,12 @@ public interface ShowMapper {
             "ORDER BY show_time ")
     List<ShowIdTime> getShowTimeAndId(@Param("show_date") String show_date, @Param("id_film") int id_film);
 
+    @Select("SELECT show_time, id_show, room_number " +
+            "FROM shows " +
+            "WHERE shows.show_date=#{show_date} AND shows.id_film=#{id_film} AND shows.show_time::TIME > #{time}::TIME " +
+            "ORDER BY show_time ")
+    List<ShowIdTime> getShowTimeAndIdOfToday(@Param("show_date") String show_date, @Param("id_film") int id_film, @Param("time") String time);
+
     /**
      * @param show_date data di proiezione
      * @return lista di tutti gli id_film che proiettano in data show_date
@@ -67,6 +73,11 @@ public interface ShowMapper {
             "FROM shows " +
             "WHERE shows.show_date=#{show_date}")
     List<Integer> getDayFilms(String show_date);
+
+    @Select("SELECT DISTINCT id_film " +
+            "FROM shows " +
+            "WHERE shows.show_date=#{show_date} AND shows.show_time::TIME > #{time}::TIME")
+    List<Integer> getTodayFilms(@Param("show_date") String show_date, @Param("time") String time);
 
     /**
      * @param show_date data di proiezione
@@ -77,6 +88,12 @@ public interface ShowMapper {
             "WHERE show_date=#{show_date} " +
             "ORDER BY show_time")
     List<Show> getDayShows(String show_date);
+
+    @Select("SELECT * " +
+            "FROM shows " +
+            "WHERE show_date=#{show_date} AND show_time::TIME > #{time}::TIME" +
+            "ORDER BY show_time")
+    List<Show> getTodayDayShows(String show_date, String time);
 
     /**
      * @param show oggetto Show
@@ -130,5 +147,16 @@ public interface ShowMapper {
             "WHERE id_show=#{id_show} ")
     ShowTime getShowTime(int id_show);
 
+    //TODO:Test
+    @Select("SELECT * " +
+            "FROM shows " +
+            "WHERE show_date::DATE>#{show_date}::DATE")
+    List<Show> getShowsAfterDate(String show_date);
+
+    //TODO:Test
+    @Select("SELECT * " +
+            "FROM shows " +
+            "WHERE show_date=#{show_date} AND show_time::TIME>#{show_time}::TIME")
+    List<Show> getDayShowsAfterTime(@Param("show_date") String show_date, @Param("show_time") String show_time);
 }
 
