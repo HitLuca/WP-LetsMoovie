@@ -15,7 +15,6 @@ import org.apache.ibatis.session.SqlSession;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
 import utilities.reservation.TemporaryReservationManager;
-import utilities.reservation.request.TemporaryReservationRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -104,6 +103,7 @@ public class PaymentManagement extends HttpServlet {
                 payment.setId_seat(id_seat);
                 payment.setId_show(id_show);
                 payment.setUsername(username);
+                payment.setCode(paymentRequest.getCode());
                 userMapper.insertPayment(payment);
             }
             temporaryReservationManager.confirmReservationRequest(paymentRequest.getCode(),sqlSession);

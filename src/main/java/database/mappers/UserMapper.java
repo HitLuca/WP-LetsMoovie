@@ -151,8 +151,8 @@ public interface UserMapper {
      *
      * @param payment oggetto Payment
      */
-    @Insert("INSERT INTO payments (payment_date, payment_time, ticket_type, id_seat, id_show, username) " +
-            "SELECT #{payment_date}, #{payment_time}, #{ticket_type}, #{id_seat}, #{id_show}, #{username}")
+    @Insert("INSERT INTO payments (payment_date, payment_time, ticket_type, id_seat, id_show, username, code) " +
+            "SELECT #{payment_date}, #{payment_time}, #{ticket_type}, #{id_seat}, #{id_show}, #{username}, #{code}")
     void insertPayment(Payment payment);
 
     /**
