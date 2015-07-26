@@ -112,6 +112,10 @@
         <servlet-name>updateStatus</servlet-name>
         <jsp-file>/jsp/featureAdmin/updateStatus.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>batman</servlet-name>
+        <jsp-file>/jsp/batman.jsp</jsp-file>
+    </servlet>
 
 
     <!-- MAPPING JPS-->
@@ -202,5 +206,9 @@
     <servlet-mapping>
         <servlet-name>updateStatus</servlet-name>
         <url-pattern>/admin/updateStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>batman</servlet-name>
+        <url-pattern>/batman</url-pattern>
     </servlet-mapping>
 </web-app>
