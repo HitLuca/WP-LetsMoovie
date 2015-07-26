@@ -40,10 +40,9 @@ public interface ShowMapper {
     Show getShowData(int id_show);
 
     /**
-     * @param code
+     * @param code codice della prenotazione
      * @return il room_number associato al codice
      */
-    //TODO:Test
     @Select("SELECT DISTINCT room_number " +
             "FROM payments NATURAL JOIN shows " +
             "WHERE code=#{code}")
@@ -122,7 +121,10 @@ public interface ShowMapper {
     int getRoomNumber(int id_show);
 
 
-    //TODO:Test
+    /**
+     * @param id_show id dello show
+     * @return data e ora dello show
+     */
     @Select("SELECT show_date, show_time " +
             "FROM shows " +
             "WHERE id_show=#{id_show} ")

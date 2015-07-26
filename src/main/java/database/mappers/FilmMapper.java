@@ -15,7 +15,7 @@ public interface FilmMapper {
 
     /**
      * @param film_title titolo del film
-     * @param year       anno del film
+     * @param year anno del film
      * @return id_film associato
      */
     @Select("SELECT id_film " +

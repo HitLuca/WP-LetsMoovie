@@ -45,7 +45,7 @@ public interface NotDecidedMapper {
     ConfigParameter getConfigParameter(String parameter);
 
     /**
-     * @return
+     * @return lista di dati riguardanti ogni sala
      */
     @Select("SELECT * " +
             "FROM cinema_rooms ")
@@ -53,19 +53,17 @@ public interface NotDecidedMapper {
 
     /**
      *
-     * @param ticket_type
-     * @return
+     * @param ticket_type tipo di biglietto
+     * @return prezzo associato al biglietto
      */
-    //TODO:Test
     @Select("SELECT price FROM prices WHERE ticket_type=#{ticket_type}")
     float getPrice(String ticket_type);
 
     /**
      *
-     * @param code
-     * @return
+     * @param code codice di prenotazione
+     * @return ritorna il codice stesso se è presente o "" altrimenti
      */
-    //TODO:Test
     @Select("SELECT DISTINCT code " +
             "FROM payments " +
             "WHERE code=#{code}")
