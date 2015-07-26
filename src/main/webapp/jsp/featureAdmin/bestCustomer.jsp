@@ -18,7 +18,7 @@
                 hanno comprato più biglietti</h4>
 
             <form action="/api/admin/getRankedUsers/" method="post" id="percentageSelect">
-                <div class="row">
+                <div class="row" id="inputPercentage">
                     <div class="small-10 medium-7 large-5 small-centered columns">
                         <div class="row collapse">
                             <div class="small-8 columns">

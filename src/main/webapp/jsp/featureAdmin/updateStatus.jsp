@@ -43,6 +43,8 @@
             </div>
             <div id="conferma" class="row collapse">
                 <h4>Clicca su un posto per modificarne lo stato</h4>
+
+                <p></p>
                 <div class="medium-3 small-centered columns">
                     <button class="button radius ladda-button" data-style="zoom-out">Conferma cambiamento</button>
                 </div>
