@@ -13,20 +13,9 @@ public class SeatDetailRequest {
     private String price;
     private String checked;
 
-    public SeatDetailRequest(String s_row, String s_column, String ticket_type, String price) {
-        this.s_row = s_row;
-        this.s_column = s_column;
-        this.ticket_type = ticket_type;
-        this.price = price;
-    }
-
     @toSanitize(name = "s_row", reg = Regex.ID)
     public String getS_row() {
         return s_row;
-    }
-
-    public void setS_row(String row) {
-        this.s_row = row;
     }
 
     @toSanitize(name = "s_column", reg = Regex.ID)
@@ -34,32 +23,43 @@ public class SeatDetailRequest {
         return s_column;
     }
 
-    public void setS_column(String column) {
-        this.s_column = column;
-    }
-
     public String getTicket_type() {
         return ticket_type;
-    }
-
-    public void setTicket_type(String ticket_type) {
-        this.ticket_type = ticket_type;
     }
 
     public String getPrice() {
         return price;
     }
 
+    public void setS_row(String row) {
+        this.s_row = row;
+    }
+
+    public void setS_column(String column) {
+        this.s_column = column;
+    }
+
+    public void setTicket_type(String ticket_type) {
+        this.ticket_type = ticket_type;
+    }
+
     public void setPrice(String price) {
         this.price = price;
     }
 
-    public String isChecked() {
+    public boolean isChecked() {
         return checked;
     }
 
-    public void setChecked(String checked) {
+    public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public SeatDetailRequest(String s_row, String s_column, String ticket_type, String price) {
+        this.s_row = s_row;
+        this.s_column = s_column;
+        this.ticket_type = ticket_type;
+        this.price = price;
     }
 
 
