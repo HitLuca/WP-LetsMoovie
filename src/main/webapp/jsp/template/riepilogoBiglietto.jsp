@@ -2,9 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="panel callout radius row biglietto text-center" id="posto">
     <div class="medium-1 columns hide checkbox-biglietto">
-        <input name="seatList[[checked]]:string" type="checkbox" value="true">
-        <input type="hidden" name="seatList[[s_row]]" data-bind="s_row_input">
-        <input type="hidden" name="seatList[[s_column]]" data-bind="s_column_input">
+        <input name="seatList[][checked]:string" type="checkbox" value="true" data-bind="s_checked">
+        <input type="hidden" name="seatList[][s_row]" data-bind="s_row_input">
+        <input type="hidden" name="seatList[][s_column]" data-bind="s_column_input">
     </div>
     <div class="medium-3 columns" id="posizione">
         <div class="row collapse">
