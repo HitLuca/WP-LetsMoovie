@@ -57,7 +57,7 @@ public class VerificationMailSender {
         email.addTo(registrationRequest.getEmail());
         email.setFrom("info@letsmoovie.com");
         email.setSubject("Verify your account");
-        email.setTemplateId("62710ec1-548f-4b62-a4fa-757187194b9f");
+        email.setTemplateId("fa28abaf-6b95-44a2-b4a2-d4f21fe730c8");
         email.setText("Benvenuto "+registrationRequest.getUsername()+"\nClicca "+url+" per confermare la registrazione");
 
         if(sendEmail) {

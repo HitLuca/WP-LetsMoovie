@@ -42,7 +42,7 @@ public class PasswordRecoveryMailSender {
         email.addTo(userEmail);
         email.setFrom("info@letsmoovie.com");
         email.setSubject("Password Recovery");
-        email.setTemplateId("62710ec1-548f-4b62-a4fa-757187194b9f");
+        email.setTemplateId("fa28abaf-6b95-44a2-b4a2-d4f21fe730c8");
 
         email.setText("Ciao "+username+" Abbiamo ricevuto una richiesta di cambio password, clicca Clicca "+url+" per procedere con l'operazione");
 

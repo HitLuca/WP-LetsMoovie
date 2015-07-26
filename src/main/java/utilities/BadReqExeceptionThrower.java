@@ -33,6 +33,12 @@ public class BadReqExeceptionThrower {
             throw new BadRequestException(ErrorCode.NOT_LOGGED_IN);
     }
 
+    public static void checkNotUserLogged(HttpServletRequest request) throws BadRequestException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("username") != null)
+            throw new BadRequestException(ErrorCode.ALREADY_LOGGED);
+    }
+
     /**
      * Lancia eccezione se l'utente è USER e sta cercando di accedere a un nome utente diverso dal suo
      *
