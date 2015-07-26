@@ -112,8 +112,6 @@ public class DebitCard extends HttpServlet {
 
             //Se sei un utente che cerca sè stesso (devi andare in un tempio buddhista) e se non esisti allora ci sono
             // problemi gravi nel db del server
-            if (numbers.size() == 0)
-                throw new BadRequestException();
 
             opRes = new DebitCardResponse(numbers);
 

@@ -44,7 +44,7 @@ public class PasswordRecoveryMailSender {
         email.setSubject("Password Recovery");
         email.setTemplateId("fa28abaf-6b95-44a2-b4a2-d4f21fe730c8");
 
-        email.setText("Ciao "+username+" Abbiamo ricevuto una richiesta di cambio password, clicca Clicca "+url+" per procedere con l'operazione");
+        email.setHtml("Ciao "+username+" Abbiamo ricevuto una richiesta di cambio password, clicca <a href=\""+url+"\">qui</a>  per procedere con l'operazione");
 
         if(sendEmail) {
             try {
