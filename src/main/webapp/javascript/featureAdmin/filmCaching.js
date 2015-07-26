@@ -27,7 +27,9 @@ var Films = {
             }
         };
         Transparency.render(set[0], data.filmList, directives);
-        set.select2();
+        set.select2({
+            placeholder: "Scegli un film dalla lista"
+        });
         set.on("select2:select", function (event) {
             event.preventDefault();
             $("#sceltaFilm").trigger("submit");

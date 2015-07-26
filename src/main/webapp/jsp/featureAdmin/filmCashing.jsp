@@ -22,6 +22,7 @@
                             <div class="medium-6 medium-centered columns">
                                 <label>Lista film
                                     <select name="id_film" id="listaFilm">
+                                        <option></option>
                                         <option data-bind="film_title"></option>
                                     </select>
                                 </label>

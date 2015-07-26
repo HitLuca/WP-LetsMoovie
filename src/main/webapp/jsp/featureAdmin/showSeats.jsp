@@ -19,21 +19,22 @@
         <div class="small-12 columns">
             <div class="row">
                 <div class="medium-4 columns">
-                    <h4>Selezionare il giorno</h4>
+                    <h4>Seleziona il giorno</h4>
                 </div>
                 <div class="medium-4 columns end">
                     <form id="sceltaData" action="/api/adminData/getShows">
-                        <input name="date" type="text" id="datepicker">
+                        <input name="date" type="text" id="datepicker" placeholder="Clicca per scegliere la data">
                     </form>
                 </div>
             </div>
             <div class="row">
                 <div class="medium-4 columns">
-                    <h4>Selezionare lo spettacolo</h4>
+                    <h4>Seleziona lo spettacolo</h4>
                 </div>
                 <div class="medium-4 columns end">
                     <form id="sceltaSpettacolo" action="/api/admin/getShowSeats">
                         <select id="Film" name="id_show" data-bind="showDataList">
+                            <option></option>
                             <option value="" data-bind="film_Name"></option>
                         </select>
                     </form>

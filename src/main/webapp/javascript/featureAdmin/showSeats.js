@@ -20,7 +20,9 @@ var getShowList = {
             }
         };
         Transparency.render(selectItem[0], data.showDataList, directives);
-        $("#Film").select2();
+        $("#Film").select2({
+            placeholder: "Scegli un film dalla lista"
+        });
     },
     wrongData: function (data) {
         alertify.error("Data non valida");
