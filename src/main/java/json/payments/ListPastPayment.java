@@ -22,7 +22,7 @@ public class ListPastPayment implements OperationResult {
         pastPaymentList = new ArrayList<>();
 
         for (CompletePayments c : cp) {
-            pastPaymentList.add(new PastPayment(c, u, username));
+            pastPaymentList.add(new PastPayment(c, u, username, c.getCode()));
         }
     }
 }

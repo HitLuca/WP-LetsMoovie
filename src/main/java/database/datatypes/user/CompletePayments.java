@@ -12,7 +12,6 @@ public class CompletePayments implements OperationResult {
 
     @Expose
     private String code;
-
     @Expose
     private String payment_date;
     @Expose
