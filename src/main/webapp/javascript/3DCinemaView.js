@@ -164,7 +164,27 @@ var Cinema3DView = {
         Cinema3DView.scene = new THREE.Scene();
 
 
-        // world
+        Cinema3DView.freeChair = new THREE.MeshLambertMaterial({
+            color: 0xffffcc,
+            shading: THREE.flatShading
+        });
+        Cinema3DView.selectedChair =  new THREE.MeshLambertMaterial({
+            color: 0x009c06,
+            shading: THREE.flatShading
+        });
+        Cinema3DView.hoveringChair = new THREE.MeshLambertMaterial({
+            color: 0xaaff88,
+            shading: THREE.flatShading
+        });
+        Cinema3DView.hoveringChairSelected = new THREE.MeshLambertMaterial({
+            color: 0xffaa88,
+            shading: THREE.flatShading
+        });
+        Cinema3DView.busySeatMaterial = new THREE.MeshLambertMaterial({
+            color:  0xffffcc,
+            transparent: true,
+            opacity: 0.4,
+            shading: THREE.flatShading});
 
 
         Cinema3DView.raycaster = new THREE.Raycaster();
@@ -358,7 +378,7 @@ var Cinema3DView = {
         var footColor = 0x777777;
 
         var standMaterial = new THREE.MeshLambertMaterial({color: footColor});
-        var chairMaterial = Materials.freeChair;
+        var chairMaterial = Materials.freeChair.clone();
 
         Cinema3DView.freeSeatMesh = Cinema3DView.computeSeat(standMaterial, chairMaterial, false);
         Cinema3DView.freeSeatMesh.name = "seat";
