@@ -25,7 +25,10 @@
                         <strong>Luca Alberigo</strong>
 
                         <p>Front End Developer<br>
-                            Global Tactics Designer</p>
+                            Global Tactics Designer<br>
+                            Chief Usability Officer
+                        </p>
+
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
@@ -35,7 +38,10 @@
                     <div class="medium-8 columns wow flipInY">
                         <strong>Alessandro Bacchiega</strong>
 
-                        <p>Front End Developer</p>
+                        <p>Front End Developer<br>
+                            Chief Creative Director<br>
+                            Dynamic Brand Strategist
+                        </p>
                     </div>
                 </div>
             </div>
@@ -47,9 +53,10 @@
                     <div class="medium-8 columns wow flipInY">
                         <strong>Luca Bosotti</strong>
 
-                        <p>Back End developer<br>
-                            Future Research Developer
-                            Communication Assistant</p>
+                        <p>Back End Developer<br>
+                            Future Research Developer<br>
+                            Central Configuration Architect
+                        </p>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
@@ -74,7 +81,8 @@
                         <strong>Carlo Mion</strong>
 
                         <p>Front End Developer<br>
-                            Legacy Functionality Representative
+                            Legacy Functionality Representative<br>
+                            Central Quality Orchestrator
                         </p>
                     </div>
                 </div>
@@ -86,7 +94,9 @@
                         <strong>Luca Simonetto</strong>
 
                         <p>Back End Developer<br>
-                            Chief Data Representative</p>
+                            Chief Data Representative<br>
+                            Direct Integration Producer
+                        </p>
                     </div>
                 </div>
             </div>

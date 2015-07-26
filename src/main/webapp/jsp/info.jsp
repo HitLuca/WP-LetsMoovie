@@ -19,7 +19,7 @@
             <div class="panel callout radious">
                 <p>
                     <strong>Orari:</strong>
-                    Lunedì - Domenica 14:00 - 24:00</p>
+                    Lunedì - Domenica 15:00 - 02:00</p>
 
                 <p>
                     <strong>Telefono:</strong>
