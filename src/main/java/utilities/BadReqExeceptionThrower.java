@@ -12,6 +12,8 @@ import utilities.InputValidator.ModelValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -186,7 +188,17 @@ public class BadReqExeceptionThrower {
         if (time.getLocalDate().isEqual(LocalDate.now()))
             if (time.getLocalTime().isBefore(LocalTime.now()))
                 throw new BadRequestException(ErrorCode.END_OF_TIME);
+    }
 
+    public static void checkTime(String payment_date, String payment_time, String todayDate, String todayTime) throws BadRequestException {
+        if (Date.valueOf(payment_date).before(Date.valueOf(todayDate))) {
+            throw new BadRequestException(ErrorCode.BACK_IN_TIME);
+        } else if (Date.valueOf(payment_date).equals(Date.valueOf(todayDate))) {
+            if (Time.valueOf(payment_time).before(Time.valueOf(todayTime))) {
+                throw new BadRequestException(ErrorCode.BACK_IN_TIME);
+            }
+        } else {
 
+        }
     }
 }

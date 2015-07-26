@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.sendgrid.SendGrid;
+import com.sendgrid.SendGridException;
 import database.DatabaseConnection;
 import database.datatypes.film.FilmData;
 import database.datatypes.film.FilmIncome;
@@ -13,6 +15,7 @@ import database.datatypes.seat.Seat;
 import database.datatypes.seat.SeatCount;
 import database.datatypes.show.Show;
 import database.datatypes.user.Payment;
+import database.datatypes.user.UserData;
 import database.datatypes.user.UserPaid;
 import database.mappers.*;
 import json.OperationResult;
@@ -44,8 +47,10 @@ import java.util.List;
  */
 @WebServlet(name = "AdminFunctions", urlPatterns = "/api/admin/*")
 public class AdminFunctions extends HttpServlet {
-    Gson gsonWriter;
-    Gson gsonReader;
+    private Gson gsonWriter;
+    private Gson gsonReader;
+    private SendGrid sendGrid;
+    private boolean sendEmail;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -66,10 +71,10 @@ public class AdminFunctions extends HttpServlet {
 
         try {
             //Controllo che l'utente sia loggato
-            //BadReqExeceptionThrower.checkUserLogged(request);
+            //BadReqExeceptionThrower.checkUserLogged(request); //TODO:mettere apposto
 
             //Controllo che abbia i permessi adatti
-            //BadReqExeceptionThrower.checkAdminSuperAdmin(request);
+            //BadReqExeceptionThrower.checkAdminSuperAdmin(request);//TODO:mettere apposto
 
             RestUrlMatcher rs = new RestUrlMatcher(request.getPathInfo());
             String function = rs.getParameter();
@@ -118,9 +123,16 @@ public class AdminFunctions extends HttpServlet {
                                         String ticket_type = p.getTicket_type();
                                         float price = notDecidedMapper.getTicketPrice(ticket_type);
                                         String username = p.getUsername();
-
+                                        UserData userData = userMapper.getUserData(username);
                                         userMapper.addCredit(username, price);
                                         userMapper.deletePayment(p);
+                                        String film_title = filmMapper.getFilmTitle((showMapper.getShowData(payments.get(0).getId_show())).getId_film()).getFilm_title();
+
+                                        Seat s = seatMapper.getSeatFromId(p.getId_seat());
+                                        SeatDetailRequest seatDetailRequest = new SeatDetailRequest(String.valueOf(s.getRow()), String.valueOf(s.getColumn()));
+                                        seatDetailRequest.setTicket_type(p.getTicket_type());
+                                        seatDetailRequest.setPrice(notDecidedMapper.getTicketPrice(p.getTicket_type()));
+                                        sendEmail(userData.getEmail(), userData.getName(), userData.getSurname(), p, new ArrayList<SeatDetailRequest>(Arrays.asList(seatDetailRequest)), userMapper, film_title, 100f);
 
                                         seatMapper.insertSeatReservation(p.getId_show(), p.getId_seat(), newStatus);
                                     }
@@ -323,6 +335,18 @@ public class AdminFunctions extends HttpServlet {
 
                     BadReqExeceptionThrower.checkDeleteReservation(deleteReservationRequest);
 
+                    LocalDateTime localDateTime = LocalDateTime.now();
+
+                    String todayDate = localDateTime.format(dateFormatter);
+                    String todayTime = localDateTime.format(timeFormatter);
+
+                    List<Payment> payments = userMapper.getPaymentFromCode(code);
+
+                    String payment_date = payments.get(0).getPayment_date();
+                    String payment_time = payments.get(0).getPayment_time();
+
+                    BadReqExeceptionThrower.checkTime(payment_date, payment_time, todayDate, todayTime);
+
                     if (seatDetailRequests != null) {
                         for (SeatDetailRequest sdr : seatDetailRequests) {
                             BadReqExeceptionThrower.checkRegex(sdr);
@@ -332,30 +356,40 @@ public class AdminFunctions extends HttpServlet {
                     if (seatDetailRequests != null && !code.equals("")) {
                         float totalRefund = 0f;
                         float refoundPercentage = 0.8f;
+                        int room_number = showMapper.getRoomNumberFromCode(code);
+                        int id_show = payments.get(0).getId_show();
+                        String username = userMapper.getPaymentFromCode(code).get(0).getUsername();
                         for (SeatDetailRequest sdr : seatDetailRequests) {
-                            if (sdr.isChecked().equals("true")) {
-                                float ticket_price = Float.parseFloat(sdr.getPrice());
-                                int room_number = showMapper.getRoomNumberFromCode(code);
-                                int id_seat = seatMapper.getIdSeat(room_number, Integer.parseInt(sdr.getS_row()), Integer.parseInt(sdr.getS_column()));
-                                userMapper.deletePaymentFromCode(code, id_seat);
-                                totalRefund += ticket_price;
+                            if (sdr.getChecked() != null) {
+                                if (sdr.getChecked().equals("true")) {
+                                    int id_seat = seatMapper.getIdSeat(room_number, Integer.parseInt(sdr.getS_row()), Integer.parseInt(sdr.getS_column()));
+                                    float ticket_price = seatMapper.getSeatTicketPrice(id_seat, id_show);
+                                    String ticket_type = userMapper.getPaymentData(id_show, id_seat).getTicket_type();
+
+                                    sdr.setTicket_type(ticket_type);
+                                    sdr.setPrice(ticket_price);
+
+                                    userMapper.deletePaymentFromCode(code, id_seat);
+                                    totalRefund += ticket_price;
+                                }
                             }
                         }
                         float computedRefound = totalRefund * refoundPercentage;
-                        String username = userMapper.getPaymentFromCode(code).get(0).getUsername();
                         userMapper.addCredit(username, computedRefound);
+                        String film_title = filmMapper.getFilmTitle((showMapper.getShowData(payments.get(0).getId_show())).getId_film()).getFilm_title();
+                        UserData userData = userMapper.getUserData(username);
+                        String name = userData.getName();
+                        String surname = userData.getSurname();
+                        String email = userData.getEmail();
+                        sendEmail(email, name, surname, payments.get(0), seatDetailRequests, userMapper, film_title, refoundPercentage);
                     } else if (seatDetailRequests == null && !code.equals("")) {
-                        List<Payment> paymentList = userMapper.getPaymentFromCode(code);
-
-                        String payment_date = paymentList.get(0).getPayment_date();
-                        String payment_time = paymentList.get(0).getPayment_time();
-                        String username = paymentList.get(0).getUsername();
-                        int id_show = paymentList.get(0).getId_show();
+                        String username = payments.get(0).getUsername();
+                        int id_show = payments.get(0).getId_show();
 
                         List<SeatDetailResponse> seatDetailResponses = new ArrayList<>();
                         Seat seat;
 
-                        for (Payment p : paymentList) {
+                        for (Payment p : payments) {
                             seat = seatMapper.getSeatFromId(p.getId_seat());
                             seatDetailResponses.add(new SeatDetailResponse(seat.getRow(), seat.getColumn(), p.getTicket_type(), notDecidedMapper.getTicketPrice(p.getTicket_type())));
                         }
@@ -383,8 +417,46 @@ public class AdminFunctions extends HttpServlet {
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonWriter = gsonBuilder.disableHtmlEscaping().create();
         gsonReader = new Gson();
+
+        String api_user = System.getenv("API_USER");
+        String api_key = System.getenv("API_KEY");
+        sendGrid = new SendGrid(api_user, api_key);
+        try {
+            sendEmail = System.getenv("SEND_EMAIL").equals("TRUE");
+        } catch (Exception e) {
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    }
+
+    private void sendEmail(String userEmail, String name, String surname, Payment payment, List<SeatDetailRequest> seats, UserMapper userMapper, String film_title, float refoundPercentage) {
+
+        String message = "Salve " + name + " " + surname + ",<br>La informiamo che le prenotazioni dei seguenti posti, per la proiezione "
+                + film_title + " in data " + payment.getPayment_date() + ", alle ore " + payment.getPayment_time() + ", sono state disdette:<br><br>";
+        for (SeatDetailRequest sdr : seats) {
+            if (sdr.getChecked() != null) {
+                if (sdr.getChecked().equals("true")) {
+                    message += "Fila: " + (sdr.getS_row() + 1) + "<br>Posto: " + (sdr.getS_column() + 1) + "<br>Tipo biglietto: " + sdr.getTicket_type() + "<br>Prezzo: Euro " + sdr.getPrice() + "<br><br>";
+                }
+            }
+        }
+        message += "La informiamo inoltre che il " + refoundPercentage + "% dell'intero importo pagato è stato accreditato nel suo account.";
+
+        System.out.println(message);
+
+        SendGrid.Email email = new SendGrid.Email();
+        email.addTo(/*userEmail*/ "luca.simonetto.94@gmail.com"); //TODO:mettere apposto
+        email.setFrom("info@letsmoovie.com");
+        email.setSubject("Prenotazione disdetta");
+        email.setTemplateId("fa28abaf-6b95-44a2-b4a2-d4f21fe730c8");
+        email.setHtml(message);
+
+        if (sendEmail) {
+            try {
+                sendGrid.send(email).getMessage();
+            } catch (SendGridException e) {
+            }
+        }
     }
 }

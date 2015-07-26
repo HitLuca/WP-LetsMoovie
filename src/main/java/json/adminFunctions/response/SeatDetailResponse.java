@@ -20,7 +20,7 @@ public class SeatDetailResponse {
         this.s_row = Integer.parseInt(sdr.getS_row());
         this.s_column = Integer.parseInt(sdr.getS_column());
         this.ticket_type = sdr.getTicket_type();
-        this.price = Float.parseFloat(sdr.getPrice());
+        this.price = sdr.getPrice();
     }
 
     public SeatDetailResponse(int s_row, int s_column, String ticket_type, float price) {
