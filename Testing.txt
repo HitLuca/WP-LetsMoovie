@@ -2,11 +2,11 @@
 URL: http://localhost:8080/info
 Descrizione: Togliere Ecco alcune informazioni su di noi che potrebbero servirti:
 
-2-Modificare descrizione cookies
+2-Modificare descrizione cookies FATTO!
 URL: http://localhost:8080/privacy
 Descrizione: Questo sito fa uso di cookie per migliorare l’esperienza di navigazione degli utenti e per raccogliere informazioni sull’utilizzo del sito stesso. Utilizziamo sia cookie tecnici sia cookie di parti terze per inviare messaggi promozionali sulla base dei comportamenti degli utenti. Può conoscere i dettagli consultando la nostra privacy policy qui. Proseguendo nella navigazione si accetta l’uso dei cookie; in caso contrario è possibile abbandonare il sito.
 
-3-Orari cinema errati
+3-Orari cinema errati FATTO"
 URL:http://localhost:8080/info
 Descrizione: Il cinema apre alle 15:00 e chiude al termine del film delle 24:00 (~02:00)
 

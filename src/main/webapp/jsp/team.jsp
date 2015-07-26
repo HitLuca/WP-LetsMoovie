@@ -23,6 +23,9 @@
                     </div>
                     <div class="medium-8 columns wow flipInY">
                         <strong>Luca Alberigo</strong>
+
+                        <p>Front End Developer<br>
+                            Global Tactics Designer</p>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
@@ -31,6 +34,8 @@
                     </div>
                     <div class="medium-8 columns wow flipInY">
                         <strong>Alessandro Bacchiega</strong>
+
+                        <p>Front End Developer</p>
                     </div>
                 </div>
             </div>
@@ -41,6 +46,10 @@
                     </div>
                     <div class="medium-8 columns wow flipInY">
                         <strong>Luca Bosotti</strong>
+
+                        <p>Back End developer<br>
+                            Future Research Developer
+                            Communication Assistant</p>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
@@ -49,6 +58,10 @@
                     </div>
                     <div class="medium-8 columns wow flipInY">
                         <strong>Marco Federici</strong>
+
+                        <p>Back End Developer<br>
+                            Central Interactions Manager<br>
+                            3D Graphic Designer</p>
                     </div>
                 </div>
             </div>
@@ -59,6 +72,10 @@
                     </div>
                     <div class="medium-8 columns wow flipInY">
                         <strong>Carlo Mion</strong>
+
+                        <p>Front End Developer<br>
+                            Legacy Functionality Representative
+                        </p>
                     </div>
                 </div>
                 <div class="medium-6 centered columns">
@@ -67,6 +84,9 @@
                     </div>
                     <div class="medium-8 columns wow flipInY">
                         <strong>Luca Simonetto</strong>
+
+                        <p>Back End Developer<br>
+                            Chief Data Representative</p>
                     </div>
                 </div>
             </div>
