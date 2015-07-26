@@ -2,6 +2,7 @@ package servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import database.ShowsCompression;
 import json.payments.PdfTicketCreator;
 import json.tickets.TicketData;
 
@@ -22,43 +23,18 @@ import java.util.List;
 @WebServlet(name = "Test", urlPatterns = "/api/test")
 public class Test extends HttpServlet {
     private Gson gsonWriter;
+    private final ShowsCompression showsCompression = new ShowsCompression();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        showsCompression.decompressShows();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        OutputStream out = response.getOutputStream();
-        List<TicketData> ticketDatas = new ArrayList<>();
-
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-        ticketDatas.add(new TicketData("titolo film", "2015-07-26", "18:48", "5", "8", "Etrunon", "21:54", "2015-07-26", "intero", 8f, "ultracodice", 2));
-
-
-        response.setContentType("application/pdf");
-        response.addHeader("Content-Type", "application/force-download");
-        response.addHeader("Content-Disposition", "attachment; filename=\"yourFile.pdf\"");
-
-        String pathToWeb = getServletContext().getRealPath(File.separator);
-
-        PdfTicketCreator pd = new PdfTicketCreator();
-
         try {
-            response.getOutputStream().write(pd.createPdf(ticketDatas, getServletContext()).toByteArray());
+
+            showsCompression.compressShows(2);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,8 +43,6 @@ public class Test extends HttpServlet {
     @Override
     public void init() throws ServletException {
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        gsonWriter = gsonBuilder.create();
+
     }
 }
