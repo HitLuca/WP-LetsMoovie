@@ -11,7 +11,6 @@ var Map = {
         Map.listeners();
     },
     listeners: function () {
-        //TODO: USATO PER DEBUG
         $(Map.id).on("onSeatAdd", Tickets.addSeat);
         $(Map.id).on("onRemoveAdd", Tickets.removeSeat);
     }
@@ -110,7 +109,6 @@ var Seats = {
 var Reservation = {
     redirectUrl: "/payment/",
     successPost: function (data) {
-        //    TODO: REDIRECT A PAGINA DI PAGAMENTO
         Notifications.saveNotification("warning", "Completa il pagamento per prenotare i posti!");
         window.location.assign(Reservation.redirectUrl + data.reservationCode);
     },
