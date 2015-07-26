@@ -67,9 +67,9 @@
                     <div id="panel2" class="content">
                         <div class="content-box section-box">
                             <c:set scope="request" value="false" var="orario"/>
-                                <c:import url="template/filmItemList.jsp"/>
-                            </div>
+                            <c:import url="template/filmItemList.jsp"/>
                         </div>
+                    </div>
                 </dd>
             </dl>
 
