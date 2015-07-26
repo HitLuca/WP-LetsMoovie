@@ -14,7 +14,7 @@
                     <p align="justify">
                         Se per qualsiasi motivo riscontrassi difficoltà nell'utilizzo del sito,
                         del sistema di prenotazione dei posti, durante le operazioni di pagamento o,
-                        più semplicemente, avessi qualche domanda particolare da porci, sentiti
+                        più semplicemente, avessi qualche domanda particolare, sentiti
                         libero di contattarci con una email oppure una telefonata.<br><br>
                         Tutte le informazioni utili puoi trovarle su
                         <a href="/info">questa</a>

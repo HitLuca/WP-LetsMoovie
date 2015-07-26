@@ -136,7 +136,6 @@
 
                 </div>
             </div>
-            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
         </div>
 
     </div>
