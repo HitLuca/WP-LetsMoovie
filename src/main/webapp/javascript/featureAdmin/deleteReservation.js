@@ -3,7 +3,6 @@ numeral.language('it');
 var getCode = {
     code: null,
     correctCode: function (data) {
-        console.log(data);
         $(".checkbox-biglietto").removeClass("hide");
         var directives = {
             price: {
@@ -22,19 +21,31 @@ var getCode = {
                 }
             },
             s_row_input: {
-                value: function () {
+                value: function (params) {
                     return this.s_row;
+                },
+                name: function (params) {
+                    return "seatList[" + params.index + "][s_row]";
                 }
             },
             s_column_input: {
                 value: function () {
                     return this.s_column;
+                },
+                name: function (params) {
+                    return "seatList[" + params.index + "][s_column]";
+                }
+            },
+            s_checked: {
+                name: function (params) {
+                    return "seatList[" + params.index + "][checked]:string";
                 }
             }
         };
         Transparency.render($("#postiPrenotazione")[0], data, directives);
         getCode.code = $("#sentCode").val();
         $("#reservationCode").val(getCode.code);
+        $("input:checkbox").removeAttr("checked");
     },
     wrongCode: function (data) {
         var errorCode = data.responseJSON.errorCode;
@@ -57,9 +68,22 @@ var getCode = {
 var cancellaPrenotazione = {
     successCancella: function () {
         alertify.success("Prenotazione cancellata con successo!");
+        $("#codicePrenotazione").trigger('submit');
     },
-    failCancella: function () {
-        alertify.error("Errore nel cancellare la prenotazione");
+    failCancella: function (data) {
+        var JSON = data.responseJSON;
+        var errorCode = JSON.errorCode;
+        if (errorCode != null) {
+            switch (errorCode) {
+                case 2:
+                    alertify.warning("Nessun biglietto selezionato!");
+                    break;
+                default:
+                    alertify.error("Errore nel cancellare la prenotazione");
+            }
+        } else {
+            alertify.error("Errore nel cancellare la prenotazione");
+        }
     }
 };
 

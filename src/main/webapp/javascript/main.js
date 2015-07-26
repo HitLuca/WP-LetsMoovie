@@ -4,14 +4,15 @@ var Forms = {
     loadingButton: function (button) {
         button.attr("disabled", '');
         if (button.hasClass("ladda-button")) {
-            Forms.l = Ladda.create(button[0]);
-            Forms.l.start();
+            var l = Ladda.create(button[0]);
+            button.data('ladda', l);
+            l.start();
         }
     },
     enableButton: function (button) {
         button.removeAttr("disabled");
-        if (Forms.l != null)
-            Forms.l.stop();
+        if (button.data('ladda') != null)
+            button.data('ladda').stop();
     },
     ajax: function (jsonData, url, form) {
         return $.ajax({
@@ -36,7 +37,8 @@ var Forms = {
 
             //Serializza la form in JSON
             var Json = form.serializeJSON({
-                parseBooleans: true
+                parseBooleans: true,
+                useIntKeysAsArrayIndex: true
             });
             // Stop form from submitting normally
 

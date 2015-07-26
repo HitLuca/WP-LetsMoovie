@@ -371,6 +371,7 @@ public class AdminFunctions extends HttpServlet {
                         int room_number = showMapper.getRoomNumberFromCode(code);
                         int id_show = payments.get(0).getId_show();
                         String username = userMapper.getPaymentFromCode(code).get(0).getUsername();
+
                         for (SeatDetailRequest sdr : seatDetailRequests) {
                             if (sdr.getChecked() != null) {
                                 if (sdr.getChecked().equals("true")) {
@@ -394,6 +395,7 @@ public class AdminFunctions extends HttpServlet {
                         String surname = userData.getSurname();
                         String email = userData.getEmail();
                         sendEmail(email, name, surname, payments.get(0), seatDetailRequests, userMapper, film_title, 80f);
+                        outputStream.print(gsonWriter.toJson(null));
                     } else if (seatDetailRequests == null && !code.equals("")) {
                         String username = payments.get(0).getUsername();
                         int id_show = payments.get(0).getId_show();
@@ -408,6 +410,7 @@ public class AdminFunctions extends HttpServlet {
                         outputStream.print(gsonWriter.toJson(seatDetailResponses));
                         sessionSql.close();
                     }
+
                     break;
                 }
             }
