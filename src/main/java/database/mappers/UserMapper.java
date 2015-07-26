@@ -275,7 +275,7 @@ public interface UserMapper {
     //TODO:Test
     @Select("SELECT * " +
             "FROM payments " +
-            "WHERE payment_date=#{payment_date}")
+            "WHERE payment_date::DATE=#{payment_date}::DATE AND payment_time::TIME>#{payment_time}::TIME")
     List<Payment> getDayPaymentsAfterTime(@Param("payment_date") String payment_date, @Param("payment_time") String payment_time);
 
     //TODO:Test
