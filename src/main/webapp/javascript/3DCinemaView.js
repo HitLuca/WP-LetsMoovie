@@ -140,9 +140,9 @@ var Cinema3DView = {
 
         Cinema3DView.seats = [];
 
-        Cinema3DView.renderer = new THREE.WebGLRenderer({antialias: true});
+        Cinema3DView.renderer = new THREE.WebGLRenderer({antialias: false});
         Cinema3DView.renderer.setClearColor(0x000000, 1);
-        Cinema3DView.renderer.setPixelRatio($(Cinema3DView.container).width()*1.2 / $(Cinema3DView.container).height()*1.2);
+        Cinema3DView.renderer.setPixelRatio($(Cinema3DView.container).width()*1.0 / $(Cinema3DView.container).height()*1.0);
         Cinema3DView.renderer.setSize($(cont).width(), $(cont).height());
 
         Cinema3DView.camera = new THREE.PerspectiveCamera(60,$(Cinema3DView.container).width() / $(Cinema3DView.container).height(), 1, 3000);
@@ -657,12 +657,14 @@ var Cinema3DView = {
             }
             else if(Cinema3DView.seatMap[clicked.parent.uuid].status == 3){
                 Cinema3DView.seatMap[clicked.parent.uuid].status = 4;
-                if(Cinema3DView.seatMap[clicked.parent.uuid].changed==false)
+                if(Cinema3DView.seatMap[clicked.parent.uuid].changed==false || Cinema3DView.seatMap[clicked.parent.uuid].changed==null)
                 {
+                    Cinema3DView.seatMap[clicked.parent.uuid].changed=true;
                     $(Cinema3DView.container).trigger("onSeatChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
                 }
                 else
                 {
+                    Cinema3DView.seatMap[clicked.parent.uuid].changed=false;
                     $(Cinema3DView.container).trigger("onResetChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
                 }
                 //Cinema3DView.lastLight.intensity = 0;
@@ -682,12 +684,14 @@ var Cinema3DView = {
             else if(Cinema3DView.seatMap[clicked.parent.uuid].status == 4){
                 Cinema3DView.seatMap[clicked.parent.uuid].status = 3;
                 //Cinema3DView.lastLight.intensity = 0;
-                if(Cinema3DView.seatMap[clicked.parent.uuid].changed==false)
+                if(Cinema3DView.seatMap[clicked.parent.uuid].changed==false || Cinema3DView.seatMap[clicked.parent.uuid].changed==null)
                 {
+                    Cinema3DView.seatMap[clicked.parent.uuid].changed=true;
                     $(Cinema3DView.container).trigger("onSeatChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
                 }
                 else
                 {
+                    Cinema3DView.seatMap[clicked.parent.uuid].changed=false;
                     $(Cinema3DView.container).trigger("onResetChange",[Cinema3DView.seatMap[clicked.parent.uuid].x, Cinema3DView.seatMap[clicked.parent.uuid].y]);
                 }
                 Cinema3DView.scene.remove(clicked.parent);
