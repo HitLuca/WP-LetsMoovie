@@ -21,6 +21,7 @@ var RoomsList = {
             }
         };
         Transparency.render(selectItem[0], data.roomList, directives);
+        selectItem.prepend("<option disabled selected hidden>Scegli una sala dalla lista</option>");
         if (!RoomsList.bind) {
             RoomsList.bind = true;
             selectItem.on("change", function () {
@@ -48,6 +49,8 @@ var RoomMap = {
     roomsSuccess: function (data) {
         Cinema3DView.init(RoomMap.map, data.showSeatList, data.column, data.row, false);
         RoomMap.bindEvents();
+        //    SALVA NUMERO SALA NELLA FORM USATA PER MODIFICARE I POSTI NELLA SALA
+        $("#roomId").val(RoomMap.id);
     },
     roomError: function () {
         alertify.error("Errore nel visualizzare la mappa");
@@ -62,15 +65,26 @@ var RoomMap = {
 var ChangedSeats = {
     form: $("#conferma"),
     posto: $("#posto"),
+    posti: $("#posti"),
     addSeat: function (event, x, y) {
+        event.preventDefault();
+
         var posto = ChangedSeats.posto.clone();
         posto.attr("id", "");
-        alertify.success("Aggiunto posto " + x + " " + y);
-        ChangedSeats.posto.append(posto);
+        posto.attr("data-coordinate", "" + x + "" + y);
+        posto.find("#s_row").removeAttr("disabled").val(x);
+        posto.find("#s_column").removeAttr("disabled").val(y);
+        alertify.success("Selezionato posto alla colonna " + (1 + x) + " fila " + (1 + y));
+        ChangedSeats.posto.after(posto);
 
     },
     removeSeat: function (event, x, y) {
-        alertify.success("Rimosso posto " + x + " " + y);
+        event.preventDefault();
+
+        var posto = ChangedSeats.posti.find("[data-coordinate='" + x + "" + y + "']");
+        posto.remove();
+
+        alertify.success("Posto deselezionato");
     },
     successPost: function (data) {
         alertify.succes("I posti selezionati sono stati correttamente modificati");

@@ -5,7 +5,7 @@
 <html>
 <c:url var="url" value="/jsp/layout/head.jsp">
     <c:param name="title" value="Modifica stato posto"/>
-    <c:param name="css" value="/css/updateStatus.css"></c:param>
+    <c:param name="css" value="/css/updateStatus.css"/>
 </c:url>
 <c:import url="${url}"/>
 <body>
@@ -41,13 +41,14 @@
                     </div>
                 </div>
             </div>
-            <form id="conferma" action="/api/admin/updateRoomSeatStatus">
-                <input type="hidden" id="roomId">
+            <form id="conferma" action="<c:url value="/api/admin/updateRoomSeatStatus"/>">
+                <input type="hidden" id="roomId" name="room_number">
 
-                <div id="posto">
-                    blablabla
-                    <input type="hidden" id="s_row">
-                    <input type="hidden" id="s_column">
+                <div id="posti">
+                    <div id="posto" data-coordinate="">
+                        <input type="hidden" id="s_row" name="seats[][row]" disabled>
+                        <input type="hidden" id="s_column" name="seats[][column]" disabled>
+                    </div>
                 </div>
                 <div class="row collapse">
                     <h4>Clicca su un posto per modificarne lo stato</h4>
@@ -69,6 +70,6 @@
 <script src="<c:url value="/lib/js/threejs/OBJLoader.min.js"/>"></script>
 
 <script src="<c:url value="/javascript/3DCinemaView.js"/>"></script>
-<script src="/javascript/featureAdmin/updateStatus.js"></script>
+<script src="<c:url value="/javascript/featureAdmin/updateStatus.js"/>"></script>
 </body>
 </html>
