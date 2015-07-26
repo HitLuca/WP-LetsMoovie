@@ -458,8 +458,6 @@ public class AdminFunctions extends HttpServlet {
         }
         message += "La informiamo inoltre che il " + refoundPercentage + "% dell'intero importo pagato è stato accreditato nel suo account.";
 
-        System.out.println(message);
-
         SendGrid.Email email = new SendGrid.Email();
         email.addTo(userEmail);
         email.setFrom("info@letsmoovie.com");
