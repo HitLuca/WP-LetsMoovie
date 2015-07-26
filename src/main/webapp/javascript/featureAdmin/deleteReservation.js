@@ -37,7 +37,20 @@ var getCode = {
         $("#reservationCode").val(getCode.code);
     },
     wrongCode: function (data) {
-        alertify.error("Codice inserito non valido");
+        var errorCode = data.responseJSON.errorCode;
+        if (errorCode != null) {
+            switch (errorCode) {
+                case 15:
+                {
+                    alertify.error("Lo spettacolo è già stato proiettato!");
+                }
+                    break;
+                default:
+                    alertify.error("Codice inserito non valido!");
+            }
+        } else {
+            alertify.error("Codice inserito non valido!");
+        }
     }
 };
 

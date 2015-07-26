@@ -19,11 +19,13 @@
 
                     <div class="row collapse">
                         <div class="medium-6 small-centered columns">
+                            <form id="salaCinema" action="/api/admin/getRoomSeats">
                             <label>Sale cinema
                                 <select id="listaSale" name="room_number" data-bind="roomList">
                                     <option data-bind="room_number"></option>
                                 </select>
                             </label>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -24,9 +24,10 @@ var RoomsList = {
         selectItem.prepend("<option disabled selected hidden>Scegli una sala dalla lista</option>");
         if (!RoomsList.bind) {
             RoomsList.bind = true;
-            selectItem.on("change", function () {
+            selectItem.on("change", function (event) {
+                event.preventDefault();
+                $("#salaCinema").trigger("submit");
                 RoomMap.id = $(this).find(":selected").attr("value");
-                RoomMap.getRoomMap(RoomMap.id);
             });
         }
     },
@@ -39,15 +40,8 @@ var RoomMap = {
     id: null,
     map: document.getElementById("roomMap"),
     url: "/api/viewRoom/",
-    getRoomMap: function (id) {
-        var request = $.ajax({
-            url: RoomMap.url + id
-        });
-        request.done(RoomMap.roomsSuccess);
-        request.fail(RoomMap.roomError);
-    },
     roomsSuccess: function (data) {
-        Cinema3DView.init(RoomMap.map, data.showSeatList, data.column, data.row, false);
+        Cinema3DView.init2(RoomMap.map, data.showSeatList, data.column, data.row, false, true);
         RoomMap.bindEvents();
         //    SALVA NUMERO SALA NELLA FORM USATA PER MODIFICARE I POSTI NELLA SALA
         $("#roomId").val(RoomMap.id);
@@ -66,7 +60,7 @@ var ChangedSeats = {
     form: $("#conferma"),
     posto: $("#posto"),
     posti: $("#posti"),
-    addSeat: function (event, x, y) {
+    addSeat: function (event, y, x) {
         event.preventDefault();
 
         var posto = ChangedSeats.posto.clone();
@@ -78,7 +72,7 @@ var ChangedSeats = {
         ChangedSeats.posto.after(posto);
 
     },
-    removeSeat: function (event, x, y) {
+    removeSeat: function (event, y, x) {
         event.preventDefault();
 
         var posto = ChangedSeats.posti.find("[data-coordinate='" + x + "" + y + "']");
@@ -96,5 +90,6 @@ var ChangedSeats = {
 
 $(function () {
     RoomsList.getRoomsInfo();
+    Forms.PostForm("salaCinema", RoomMap.roomsSuccess, RoomMap.roomError);
     Forms.PostForm("conferma", ChangedSeats.successPost, ChangedSeats.errorPost, false);
 });
