@@ -16,7 +16,7 @@
         <div class="small-12 columns">
             <div class="row">
                 <div class="large-12 columns">
-                    <h4>Inserisci il codice di una prenotazione per procedere alla sua cancellazione.</h4>
+                    <h4>Inserisci il codice di una prenotazione per procedere alla sua cancellazione</h4>
 
                     <form action="/api/admin/deleteReservation" id="codicePrenotazione">
                         <div class="row">
@@ -38,7 +38,7 @@
                     </form>
                 </div>
             </div>
-            <form action="/api/admin/deleteReservation" id="cancellaPrenotazione">
+            <form action="/api/admin/deleteReservation" id="cancellaPrenotazione" class="hide">
                 <input id="reservationCode" type="hidden" name="code">
                 <div class="row">
                     <div id="listaTickets" class="large-12 columns">

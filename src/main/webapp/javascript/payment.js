@@ -129,8 +129,19 @@ var Payment = {
         alertify.success("Il pagamento è andato a buon fine!");
         $("#paymentOk").foundation("reveal", "open");
     },
-    errorPayment: function(data) {
-        alertify.error("Errore nel processare il pagamento!");
+    errorPayment: function (data) {
+        var Json = data.responseJSON;
+        var errorCode = Json.errorCode;
+        if (errorCode != null) {
+            switch (errorCode) {
+                case 13:
+                    alertify.warning("Non hai abbastanza soldi!");
+                    break;
+                default:
+                    alertify.error("Errore nel processare il pagamento!");
+            }
+        } else
+            alertify.error("Errore nel processare il pagamento!");
     }
 };
 

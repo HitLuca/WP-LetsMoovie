@@ -164,23 +164,23 @@ var Cinema3DView = {
         Cinema3DView.scene = new THREE.Scene();
 
 
-        Cinema3DView.freeChair = new THREE.MeshLambertMaterial({
+        Materials.freeChair = new THREE.MeshLambertMaterial({
             color: 0xffffcc,
             shading: THREE.flatShading
         });
-        Cinema3DView.selectedChair = new THREE.MeshLambertMaterial({
+        Materials.selectedChair = new THREE.MeshLambertMaterial({
             color: 0x009c06,
             shading: THREE.flatShading
         });
-        Cinema3DView.hoveringChair = new THREE.MeshLambertMaterial({
+        Materials.hoveringChair = new THREE.MeshLambertMaterial({
             color: 0xaaff88,
             shading: THREE.flatShading
         });
-        Cinema3DView.hoveringChairSelected = new THREE.MeshLambertMaterial({
+        Materials.hoveringChairSelected = new THREE.MeshLambertMaterial({
             color: 0xffaa88,
             shading: THREE.flatShading
         });
-        Cinema3DView.busySeatMaterial = new THREE.MeshLambertMaterial({
+        Materials.busySeatMaterial = new THREE.MeshLambertMaterial({
             color: 0xffffcc,
             transparent: true,
             opacity: 0.4,

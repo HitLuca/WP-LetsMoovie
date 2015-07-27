@@ -37,12 +37,18 @@ var RoomsList = {
 };
 
 var RoomMap = {
+    bind: false,
     id: null,
     map: document.getElementById("roomMap"),
     url: "/api/viewRoom/",
     roomsSuccess: function (data) {
         Cinema3DView.init2(RoomMap.map, data.showSeatList, data.column, data.row, false, true);
-        RoomMap.bindEvents();
+        if (!RoomMap.bind) {
+            RoomMap.bind = true;
+            RoomMap.bindEvents();
+        }
+        ChangedSeats.posti.empty();
+        ChangedSeats.posti.append(ChangedSeats.posto);
         //    SALVA NUMERO SALA NELLA FORM USATA PER MODIFICARE I POSTI NELLA SALA
         $("#roomId").val(RoomMap.id);
     },

@@ -93,7 +93,7 @@ var Seats = {
         switch (JSON.errorCode) {
             case 10:
             {
-                Notifications.saveNotification("warning", "Devi aver effettuato l'accesso per visualizzare la sala!");
+                //Notifications.saveNotification("warning", "Devi aver effettuato l'accesso per visualizzare la sala!");
                 Session.redirectToLogin();
             }
                 break;

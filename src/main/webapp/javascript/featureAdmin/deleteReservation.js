@@ -3,6 +3,8 @@ numeral.language('it');
 var getCode = {
     code: null,
     correctCode: function (data) {
+        $("#cancellaPrenotazione").removeClass("hide");
+        $("#cancellaPrenotazione").addClass("animated fadeIn");
         $(".checkbox-biglietto").removeClass("hide");
         var directives = {
             price: {
@@ -62,12 +64,13 @@ var getCode = {
         } else {
             alertify.error("Codice inserito non valido!");
         }
+        $("#cancellaPrenotazione").addClass("hide");
     }
 };
 
 var cancellaPrenotazione = {
     successCancella: function () {
-        alertify.success("Prenotazione cancellata con successo!");
+        alertify.success("I posti selezionati sono stati cancellati con successo!");
         $("#codicePrenotazione").trigger('submit');
     },
     failCancella: function (data) {
