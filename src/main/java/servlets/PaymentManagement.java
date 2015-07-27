@@ -45,7 +45,6 @@ import java.util.List;
  * @apiError (10) {int} errorCode NOT_LOGGED_IN: l'utente non è loggato
  */
 @WebServlet(name = "PaymentManagement", urlPatterns = "/api/payment/*")
-//TODO: mapping Servlet con asterisco in più
 public class PaymentManagement extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;

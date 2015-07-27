@@ -42,8 +42,6 @@ public class SetNewPassword extends HttpServlet {
 
     PasswordRecoveryCodeCheck passwordRecoveryCodeCheck;
 
-    //TODO RITORNARE L'USERNAME
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //Inizializzo la sessione Sql
