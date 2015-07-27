@@ -116,6 +116,10 @@
         <servlet-name>batman</servlet-name>
         <jsp-file>/jsp/batman.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>editShowDuration</servlet-name>
+        <jsp-file>/jsp/featureAdmin/editShowDuration.jsp</jsp-file>
+    </servlet>
 
 
     <!-- MAPPING JPS-->
@@ -210,5 +214,9 @@
     <servlet-mapping>
         <servlet-name>batman</servlet-name>
         <url-pattern>/batman</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editShowDuration</servlet-name>
+        <url-pattern>/admin/editShowDuration/*</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -1,5 +1,6 @@
 package servlets;
 
+import com.google.gson.Gson;
 import database.ShowsCompression;
 import database.datatypes.show.Show;
 
@@ -21,14 +22,17 @@ public class Test extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         showsCompression.decompressShows();
+        response.setContentType("application/json");
+        response.getWriter().write(new Gson().toJson(null));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            showsCompression.compressShows(2);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String minuti = request.getParameter("minuti");
+        int i = Integer.parseInt(minuti);
+        showsCompression.compressShows(i);
+        response.setContentType("application/json");
+        response.getWriter().write(new Gson().toJson(null));
+
     }
 
     @Override

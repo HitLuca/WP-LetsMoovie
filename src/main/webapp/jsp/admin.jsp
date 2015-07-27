@@ -54,10 +54,20 @@
                         <div class="row">
                             <div class="medium-4 columns">
                                 <a href="/admin/updateStatus" class="button expand radius">
-                                    Modifica posto</a>
+                                    Modifica posti</a>
                             </div>
                             <div class="medium-8 columns">
                                 <p>Consente di modificare lo stato di un posto.</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="medium-4 columns">
+                                <a href="<c:url value="/admin/editShowDuration/"/>" class="button expand radius">
+                                    Modifica programmazione</a>
+                            </div>
+                            <div class="medium-8 columns">
+                                <p>Cambia la durata degli spettacoli</p>
                             </div>
                         </div>
                     </div>
