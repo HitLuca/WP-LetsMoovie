@@ -147,15 +147,6 @@ public class AdminData extends HttpServlet {
     }
 
     private OperationResult getReservationDetails() {
-
-        /*
-            Devo ritornare il numero di posti prenotati seguito dalla lista di tutti i sedili.
-            In più aggiungo film data spettacolo e sala.
-            //TODO: implementare getReservationDetails non appena si sanno cose sulla prenotazione
-
-         */
-
-
         return null;
     }
 

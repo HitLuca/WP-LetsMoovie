@@ -26,8 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-//TODO invalid mail lo tiriamo in quali situazioni?
-
 /**
  * @api {post} /api/passwordRecovery
  * @apiName PasswordRecovery
@@ -48,8 +46,6 @@ public class PasswordRecovery extends HttpServlet {
     Gson gsonWriter;
     Gson gsonReader;
     PasswordRecoveryMailSender passwordRecoveryMailSender;
-
-    //TODO Lanciare errore 7 se già presente la sessione
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

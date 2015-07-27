@@ -7,7 +7,6 @@ import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
 import database.datatypes.film.FilmData;
 import database.datatypes.show.ShowIdTime;
-import database.datatypes.show.ShowTime;
 import database.mappers.FilmMapper;
 import database.mappers.ShowMapper;
 import json.OperationResult;
@@ -25,9 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -110,7 +106,6 @@ public class FilmDay extends HttpServlet {
                 }*/
 
                 //Creo l'oggetto FilmAndShows e lo riempio
-                //TODO, errore? hours nel costruttore non serve
                 if(hours.size()>0) {
                     FilmAndShows filmAndShows = new FilmAndShows(filmData, hours, filmMapper);
                     filmAndShows.addHours(date.format(dateFormat), hours);
