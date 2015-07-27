@@ -25,9 +25,7 @@
             dei dati che successivamente verranno utilizzati per rispondere alle Sue richieste. Il conferimento dei dati
             è necessario
             per poter inoltarLe le informazioni che ci richiede. Non verranno diffusi o comunicati a terzi per nessuna
-            ragione,
-            potremmo invece utilizzarli, previo consenso, per mandarLe delle periodiche newsletter. La informiamo infine
-            che in
+            ragione. La informiamo infine che in
             relazione al trattamento potrà esercitare i diritti di cui all'articolo 7 della legge citata ed in
             particolare
             chiedere in qualsiasi momento al titolare, la cancellazione, l'aggiornamento, la modifica dei dati in nostri
@@ -36,11 +34,8 @@
 
         <h3><strong>Cookies</strong></h3>
 
-        <p align="justify">Questo sito fa uso di cookies per migliorare l’esperienza di navigazione degli utenti
-            e per raccogliere informazioni sull’utilizzo del sito stesso. Utilizziamo sia cookie tecnici sia cookie
-            di parti terze per inviare messaggi promozionali sulla base dei comportamenti degli utenti. Può conoscere
-            i dettagli consultando la nostra privacy policy qui. Proseguendo nella navigazione si accetta l’uso dei
-            cookie; in caso contrario è possibile abbandonare il sito.</p>
+        <p align="justify">Questo sito fa uso di cookie tecnici per migliorare l’esperienza di navigazione degli utenti.
+            Proseguendo nella navigazione si accetta l’uso dei cookie.</p>
     </div>
 
     <div class="push"></div>

@@ -88,6 +88,17 @@ public class AdminFunctions extends HttpServlet {
                     int room_number = Integer.parseInt(roomSeatRequest.getRoom_number());
 
                     int id_seat;
+
+                    LocalDateTime localDate = LocalDateTime.now();
+                    String todayDate = localDate.format(dateFormatter);
+                    String todayTime = localDate.format(timeFormatter);
+
+                    List<Payment> payments = userMapper.getDayPaymentsAfterTime(localDate.format(dateFormatter), localDate.format(timeFormatter));
+                    payments.addAll(userMapper.getPaymentsAfterDate(localDate.format(dateFormatter)));
+
+                    List<Show> shows = showMapper.getDayShowsAfterTime(localDate.format(dateFormatter), localDate.format(timeFormatter));
+                    shows.addAll(showMapper.getShowsAfterDate(localDate.format(dateFormatter)));
+
                     for (SeatRequest seatRequest : roomSeatRequest.getSeats()) {
                         seatRequest.setId_show("1");
                         seatRequest.setStatus("ok");
@@ -105,24 +116,11 @@ public class AdminFunctions extends HttpServlet {
 
                         String pastStatus = seatMapper.getSeatStatus(id_seat);
 
-                        LocalDateTime localDate = LocalDateTime.now();
-
-
-                        String todayDate = localDate.format(dateFormatter);
-                        String todayTime = localDate.format(timeFormatter);
-
                         switch (pastStatus) {
                             case "ok": //Il posto deve essere rotto
                             {
                                 String newStatus = "broken";
                                 seatMapper.updateSeatStatus(newStatus, id_seat);
-                                List<Payment> payments = userMapper.getDayPaymentsAfterTime(localDate.format(dateFormatter), localDate.format(timeFormatter));
-                                payments.addAll(userMapper.getPaymentsAfterDate(localDate.format(dateFormatter)));
-
-                                List<Show> shows = new ArrayList<>();
-
-                                shows = showMapper.getDayShowsAfterTime(localDate.format(dateFormatter), localDate.format(timeFormatter));
-                                shows.addAll(showMapper.getShowsAfterDate(localDate.format(dateFormatter)));
 
                                 for (Show show : shows) {
                                     if (show.getRoom_number() == room_number) {
@@ -155,9 +153,6 @@ public class AdminFunctions extends HttpServlet {
                             case "broken": //Il posto va inserito negli spettacoli
                             {
                                 String newStatus = "ok";
-
-                                List<Show> shows = showMapper.getDayShowsAfterTime(localDate.format(dateFormatter), localDate.format(timeFormatter));
-                                shows.addAll(showMapper.getShowsAfterDate(localDate.format(dateFormatter)));
 
                                 for (Show s : shows) {
                                     if (s.getRoom_number() == room_number) {

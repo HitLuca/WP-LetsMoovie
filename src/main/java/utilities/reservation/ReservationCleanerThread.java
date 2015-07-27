@@ -19,20 +19,21 @@ import java.util.concurrent.Semaphore;
  * Created by marco on 17/07/15.
  */
 public class ReservationCleanerThread extends Thread{
-    private final long CLEANROUTINETIME = 60 * 10;
+    private final long CLEANROUTINETIME = 60 * 5;
     private final int RESERVATION_CODE_SIZE = 17;
     int reservationIndex;
     private Map<String,TemporaryReservationRequest> pendingReservations;
     private Semaphore mutex;
     private Semaphore noRequest;
 
-    @Override
-    public void start()
+
+    public ReservationCleanerThread()
     {
         pendingReservations = new HashMap<>();
         mutex = new Semaphore(1,true);
         noRequest = new Semaphore(0,true);
         reservationIndex = 0;
+        System.out.println("Start");
     }
 
     public String add(TemporaryReservationRequest reservation, SqlSession session) throws BadRequestException {
@@ -134,13 +135,18 @@ public class ReservationCleanerThread extends Thread{
     @Override
     public void run()
     {
+        System.out.print("Entro");
         try {
             while (true) {
+                System.out.println("Mi metto in attesa che qualcuno risponda");
                 noRequest.acquire();
+                System.out.println("Entro per cancellare i posti");
                 mutex.acquire();
                 while (pendingReservations.size() > 0) {
                     removeExpired();
+                    System.out.println("Posti Cancellati");
                     mutex.release();
+                    System.out.println("Mi metto in attesa");
                     sleep(CLEANROUTINETIME * 1000l);
                     mutex.acquire();
                 }

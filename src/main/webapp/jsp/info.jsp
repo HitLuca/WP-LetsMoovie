@@ -27,7 +27,7 @@
 
                 <p>
                     <strong>Indirizzo:</strong>
-                    Via Prato Bovino 2, Castelnovo di Sotto RE
+                    Via Prato Bovino 2, Castelnovo di Sotto <a href="/batman">(BAT)</a>
                 </p>
 
                 <p>

@@ -14,7 +14,7 @@ import java.util.List;
  * Created by marco on 21/07/15.
  */
 public class TemporaryReservationManager {
-    private final long TEMPORARY_RESERVATION_DURATION = 1000*60*10;
+    private final long TEMPORARY_RESERVATION_DURATION = 1000*60*5;
     ReservationCleanerThread reservationCleanerThread;
 
     public TemporaryReservationManager()
