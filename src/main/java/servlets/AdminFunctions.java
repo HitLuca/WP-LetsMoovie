@@ -24,6 +24,7 @@ import json.adminFunctions.response.*;
 import json.showRoom.SeatList;
 import json.showRoom.ShowSeat;
 import org.apache.ibatis.session.SqlSession;
+import types.enums.ErrorCode;
 import types.enums.SeatStatus;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
@@ -170,7 +171,6 @@ public class AdminFunctions extends HttpServlet {
                         }
                     }
                     outputStream.print(gsonWriter.toJson(null));
-                    sessionSql.close();
                     break;
                 }
                 //NON UTILIZZATO
@@ -237,7 +237,6 @@ public class AdminFunctions extends HttpServlet {
                         }
                     }
                     outputStream.print(gsonWriter.toJson(seatList));
-                    sessionSql.close();
                     break;
                 }
                 //FATTO
@@ -268,7 +267,6 @@ public class AdminFunctions extends HttpServlet {
                     }
 
                     outputStream.print(gsonWriter.toJson(seatList));
-                    sessionSql.close();
                     break;
                 }
                 //FATTO
@@ -289,7 +287,6 @@ public class AdminFunctions extends HttpServlet {
                         roomSeatList.addSeat(new RoomSeatCount(sc.getRow(), sc.getColumn(), sc.getCount()));
                     }
                     outputStream.print(gsonWriter.toJson(roomSeatList));
-                    sessionSql.close();
                     break;
                 }
                 //FATTO
@@ -311,7 +308,6 @@ public class AdminFunctions extends HttpServlet {
                     }
 
                     outputStream.print(gsonWriter.toJson(userRankRequests));
-                    sessionSql.close();
                     break;
                 }
                 //FATTO
@@ -327,7 +323,6 @@ public class AdminFunctions extends HttpServlet {
                     FilmIncomeResponse res = new FilmIncomeResponse(fd, income);
 
                     outputStream.print(gsonWriter.toJson(res));
-                    sessionSql.close();
                     break;
                 }
                 //NON UTILIZZATO
@@ -339,12 +334,12 @@ public class AdminFunctions extends HttpServlet {
                         filmIncomeResponses.add(new FilmIncomeResponse(filmTitle.getFilm_title(), filmTitle.getYear(), f.getIncome()));
                     }
                     outputStream.print(gsonWriter.toJson(filmIncomeResponses));
-                    sessionSql.close();
                     break;
                 }
                 case "deleteReservation": {
                     DeleteReservationRequest deleteReservationRequest = gsonReader.fromJson(request.getReader(), DeleteReservationRequest.class);
                     String code = deleteReservationRequest.getCode();
+
                     List<SeatDetailRequest> seatDetailRequests = deleteReservationRequest.getSeatList();
 
                     BadReqExeceptionThrower.checkDeleteReservation(deleteReservationRequest);
@@ -408,7 +403,6 @@ public class AdminFunctions extends HttpServlet {
                             seatDetailResponses.add(new SeatDetailResponse(seat.getRow(), seat.getColumn(), p.getTicket_type(), notDecidedMapper.getTicketPrice(p.getTicket_type())));
                         }
                         outputStream.print(gsonWriter.toJson(seatDetailResponses));
-                        sessionSql.close();
                     }
 
                     break;
@@ -420,6 +414,10 @@ public class AdminFunctions extends HttpServlet {
             outputStream.print(gsonWriter.toJson(operationResult));
         } catch (JsonIOException | JsonSyntaxException | NullPointerException e) {
             operationResult = new BadRequestException();
+            response.setStatus(400);
+            outputStream.print(gsonWriter.toJson(operationResult));
+        } catch (IndexOutOfBoundsException e) {
+            operationResult = new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
             response.setStatus(400);
             outputStream.print(gsonWriter.toJson(operationResult));
         }

@@ -81,7 +81,7 @@ var ChangedSeats = {
         alertify.success("Posto deselezionato");
     },
     successPost: function (data) {
-        alertify.succes("I posti selezionati sono stati correttamente modificati");
+        alertify.success("I posti selezionati sono stati correttamente modificati");
     },
     errorPost: function (data) {
         alertify.error("Errore nel modificare i posti selezionati");

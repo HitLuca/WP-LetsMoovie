@@ -164,9 +164,10 @@ public class BadReqExeceptionThrower {
     }
 
     public static void checkDeleteReservation(DeleteReservationRequest drr) throws BadRequestException {
-        if (drr.getSeatList() == null && drr.getCode().equals("")) {
+        if (drr.getCode().equals("") && drr.getSeatList().size() == 1 && drr.getSeatList().get(0).getS_row().equals("")) {
             throw new BadRequestException(ErrorCode.EMPTY_WRONG_FIELD);
         }
+
     }
 
     public static void checkUserAlreadyLogged(HttpServletRequest request) throws BadRequestException {

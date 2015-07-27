@@ -6,7 +6,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import database.DatabaseConnection;
 import database.datatypes.film.FilmTitle;
-import database.datatypes.show.Show;
 import database.datatypes.user.Payment;
 import database.datatypes.user.UserData;
 import database.mappers.*;
@@ -16,12 +15,9 @@ import json.payments.PdfTicketCreator;
 import json.reservation.request.ReservationRequest;
 import json.reservation.request.SeatReservation;
 import json.tickets.TicketData;
-import json.userPersonalData.UserCreditResponse;
 import org.apache.ibatis.session.SqlSession;
 import types.exceptions.BadRequestException;
 import utilities.BadReqExeceptionThrower;
-import utilities.mail.MailCleanerThread;
-import utilities.mail.MailCleanerThreadFactory;
 import utilities.mail.TicketMail;
 import utilities.reservation.TemporaryReservationManager;
 
@@ -30,7 +26,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -175,7 +174,6 @@ public class PaymentManagement extends HttpServlet {
         } catch (BadRequestException e) {
             operationResult = e;
             response.setStatus(400);
-            outputStream.print(gsonWriter.toJson(operationResult));
         }
         sqlSession.commit();
         sqlSession.close();
