@@ -10,7 +10,7 @@ public class MailCleanerThreadFactory {
         if (mailCleanerThread == null)
         {
             mailCleanerThread = new MailCleanerThread();
-            mailCleanerThread.run();
+            mailCleanerThread.start();
         }
         return  mailCleanerThread;
     }

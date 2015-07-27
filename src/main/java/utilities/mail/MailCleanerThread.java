@@ -11,13 +11,13 @@ import java.util.concurrent.Semaphore;
  * Created by marco on 25/06/15.
  */
 public class MailCleanerThread extends Thread {
+    private final long CLEANROUTINETIME = 60 * 10;
     private Map<String, UserEmailRequest> pendingRequests;
     private Semaphore mutex;
     private Semaphore noRequest;
-    private final long CLEANROUTINETIME = 60*10;
 
-    @Override
-    public void start()
+
+    public MailCleanerThread()
     {
         pendingRequests=new HashMap<String, UserEmailRequest>();
         mutex = new Semaphore(1,true);
